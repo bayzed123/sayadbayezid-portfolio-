@@ -1,0 +1,18 @@
+# Robots.txt for Sayad Md Bayezid Hosan Portfolio
+# All Rights Reserved
+
+User-agent: *
+Allow: /
+Allow: /assets/
+Allow: /sayadbayezid-portfolio-/
+
+# Disallow admin and private pages (if any)
+Disallow: /admin/
+Disallow: /private/
+
+# Sitemap
+Sitemap: https://bayzed123.github.io/sayadbayezid-portfolio-/sitemap.xml
+Sitemap: https://sayadbayezid.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
