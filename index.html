@@ -515,16 +515,28 @@
       
       /* Responsive */
       @media (max-width: 768px) {
-        .hero h1 {
-          font-size: 2rem;
+        .hero {
+          min-height: auto;
+          padding: 8rem 0 4rem 0;
+          display: block;
         }
-        
+        .hero-content {
+          text-align: center;
+        }
+        .hero h1 {
+          font-size: 2.2rem;
+        }
         .section-title {
           font-size: 2rem;
         }
-        
         nav ul {
           display: none;
+        }
+        .hero-buttons {
+          justify-content: center;
+        }
+        .hero-image {
+          margin-top: 3rem;
         }
       }
     </style>
@@ -784,9 +796,10 @@
       "@id": "https://sayadbayezid.com#person",
       "name": "Sayad Md Bayezid Hosan",
       "givenName": "Sayad",
-      "additionalName": "Md Bayezid",
       "familyName": "Hosan",
-      "alternateName": ["Bayezid", "Sayad Bayezid", "Bayezid Hosan"],
+      "gender": "Male",
+      "birthDate": "2003-06-26",
+      "alternateName": ["Bayezid", "Sayad Bayezid", "Bayezid Hosan", "Mr. Bayezid"],
       "nickname": "Bayezid",
       "url": "https://sayadbayezid.com",
       "image": [
@@ -803,7 +816,8 @@
           "height": 400
         }
       ],
-      "description": "Technology Entrepreneur, Tech Provider, and Digital Content Creator based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions. With 5+ years of experience, 2,200+ happy clients worldwide, and 98% client retention rate.",
+      "description": "Technology Entrepreneur, Tech Provider, and Digital Content Creator based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier. Also known as Bayezid. Specializing in web development, AI integration, and innovative digital solutions. With 5+ years of experience, 2,200+ happy clients worldwide, and 98% client retention rate.",
+      "disambiguatingDescription": "Technology Entrepreneur and Digital Content Creator from Bangladesh with expertise in web development and AI integration. Also known as Bayezid.",
       "jobTitle": [
         "Technology Entrepreneur",
         "Tech Provider",
@@ -920,11 +934,6 @@
       },
       "nationality": "BD",
       "educationLevel": "Undergraduate",
-      "award": [
-        "98% Client Retention Rate",
-        "2,200+ Happy Clients Worldwide",
-        "2,140 Satisfied & Analyzed Clients"
-      ],
       "hasCredential": [
         {
           "@type": "EducationalOccupationalCredential",
@@ -938,41 +947,18 @@
           "url": "https://nub.edu.bd"
         }
       ],
-
-      "mainEntity": "https://sayadbayezid.com",
-      "potentialAction": [
+      "award": [
         {
-          "@type": "CommunicateAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://sayadbayezid.com#contact"
-          }
+          "@type": "Award",
+          "name": "98% Client Retention Rate",
+          "description": "Highest client satisfaction and retention in the digital services industry"
         },
         {
-          "@type": "TradeAction",
-          "target": {
-            "@type": "EntryPoint",
-            "urlTemplate": "https://sayadbayezid.com#projects"
-          }
+          "@type": "Award",
+          "name": "2,200+ Happy Clients Worldwide",
+          "description": "Trusted by thousands of clients across multiple continents for innovative digital solutions"
         }
       ],
-      "interactionStatistic": [
-        {
-          "@type": "InteractionCounter",
-          "interactionType": "https://schema.org/ViewAction",
-          "userInteractionCount": 2200
-        },
-        {
-          "@type": "InteractionCounter",
-          "interactionType": "https://schema.org/FollowAction",
-          "userInteractionCount": 5000
-        }
-      ],
-      "givenName": "Sayad",
-      "familyName": "Hosan",
-      "honorificPrefix": "Mr.",
-      "gender": "Male",
-      "disambiguatingDescription": "Technology Entrepreneur and Digital Content Creator from Bangladesh with expertise in web development and AI integration",
       "hasOccupation": [
         {
           "@type": "Occupation",
@@ -1021,7 +1007,15 @@
         "https://connectbayezid-8dcdz46v.manus.space",
         "https://www.genzfrontir.com",
         "https://qr.genzfrontir.com"
-      ]
+      ],
+      "mainEntityOfPage": "https://sayadbayezid.com",
+      "potentialAction": {
+        "@type": "CommunicateAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://sayadbayezid.com#contact"
+        }
+      }
     }
     </script>
 
