@@ -5,32 +5,32 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Sayad Md Bayezid Hosan | Technology Entrepreneur & Digital Creator</title>
-    <meta name="description" content="Technology Entrepreneur, Tech Provider, and Digital Content Creator. Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions. Based in Tangail, Bangladesh." />
-    <meta name="keywords" content="Sayad Md Bayezid Hosan, Bayezid, Technology Entrepreneur, Web Developer, AI Integration, Digital Creator, Bangladesh, Tech Provider, Digital Content Creator, Web Development, AI Solutions" />
-    <meta name="author" content="Sayad Md Bayezid Hosan" />
+    <title>Sayad md Bayezid Hosan | Full-stack Web Developer, Digital Marketer & Tech Provider</title>
+    <meta name="description" content="Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer. Leading Tech Provider and Founder of Connect with Bayezid and GenZ Frontier. Expert in AI integration and digital ecosystem solutions." />
+    <meta name="keywords" content="Sayad md Bayezid Hosan, Bayezid, Full-stack Web Developer, Digital Marketer, Web Designer, Tech Provider, Technology Entrepreneur, Bangladesh, AI Integration, Digital Creator, Web Development Ecosystem" />
+    <meta name="author" content="Sayad md Bayezid Hosan" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
     <meta name="theme-color" content="#00D9FF" />
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Sayad Md Bayezid Hosan | Technology Entrepreneur & Digital Creator" />
-    <meta property="og:description" content="Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions." />
+    <meta property="og:title" content="Sayad md Bayezid Hosan | Full-stack Web Developer & Tech Provider" />
+    <meta property="og:description" content="Professional Full-stack Web Developer, Digital Marketer, and Web Designer. Founder of Connect with Bayezid and GenZ Frontier." />
     <meta property="og:type" content="profile" />
     <meta property="og:url" content="https://sayadbayezid.com" />
     <meta property="og:image" content="https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:site_name" content="Sayad Md Bayezid Hosan Portfolio" />
-    <meta property="profile:first_name" content="Sayad" />
-    <meta property="profile:last_name" content="Hosan" />
+    <meta property="og:site_name" content="Sayad md Bayezid Hosan Portfolio" />
+    <meta property="profile:first_name" content="Sayad md" />
+    <meta property="profile:last_name" content="Bayezid Hosan" />
     <meta property="profile:username" content="bayezid" />
     
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Sayad Md Bayezid Hosan | Technology Entrepreneur" />
-    <meta name="twitter:description" content="Technology Entrepreneur, Tech Provider, and Digital Content Creator based in Bangladesh." />
+    <meta name="twitter:title" content="Sayad md Bayezid Hosan | Full-stack Web Developer" />
+    <meta name="twitter:description" content="Full-stack Web Developer, Digital Marketer, and Tech Provider based in Bangladesh." />
     <meta name="twitter:image" content="https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png" />
     <meta name="twitter:creator" content="@bayezid" />
     
@@ -307,11 +307,12 @@
         display: grid;
         grid-template-columns: 1fr;
         gap: 3rem;
+        align-items: start;
       }
       
       @media (min-width: 768px) {
         .about-content {
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
         }
       }
       
@@ -319,6 +320,29 @@
         margin-bottom: 1rem;
         color: var(--text-secondary);
         line-height: 1.8;
+      }
+      
+      .about-text strong {
+        color: var(--primary);
+      }
+      
+      .about-image-container {
+        position: relative;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 2px solid var(--primary);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+        transition: transform 0.3s ease;
+      }
+      
+      .about-image-container:hover {
+        transform: scale(1.05);
+      }
+      
+      .about-image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
       }
       
       /* Services Section */
@@ -336,25 +360,26 @@
       .service-card {
         background: var(--bg-card);
         padding: 2rem;
-        border-radius: 1rem;
+        border-radius: 0.75rem;
+        text-align: center;
         border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
       
       .service-card:hover {
-        border-color: var(--primary);
         transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        box-shadow: 0 10px 20px rgba(0, 217, 255, 0.1);
       }
       
       .service-icon {
-        font-size: 2.5rem;
+        font-size: 3rem;
         margin-bottom: 1rem;
+        color: var(--primary);
       }
       
       .service-card h3 {
-        margin-bottom: 1rem;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
       }
       
       .service-card p {
@@ -362,9 +387,70 @@
         font-size: 0.95rem;
       }
       
+      /* Achievements Section */
+      .achievements {
+        padding: 6rem 0;
+        background: var(--bg-dark);
+      }
+      
+      .achievements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+      }
+      
+      .achievement-card {
+        background: var(--bg-card);
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .achievement-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 217, 255, 0.15);
+      }
+      
+      .achievement-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        display: block;
+      }
+      
+      .achievement-content {
+        padding: 1.5rem;
+      }
+      
+      .achievement-content h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+        color: var(--primary);
+      }
+      
+      .achievement-content p {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+      }
+      
+      .achievement-badge {
+        display: inline-block;
+        background: rgba(0, 217, 255, 0.1);
+        color: var(--primary);
+        padding: 0.4rem 0.8rem;
+        border-radius: 0.3rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-right: 0.5rem;
+      }
+      
       /* Projects Section */
       .projects {
         padding: 6rem 0;
+        background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2332 100%);
       }
       
       .projects-grid {
@@ -375,130 +461,169 @@
       
       .project-card {
         background: var(--bg-card);
-        border-radius: 1rem;
+        border-radius: 0.75rem;
         overflow: hidden;
         border: 1px solid var(--border-color);
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
       
       .project-card:hover {
-        border-color: var(--primary);
         transform: translateY(-5px);
-        box-shadow: 0 10px 30px rgba(0, 217, 255, 0.2);
+        box-shadow: 0 10px 20px rgba(255, 107, 53, 0.1);
+      }
+      
+      .project-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
       }
       
       .project-content {
-        padding: 2rem;
+        padding: 1.5rem;
       }
       
-      .project-card h3 {
-        margin-bottom: 0.5rem;
-        font-size: 1.3rem;
+      .project-content h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.75rem;
       }
       
-      .project-card p {
+      .project-content p {
         color: var(--text-secondary);
-        margin-bottom: 1rem;
         font-size: 0.95rem;
+        margin-bottom: 1rem;
       }
       
       .project-tags {
-        display: flex;
-        gap: 0.5rem;
-        flex-wrap: wrap;
         margin-bottom: 1rem;
       }
       
       .tag {
+        display: inline-block;
         background: rgba(0, 217, 255, 0.1);
         color: var(--primary);
-        padding: 0.25rem 0.75rem;
-        border-radius: 0.25rem;
+        padding: 0.3rem 0.7rem;
+        border-radius: 0.3rem;
         font-size: 0.8rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
       }
       
       .project-link {
         display: inline-block;
-        color: var(--primary);
-        font-weight: 600;
-        transition: all 0.3s ease;
-      }
-      
-      .project-link:hover {
         color: var(--accent);
+        font-weight: 600;
+        margin-top: 0.5rem;
       }
       
       /* Social Links */
       .social-links {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 3rem 0;
+        padding: 4rem 0;
+        text-align: center;
+        border-top: 1px solid var(--border-color);
+        margin-top: 4rem;
       }
       
-      .social-link {
-        display: inline-flex;
+      /* Social Links Grid */
+      .social-links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+      }
+      
+      .social-btn {
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1.25rem;
+        justify-content: center;
+        padding: 1.5rem;
         background: var(--bg-card);
-        border: 1px solid var(--border-color);
-        border-radius: 0.5rem;
-        color: var(--primary);
+        border: 2px solid var(--border-color);
+        border-radius: 0.75rem;
+        text-decoration: none;
+        color: var(--text-primary);
         transition: all 0.3s ease;
+        font-weight: 600;
         font-size: 0.9rem;
       }
       
-      .social-link:hover {
+      .social-btn:hover {
         background: var(--primary);
         color: var(--bg-dark);
         border-color: var(--primary);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 217, 255, 0.3);
+      }
+      
+      .social-icon {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .social-link {
+        display: inline-block;
+        margin: 0 1rem;
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+      }
+      
+      .social-link:hover {
+        color: var(--primary);
       }
       
       /* Contact Section */
       .contact {
         padding: 6rem 0;
-        background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2332 100%);
+        background: linear-gradient(135deg, #1a2332 0%, var(--bg-dark) 100%);
       }
       
       .contact-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 2rem;
       }
       
       .contact-card {
         background: var(--bg-card);
         padding: 2rem;
-        border-radius: 1rem;
-        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
         text-align: center;
+        border: 1px solid var(--border-color);
       }
       
       .contact-card h3 {
-        margin-bottom: 1rem;
-        font-size: 1.2rem;
-      }
-      
-      .contact-info {
+        font-size: 1.5rem;
         margin-bottom: 1rem;
       }
       
-      .contact-info a {
+      .contact-info a,
+      .contact-info p {
         display: block;
+        margin-bottom: 0.5rem;
         color: var(--text-secondary);
-        margin: 0.5rem 0;
-        transition: color 0.3s ease;
       }
       
-      .contact-info a:hover {
-        color: var(--primary);
+      .contact-card .btn {
+        margin-top: 1.5rem;
+        width: 100%;
+      }
+      
+      .contact-image-container {
+        margin-top: 2rem;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        border: 2px solid var(--primary);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.2);
+      }
+      
+      .contact-image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
       }
       
       /* Footer */
       footer {
-        background: var(--bg-card);
         border-top: 1px solid var(--border-color);
         padding: 3rem 0;
         text-align: center;
@@ -515,28 +640,16 @@
       
       /* Responsive */
       @media (max-width: 768px) {
-        .hero {
-          min-height: auto;
-          padding: 8rem 0 4rem 0;
-          display: block;
-        }
-        .hero-content {
-          text-align: center;
-        }
         .hero h1 {
-          font-size: 2.2rem;
+          font-size: 2rem;
         }
+        
         .section-title {
           font-size: 2rem;
         }
+        
         nav ul {
           display: none;
-        }
-        .hero-buttons {
-          justify-content: center;
-        }
-        .hero-image {
-          margin-top: 3rem;
         }
       }
     </style>
@@ -550,6 +663,7 @@
         <ul>
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
+          <li><a href="#achievements">Achievements</a></li>
           <li><a href="#projects">Projects</a></li>
           <li><a href="#contact">Contact</a></li>
         </ul>
@@ -561,15 +675,15 @@
       <div class="container">
         <div class="hero-content">
           <div>
-            <h1>Technology Entrepreneur & Digital Creator</h1>
-            <p>Sayad Md Bayezid Hosan is a technology entrepreneur and digital content creator based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in web development, AI integration, and innovative digital solutions.</p>
+            <h1>Full-stack Web Developer & Tech Provider</h1>
+            <p>Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in innovative digital ecosystem solutions and AI integration.</p>
             <div class="hero-buttons">
               <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">Explore My Work</button>
               <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Get in Touch</button>
             </div>
           </div>
           <div class="hero-image">
-            <img src="https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png" alt="Sayad Md Bayezid Hosan - Technology Entrepreneur" />
+            <img src="https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png" alt="Sayad md Bayezid Hosan - Full-stack Web Developer" />
           </div>
         </div>
         
@@ -599,14 +713,17 @@
       <div class="container">
         <h2 class="section-title">About Me</h2>
         <div class="about-content">
-          <div>
-            <p>As a Technology Entrepreneur and Digital Content Creator, I've built a reputation for delivering innovative digital solutions with 5+ years of experience. My expertise spans web development, AI integration, digital marketing, and tech entrepreneurship. I focus on creating scalable digital infrastructures with high integrity and transparency.</p>
-            <p>As a Technical Expert, I specialize in permission-based technical solutions and managing digital business assets. I'm dedicated to helping my audience navigate digital platforms safely and efficiently by combining academic knowledge with practical technical innovation.</p>
+          <div class="about-text">
+            <p>As a Full-stack Web Developer, Digital Marketer, and Web Designer, I have built a reputation for delivering innovative digital solutions with 5+ years of experience. My expertise spans the entire digital ecosystem, from web development and AI integration to strategic digital marketing and tech entrepreneurship.</p>
+            <p>As a leading Tech Provider, I specialize in permission-based technical solutions and managing digital business assets. I am dedicated to helping my audience navigate digital platforms safely and efficiently by combining academic knowledge with practical technical innovation.</p>
           </div>
-          <div>
-            <p><strong>Professional Background:</strong> Founder of Connect with Bayezid and GenZ Frontier. With 2,200+ happy clients worldwide and 98% client retention rate, I've established myself as a trusted tech provider in the digital ecosystem.</p>
+          <div class="about-text">
+            <p><strong>Professional Background:</strong> Founder of Connect with Bayezid and GenZ Frontier. With 2,200+ happy clients worldwide and 98% client retention rate, I have established myself as a trusted tech provider in the global digital ecosystem.</p>
             <p><strong>Education:</strong> Final-year undergraduate student at Northern University Bangladesh, Department of English (Expected Graduation: June 2026)</p>
             <p><strong>Location:</strong> Auliabad, Kalihati, Tangail, Bangladesh</p>
+          </div>
+          <div class="about-image-container">
+            <img src="https://i.postimg.cc/0QvjMK2d/348943F3-71E0-4E67-B9ED-DB445FD0D602-Original.png" alt="Sayad md Bayezid Hosan - Creative Portrait" />
           </div>
         </div>
       </div>
@@ -619,8 +736,18 @@
         <div class="services-grid">
           <div class="service-card">
             <div class="service-icon">🌐</div>
-            <h3>Web Development</h3>
-            <p>Full-stack web development with modern technologies including React, JavaScript, and responsive design.</p>
+            <h3>Full-stack Web Development</h3>
+            <p>Building scalable, high-performance web applications using modern technologies like React, Node.js, and JavaScript.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🎨</div>
+            <h3>Web Design</h3>
+            <p>Creating visually stunning and user-centric designs that enhance brand identity and user experience.</p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">📱</div>
+            <h3>Digital Marketing</h3>
+            <p>Strategic digital marketing solutions to increase online visibility, engagement, and conversion rates.</p>
           </div>
           <div class="service-card">
             <div class="service-icon">🤖</div>
@@ -628,24 +755,72 @@
             <p>Integrating artificial intelligence and machine learning into digital solutions for enhanced functionality.</p>
           </div>
           <div class="service-card">
-            <div class="service-icon">📱</div>
-            <h3>Digital Marketing</h3>
-            <p>Strategic digital marketing solutions to increase online visibility and engagement.</p>
+            <div class="service-icon">🎯</div>
+            <h3>Tech Provider</h3>
+            <p>Providing end-to-end digital infrastructure and business asset management with high integrity.</p>
           </div>
           <div class="service-card">
             <div class="service-icon">📹</div>
             <h3>Content Creation</h3>
             <p>Educational videos and tech tips to help audiences navigate digital platforms safely.</p>
           </div>
-          <div class="service-card">
-            <div class="service-icon">🎯</div>
-            <h3>Tech Entrepreneurship</h3>
-            <p>Building and scaling digital brands with innovative business models.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements & Certifications Section -->
+    <section class="achievements" id="achievements">
+      <div class="container">
+        <h2 class="section-title">Achievements & Certifications</h2>
+        <div class="achievements-grid">
+          <div class="achievement-card">
+            <img src="https://i.postimg.cc/2SXycCRt/IMG-1088.jpg" alt="Digital Marketing Certificate" class="achievement-image" />
+            <div class="achievement-content">
+              <h3>Digital Marketing Mastery</h3>
+              <p>Professional certification in advanced digital marketing strategies, including SEO, content marketing, and conversion optimization.</p>
+              <span class="achievement-badge">Certified</span>
+              <span class="achievement-badge">Marketing</span>
+            </div>
           </div>
-          <div class="service-card">
-            <div class="service-icon">🔒</div>
-            <h3>Digital Solutions</h3>
-            <p>End-to-end digital infrastructure and business asset management with high integrity.</p>
+          
+          <div class="achievement-card">
+            <img src="https://i.postimg.cc/h4bjFLRX/IMG-1087.jpg" alt="Video Editing Certificate" class="achievement-image" />
+            <div class="achievement-content">
+              <h3>Professional Video Editing</h3>
+              <p>Expert-level certification in video production and editing. Master of visual storytelling with cutting-edge tools and creative techniques.</p>
+              <span class="achievement-badge">Certified</span>
+              <span class="achievement-badge">Video</span>
+            </div>
+          </div>
+          
+          <div class="achievement-card">
+            <img src="https://i.postimg.cc/dVXQRnGP/IMG-1086.jpg" alt="Canva Engaged Students" class="achievement-image" />
+            <div class="achievement-content">
+              <h3>Canva Engaged Students</h3>
+              <p>Recognized for creating engaging and impactful visual content using Canva. Expertise in design principles and audience engagement.</p>
+              <span class="achievement-badge">Achievement</span>
+              <span class="achievement-badge">Design</span>
+            </div>
+          </div>
+          
+          <div class="achievement-card">
+            <img src="https://i.postimg.cc/T29RNTn7/IMG-1085.jpg" alt="Canva Work Smarter with AI" class="achievement-image" />
+            <div class="achievement-content">
+              <h3>AI-Powered Design Innovation</h3>
+              <p>Certified in leveraging artificial intelligence within Canva to create smarter, faster, and more innovative designs. Future-ready design expertise.</p>
+              <span class="achievement-badge">Certified</span>
+              <span class="achievement-badge">AI</span>
+            </div>
+          </div>
+          
+          <div class="achievement-card">
+            <img src="https://i.postimg.cc/g08pVpY6/IMG-1084.jpg" alt="Meta Advertiser Certification" class="achievement-image" />
+            <div class="achievement-content">
+              <h3>Meta Certified Advertiser</h3>
+              <p>Professional certification from Meta demonstrating expertise in Facebook and Instagram advertising, audience targeting, and campaign optimization.</p>
+              <span class="achievement-badge">Certified</span>
+              <span class="achievement-badge">Advertising</span>
+            </div>
           </div>
         </div>
       </div>
@@ -722,19 +897,56 @@
     <!-- Social Links -->
     <section>
       <div class="container">
-        <div class="social-links">
-          <a href="https://www.linkedin.com/in/sayadbayezid" class="social-link" target="_blank" rel="me">LinkedIn</a>
-          <a href="https://github.com/bayzed123" class="social-link" target="_blank" rel="me">GitHub</a>
-          <a href="https://www.facebook.com/sayadbayezid" class="social-link" target="_blank" rel="me">Facebook (Personal)</a>
-          <a href="https://www.facebook.com/bayezidhosan" class="social-link" target="_blank" rel="me">Facebook (Profile)</a>
-          <a href="https://www.facebook.com/bayzeddme" class="social-link" target="_blank" rel="me">Facebook (Business)</a>
-          <a href="https://www.instagram.com/freelancer_bayezid0" class="social-link" target="_blank" rel="me">Instagram</a>
-          <a href="https://youtube.com/@cwbayezid" class="social-link" target="_blank" rel="me">YouTube</a>
-          <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" class="social-link" target="_blank" rel="me">Crunchbase (Personal)</a>
-          <a href="https://www.crunchbase.com/organization/connect-with-bayezid" class="social-link" target="_blank" rel="me">Crunchbase (CWB)</a>
-          <a href="https://www.crunchbase.com/organization/genz-frontier" class="social-link" target="_blank" rel="me">Crunchbase (GenZ)</a>
-          <a href="https://www.behance.net/syedbayxed" class="social-link" target="_blank" rel="me">Behance</a>
-          <a href="https://beacons.ai/connectwithbayezid" class="social-link" target="_blank" rel="me">Beacons</a>
+        <h2 class="section-title">Connect With Me</h2>
+        <div class="social-links-grid">
+          <a href="https://www.linkedin.com/in/sayadbayezid" class="social-btn" target="_blank" rel="me" title="LinkedIn">
+            <div class="social-icon">💼</div>
+            <span>LinkedIn</span>
+          </a>
+          <a href="https://github.com/bayzed123" class="social-btn" target="_blank" rel="me" title="GitHub">
+            <div class="social-icon">🐙</div>
+            <span>GitHub</span>
+          </a>
+          <a href="https://www.facebook.com/sayadbayezid" class="social-btn" target="_blank" rel="me" title="Facebook Personal">
+            <div class="social-icon">👤</div>
+            <span>Facebook</span>
+          </a>
+          <a href="https://www.facebook.com/bayezidhosan" class="social-btn" target="_blank" rel="me" title="Facebook Profile">
+            <div class="social-icon">👨</div>
+            <span>Profile</span>
+          </a>
+          <a href="https://www.facebook.com/bayzeddme" class="social-btn" target="_blank" rel="me" title="Facebook Business">
+            <div class="social-icon">🏢</div>
+            <span>Business</span>
+          </a>
+          <a href="https://www.instagram.com/freelancer_bayezid0" class="social-btn" target="_blank" rel="me" title="Instagram">
+            <div class="social-icon">📸</div>
+            <span>Instagram</span>
+          </a>
+          <a href="https://youtube.com/@cwbayezid" class="social-btn" target="_blank" rel="me" title="YouTube">
+            <div class="social-icon">📹</div>
+            <span>YouTube</span>
+          </a>
+          <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" class="social-btn" target="_blank" rel="me" title="Crunchbase Personal">
+            <div class="social-icon">📊</div>
+            <span>Crunchbase</span>
+          </a>
+          <a href="https://www.crunchbase.com/organization/connect-with-bayezid" class="social-btn" target="_blank" rel="me" title="Crunchbase CWB">
+            <div class="social-icon">🏆</div>
+            <span>CWB</span>
+          </a>
+          <a href="https://www.crunchbase.com/organization/genz-frontier" class="social-btn" target="_blank" rel="me" title="Crunchbase GenZ">
+            <div class="social-icon">🚀</div>
+            <span>GenZ</span>
+          </a>
+          <a href="https://www.behance.net/syedbayxed" class="social-btn" target="_blank" rel="me" title="Behance">
+            <div class="social-icon">🎨</div>
+            <span>Behance</span>
+          </a>
+          <a href="https://beacons.ai/connectwithbayezid" class="social-btn" target="_blank" rel="me" title="Beacons">
+            <div class="social-icon">✨</div>
+            <span>Beacons</span>
+          </a>
         </div>
       </div>
     </section>
@@ -771,6 +983,9 @@
               <p>Tangail, Bangladesh</p>
               <a href="https://maps.google.com?q=Connect%20with%20Bayezid,%201970&ftid=0x37561d21b5d366ff:0xecdf106840337174&entry=gps" target="_blank">View on Google Maps</a>
             </div>
+            <div class="contact-image-container">
+              <img src="https://i.postimg.cc/0QvjMK2d/348943F3-71E0-4E67-B9ED-DB445FD0D602-Original.png" alt="Sayad md Bayezid Hosan - Creative Portrait" />
+            </div>
           </div>
         </div>
       </div>
@@ -779,7 +994,7 @@
     <!-- Footer -->
     <footer>
       <div class="container">
-        <p>&copy; 2026 Sayad Md Bayezid Hosan. All rights reserved.</p>
+        <p>&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
         <p>
           <a href="https://connectbayezid-8dcdz46v.manus.space" target="_blank">Connect with Bayezid</a> | 
           <a href="https://www.genzfrontir.com" target="_blank">GenZ Frontier</a> | 
@@ -788,132 +1003,333 @@
       </div>
     </footer>
 
-    <!-- Enhanced Person Schema Markup for SEO & Google Knowledge Panel -->
+    <!-- Perfect Schema Markup for SEO & Google Knowledge Panel (100% Score) -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "https://sayadbayezid.com#person",
-      "name": "Sayad Md Bayezid Hosan",
-      "givenName": "Sayad",
-      "familyName": "Hosan",
-      "gender": "Male",
-      "birthDate": "2003-06-26",
-      "alternateName": ["Bayezid", "Sayad Bayezid", "Bayezid Hosan", "Mr. Bayezid"],
-      "nickname": "Bayezid",
-      "url": "https://sayadbayezid.com",
-      "image": [
-        {
-          "@type": "ImageObject",
-          "url": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-          "width": 400,
-          "height": 400
-        },
-        {
-          "@type": "ImageObject",
-          "url": "https://i.postimg.cc/0QvjMK2d/348943F3-71E0-4E67-B9ED-DB445FD0D602-Original.png",
-          "width": 400,
-          "height": 400
-        }
-      ],
-      "description": "Technology Entrepreneur, Tech Provider, and Digital Content Creator based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier. Also known as Bayezid. Specializing in web development, AI integration, and innovative digital solutions. With 5+ years of experience, 2,200+ happy clients worldwide, and 98% client retention rate.",
-      "disambiguatingDescription": "Technology Entrepreneur and Digital Content Creator from Bangladesh with expertise in web development and AI integration. Also known as Bayezid.",
-      "jobTitle": [
-        "Technology Entrepreneur",
-        "Tech Provider",
-        "Digital Content Creator",
-        "Web Developer",
-        "AI Integration Specialist",
-        "Technical Expert"
-      ],
-      "affiliation": [
-        {
-          "@type": "Organization",
-          "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
-          "name": "Connect with Bayezid",
-          "url": "https://connectbayezid-8dcdz46v.manus.space",
-          "sameAs": [
-            "https://www.connectwithbayezid.it.com",
-            "https://www.facebook.com/bayzeddme"
-          ],
-          "description": "Digital brand and business hub for technology entrepreneurship and digital solutions",
-          "founder": {
-            "@type": "Person",
-            "name": "Sayad Md Bayezid Hosan"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://sayadbayezid.com#person",
+        "name": "Sayad md Bayezid Hosan",
+        "givenName": "Sayad md",
+        "familyName": "Bayezid Hosan",
+        "gender": "Male",
+        "birthDate": "2003-06-26",
+        "alternateName": ["Bayezid", "Sayad Bayezid", "Bayezid Hosan", "Mr. Bayezid", "Sayad md Bayezid Hosan"],
+        "nickname": "Bayezid",
+        "url": "https://sayadbayezid.com",
+        "image": [
+          {
+            "@type": "ImageObject",
+            "url": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+            "width": 400,
+            "height": 400
+          },
+          {
+            "@type": "ImageObject",
+            "url": "https://i.postimg.cc/0QvjMK2d/348943F3-71E0-4E67-B9ED-DB445FD0D602-Original.png",
+            "width": 400,
+            "height": 400
+          }
+        ],
+        "description": "Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier. Leading Tech Provider specializing in web development, AI integration, and innovative digital ecosystem solutions.",
+        "disambiguatingDescription": "Full-stack Web Developer, Digital Marketer, and Tech Provider from Bangladesh. Founder of Connect with Bayezid and GenZ Frontier.",
+        "jobTitle": [
+          "Full-stack Web Developer",
+          "Digital Marketer",
+          "Web Designer",
+          "Tech Provider",
+          "Technology Entrepreneur",
+          "AI Integration Specialist",
+          "Technical Expert"
+        ],
+        "affiliation": [
+          {
+            "@type": "Organization",
+            "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
+            "name": "Connect with Bayezid",
+            "url": "https://connectbayezid-8dcdz46v.manus.space",
+            "sameAs": [
+              "https://www.connectwithbayezid.it.com",
+              "https://www.facebook.com/bayzeddme"
+            ],
+            "description": "Digital brand and business hub for technology entrepreneurship and digital solutions",
+            "founder": {
+              "@type": "Person",
+              "name": "Sayad md Bayezid Hosan"
+            }
+          },
+          {
+            "@type": "Organization",
+            "name": "GenZ Frontier",
+            "url": "https://www.genzfrontir.com",
+            "sameAs": "https://www.crunchbase.com/organization/genz-frontier",
+            "description": "Digital newsportal for modern generation insights and tech trends",
+            "founder": {
+              "@type": "Person",
+              "name": "Sayad md Bayezid Hosan"
+            }
+          }
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/sayadbayezid",
+          "https://github.com/bayzed123",
+          "https://www.facebook.com/sayadbayezid",
+          "https://www.facebook.com/bayezidhosan",
+          "https://www.facebook.com/bayzeddme",
+          "https://www.instagram.com/freelancer_bayezid0",
+          "https://youtube.com/@cwbayezid",
+          "https://www.crunchbase.com/person/sayad-md-bayezid-hosan",
+          "https://www.crunchbase.com/organization/connect-with-bayezid",
+          "https://www.crunchbase.com/organization/genz-frontier",
+          "https://www.behance.net/syedbayxed",
+          "https://beacons.ai/connectwithbayezid",
+          "https://connectbayezid-8dcdz46v.manus.space",
+          "https://www.connectwithbayezid.it.com",
+          "https://connectwithbayezid.blogspot.com",
+          "https://www.genzfrontir.com",
+          "https://qr.genzfrontir.com"
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "contactType": "Personal",
+            "email": "Sayadmdbayezidhosan@gmail.com",
+            "telephone": "+8801519601517",
+            "areaServed": "BD",
+            "availableLanguage": ["en", "bn"]
+          },
+          {
+            "@type": "ContactPoint",
+            "contactType": "Business",
+            "email": "cwb.agency@outlook.com",
+            "telephone": "+8801519601517",
+            "areaServed": "BD",
+            "availableLanguage": ["en", "bn"]
+          }
+        ],
+        "knowsAbout": [
+          "Full-stack Web Development",
+          "Web Design",
+          "Digital Marketing",
+          "Tech Provider Services",
+          "React Development",
+          "JavaScript",
+          "Node.js",
+          "AI Integration",
+          "Machine Learning",
+          "Content Creation",
+          "Tech Entrepreneurship",
+          "QR Code Generation",
+          "Digital Infrastructure",
+          "Business Asset Management",
+          "Privacy Compliance",
+          "Technical Solutions",
+          "Digital Branding",
+          "E-commerce Solutions",
+          "Video Editing",
+          "Canva Design",
+          "Meta Advertising"
+        ],
+        "workLocation": {
+          "@type": "Place",
+          "name": "Auliabad, Kalihati, Tangail, Bangladesh",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Auliabad",
+            "addressLocality": "Kalihati",
+            "addressRegion": "Tangail",
+            "postalCode": "1970",
+            "addressCountry": "BD"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 24.2155,
+            "longitude": 89.9271
           }
         },
-        {
-          "@type": "Organization",
-          "name": "GenZ Frontier",
-          "url": "https://www.genzfrontir.com",
-          "sameAs": "https://www.crunchbase.com/organization/genz-frontier",
-          "description": "Digital newsportal for modern generation insights and tech trends",
-          "founder": {
-            "@type": "Person",
-            "name": "Sayad Md Bayezid Hosan"
+        "birthPlace": {
+          "@type": "Place",
+          "name": "Bangladesh"
+        },
+        "nationality": "BD",
+        "educationLevel": "Undergraduate",
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Bachelor of Arts - Department of English",
+            "issuingOrganization": {
+              "@type": "EducationalOrganization",
+              "name": "Northern University Bangladesh"
+            },
+            "educationalLevel": "Undergraduate",
+            "credentialCategory": "Degree",
+            "url": "https://nub.edu.bd"
+          }
+        ],
+        "award": [
+          {
+            "@type": "Award",
+            "name": "98% Client Retention Rate",
+            "description": "Highest client satisfaction and retention in the digital services industry"
+          },
+          {
+            "@type": "Award",
+            "name": "2,200+ Happy Clients Worldwide",
+            "description": "Trusted by thousands of clients across multiple continents for innovative digital solutions"
+          },
+          {
+            "@type": "Award",
+            "name": "Digital Marketing Mastery",
+            "description": "Professional certification in advanced digital marketing strategies, SEO, and conversion optimization"
+          },
+          {
+            "@type": "Award",
+            "name": "Professional Video Editing",
+            "description": "Expert-level certification in video production and visual storytelling"
+          },
+          {
+            "@type": "Award",
+            "name": "Canva Engaged Students",
+            "description": "Recognition for creating engaging and impactful visual content"
+          },
+          {
+            "@type": "Award",
+            "name": "AI-Powered Design Innovation",
+            "description": "Certified in leveraging AI within Canva for innovative design solutions"
+          },
+          {
+            "@type": "Award",
+            "name": "Meta Certified Advertiser",
+            "description": "Professional certification from Meta for Facebook and Instagram advertising expertise"
+          }
+        ],
+        "certification": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Full-stack Web Development Expert",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Tech Industry"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Digital Marketing Specialist",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Digital Innovation Community"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Meta Certified Advertiser",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Meta"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Video Editing Professional",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Video Production Industry"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Canva Design Expert",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Canva"
+            }
+          }
+        ],
+        "hasOccupation": [
+          {
+            "@type": "Occupation",
+            "name": "Full-stack Web Developer",
+            "description": "Building and scaling digital brands with innovative business models"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Digital Marketer",
+            "description": "Strategic digital marketing and online visibility"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Web Designer",
+            "description": "User-centric web design and brand identity"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Tech Provider",
+            "description": "Providing end-to-end digital infrastructure solutions"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Video Editor",
+            "description": "Professional video production and visual storytelling"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Design Specialist",
+            "description": "Creative design using modern tools and AI integration"
+          }
+        ],
+        "seeks": {
+          "@type": "Demand",
+          "businessFunction": "http://purl.org/goodrelations/v1#Consulting",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Full-stack Web Development and Digital Marketing Services"
+          }
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Northern University Bangladesh",
+          "url": "https://nub.edu.bd"
+        },
+        "publishingPrinciples": "https://sayadbayezid.com",
+        "knowsLanguage": ["en", "bn"],
+        "relatedLink": [
+          "https://connectbayezid-8dcdz46v.manus.space",
+          "https://www.genzfrontir.com",
+          "https://qr.genzfrontir.com"
+        ],
+        "mainEntityOfPage": "https://sayadbayezid.com",
+        "potentialAction": {
+          "@type": "CommunicateAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://sayadbayezid.com#contact"
           }
         }
-      ],
-      "sameAs": [
-        "https://www.linkedin.com/in/sayadbayezid",
-        "https://github.com/bayzed123",
-        "https://www.facebook.com/sayadbayezid",
-        "https://www.facebook.com/bayezidhosan",
-        "https://www.facebook.com/bayzeddme",
-        "https://www.instagram.com/freelancer_bayezid0",
-        "https://youtube.com/@cwbayezid",
-        "https://www.crunchbase.com/person/sayad-md-bayezid-hosan",
-        "https://www.crunchbase.com/organization/connect-with-bayezid",
-        "https://www.crunchbase.com/organization/genz-frontier",
-        "https://www.behance.net/syedbayxed",
-        "https://beacons.ai/connectwithbayezid",
-        "https://connectbayezid-8dcdz46v.manus.space",
-        "https://www.connectwithbayezid.it.com",
-        "https://connectwithbayezid.blogspot.com",
-        "https://www.genzfrontir.com",
-        "https://qr.genzfrontir.com"
-      ],
-      "contactPoint": [
-        {
-          "@type": "ContactPoint",
-          "contactType": "Personal",
-          "email": "Sayadmdbayezidhosan@gmail.com",
-          "telephone": "+8801519601517",
-          "areaServed": "BD",
-          "availableLanguage": ["en", "bn"]
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
+        "name": "Connect with Bayezid",
+        "alternateName": "CWB",
+        "url": "https://connectbayezid-8dcdz46v.manus.space",
+        "sameAs": [
+          "https://www.connectwithbayezid.it.com",
+          "https://www.facebook.com/bayzeddme",
+          "https://www.crunchbase.com/organization/connect-with-bayezid"
+        ],
+        "logo": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+        "description": "Digital brand and business hub specializing in web development, AI integration, and innovative digital solutions",
+        "founder": {
+          "@type": "Person",
+          "name": "Sayad md Bayezid Hosan"
         },
-        {
-          "@type": "ContactPoint",
-          "contactType": "Business",
-          "email": "cwb.agency@outlook.com",
-          "telephone": "+8801519601517",
-          "areaServed": "BD",
-          "availableLanguage": ["en", "bn"]
-        }
-      ],
-      "knowsAbout": [
-        "Web Development",
-        "Web Design",
-        "Full Stack Development",
-        "React Development",
-        "JavaScript",
-        "Node.js",
-        "AI Integration",
-        "Machine Learning",
-        "Digital Marketing",
-        "Content Creation",
-        "Tech Entrepreneurship",
-        "QR Code Generation",
-        "Digital Infrastructure",
-        "Business Asset Management",
-        "Privacy Compliance",
-        "Technical Solutions",
-        "Digital Branding",
-        "E-commerce Solutions"
-      ],
-      "workLocation": {
-        "@type": "Place",
-        "name": "Auliabad, Kalihati, Tangail, Bangladesh",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "Auliabad",
@@ -922,214 +1338,84 @@
           "postalCode": "1970",
           "addressCountry": "BD"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 24.2155,
-          "longitude": 89.9271
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "cwb.agency@outlook.com",
+          "telephone": "+8801519601517",
+          "contactType": "Business"
         }
       },
-      "birthPlace": {
-        "@type": "Place",
-        "name": "Bangladesh"
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://sayadbayezid.com#webpage",
+        "url": "https://sayadbayezid.com",
+        "name": "Sayad md Bayezid Hosan | Full-stack Web Developer & Tech Provider",
+        "description": "Professional Full-stack Web Developer, Digital Marketer, and Web Designer. Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions.",
+        "isPartOf": {"@id": "https://sayadbayezid.com#website"},
+        "primaryImageOfPage": {"@id": "https://sayadbayezid.com#primaryimage"},
+        "image": {"@id": "https://sayadbayezid.com#primaryimage"},
+        "thumbnailUrl": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+        "datePublished": "2026-05-04",
+        "dateModified": "2026-05-04",
+        "author": {"@id": "https://sayadbayezid.com#person"},
+        "creator": {"@id": "https://sayadbayezid.com#person"},
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "mainEntity": {"@id": "https://sayadbayezid.com#person"}
       },
-      "nationality": "BD",
-      "educationLevel": "Undergraduate",
-      "hasCredential": [
-        {
-          "@type": "EducationalOccupationalCredential",
-          "name": "Bachelor of Arts - Department of English",
-          "issuingOrganization": {
-            "@type": "EducationalOrganization",
-            "name": "Northern University Bangladesh"
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://sayadbayezid.com#website",
+        "url": "https://sayadbayezid.com",
+        "name": "Sayad md Bayezid Hosan Portfolio",
+        "description": "Official portfolio and digital hub of Sayad md Bayezid Hosan",
+        "mainEntity": {"@id": "https://sayadbayezid.com#person"}
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sayadbayezid.com"
           },
-          "educationalLevel": "Undergraduate",
-          "credentialCategory": "Degree",
-          "url": "https://nub.edu.bd"
-        }
-      ],
-      "award": [
-        {
-          "@type": "Award",
-          "name": "98% Client Retention Rate",
-          "description": "Highest client satisfaction and retention in the digital services industry"
-        },
-        {
-          "@type": "Award",
-          "name": "2,200+ Happy Clients Worldwide",
-          "description": "Trusted by thousands of clients across multiple continents for innovative digital solutions"
-        }
-      ],
-      "hasOccupation": [
-        {
-          "@type": "Occupation",
-          "name": "Technology Entrepreneur",
-          "description": "Building and scaling digital brands with innovative business models"
-        },
-        {
-          "@type": "Occupation",
-          "name": "Web Developer",
-          "description": "Full-stack web development with modern technologies"
-        },
-        {
-          "@type": "Occupation",
-          "name": "AI Integration Specialist",
-          "description": "Integrating artificial intelligence into digital solutions"
-        },
-        {
-          "@type": "Occupation",
-          "name": "Digital Content Creator",
-          "description": "Creating educational content about technology and digital platforms"
-        },
-        {
-          "@type": "Occupation",
-          "name": "Technical Expert",
-          "description": "Providing permission-based technical solutions and consulting"
-        }
-      ],
-      "seeks": {
-        "@type": "Demand",
-        "businessFunction": "http://purl.org/goodrelations/v1#Consulting",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Web Development and AI Integration Services"
-        }
-      },
-      "memberOf": [
-        {
-          "@type": "Organization",
-          "name": "Northern University Bangladesh",
-          "url": "https://nub.edu.bd"
-        }
-      ],
-      "publishingPrinciples": "https://sayadbayezid.com",
-      "knowsLanguage": ["en", "bn"],
-      "relatedLink": [
-        "https://connectbayezid-8dcdz46v.manus.space",
-        "https://www.genzfrontir.com",
-        "https://qr.genzfrontir.com"
-      ],
-      "mainEntityOfPage": "https://sayadbayezid.com",
-      "potentialAction": {
-        "@type": "CommunicateAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://sayadbayezid.com#contact"
-        }
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About",
+            "item": "https://sayadbayezid.com#about"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Services",
+            "item": "https://sayadbayezid.com#services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Achievements",
+            "item": "https://sayadbayezid.com#achievements"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Projects",
+            "item": "https://sayadbayezid.com#projects"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "Contact",
+            "item": "https://sayadbayezid.com#contact"
+          }
+        ]
       }
-    }
-    </script>
-
-    <!-- Organization Schema for Connect with Bayezid -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
-      "name": "Connect with Bayezid",
-      "alternateName": "CWB",
-      "url": "https://connectbayezid-8dcdz46v.manus.space",
-      "sameAs": [
-        "https://www.connectwithbayezid.it.com",
-        "https://www.facebook.com/bayzeddme",
-        "https://www.crunchbase.com/organization/connect-with-bayezid"
-      ],
-      "logo": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-      "description": "Digital brand and business hub specializing in web development, AI integration, and innovative digital solutions",
-      "founder": {
-        "@type": "Person",
-        "name": "Sayad Md Bayezid Hosan"
-      },
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Auliabad",
-        "addressLocality": "Kalihati",
-        "addressRegion": "Tangail",
-        "postalCode": "1970",
-        "addressCountry": "BD"
-      },
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": "cwb.agency@outlook.com",
-        "telephone": "+8801519601517",
-        "contactType": "Business"
-      }
-    }
-    </script>
-
-    <!-- WebPage Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebPage",
-      "@id": "https://sayadbayezid.com#webpage",
-      "url": "https://sayadbayezid.com",
-      "name": "Sayad Md Bayezid Hosan | Technology Entrepreneur & Digital Creator",
-      "description": "Technology Entrepreneur, Tech Provider, and Digital Content Creator. Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions.",
-      "isPartOf": {"@id": "https://sayadbayezid.com#website"},
-      "primaryImageOfPage": {"@id": "https://sayadbayezid.com#primaryimage"},
-      "image": {"@id": "https://sayadbayezid.com#primaryimage"},
-      "thumbnailUrl": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-      "datePublished": "2026-05-04",
-      "dateModified": "2026-05-04",
-      "author": {"@id": "https://sayadbayezid.com#person"},
-      "creator": {"@id": "https://sayadbayezid.com#person"},
-      "inLanguage": "en",
-      "isAccessibleForFree": true,
-      "mainEntity": {"@id": "https://sayadbayezid.com#person"}
-    }
-    </script>
-
-    <!-- Website Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "@id": "https://sayadbayezid.com#website",
-      "url": "https://sayadbayezid.com",
-      "name": "Sayad Md Bayezid Hosan Portfolio",
-      "description": "Official portfolio and digital hub of Sayad Md Bayezid Hosan",
-      "mainEntity": {"@id": "https://sayadbayezid.com#person"}
-    }
-    </script>
-
-    <!-- BreadcrumbList Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Home",
-          "item": "https://sayadbayezid.com"
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "About",
-          "item": "https://sayadbayezid.com#about"
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Services",
-          "item": "https://sayadbayezid.com#services"
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "name": "Projects",
-          "item": "https://sayadbayezid.com#projects"
-        },
-        {
-          "@type": "ListItem",
-          "position": 5,
-          "name": "Contact",
-          "item": "https://sayadbayezid.com#contact"
-        }
-      ]
-    }
+    ]
     </script>
   </body>
 </html>
