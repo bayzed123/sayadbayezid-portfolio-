@@ -1,18 +1,23 @@
-# Robots.txt for Sayad Md Bayezid Hosan Portfolio
-# All Rights Reserved
+# robots.txt for sayadbayezid.com
+# This file tells search engines which pages to crawl and index
 
+# Allow all search engines to crawl the entire site
 User-agent: *
 Allow: /
-Allow: /assets/
-Allow: /sayadbayezid-portfolio-/
+Disallow: 
 
-# Disallow admin and private pages (if any)
-Disallow: /admin/
-Disallow: /private/
+# Specific rules for Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
 
-# Sitemap
-Sitemap: https://bayzed123.github.io/sayadbayezid-portfolio-/sitemap.xml
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Sitemap location
 Sitemap: https://sayadbayezid.com/sitemap.xml
 
-# Crawl delay
-Crawl-delay: 1
+# Comment: This robots.txt allows all search engines to crawl and index the entire website
+# The sitemap helps search engines discover all pages more efficiently
