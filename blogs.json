@@ -1,0 +1,37 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "Getting Started with Full-Stack Web Development",
+      "excerpt": "Learn the fundamentals of full-stack web development and how to build modern web applications from scratch. This guide covers frontend technologies, backend frameworks, and best practices.",
+      "content": "Full-stack web development involves building both the frontend and backend of web applications. In this article, we'll explore the essential technologies and practices you need to master.",
+      "category": "Web Development",
+      "date": "2026-05-11",
+      "author": "Sayad md Bayezid Hosan",
+      "image": "https://via.placeholder.com/400x200?text=Full-Stack+Development",
+      "link": "https://connectwithbayezid.blogspot.com"
+    },
+    {
+      "id": 2,
+      "title": "Digital Marketing Strategies for Tech Startups",
+      "excerpt": "Discover effective digital marketing strategies tailored for tech startups. From SEO to social media marketing, learn how to build your brand and reach your target audience.",
+      "content": "Digital marketing is crucial for tech startups to establish their presence and attract customers. This article covers various strategies including SEO, content marketing, and social media.",
+      "category": "Digital Marketing",
+      "date": "2026-05-10",
+      "author": "Sayad md Bayezid Hosan",
+      "image": "https://via.placeholder.com/400x200?text=Digital+Marketing",
+      "link": "https://connectwithbayezid.blogspot.com"
+    },
+    {
+      "id": 3,
+      "title": "The Future of AI Integration in Web Development",
+      "excerpt": "Explore how artificial intelligence is transforming web development. Learn about AI-powered tools, machine learning models, and how to integrate AI features into your web applications.",
+      "content": "Artificial intelligence is revolutionizing web development by automating tasks, improving user experiences, and enabling new capabilities. Discover the latest trends and technologies.",
+      "category": "AI & Technology",
+      "date": "2026-05-09",
+      "author": "Sayad md Bayezid Hosan",
+      "image": "https://via.placeholder.com/400x200?text=AI+Integration",
+      "link": "https://connectwithbayezid.blogspot.com"
+    }
+  ]
+}
