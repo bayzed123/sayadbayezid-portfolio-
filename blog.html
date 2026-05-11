@@ -337,6 +337,7 @@
                 <li><a href="/">Home</a></li>
                 <li><a href="/#about">About</a></li>
                 <li><a href="/#services">Services</a></li>
+                <li><a href="/#achievements">Achievements</a></li>
                 <li><a href="/#projects">Projects</a></li>
                 <li><a href="/blog.html">Blog</a></li>
                 <li><a href="/#contact">Contact</a></li>
@@ -350,6 +351,7 @@
             <div class="hero-content">
                 <h1>Blog & Insights</h1>
                 <p>Explore articles and insights on web development, digital marketing, tech entrepreneurship, and innovative digital solutions.</p>
+        
             </div>
         </div>
     </section>
@@ -380,6 +382,16 @@
     </footer>
 
     <script>
+        // Function to generate URL-friendly slug from title
+        function generateSlug(title) {
+            return title
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '') // Remove special characters
+                .replace(/\s+/g, '-') // Replace spaces with hyphens
+                .replace(/-+/g, '-'); // Replace multiple hyphens with single hyphen
+        }
+
         // Function to fetch and display blog posts
         async function loadBlogPosts() {
             const container = document.getElementById('blog-container');
@@ -418,6 +430,10 @@
                         day: 'numeric'
                     });
                     
+                    // Generate permalink using slug
+                    const slug = generateSlug(blog.title);
+                    const permalink = `/blog/${slug}.html`;
+                    
                     html += `
                         <div class="blog-card">
                             <img src="${blog.image || 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(blog.title)}" alt="${blog.title}" class="blog-image" />
@@ -428,7 +444,7 @@
                                 </div>
                                 <h3>${blog.title}</h3>
                                 <p>${blog.excerpt}</p>
-                                <a href="${blog.link || '#'}" class="blog-link">Read More →</a>
+                                <a href="${permalink}" class="blog-link">Read More →</a>
                             </div>
                         </div>
                     `;
