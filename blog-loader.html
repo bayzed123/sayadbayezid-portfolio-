@@ -493,11 +493,10 @@
             }
         }
 
-        // Function to extract slug from URL
-        function getSlugFromURL() {
-            const path = window.location.pathname;
-            const match = path.match(/\/blog\/(.+?)\.html$/);
-            return match ? match[1] : null;
+        // Function to get slug from query parameter
+        function getSlugFromQuery() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('post');
         }
 
         // Function to render blog post
@@ -571,7 +570,7 @@
 
         // Load and render blog post
         async function loadBlogPost() {
-            const slug = getSlugFromURL();
+            const slug = getSlugFromQuery();
             
             if (!slug) {
                 document.getElementById('content-container').innerHTML = `

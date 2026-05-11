@@ -136,11 +136,74 @@
         display: none;
         list-style: none;
         gap: 2rem;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(15, 20, 25, 0.95);
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      
+      nav ul.active {
+        display: flex;
       }
       
       @media (min-width: 768px) {
         nav ul {
-          display: flex;
+          display: flex !important;
+          position: static;
+          flex-direction: row;
+          background: none;
+          padding: 0;
+          border: none;
+        }
+      }
+      
+      nav ul li {
+        padding: 0.5rem 1.5rem;
+      }
+      
+      @media (min-width: 768px) {
+        nav ul li {
+          padding: 0;
+        }
+      }
+      
+      .menu-toggle {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem;
+      }
+      
+      .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      
+      .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(8px, 8px);
+      }
+      
+      .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+      
+      .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+      
+      @media (min-width: 768px) {
+        .menu-toggle {
+          display: none;
         }
       }
       
@@ -148,6 +211,13 @@
         font-size: 0.875rem;
         font-weight: 500;
         transition: color 0.3s ease;
+        display: block;
+      }
+      
+      @media (min-width: 768px) {
+        nav a {
+          display: inline;
+        }
       }
       
       /* Hero Section */
@@ -670,14 +740,19 @@
     <nav>
       <div class="container">
         <div class="logo">Bayezid<span>.</span></div>
-        <ul>
-   <li><a href="#about">About</a></li>
-   <li><a href="#services">Services</a></li>
-   <li><a href="#achievements">Achievements</a></li>
-   <li><a href="#projects">Projects</a></li>
-   <li><a href="/blog.html">Blog</a></li>
-   <li><a href="#contact">Contact</a></li>
-</ul>
+        <button class="menu-toggle" id="menuToggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul id="navMenu">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
       </div>
     </nav>
 
@@ -1451,6 +1526,35 @@
         ]
       }
     ]
+    </script>
+    
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+      
+      // Toggle menu on button click
+      menuToggle.addEventListener('click', function() {
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+      
+      // Close menu when a link is clicked
+      const navLinks = navMenu.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          menuToggle.classList.remove('active');
+          navMenu.classList.remove('active');
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('nav')) {
+          menuToggle.classList.remove('active');
+          navMenu.classList.remove('active');
+        }
+      });
     </script>
   </body>
 </html>

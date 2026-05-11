@@ -432,7 +432,7 @@
                     
                     // Generate permalink using slug
                     const slug = generateSlug(blog.title);
-                    const permalink = `/blog/${slug}.html`;
+                    const permalink = `/blog-loader.html?post=${slug}`;
                     
                     html += `
                         <div class="blog-card">
