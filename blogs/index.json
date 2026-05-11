@@ -1,0 +1,13 @@
+{
+  "blogs": [
+    {
+      "id": 1,
+      "title": "AI Video Generation Masterclass: Creating Cinematic Content from Text",
+      "excerpt": "Learn how AI video generation is transforming filmmaking and digital storytelling in 2026. Discover cinematic prompting, AI editing workflows, and advanced text-to-video creation strategies in this practical tutorial.",
+      "category": "AI Video Generation",
+      "date": "2026-05-12",
+      "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIFq6hHQP1501E6MT51qZYFMjLMfjYBfpd0IG_2n2gjuWKQVpCD0TXKskTekwnj_qDWozLH_sXjRTzKGmUNziCqhEhv1uSipZp3Me8A2tS58CkuzgRiRC71I3YjBXtq-OOWddGTgGzy2WwLkhY1XRc6WxC7PhuEbhEoUR5bSLDzx9rHnYHgt8iIfPcQSGI/s2560/ai_video_mega_guide_thumbnail.png",
+      "slug": "ai-video-generation-masterclass-creating-cinematic-content-from-text"
+    }
+  ]
+}

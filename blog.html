@@ -397,8 +397,8 @@
             const container = document.getElementById('blog-container');
             
             try {
-                // Fetch the blogs.json file from the root of the repository
-                const response = await fetch('/blogs.json');
+                // Fetch the blogs/index.json file from the blogs folder
+                const response = await fetch('/blogs/index.json');
                 
                 if (!response.ok) {
                     throw new Error('Failed to load blog posts');

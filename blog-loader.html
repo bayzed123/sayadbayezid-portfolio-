@@ -476,16 +476,13 @@
         // Function to find blog post by slug
         async function findBlogBySlug(slug) {
             try {
-                const response = await fetch('/blogs.json');
+                // Fetch the individual blog file directly
+                const response = await fetch(`/blogs/${slug}.json`);
                 if (!response.ok) {
-                    throw new Error('Failed to load blogs');
+                    throw new Error('Failed to load blog post');
                 }
                 
-                const data = await response.json();
-                const blogs = data.blogs || [];
-                
-                // Find blog matching the slug
-                const blog = blogs.find(b => generateSlug(b.title) === slug);
+                const blog = await response.json();
                 return blog;
             } catch (error) {
                 console.error('Error finding blog:', error);
