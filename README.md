@@ -261,6 +261,16 @@ If you use this portfolio, please keep the footer credit to help others discover
 
 If you find this portfolio and blog system helpful, consider supporting its development. Your appreciation keeps the project alive and free for everyone!
 
+<div align="left">
+  <a href="https://www.paypal.me/connectwithbayezid" target="_blank">
+    <img src="https://raw.githubusercontent.com/bayzed123/sayadbayezid-portfolio-/main/assets/images/paypal_logo.png" width="150" alt="Support via PayPal">
+  </a>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.payoneer.com/" target="_blank">
+    <img src="https://raw.githubusercontent.com/bayzed123/sayadbayezid-portfolio-/main/assets/images/payoneer_logo.png" width="150" alt="Support via Payoneer">
+  </a>
+</div>
+
 *   **PayPal:** [@connectwithbayezid](https://www.paypal.me/connectwithbayezid)
 *   **Payoneer:** `cwb.agency@outlook.com`
 
