@@ -1,0 +1,13 @@
+{
+  "blogs": [
+    {
+      "id": 1778550098,
+      "title": "Data Analytics for Beginners: Mastering Google Analytics 4 & Looker Studio",
+      "excerpt": "A beginner's masterclass in data analytics. Learn to master Google Analytics 4 (GA4) and build powerful dashboards with Looker Studio in 2026.",
+      "category": "General",
+      "date": "2026-05-11",
+      "image": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+      "slug": "data-analytics-for-beginners-mastering-google-analytics-4-looker-studio"
+    }
+  ]
+}
