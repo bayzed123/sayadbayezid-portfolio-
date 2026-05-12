@@ -168,27 +168,9 @@ class I18n {
     const nav = document.querySelector('nav');
     if (!nav) return;
 
-    // Check if switcher already exists
-    if (document.getElementById('languageSwitcher')) return;
-
-    const switcherHTML = `
-      <li class="lang-switcher-item">
-        <div class="language-switcher" id="languageSwitcher">
-          <button class="lang-btn" data-lang="en" title="English">EN</button>
-          <button class="lang-btn" data-lang="es" title="Español">ES</button>
-          <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
-        </div>
-      </li>
-    `;
-
-    // Insert switcher into the navigation menu list
-    const navMenu = document.getElementById('navMenu');
-    if (navMenu) {
-      navMenu.insertAdjacentHTML('beforeend', switcherHTML);
-    }
-
-    // Add event listeners
-    document.querySelectorAll('.lang-btn').forEach(btn => {
+    // Add event listeners to hardcoded buttons
+    const langBtns = document.querySelectorAll('.lang-btn');
+    langBtns.forEach(btn => {
       btn.addEventListener('click', (e) => {
         const lang = e.target.getAttribute('data-lang');
         this.applyLanguage(lang);
@@ -198,9 +180,6 @@ class I18n {
 
     // Set initial active button
     this.updateActiveLangBtn();
-
-    // Add CSS for language switcher
-    this.addLanguageSwitcherStyles();
   }
 
   /**
