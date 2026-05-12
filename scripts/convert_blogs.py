@@ -76,12 +76,16 @@ def process_html_file(file_path):
     return blog_data
 
 def main():
-    upload_dir = 'blog_uploads'
+    # Updated to process HTML files from blogs directory
     blogs_dir = 'blogs'
-    index_path = os.path.join(blogs_dir, 'index.json')
+    json_dir = os.path.join(blogs_dir, 'json')
+    index_path = os.path.join(json_dir, 'index.json')
     
+    # Create directories if they don't exist
     if not os.path.exists(blogs_dir):
         os.makedirs(blogs_dir)
+    if not os.path.exists(json_dir):
+        os.makedirs(json_dir)
         
     if not os.path.exists(index_path):
         with open(index_path, 'w') as f:
@@ -92,15 +96,16 @@ def main():
     
     new_blogs_added = False
     
-    for filename in os.listdir(upload_dir):
+    # Process all HTML files in the blogs directory
+    for filename in os.listdir(blogs_dir):
         if filename.endswith('.html'):
-            file_path = os.path.join(upload_dir, filename)
+            file_path = os.path.join(blogs_dir, filename)
             blog_data = process_html_file(file_path)
             
             if blog_data:
                 slug = generate_slug(blog_data['title'])
                 json_filename = f"{slug}.json"
-                json_path = os.path.join(blogs_dir, json_filename)
+                json_path = os.path.join(json_dir, json_filename)
                 
                 # Save individual JSON
                 with open(json_path, 'w', encoding='utf-8') as f:
@@ -135,9 +140,6 @@ def main():
                 
                 new_blogs_added = True
                 print(f"Processed: {filename} -> {json_filename}")
-                
-                # Optional: Remove the HTML file after processing
-                # os.remove(file_path)
     
     if new_blogs_added:
         # Sort index by date
@@ -145,6 +147,8 @@ def main():
         with open(index_path, 'w', encoding='utf-8') as f:
             json.dump(index_data, f, indent=2, ensure_ascii=False)
         print("Updated index.json")
+    else:
+        print("No new HTML files found to process.")
 
 if __name__ == "__main__":
     main()
