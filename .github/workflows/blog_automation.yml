@@ -14,6 +14,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          # Explicitly check out the 'main' branch (update 'main' if your branch name is different)
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -33,4 +36,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add blogs/
           git commit -m "Auto-convert HTML blog to JSON [skip ci]" || echo "No changes to commit"
-          git push origin HEAD:${{ github.ref_name }}
+          # Explicitly push to the 'main' branch (update 'main' if your branch name is different)
+          git push origin HEAD:main
