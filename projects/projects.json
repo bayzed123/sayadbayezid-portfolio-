@@ -3,8 +3,13 @@
     {
       "id": 1,
       "title": "AI WhatsApp Automation (Fijian Client)",
-      "description": "A full-fledged 24/7 AI customer service system. It seamlessly automates orders, processes voice/image messages, and tracks IDs to boost sales and eliminate hours of manual work. Built for a $1,600+ high-value business outcome.",
+      "description": "The ultimate 2026 WhatsApp API Mega Guide. A full-fledged 24/7 AI customer service system that automates orders, processes voice/image messages, and tracks IDs. Built for high-value business outcomes.",
       "video_url": "https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov",
+      "link": "https://connectwithbayezid.blogspot.com/2026/05/the-ultimate-2026-whatsapp-api_8.html?m=1",
+      "audio_links": [
+        { "title": "Mega Guide Part 1", "url": "https://raw.githubusercontent.com/Sayadbayezid/WhatsappApi-workflow-Connect-with-Bayezid-/main/whatsapp_api_mega_guide_part1.mp3" },
+        { "title": "Mega Guide Part 2", "url": "https://raw.githubusercontent.com/Sayadbayezid/WhatsappApi-workflow-Connect-with-Bayezid-/main/whatsapp_api_mega_guide_part2.mp3" }
+      ],
       "tags": ["AI Chatbot", "WhatsApp API", "Business Automation"],
       "is_latest": false
     },
