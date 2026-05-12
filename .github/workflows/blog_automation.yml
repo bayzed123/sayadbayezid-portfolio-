@@ -13,9 +13,10 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
+        # Ensure you're working directly on the `main` branch
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          ref: main
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -31,10 +32,13 @@ jobs:
 
       - name: Commit and push changes
         run: |
+          # Configure Git user information
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+
+          # Add and commit blog changes
           git add blogs/
           git commit -m "Auto-convert HTML blog to JSON [skip ci]" || echo "No changes to commit"
-          # Pull the latest changes from the remote main branch before pushing
-          git pull --rebase origin main
+
+          # Push changes explicitly to the `main` branch
           git push origin main
