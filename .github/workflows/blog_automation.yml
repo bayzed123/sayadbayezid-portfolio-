@@ -35,4 +35,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git add blogs/
           git commit -m "Auto-convert HTML blog to JSON [skip ci]" || echo "No changes to commit"
+          # Pull the latest changes from the remote main branch before pushing
+          git pull --rebase origin main
           git push origin main
