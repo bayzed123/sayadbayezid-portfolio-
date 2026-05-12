@@ -1,16 +1,7 @@
 {
   "blogs": [
     {
-      "id": 1,
-      "title": "AI Video Generation Masterclass: Creating Cinematic Content from Text",
-      "excerpt": "Learn how AI video generation is transforming filmmaking and digital storytelling in 2026. Discover cinematic prompting, AI editing workflows, and advanced text-to-video creation strategies in this practical tutorial.",
-      "category": "AI Video Generation",
-      "date": "2026-05-12",
-      "image": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIFq6hHQP1501E6MT51qZYFMjLMfjYBfpd0IG_2n2gjuWKQVpCD0TXKskTekwnj_qDWozLH_sXjRTzKGmUNziCqhEhv1uSipZp3Me8A2tS58CkuzgRiRC71I3YjBXtq-OOWddGTgGzy2WwLkhY1XRc6WxC7PhuEbhEoUR5bSLDzx9rHnYHgt8iIfPcQSGI/s2560/ai_video_mega_guide_thumbnail.png",
-      "slug": "ai-video-generation-masterclass-creating-cinematic-content-from-text"
-    },
-    {
-      "id": 1778560209,
+      "id": 1778563508,
       "title": "Data Analytics for Beginners: Mastering Google Analytics 4 & Looker Studio",
       "excerpt": "A beginner's masterclass in data analytics. Learn to master Google Analytics 4 (GA4) and build powerful dashboards with Looker Studio in 2026.",
       "category": "General",
@@ -19,16 +10,7 @@
       "slug": "data-analytics-for-beginners-mastering-google-analytics-4-looker-studio"
     },
     {
-      "id": 1778560209,
-      "title": "YouTube Monetization, Algorithm & SEO: The Ultimate 2026 Mega-Guide for Creators",
-      "excerpt": "Master YouTube monetization, understand the 2026 algorithm, and boost your channel's SEO with this 10,000+ word ultimate guide. Solve policy violations, increase CTR, and grow your earnings.",
-      "category": "General",
-      "date": "2026-05-12",
-      "image": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-      "slug": "youtube-monetization-algorithm-seo-the-ultimate-2026-mega-guide-for-creators"
-    },
-    {
-      "id": 1778561750,
+      "id": 1778563508,
       "title": "Unveiling the Digital Ecosystem: A Deep Dive into Sayad Md Bayezid Hosan's Portfolio Repository",
       "excerpt": "",
       "category": "General",
@@ -37,13 +19,13 @@
       "slug": "unveiling-the-digital-ecosystem-a-deep-dive-into-sayad-md-bayezid-hosans-portfolio-repository"
     },
     {
-      "id": 8,
-      "title": "Tech Finance 101: Understanding Digital Wallets & Secure P2P Transactions",
-      "excerpt": "A beginner-friendly guide to tech finance. Learn about digital wallet security, secure P2P trading, and safe digital transactions in 2026.",
-      "category": "Tech Finance",
-      "date": "2026-05-01",
+      "id": 1778563508,
+      "title": "YouTube Monetization, Algorithm & SEO: The Ultimate 2026 Mega-Guide for Creators",
+      "excerpt": "Master YouTube monetization, understand the 2026 algorithm, and boost your channel's SEO with this 10,000+ word ultimate guide. Solve policy violations, increase CTR, and grow your earnings.",
+      "category": "General",
+      "date": "2026-05-12",
       "image": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-      "slug": "tech-finance-101-understanding-digital-wallets-secure-p2p-transactions"
+      "slug": "youtube-monetization-algorithm-seo-the-ultimate-2026-mega-guide-for-creators"
     }
   ]
 }

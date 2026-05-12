@@ -585,12 +585,34 @@
             
             // Render blog content
             let contentHTML = `<div class="blog-content">`;
+
+            // Add Table of Contents if available
+            if (blog.toc && blog.toc.length > 0) {
+                contentHTML += `
+                    <div class="toc" style="background: rgba(0, 217, 255, 0.05); padding: 1.5rem; border-radius: 0.5rem; margin-bottom: 2rem; border: 1px solid var(--border-color);">
+                        <h3 style="margin-top: 0; font-size: 1.2rem; margin-bottom: 1rem; color: var(--primary);">Table of Contents</h3>
+                        <ul style="list-style: none; margin-left: 0;">
+                            ${blog.toc.map(item => `<li style="margin-bottom: 0.5rem;"><a href="#${item.id}" style="color: var(--text-secondary); font-size: 0.95rem;">${item.text}</a></li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
             
             // Convert markdown-like content to HTML and make links clickable
             const contentLines = blog.content.split('\n\n');
             contentLines.forEach(line => {
-                if (line.trim()) {
-                    contentHTML += `<p>${linkify(line.trim())}</p>`;
+                let trimmed = line.trim();
+                if (trimmed) {
+                    if (trimmed.startsWith('[[SECTION_ID:')) {
+                        const sectionId = trimmed.match(/\[\[SECTION_ID:(.+)\]\]/)[1];
+                        contentHTML += `<div id="${sectionId}"></div>`;
+                    } else if (trimmed.startsWith('### ')) {
+                        contentHTML += `<h3>${linkify(trimmed.substring(4))}</h3>`;
+                    } else if (trimmed.startsWith('## ')) {
+                        contentHTML += `<h2>${linkify(trimmed.substring(3))}</h2>`;
+                    } else {
+                        contentHTML += `<p>${linkify(trimmed)}</p>`;
+                    }
                 }
             });
             
@@ -611,10 +633,15 @@
                 contentHTML += `
                     <div class="faq-section">
                         <h3>Frequently Asked Questions</h3>
-                        ${blog.faq.map(item => `
-                            <div class="faq-item">
-                                <div class="faq-question">${linkify(item.question)}</div>
-                                <div class="faq-answer">${linkify(item.answer)}</div>
+                        ${blog.faq.map((item, index) => `
+                            <div class="faq-item" style="margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 0.5rem; overflow: hidden;">
+                                <div class="faq-question" onclick="toggleFaq(${index})" style="background: rgba(0, 217, 255, 0.05); padding: 1rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--primary);">
+                                    <span>${linkify(item.question)}</span>
+                                    <span id="faq-icon-${index}">+</span>
+                                </div>
+                                <div id="faq-answer-${index}" class="faq-answer" style="display: none; padding: 1rem; border-top: 1px solid var(--border-color); color: var(--text-secondary); line-height: 1.6;">
+                                    ${linkify(item.answer)}
+                                </div>
                             </div>
                         `).join('')}
                     </div>
@@ -713,6 +740,19 @@
             }
             
             renderBlogPost(blog);
+        }
+
+        // Function to toggle FAQ accordion
+        function toggleFaq(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.getElementById(`faq-icon-${index}`);
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+                icon.textContent = '-';
+            } else {
+                answer.style.display = 'none';
+                icon.textContent = '+';
+            }
         }
 
         // Load blog post when page loads

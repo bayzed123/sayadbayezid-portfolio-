@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import markdown
 from bs4 import BeautifulSoup
 from datetime import datetime
 
@@ -27,6 +28,16 @@ def process_html_file(file_path):
         meta_desc = soup.find('meta', attrs={'name': 'description'})
         excerpt = meta_desc['content'] if meta_desc else ""
         
+        # Extract Table of Contents
+        toc = []
+        toc_section = soup.find('section', class_='toc')
+        if toc_section:
+            for link in toc_section.find_all('a'):
+                toc.append({
+                    "text": link.get_text().strip(),
+                    "id": link.get('href', '').replace('#', '')
+                })
+        
         # Extract content
         content_parts = []
         # Try to find main content areas
@@ -35,25 +46,31 @@ def process_html_file(file_path):
             sections = [soup.body] if soup.body else [soup]
             
         for section in sections:
-            for p in section.find_all(['p', 'h2', 'h3', 'li', 'blockquote']):
-                # Avoid duplicate text from nested elements
-                if p.parent.name in ['p', 'li', 'blockquote']:
+            # We want to preserve IDs for TOC links
+            for elem in section.find_all(['p', 'h2', 'h3', 'li', 'blockquote', 'section']):
+                if elem.name == 'section' and elem.get('id'):
+                    # We'll use a marker for section IDs
+                    content_parts.append(f"[[SECTION_ID:{elem.get('id')}]]")
+                    continue
+                
+                if elem.parent.name in ['p', 'li', 'blockquote']:
                     continue
                 
                 # Convert <a> tags to text with URL if they aren't already URLs
-                for a in p.find_all('a'):
+                for a in elem.find_all('a'):
                     href = a.get('href', '')
-                    if href and a.get_text().strip() != href:
-                        # If the text is not the same as the link, we can append the link in brackets
-                        # or just ensure the link is present. Given the user's request, 
-                        # they want links to work. The renderer now auto-links URLs.
-                        # So we can just append the URL if it's not already there.
+                    if href and a.get_text().strip() != href and not href.startswith('#'):
                         if href not in a.get_text():
                             a.append(f" ({href})")
                 
-                text = p.get_text().strip()
+                text = elem.get_text().strip()
                 if text:
-                    content_parts.append(text)
+                    if elem.name == 'h2':
+                        content_parts.append(f"## {text}")
+                    elif elem.name == 'h3':
+                        content_parts.append(f"### {text}")
+                    else:
+                        content_parts.append(text)
         
         content = "\n\n".join(content_parts)
         
@@ -62,10 +79,9 @@ def process_html_file(file_path):
         accordions = soup.find_all(['button', 'div'], class_='accordion')
         panels = soup.find_all('div', class_='panel')
         for acc, panel in zip(accordions, panels):
-            # Process links in answer
             for a in panel.find_all('a'):
                 href = a.get('href', '')
-                if href and a.get_text().strip() != href:
+                if href and a.get_text().strip() != href and not href.startswith('#'):
                     if href not in a.get_text():
                         a.append(f" ({href})")
             
@@ -86,7 +102,8 @@ def process_html_file(file_path):
             "title": title,
             "excerpt": excerpt,
             "content": content,
-            "category": "General", # Default
+            "toc": toc,
+            "category": "General",
             "date": date,
             "author": "Sayad Md Bayezid Hosan",
             "image": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
@@ -94,6 +111,59 @@ def process_html_file(file_path):
             "faq": faq
         }
         
+        return blog_data
+    except Exception as e:
+        print(f"Error processing {file_path}: {e}")
+        return None
+
+def process_md_file(file_path):
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            text = f.read()
+        
+        # Parse frontmatter if exists, otherwise use simple parsing
+        title = "Untitled Blog"
+        excerpt = ""
+        tags = []
+        content = text
+        
+        # Simple title extraction from first # header
+        title_match = re.search(r'^#\s+(.+)$', text, re.MULTILINE)
+        if title_match:
+            title = title_match.group(1).strip()
+            content = text.replace(title_match.group(0), "", 1).strip()
+        
+        # Extract excerpt (first paragraph)
+        paragraphs = [p for p in content.split('\n\n') if p.strip() and not p.strip().startswith('#')]
+        if paragraphs:
+            excerpt = paragraphs[0][:160] + "..." if len(paragraphs[0]) > 160 else paragraphs[0]
+        
+        # Generate TOC from headers
+        toc = []
+        headers = re.findall(r'^(##|###)\s+(.+)$', content, re.MULTILINE)
+        for level, header_text in headers:
+            header_id = header_text.lower().strip().replace(' ', '-')
+            header_id = re.sub(r'[^\w-]', '', header_id)
+            toc.append({
+                "text": header_text.strip(),
+                "id": header_id
+            })
+            # Add ID markers to content
+            content = content.replace(f"{level} {header_text}", f"[[SECTION_ID:{header_id}]]\n{level} {header_text}")
+
+        blog_data = {
+            "id": int(datetime.now().timestamp()),
+            "title": title,
+            "excerpt": excerpt,
+            "content": content,
+            "toc": toc,
+            "category": "General",
+            "date": datetime.now().strftime('%Y-%m-%d'),
+            "author": "Sayad Md Bayezid Hosan",
+            "image": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+            "tags": [],
+            "faq": []
+        }
         return blog_data
     except Exception as e:
         print(f"Error processing {file_path}: {e}")
@@ -134,51 +204,54 @@ def main():
             
     new_blogs_added = False
     
-    # Process all HTML files in the uploads directory
+    # Process all HTML and MD files in the uploads directory
     if os.path.exists(uploads_dir):
         for filename in os.listdir(uploads_dir):
+            blog_data = None
+            file_path = os.path.join(uploads_dir, filename)
             if filename.endswith('.html'):
-                file_path = os.path.join(uploads_dir, filename)
                 blog_data = process_html_file(file_path)
+            elif filename.endswith('.md'):
+                blog_data = process_md_file(file_path)
+            
+            if blog_data:
+                slug = generate_slug(blog_data['title'])
+                json_filename = f"{slug}.json"
+                json_path = os.path.join(blogs_dir, json_filename)
                 
-                if blog_data:
-                    slug = generate_slug(blog_data['title'])
-                    json_filename = f"{slug}.json"
-                    json_path = os.path.join(blogs_dir, json_filename)
-                    
-                    # Save individual JSON
-                    with open(json_path, 'w', encoding='utf-8') as f:
-                        json.dump(blog_data, f, indent=2, ensure_ascii=False)
-                    
-                    # Update index
-                    exists = False
-                    for i, b in enumerate(index_data['blogs']):
-                        if b['slug'] == slug:
-                            index_data['blogs'][i] = {
-                                "id": b.get("id", blog_data["id"]), # Keep original ID if exists
-                                "title": blog_data["title"],
-                                "excerpt": blog_data["excerpt"],
-                                "category": blog_data["category"],
-                                "date": blog_data["date"],
-                                "image": blog_data["image"],
-                                "slug": slug
-                            }
-                            exists = True
-                            break
-                    
-                    if not exists:
-                        index_data['blogs'].append({
-                            "id": blog_data["id"],
+                # Save individual JSON
+                with open(json_path, 'w', encoding='utf-8') as f:
+                    json.dump(blog_data, f, indent=2, ensure_ascii=False)
+                
+                # Update index
+                exists = False
+                for i, b in enumerate(index_data['blogs']):
+                    if b['slug'] == slug:
+                        index_data['blogs'][i] = {
+                            "id": b.get("id", blog_data["id"]), # Keep original ID if exists
                             "title": blog_data["title"],
                             "excerpt": blog_data["excerpt"],
                             "category": blog_data["category"],
                             "date": blog_data["date"],
                             "image": blog_data["image"],
                             "slug": slug
-                        })
-                    
-                    new_blogs_added = True
-                    print(f"Processed: {filename} -> {json_filename}")
+                        }
+                        exists = True
+                        break
+                
+                if not exists:
+                    index_data['blogs'].append({
+                        "id": blog_data["id"],
+                        "title": blog_data["title"],
+                        "excerpt": blog_data["excerpt"],
+                        "category": blog_data["category"],
+                        "date": blog_data["date"],
+                        "image": blog_data["image"],
+                        "slug": slug
+                    })
+                
+                new_blogs_added = True
+                print(f"Processed: {filename} -> {json_filename}")
     
     if new_blogs_added:
         # Sort index by date (newest first)
