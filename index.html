@@ -110,13 +110,16 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        margin-bottom: 20px;
+        margin-top: 30px;
+        margin-bottom: 10px;
         background: rgba(255, 255, 255, 0.05);
         padding: 10px 15px;
         border-radius: 50px;
         width: fit-content;
         border: 1px solid var(--border-color);
         transition: all 0.3s ease;
+        z-index: 10;
+        position: relative;
       }
 
       .music-control-container:hover {
@@ -902,6 +905,20 @@
               <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" data-i18n="hero.exploreWork">Explore My Work</button>
               <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" data-i18n="hero.getInTouch">Get in Touch</button>
             </div>
+            
+            <!-- Music Control Moved to Hero -->
+            <div class="music-control-container">
+              <button id="music-toggle" class="music-btn" title="Toggle Background Music">
+                <span id="music-icon">▶</span>
+              </button>
+              <span class="music-text" id="music-status">Play Background Music</span>
+              <div class="music-visualizer" id="music-visualizer">
+                <div class="music-bar paused"></div>
+                <div class="music-bar paused"></div>
+                <div class="music-bar paused"></div>
+                <div class="music-bar paused"></div>
+              </div>
+            </div>
           </div>
           <div class="hero-image">
             <img src="https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png" alt="Sayad md Bayezid Hosan - Full-stack Web Developer" />
@@ -932,19 +949,6 @@
     <!-- About Section -->
     <section class="about" id="about">
       <div class="container">
-        <!-- Music Control -->
-        <div class="music-control-container">
-          <button id="music-toggle" class="music-btn" title="Toggle Background Music">
-            <span id="music-icon">▶</span>
-          </button>
-          <span class="music-text" id="music-status">Play Background Music</span>
-          <div class="music-visualizer" id="music-visualizer">
-            <div class="music-bar paused"></div>
-            <div class="music-bar paused"></div>
-            <div class="music-bar paused"></div>
-            <div class="music-bar paused"></div>
-          </div>
-        </div>
         <h2 class="section-title" data-i18n="about.title">About Me</h2>
         <div class="about-content">
           <div class="about-text">
