@@ -53,6 +53,7 @@ This portfolio website features a dynamic and automated blog system designed for
 *   **Clickable Links:** All URLs embedded within blog post content and FAQ sections are automatically detected and rendered as clickable hyperlinks, improving navigability.
 *   **Dynamic Table of Contents (TOC):** Blog posts are equipped with an automatically generated Table of Contents, allowing readers to quickly navigate through sections. For HTML-based posts, the TOC is extracted from a designated section; for Markdown posts, it's generated from `##` and `###` headers.
 *   **Interactive FAQ Accordions:** Frequently Asked Questions are presented in an interactive accordion format, enhancing readability and user engagement.
+*   **Embedded Video Support:** Automatically detects video URLs (`.mp4`, `.mov`, `.webm`, `.ogg`, `.avi`, `.mkv`) in your blog posts and renders them as interactive video players with full browser compatibility and proper MIME type handling.
 
 ## Blog System Workflow
 
@@ -61,6 +62,7 @@ To publish a new blog post or update an existing one, follow these steps:
 1.  **Prepare Your Blog Post:** Create your blog content in either HTML or Markdown (`.md`) format.
     *   **HTML:** Place your `.html` file (e.g., `my-blog-post.html`) in the [`blog_uploads/`](blog_uploads/) directory. Ensure proper HTML structure, including `<h1>` for the title, `<meta name="description">` for the excerpt, `<section class="toc">` for the Table of Contents, and `<button class="accordion">` / `<div class="panel">` for FAQs.
     *   **Markdown:** Place your `.md` file (e.g., `my-markdown-post.md`) in the [`blog_uploads/`](blog_uploads/) directory. Use `#` for the main title, `##` for primary sections, and `###` for sub-sections. The system will automatically generate a TOC from `##` and `###` headers.
+    *   **Videos:** Simply include video URLs (e.g., `https://example.com/video.mov`) anywhere in your blog content. The system will automatically detect and render them as interactive video players.
 
 2.  **Commit and Push:** Commit your new or updated file to the `main` branch of this repository.
 

@@ -149,6 +149,11 @@ When creating Markdown blog posts in [`blog_uploads/`](../blog_uploads/), follow
     > A: Your answer here.
     ```
 
+*   **Videos:** Embed videos by including their URLs directly in your content. Supported formats include `.mp4`, `.mov`, `.webm`, `.ogg`, `.avi`, and `.mkv`. The system will automatically detect these URLs and render them as interactive video players.
+    ```markdown
+    Check out this tutorial: https://example.com/tutorial.mov
+    ```
+
 **Example Markdown Blog Post:**
 ```markdown
 # Getting Started with Web Development

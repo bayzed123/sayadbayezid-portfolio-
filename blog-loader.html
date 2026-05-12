@@ -561,15 +561,29 @@
             
             return text.replace(urlPattern, function(url) {
                 // Check if the URL is a video file
-                const videoExtensions = ['.mp4', '.mov', '.webm', '.ogg'];
+                const videoExtensions = ['.mp4', '.mov', '.webm', '.ogg', '.avi', '.mkv'];
                 const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext) || url.toLowerCase().includes(ext + '?'));
                 
                 if (isVideo) {
+                    // Determine the correct MIME type based on file extension
+                    let mimeType = 'video/mp4';
+                    if (url.toLowerCase().includes('.mov')) {
+                        mimeType = 'video/quicktime';
+                    } else if (url.toLowerCase().includes('.webm')) {
+                        mimeType = 'video/webm';
+                    } else if (url.toLowerCase().includes('.ogg')) {
+                        mimeType = 'video/ogg';
+                    } else if (url.toLowerCase().includes('.avi')) {
+                        mimeType = 'video/x-msvideo';
+                    } else if (url.toLowerCase().includes('.mkv')) {
+                        mimeType = 'video/x-matroska';
+                    }
+                    
                     return `
-                        <div class="video-container" style="margin: 1.5rem 0; border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); background: #000;">
-                            <video controls style="width: 100%; display: block; max-height: 500px;">
-                                <source src="${url}" type="video/mp4">
-                                Your browser does not support the video tag.
+                        <div class="video-container" style="margin: 2rem 0; border-radius: 0.75rem; overflow: hidden; border: 2px solid var(--primary); background: #000; box-shadow: 0 4px 15px rgba(0, 217, 255, 0.2);">
+                            <video controls controlsList="nodownload" style="width: 100%; display: block; min-height: 300px; background: #000;" preload="metadata">
+                                <source src="${url}" type="${mimeType}">
+                                <p style="padding: 2rem; color: var(--text-secondary);">Your browser does not support the video tag. Please download the video: <a href="${url}" target="_blank" style="color: var(--primary);">Download Video</a></p>
                             </video>
                         </div>
                     `;
