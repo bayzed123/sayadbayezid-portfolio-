@@ -15,7 +15,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
-          # Explicitly check out the 'main' branch (update 'main' if your branch name is different)
           ref: main
 
       - name: Set up Python
@@ -36,5 +35,9 @@ jobs:
           git config --local user.name "GitHub Action"
           git add blogs/
           git commit -m "Auto-convert HTML blog to JSON [skip ci]" || echo "No changes to commit"
-          # Explicitly push to the 'main' branch (update 'main' if your branch name is different)
           git push origin HEAD:main
+
+      - name: Create and push a version tag
+        run: |
+          git tag v01.01.01  # Replace `v01.01.01` with the desired version dynamically if you want
+          git push origin v01.01.01
