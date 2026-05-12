@@ -2,6 +2,20 @@
   "projects": [
     {
       "id": 1,
+      "title": "Tiny Tales: The Lifetime Baby Archive",
+      "description": "The Digital Baby Diary is the ultimate website template to help you perfectly preserve your precious memories. With a beautifully crafted design, secure layout, and a structured timeline, this product is the key to keeping your favorite moments safe forever.",
+      "link": "https://bayezaarch-7cx7fyrv.manus.space",
+      "images": [
+        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/KMFZpymAutTMARfP.webp",
+        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/STbchwOKVplNMvUo.webp",
+        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/qbvZbJtFCknxOqZj.webp",
+        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/gyhvnSgRhkoxfdrl.webp"
+      ],
+      "tags": ["Baby Archive", "Memory Storage", "Digital Diary"],
+      "is_latest": false
+    },
+    {
+      "id": 6,
       "title": "AI WhatsApp Automation (Fijian Client)",
       "description": "The ultimate 2026 WhatsApp API Mega Guide. A full-fledged 24/7 AI customer service system that automates orders, processes voice/image messages, and tracks IDs. Built for high-value business outcomes.",
       "video_url": "https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov",
@@ -39,16 +53,10 @@
     },
     {
       "id": 5,
-      "title": "Tiny Tales: The Lifetime Baby Archive",
-      "description": "The Digital Baby Diary is the ultimate website template to help you perfectly preserve your precious memories. With a beautifully crafted design, secure layout, and a structured timeline, this product is the key to keeping your favorite moments safe forever.",
-      "link": "https://bayezaarch-7cx7fyrv.manus.space",
-      "images": [
-        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/KMFZpymAutTMARfP.webp",
-        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/STbchwOKVplNMvUo.webp",
-        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/qbvZbJtFCknxOqZj.webp",
-        "https://files.manuscdn.com/user_upload_by_module/session_file/310519663651640858/gyhvnSgRhkoxfdrl.webp"
-      ],
-      "tags": ["Baby Archive", "Memory Storage", "Digital Diary"],
+      "title": "Premium Full-Stack Web Project",
+      "description": "A comprehensive full-stack web development project showcasing modern UI/UX design principles, responsive layouts, and premium styling. This project demonstrates meticulous digital visual craftsmanship with smooth animations, hover effects, and a professional color scheme inspired by industry leaders like Trexalab.",
+      "video_url": "./assets/videos/latest_project.mp4",
+      "tags": ["Full-Stack Web", "UI/UX Design", "Premium Styling"],
       "is_latest": true
     }
   ]
