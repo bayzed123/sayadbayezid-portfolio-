@@ -39,6 +39,18 @@ def process_html_file(file_path):
                 # Avoid duplicate text from nested elements
                 if p.parent.name in ['p', 'li', 'blockquote']:
                     continue
+                
+                # Convert <a> tags to text with URL if they aren't already URLs
+                for a in p.find_all('a'):
+                    href = a.get('href', '')
+                    if href and a.get_text().strip() != href:
+                        # If the text is not the same as the link, we can append the link in brackets
+                        # or just ensure the link is present. Given the user's request, 
+                        # they want links to work. The renderer now auto-links URLs.
+                        # So we can just append the URL if it's not already there.
+                        if href not in a.get_text():
+                            a.append(f" ({href})")
+                
                 text = p.get_text().strip()
                 if text:
                     content_parts.append(text)
@@ -50,6 +62,13 @@ def process_html_file(file_path):
         accordions = soup.find_all(['button', 'div'], class_='accordion')
         panels = soup.find_all('div', class_='panel')
         for acc, panel in zip(accordions, panels):
+            # Process links in answer
+            for a in panel.find_all('a'):
+                href = a.get('href', '')
+                if href and a.get_text().strip() != href:
+                    if href not in a.get_text():
+                        a.append(f" ({href})")
+            
             question = acc.get_text().replace('+', '').replace('-', '').strip()
             answer = panel.get_text().strip()
             if question and answer:

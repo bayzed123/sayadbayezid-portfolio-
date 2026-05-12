@@ -551,6 +551,12 @@
             return params.get('post');
         }
 
+        // Function to convert URLs in text to clickable links
+        function linkify(text) {
+            const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            return text.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+        }
+
         // Function to render blog post
         function renderBlogPost(blog) {
             // Update page title and meta tags
@@ -580,11 +586,11 @@
             // Render blog content
             let contentHTML = `<div class="blog-content">`;
             
-            // Convert markdown-like content to HTML
+            // Convert markdown-like content to HTML and make links clickable
             const contentLines = blog.content.split('\n\n');
             contentLines.forEach(line => {
                 if (line.trim()) {
-                    contentHTML += `<p>${line.trim()}</p>`;
+                    contentHTML += `<p>${linkify(line.trim())}</p>`;
                 }
             });
             
@@ -607,8 +613,8 @@
                         <h3>Frequently Asked Questions</h3>
                         ${blog.faq.map(item => `
                             <div class="faq-item">
-                                <div class="faq-question">${item.question}</div>
-                                <div class="faq-answer">${item.answer}</div>
+                                <div class="faq-question">${linkify(item.question)}</div>
+                                <div class="faq-answer">${linkify(item.answer)}</div>
                             </div>
                         `).join('')}
                     </div>
