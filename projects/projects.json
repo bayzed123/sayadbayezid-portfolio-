@@ -1,0 +1,44 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "AI WhatsApp Automation (Fijian Client)",
+      "description": "A full-fledged 24/7 AI customer service system. It seamlessly automates orders, processes voice/image messages, and tracks IDs to boost sales and eliminate hours of manual work. Built for a $1,600+ high-value business outcome.",
+      "video_url": "https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov",
+      "tags": ["AI Chatbot", "WhatsApp API", "Business Automation"],
+      "is_latest": true
+    },
+    {
+      "id": 2,
+      "title": "Connect with Bayezid",
+      "description": "Digital brand and personal portfolio platform. Official website and business hub.",
+      "link": "https://connectbayezid-8dcdz46v.manus.space",
+      "tags": ["Web Design", "Branding"],
+      "is_latest": false
+    },
+    {
+      "id": 3,
+      "title": "GenZ Frontier",
+      "description": "Digital newsportal for modern generation insights and tech trends.",
+      "link": "https://www.genzfrontir.com",
+      "tags": ["Content", "News"],
+      "is_latest": false
+    },
+    {
+      "id": 4,
+      "title": "SmartGen QR Code Generator",
+      "description": "The world's most advanced free QR code generator. Built for speed, privacy, and full customization.",
+      "link": "https://qr.genzfrontir.com/",
+      "tags": ["Utility", "Web Tool"],
+      "is_latest": false
+    },
+    {
+      "id": 5,
+      "title": "Tiny Tales: The Lifetime Baby Archive",
+      "description": "A heartwarming platform for preserving precious baby memories and milestones.",
+      "link": "https://bayezaarch-7cx7fyrv.manus.space",
+      "tags": ["Baby Archive", "Memory Storage"],
+      "is_latest": false
+    }
+  ]
+}

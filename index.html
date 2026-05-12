@@ -917,20 +917,8 @@
 <section class="latest-project" id="latest-project" style="padding-bottom: 50px;">
     <div class="container">
         <h2 class="section-title">Latest Project</h2>
-        <div class="project-card" style="display: flex; flex-direction: column; width: 100%; max-width: 1000px; margin: 0 auto;">
-            <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px;">
-                <source src="https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov" type="video/quicktime">
-                <source src="https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov" type="video/mp4">
-            </video>
-            <div class="project-content">
-                <h3>AI WhatsApp Automation (Fijian Client)</h3>
-                <p>A full-fledged 24/7 AI customer service system. It seamlessly automates orders, processes voice/image messages, and tracks IDs to boost sales and eliminate hours of manual work. Built for a $1,600+ high-value business outcome.</p>
-                <div class="project-tags">
-                    <span class="tag">AI Chatbot</span>
-                    <span class="tag">WhatsApp API</span>
-                    <span class="tag">Business Automation</span>
-                </div>
-            </div>
+        <div id="latest-project-container">
+            <!-- Latest project will be loaded here -->
         </div>
     </div>
 </section>
@@ -940,66 +928,8 @@
     <section class="projects" id="projects">
       <div class="container">
         <h2 class="section-title">Featured Projects</h2>
-        <div class="projects-grid">
-          <div class="project-card">
-            <div class="project-content">
-              <h3>Connect with Bayezid</h3>
-              <p>Digital brand and personal portfolio platform. Official website and business hub.</p>
-              <div class="project-tags">
-                <span class="tag">Web Design</span>
-                <span class="tag">Branding</span>
-              </div>
-              <a href="https://connectbayezid-8dcdz46v.manus.space" class="project-link" target="_blank">View Project →</a>
-            </div>
-          </div>
-          
-          <div class="project-card">
-            <div class="project-content">
-              <h3>Connect with Bayezid (IT Domain)</h3>
-              <p>Alternative domain for Connect with Bayezid digital brand</p>
-              <div class="project-tags">
-                <span class="tag">Web Design</span>
-                <span class="tag">Portfolio</span>
-              </div>
-              <a href="https://www.connectwithbayezid.it.com" class="project-link" target="_blank">View Project →</a>
-            </div>
-          </div>
-          
-          <div class="project-card">
-            <div class="project-content">
-              <h3>GenZ Frontier</h3>
-              <p>Digital newsportal for modern generation insights and tech trends.</p>
-              <div class="project-tags">
-                <span class="tag">Content</span>
-                <span class="tag">News</span>
-              </div>
-              <a href="https://www.genzfrontir.com" class="project-link" target="_blank">View Project →</a>
-            </div>
-          </div>
-          
-          <div class="project-card">
-            <div class="project-content">
-              <h3>SmartGen QR Code Generator</h3>
-              <p>The world's most advanced free QR code generator. Built for speed, privacy, and full customization.</p>
-              <div class="project-tags">
-                <span class="tag">Utility</span>
-                <span class="tag">Web Tool</span>
-              </div>
-              <a href="https://qr.genzfrontir.com/" class="project-link" target="_blank">View Project →</a>
-            </div>
-          </div>
-          
-          <div class="project-card">
-            <div class="project-content">
-              <h3>Tiny Tales: The Lifetime Baby Archive</h3>
-              <p>A heartwarming platform for preserving precious baby memories and milestones.</p>
-              <div class="project-tags">
-                <span class="tag">Baby Archive</span>
-                <span class="tag">Memory Storage</span>
-              </div>
-              <a href="https://bayezaarch-7cx7fyrv.manus.space" class="project-link" target="_blank">View Project →</a>
-            </div>
-          </div>
+        <div class="projects-grid" id="projects-grid">
+          <!-- Projects will be loaded here -->
         </div>
       </div>
     </section>
@@ -1555,6 +1485,62 @@
           navMenu.classList.remove('active');
         }
       });
+
+      // Dynamic Projects Loader
+      async function loadProjects() {
+        try {
+          const response = await fetch('/projects/projects.json');
+          if (!response.ok) throw new Error('Failed to load projects');
+          const data = await response.json();
+          const projects = data.projects || [];
+
+          const latestContainer = document.getElementById('latest-project-container');
+          const gridContainer = document.getElementById('projects-grid');
+
+          // Find latest project
+          const latest = projects.find(p => p.is_latest) || projects[0];
+          if (latest) {
+            latestContainer.innerHTML = `
+              <div class="project-card" style="display: flex; flex-direction: column; width: 100%; max-width: 1000px; margin: 0 auto;">
+                ${latest.video_url ? `
+                  <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px;">
+                    <source src="${latest.video_url}" type="video/mp4">
+                  </video>
+                ` : latest.image_url ? `
+                  <img src="${latest.image_url}" alt="${latest.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px; width: 100%;">
+                ` : ''}
+                <div class="project-content">
+                  <h3>${latest.title}</h3>
+                  <p>${latest.description}</p>
+                  <div class="project-tags">
+                    ${latest.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                  </div>
+                  ${latest.link ? `<a href="${latest.link}" class="project-link" target="_blank" style="margin-top: 15px; display: inline-block;">View Project →</a>` : ''}
+                </div>
+              </div>
+            `;
+          }
+
+          // Load all projects into grid (excluding the one shown as latest if you want, or show all)
+          gridContainer.innerHTML = projects.map(project => `
+            <div class="project-card">
+              <div class="project-content">
+                <h3>${project.title}</h3>
+                <p>${project.description}</p>
+                <div class="project-tags">
+                  ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                </div>
+                ${project.link ? `<a href="${project.link}" class="project-link" target="_blank">View Project →</a>` : ''}
+              </div>
+            </div>
+          `).join('');
+
+        } catch (error) {
+          console.error('Error loading projects:', error);
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', loadProjects);
     </script>
   </body>
 </html>
