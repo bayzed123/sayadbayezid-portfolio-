@@ -146,6 +146,8 @@ Content for main section.
 
 ### Sub-section
 More detailed content.
+
+Check out this video: https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov
 ```
 
 **HTML:**
@@ -161,8 +163,11 @@ More detailed content.
 <section id="section1">
   <h2>Section 1</h2>
   <p>Your content here</p>
+  <p>Watch this video: https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov</p>
 </section>
 ```
+
+**Video Embedding:** Simply paste the direct URL of your video (e.g., `https://example.com/your-video.mov`) anywhere in your blog content. The system will automatically detect and render it as an interactive video player.
 
 Save to `blog_uploads/` and run `python scripts/convert_blogs.py`.
 
