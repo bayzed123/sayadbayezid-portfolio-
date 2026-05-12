@@ -460,6 +460,15 @@ Add custom scripts in the `<script>` tags at the end of each file.
 
 ---
 
+## Support the Project
+
+If you find this portfolio system valuable, you can support the original creator:
+
+*   **PayPal:** [@connectwithbayezid](https://www.paypal.me/connectwithbayezid)
+*   **Payoneer:** `cwb.agency@outlook.com`
+
+---
+
 ## Additional Resources
 
 - **Quick Start Guide:** [QUICK_START.md](../QUICK_START.md)

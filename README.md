@@ -257,6 +257,15 @@ If you use this portfolio, please keep the footer credit to help others discover
 
 ---
 
+## 💖 Support the Project
+
+If you find this portfolio and blog system helpful, consider supporting its development. Your appreciation keeps the project alive and free for everyone!
+
+*   **PayPal:** [@connectwithbayezid](https://www.paypal.me/connectwithbayezid)
+*   **Payoneer:** `cwb.agency@outlook.com`
+
+---
+
 ## Support & Resources
 
 *   **Quick Start:** [QUICK_START.md](QUICK_START.md)
