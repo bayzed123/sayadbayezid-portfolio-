@@ -238,21 +238,28 @@ class I18n {
       }
 
       .lang-btn {
-        padding: 0.3rem 0.6rem;
-        background: transparent;
-        border: 1px solid var(--primary);
-        color: var(--primary);
-        border-radius: 0.3rem;
+        padding: 0.4rem 0.8rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--border-color);
+        color: var(--text-secondary);
+        border-radius: 50px;
         cursor: pointer;
-        font-size: 0.7rem;
-        font-weight: 700;
+        font-size: 0.75rem;
+        font-weight: 600;
         transition: all 0.3s ease;
         line-height: 1;
       }
 
-      .lang-btn:hover, .lang-btn.active {
+      .lang-btn:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: rgba(0, 217, 255, 0.1);
+      }
+
+      .lang-btn.active {
         background: var(--primary);
         color: var(--bg-dark);
+        border-color: var(--primary);
       }
 
       @media (min-width: 768px) {
