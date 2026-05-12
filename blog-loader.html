@@ -343,6 +343,61 @@
         .back-link:hover {
             color: var(--accent);
         }
+
+        /* Related Posts Section */
+        .related-posts-section {
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .related-posts-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .related-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            padding: 1.2rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .related-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--primary);
+        }
+
+        .related-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .related-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .related-link {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+        }
         
         /* Footer */
         footer {
@@ -563,6 +618,68 @@
             contentHTML += `</div>`;
             
             document.getElementById('content-container').innerHTML = contentHTML;
+
+            // Load related posts after rendering main content
+            loadRelatedPosts(blog);
+        }
+
+        // Function to load and display related posts
+        async function loadRelatedPosts(currentBlog) {
+            try {
+                const response = await fetch('/blogs/index.json');
+                if (!response.ok) return;
+                
+                const data = await response.json();
+                const allBlogs = data.blogs || [];
+                
+                // Find blogs with matching tags (excluding current blog)
+                const currentTags = currentBlog.tags || [];
+                const related = allBlogs.filter(blog => {
+                    if (blog.slug === getSlugFromQuery()) return false;
+                    
+                    // In index.json, we might not have tags, so we can also match by category
+                    // or we can fetch the full blog data for each to check tags (more accurate but slower)
+                    // For now, let's match by category and any common words in title
+                    const sameCategory = blog.category === currentBlog.category;
+                    
+                    // Simple title word matching for better relevance
+                    const currentTitleWords = currentBlog.title.toLowerCase().split(/\s+/);
+                    const otherTitleWords = blog.title.toLowerCase().split(/\s+/);
+                    const commonWords = currentTitleWords.filter(word => 
+                        word.length > 3 && otherTitleWords.includes(word)
+                    );
+
+                    return sameCategory || commonWords.length > 0;
+                });
+
+                if (related.length > 0) {
+                    let relatedHTML = `
+                        <div class="related-posts-section">
+                            <h3>Related Articles</h3>
+                            <div class="related-grid">
+                    `;
+
+                    // Show up to 3 related posts
+                    related.slice(0, 3).forEach(post => {
+                        relatedHTML += `
+                            <a href="/blog-loader.html?post=${post.slug}" class="related-card">
+                                <h4>${post.title}</h4>
+                                <p>${post.excerpt.substring(0, 100)}...</p>
+                                <span class="related-link">Read Article →</span>
+                            </a>
+                        `;
+                    });
+
+                    relatedHTML += `
+                            </div>
+                        </div>
+                    `;
+
+                    document.getElementById('content-container').innerHTML += relatedHTML;
+                }
+            } catch (error) {
+                console.error('Error loading related posts:', error);
+            }
         }
 
         // Load and render blog post
