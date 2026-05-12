@@ -1756,12 +1756,13 @@
             `;
             
             if (latest.images && latest.images.length > 1) {
-              initSlider();
+              initSlider('slider-wrapper');
             }
           }
 
           // Load featured projects into grid (excluding the one shown as latest)
           const featuredProjects = projects.filter(p => !p.is_latest);
+          
           gridContainer.innerHTML = featuredProjects.map(project => {
             let gridMediaHTML = '';
             if (project.video_url) {
@@ -1769,14 +1770,28 @@
               const videoType = isMov ? 'video/quicktime' : 'video/mp4';
               gridMediaHTML = `
                 <div class="grid-media" style="background: #000; border-radius: 12px 12px 0 0; overflow: hidden;">
-                  <video width="100%" controls muted playsinline style="display: block; object-fit: cover; height: 200px;">
+                  <video width="100%" autoplay loop muted playsinline controls style="display: block; object-fit: cover; height: 200px;">
                     <source src="${project.video_url}" type="${videoType}">
                     Your browser does not support the video tag.
                   </video>
                 </div>
               `;
             } else if (project.images && project.images.length > 0) {
-              gridMediaHTML = `<div class="grid-media"><img src="${project.images[0]}" alt="${project.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px; width: 100%;"></div>`;
+              if (project.images.length > 1) {
+                const sliderId = `slider-${project.id}`;
+                gridMediaHTML = `
+                  <div class="slider-container" style="height: 200px;">
+                    <div class="slider-wrapper" id="${sliderId}">
+                      ${project.images.map(img => `<div class="slide"><img src="${img}" alt="${project.title}"></div>`).join('')}
+                    </div>
+                    <div class="slider-dots">
+                      ${project.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}" data-slider="${sliderId}" data-index="${i}"></div>`).join('')}
+                    </div>
+                  </div>
+                `;
+              } else {
+                gridMediaHTML = `<div class="grid-media"><img src="${project.images[0]}" alt="${project.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px; width: 100%;"></div>`;
+              }
             } else if (project.image_url) {
               gridMediaHTML = `<div class="grid-media"><img src="${project.image_url}" alt="${project.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px; width: 100%;"></div>`;
             }
@@ -1813,6 +1828,13 @@
               </div>
             `;
           }).join('');
+
+          // Init grid sliders after innerHTML is set
+          featuredProjects.forEach(p => {
+            if (p.images && p.images.length > 1) {
+              initSlider(`slider-${p.id}`);
+            }
+          });
 
         } catch (error) {
           console.error('Error loading projects:', error);
@@ -1921,34 +1943,48 @@
       });
 
       // Slider Logic
-      let currentSlideIndex = 0;
-      function initSlider() {
-        currentSlideIndex = 0;
-        updateSlider();
+      const sliders = {};
+
+      function initSlider(id) {
+        sliders[id] = 0;
+        const wrapper = document.getElementById(id);
+        if (!wrapper) return;
+        
+        const dots = wrapper.parentElement.querySelectorAll('.dot');
+        dots.forEach(dot => {
+          dot.addEventListener('click', (e) => {
+            const index = parseInt(e.target.dataset.index);
+            currentSlide(id, index);
+          });
+        });
+
         // Auto slide every 5 seconds
-        setInterval(() => moveSlide(1), 5000);
+        setInterval(() => moveSlide(id, 1), 5000);
       }
 
-      window.moveSlide = function(n) {
-        const slides = document.querySelectorAll('.slide');
+      window.moveSlide = function(id, n) {
+        const wrapper = document.getElementById(id);
+        if (!wrapper) return;
+        const slides = wrapper.querySelectorAll('.slide');
         if (slides.length === 0) return;
-        currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
-        updateSlider();
+        
+        sliders[id] = (sliders[id] + n + slides.length) % slides.length;
+        updateSlider(id);
       }
 
-      window.currentSlide = function(n) {
-        currentSlideIndex = n;
-        updateSlider();
+      window.currentSlide = function(id, n) {
+        sliders[id] = n;
+        updateSlider(id);
       }
 
-      function updateSlider() {
-        const wrapper = document.getElementById('slider-wrapper');
-        const dots = document.querySelectorAll('.dot');
-        if (wrapper) {
-          wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
-        }
+      function updateSlider(id) {
+        const wrapper = document.getElementById(id);
+        if (!wrapper) return;
+        const dots = wrapper.parentElement.querySelectorAll('.dot');
+        
+        wrapper.style.transform = `translateX(-${sliders[id] * 100}%)`;
         dots.forEach((dot, i) => {
-          dot.classList.toggle('active', i === currentSlideIndex);
+          dot.classList.toggle('active', i === sliders[id]);
         });
       }
     </script>
