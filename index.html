@@ -1604,19 +1604,38 @@
             }
           }
 
-          // Load all projects into grid (excluding the one shown as latest if you want, or show all)
-          gridContainer.innerHTML = projects.map(project => `
-            <div class="project-card">
-              <div class="project-content">
-                <h3>${project.title}</h3>
-                <p>${project.description}</p>
-                <div class="project-tags">
-                  ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          // Load featured projects into grid (excluding the one shown as latest)
+          const featuredProjects = projects.filter(p => !p.is_latest);
+          gridContainer.innerHTML = featuredProjects.map(project => {
+            let gridMediaHTML = '';
+            if (project.video_url) {
+              gridMediaHTML = `
+                <div class="grid-media">
+                  <video width="100%" muted playsinline style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px;">
+                    <source src="${project.video_url}" type="video/mp4">
+                  </video>
                 </div>
-                ${project.link ? `<a href="${project.link}" class="project-link" target="_blank">View Project →</a>` : ''}
+              `;
+            } else if (project.images && project.images.length > 0) {
+              gridMediaHTML = `<div class="grid-media"><img src="${project.images[0]}" alt="${project.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px; width: 100%;"></div>`;
+            } else if (project.image_url) {
+              gridMediaHTML = `<div class="grid-media"><img src="${project.image_url}" alt="${project.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px; width: 100%;"></div>`;
+            }
+
+            return `
+              <div class="project-card">
+                ${gridMediaHTML}
+                <div class="project-content">
+                  <h3>${project.title}</h3>
+                  <p>${project.description}</p>
+                  <div class="project-tags">
+                    ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                  </div>
+                  ${project.link ? `<a href="${project.link}" class="project-link" target="_blank">View Project →</a>` : ''}
+                </div>
               </div>
-            </div>
-          `).join('');
+            `;
+          }).join('');
 
         } catch (error) {
           console.error('Error loading projects:', error);
