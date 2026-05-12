@@ -1,13 +1,16 @@
-# Commercial License
+# Open Source License with Mandatory Attribution
 
 **Portfolio Owner:** Sayad Md Bayezid Hosan  
+**Website:** https://www.sayadbayezid.com  
 **All Rights Reserved © 2026**
 
 ---
 
 ## Terms and Conditions
 
-This portfolio website and all its contents (including but not limited to code, design, images, text, and multimedia) are the exclusive intellectual property of **Sayad Md Bayezid Hosan**.
+This portfolio website and all its contents (including but not limited to code, design, images, text, and multimedia) are the intellectual property of **Sayad Md Bayezid Hosan**.
+
+This project is released as **Open Source** under the following conditions:
 
 ### Permitted Uses
 
@@ -15,29 +18,58 @@ This portfolio website and all its contents (including but not limited to code, 
 - ✅ Professional networking and portfolio review
 - ✅ Sharing the portfolio link with others
 - ✅ Using as a reference for your own portfolio (with proper attribution)
+- ✅ Cloning, forking, and modifying the code for personal or commercial use
+- ✅ Creating derivative works based on this portfolio
+- ✅ Redistributing modified versions of this project
+
+### Mandatory Requirements
+
+**IMPORTANT:** If you use, clone, fork, or redistribute this portfolio website or any part of its code, you **MUST** comply with the following:
+
+1. **Mandatory Footer Credit:** You must include the following credit in the footer of any website or project derived from this portfolio:
+   ```
+   Portfolio & Blog System by Sayad Md Bayezid Hosan (https://www.sayadbayezid.com)
+   ```
+
+2. **Link Requirement:** The credit must include a clickable hyperlink to `https://www.sayadbayezid.com`.
+
+3. **Visibility:** The credit must be visible to all users of the website or application, typically in the footer section.
+
+4. **Preservation:** You must not remove, hide, or obscure this attribution in any way.
 
 ### Prohibited Uses
 
-- ❌ Copying or reproducing any code or design without permission
-- ❌ Commercial use or resale of any content
-- ❌ Creating derivative works without explicit written permission
-- ❌ Removing or altering copyright notices or attribution
-- ❌ Using for competitive purposes or as a template for similar services
+- ❌ Removing or altering the mandatory footer credit
+- ❌ Hiding or obscuring the attribution to Sayad Md Bayezid Hosan
+- ❌ Claiming the original design or code as your own work
+- ❌ Using this project to create competing services without proper attribution
+- ❌ Removing copyright notices or license information from the source code
 
 ### Intellectual Property Rights
 
-All intellectual property rights, including but not limited to copyrights, trademarks, and patents, are retained by **Sayad Md Bayezid Hosan**. No rights are granted except as explicitly stated in this license.
+All original intellectual property rights, including but not limited to copyrights, trademarks, and design patents, are retained by **Sayad Md Bayezid Hosan**. By using this project, you acknowledge these rights and agree to maintain proper attribution.
 
 ### Disclaimer
 
-This portfolio is provided "as is" without any warranties. The owner is not liable for any damages arising from the use or inability to use this portfolio.
+This portfolio is provided "as is" without any warranties. The owner is not liable for any damages arising from the use or inability to use this portfolio or any derivative works.
 
 ### Modifications
 
-**Sayad Md Bayezid Hosan** reserves the right to modify these terms at any time. Continued use of the portfolio constitutes acceptance of any modifications.
+**Sayad Md Bayezid Hosan** reserves the right to modify these terms at any time. Continued use of the portfolio or any derivative works constitutes acceptance of any modifications.
+
+---
+
+## How to Comply
+
+If you are using this portfolio or any code derived from it:
+
+1. Ensure the footer contains the credit: **"Portfolio & Blog System by [Sayad Md Bayezid Hosan](https://www.sayadbayezid.com)"**
+2. Keep all license files and attribution notices in your project
+3. If you modify the code, clearly indicate what changes you made
+4. Maintain a link to the original repository: https://github.com/bayzed123/sayadbayezid-portfolio-
 
 ---
 
 **© 2026 Sayad Md Bayezid Hosan. All Rights Reserved.**
 
-For inquiries or permission requests, please contact through the portfolio website.
+For inquiries, permissions, or to report license violations, please contact through the portfolio website at https://www.sayadbayezid.com.
