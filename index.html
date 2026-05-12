@@ -1816,16 +1816,31 @@
         let isPlaying = false;
 
         function onPlayerReady(event) {
-          // Attempt to autoplay (might be blocked by browser)
+          // Attempt to autoplay
           event.target.playVideo();
           event.target.setVolume(50);
+          
+          // Fallback: If autoplay is blocked, wait for any user interaction to start
+          const startAutoplay = () => {
+            if (!isPlaying) {
+              player.playVideo();
+              // Remove listeners once music starts
+              document.removeEventListener('click', startAutoplay);
+              document.removeEventListener('touchstart', startAutoplay);
+              document.removeEventListener('scroll', startAutoplay);
+            }
+          };
+
+          document.addEventListener('click', startAutoplay);
+          document.addEventListener('touchstart', startAutoplay);
+          document.addEventListener('scroll', startAutoplay);
         }
 
         function onPlayerStateChange(event) {
           if (event.data == YT.PlayerState.PLAYING) {
             isPlaying = true;
             updateUI(true);
-          } else {
+          } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
             isPlaying = false;
             updateUI(false);
           }
@@ -1843,7 +1858,8 @@
           }
         }
 
-        musicToggle.addEventListener('click', () => {
+        musicToggle.addEventListener('click', (e) => {
+          e.stopPropagation(); // Prevent triggering the global interaction listener
           if (isPlaying) {
             player.pauseVideo();
           } else {
