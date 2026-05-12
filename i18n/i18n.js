@@ -52,7 +52,7 @@ class I18n {
    */
   async loadTranslations() {
     try {
-      const response = await fetch('/i18n/translations.json');
+      const response = await fetch('i18n/translations.json');
       if (!response.ok) throw new Error('Failed to load translations');
       this.translations = await response.json();
     } catch (error) {
@@ -172,17 +172,19 @@ class I18n {
     if (document.getElementById('languageSwitcher')) return;
 
     const switcherHTML = `
-      <div class="language-switcher" id="languageSwitcher">
-        <button class="lang-btn" data-lang="en" title="English">EN</button>
-        <button class="lang-btn" data-lang="es" title="Español">ES</button>
-        <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
-      </div>
+      <li class="lang-switcher-item">
+        <div class="language-switcher" id="languageSwitcher">
+          <button class="lang-btn" data-lang="en" title="English">EN</button>
+          <button class="lang-btn" data-lang="es" title="Español">ES</button>
+          <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
+        </div>
+      </li>
     `;
 
-    // Insert switcher into nav
-    const navContainer = nav.querySelector('.container');
-    if (navContainer) {
-      navContainer.insertAdjacentHTML('beforeend', switcherHTML);
+    // Insert switcher into the navigation menu list
+    const navMenu = document.getElementById('navMenu');
+    if (navMenu) {
+      navMenu.insertAdjacentHTML('beforeend', switcherHTML);
     }
 
     // Add event listeners
@@ -224,39 +226,39 @@ class I18n {
     const style = document.createElement('style');
     style.id = 'i18nStyles';
     style.textContent = `
+      .lang-switcher-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1.5rem;
+      }
+
       .language-switcher {
         display: flex;
         gap: 0.5rem;
-        margin-left: auto;
       }
 
       .lang-btn {
-        padding: 0.4rem 0.8rem;
+        padding: 0.3rem 0.6rem;
         background: transparent;
         border: 1px solid var(--primary);
         color: var(--primary);
         border-radius: 0.3rem;
         cursor: pointer;
-        font-size: 0.75rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 700;
         transition: all 0.3s ease;
+        line-height: 1;
       }
 
-      .lang-btn:hover {
+      .lang-btn:hover, .lang-btn.active {
         background: var(--primary);
         color: var(--bg-dark);
       }
 
-      .lang-btn.active {
-        background: var(--primary);
-        color: var(--bg-dark);
-      }
-
-      @media (max-width: 768px) {
-        .language-switcher {
-          margin-left: 0;
-          margin-top: 1rem;
-          justify-content: center;
+      @media (min-width: 768px) {
+        .lang-switcher-item {
+          padding: 0;
+          margin-left: 1rem;
         }
       }
     `;
