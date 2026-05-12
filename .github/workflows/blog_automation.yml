@@ -36,8 +36,3 @@ jobs:
           git add blogs/
           git commit -m "Auto-convert HTML blog to JSON [skip ci]" || echo "No changes to commit"
           git push origin main
-
-      - name: Create and push a version tag
-        run: |
-          git tag v01.01.01  # Replace `v01.01.01` with the desired version dynamically if you want
-          git push origin v01.01.01
