@@ -13,10 +13,10 @@ jobs:
       contents: write
     steps:
       - name: Checkout repository
-        # Ensure you're working directly on the `main` branch
         uses: actions/checkout@v3
         with:
           ref: main
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -32,13 +32,16 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          # Configure Git user information
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-
-          # Add and commit blog changes
+          
+          # Add the blogs folder which contains both JSONs and index.json
           git add blogs/
-          git commit -m "Auto-convert HTML blog to JSON [skip ci]" || echo "No changes to commit"
-
-          # Push changes explicitly to the `main` branch
-          git push origin main
+          
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-convert HTML blog to JSON [skip ci]"
+            git push origin main
+          fi
