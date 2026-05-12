@@ -5,6 +5,16 @@
 
 ---
 
+## 🌐 Live Demo
+Check out the live portfolio at: **[www.sayadbayezid.com](https://www.sayadbayezid.com)**
+
+---
+
+## 📖 Documentation
+For detailed information about the project architecture, blog system, and development workflow, please visit our **[Project Wiki](https://github.com/bayzed123/sayadbayezid-portfolio-/wiki)**.
+
+---
+
 ## About
 
 I'm Sayad Md Bayezid Hosan, a technology entrepreneur, Tech Provider, and digital content creator based in Bangladesh. I specialize in integrating AI and modern web design to build efficient, scalable digital infrastructures.
@@ -33,11 +43,12 @@ As a professional within the digital ecosystem, I operate as a Technical Expert 
 ---
 
 ## Professional Links
-- ** Projects Blog:** https://sayadbayezid.com/blog.html
-- **Blog:** https://connectwithbayezid.blogspot.com
-- **GitHub:** https://github.com/bayzed123
-- **LinkedIn:** https://www.linkedin.com/in/sayadbayezid
-- **Crunchbase:** https://www.crunchbase.com/person/sayad-md-bayezid-hosan
+- **Official Website:** [www.sayadbayezid.com](https://www.sayadbayezid.com)
+- **Projects Blog:** [sayadbayezid.com/blog.html](https://sayadbayezid.com/blog.html)
+- **Blog:** [connectwithbayezid.blogspot.com](https://connectwithbayezid.blogspot.com)
+- **GitHub:** [github.com/bayzed123](https://github.com/bayzed123)
+- **LinkedIn:** [linkedin.com/in/sayadbayezid](https://www.linkedin.com/in/sayadbayezid)
+- **Crunchbase:** [crunchbase.com/person/sayad-md-bayezid-hosan](https://www.crunchbase.com/person/sayad-md-bayezid-hosan)
 
 ---
 
@@ -45,7 +56,7 @@ As a professional within the digital ecosystem, I operate as a Technical Expert 
 
 - **WhatsApp:** +880 1519 601517
 - **Email:** Contact through website
-- **Location:** Auliyabad, Kalihati, Tanagail, Bangladesh
+- **Location:** Auliyabad, Kalihati, Tangail, Bangladesh
 
 ---
 
