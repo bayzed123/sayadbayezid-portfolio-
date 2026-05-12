@@ -594,6 +594,65 @@
         font-weight: 600;
         margin-top: 0.5rem;
       }
+
+      /* Slider Styles */
+      .slider-container {
+          position: relative;
+          width: 100%;
+          height: 400px;
+          overflow: hidden;
+          border-radius: 12px 12px 0 0;
+      }
+      .slider-wrapper {
+          display: flex;
+          transition: transform 0.5s ease-in-out;
+          height: 100%;
+      }
+      .slide {
+          min-width: 100%;
+          height: 100%;
+      }
+      .slide img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+      }
+      .slider-btn {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background: rgba(0, 0, 0, 0.5);
+          color: white;
+          border: none;
+          padding: 10px 15px;
+          cursor: pointer;
+          z-index: 10;
+          border-radius: 50%;
+          font-size: 1.2rem;
+      }
+      .slider-btn:hover {
+          background: var(--primary);
+      }
+      .prev-btn { left: 10px; }
+      .next-btn { right: 10px; }
+      .slider-dots {
+          position: absolute;
+          bottom: 15px;
+          left: 50%;
+          transform: translateX(-50%);
+          display: flex;
+          gap: 8px;
+      }
+      .dot {
+          width: 10px;
+          height: 10px;
+          background: rgba(255, 255, 255, 0.5);
+          border-radius: 50%;
+          cursor: pointer;
+      }
+      .dot.active {
+          background: var(--primary);
+      }
       
       /* Social Links */
       .social-links {
@@ -1500,15 +1559,35 @@
           // Find latest project
           const latest = projects.find(p => p.is_latest) || projects[0];
           if (latest) {
+            let mediaHTML = '';
+            if (latest.video_url) {
+              mediaHTML = `
+                <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px;">
+                  <source src="${latest.video_url}" type="video/mp4">
+                </video>
+              `;
+            } else if (latest.images && latest.images.length > 0) {
+              mediaHTML = `
+                <div class="slider-container">
+                  <div class="slider-wrapper" id="slider-wrapper">
+                    ${latest.images.map(img => `<div class="slide"><img src="${img}" alt="${latest.title}"></div>`).join('')}
+                  </div>
+                  ${latest.images.length > 1 ? `
+                    <button class="slider-btn prev-btn" onclick="moveSlide(-1)">❮</button>
+                    <button class="slider-btn next-btn" onclick="moveSlide(1)">❯</button>
+                    <div class="slider-dots">
+                      ${latest.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}" onclick="currentSlide(${i})"></div>`).join('')}
+                    </div>
+                  ` : ''}
+                </div>
+              `;
+            } else if (latest.image_url) {
+              mediaHTML = `<img src="${latest.image_url}" alt="${latest.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px; width: 100%;">`;
+            }
+
             latestContainer.innerHTML = `
               <div class="project-card" style="display: flex; flex-direction: column; width: 100%; max-width: 1000px; margin: 0 auto;">
-                ${latest.video_url ? `
-                  <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px;">
-                    <source src="${latest.video_url}" type="video/mp4">
-                  </video>
-                ` : latest.image_url ? `
-                  <img src="${latest.image_url}" alt="${latest.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px; width: 100%;">
-                ` : ''}
+                ${mediaHTML}
                 <div class="project-content">
                   <h3>${latest.title}</h3>
                   <p>${latest.description}</p>
@@ -1519,6 +1598,10 @@
                 </div>
               </div>
             `;
+            
+            if (latest.images && latest.images.length > 1) {
+              initSlider();
+            }
           }
 
           // Load all projects into grid (excluding the one shown as latest if you want, or show all)
@@ -1541,6 +1624,38 @@
       }
 
       document.addEventListener('DOMContentLoaded', loadProjects);
+
+      // Slider Logic
+      let currentSlideIndex = 0;
+      function initSlider() {
+        currentSlideIndex = 0;
+        updateSlider();
+        // Auto slide every 5 seconds
+        setInterval(() => moveSlide(1), 5000);
+      }
+
+      window.moveSlide = function(n) {
+        const slides = document.querySelectorAll('.slide');
+        if (slides.length === 0) return;
+        currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
+        updateSlider();
+      }
+
+      window.currentSlide = function(n) {
+        currentSlideIndex = n;
+        updateSlider();
+      }
+
+      function updateSlider() {
+        const wrapper = document.getElementById('slider-wrapper');
+        const dots = document.querySelectorAll('.dot');
+        if (wrapper) {
+          wrapper.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        }
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === currentSlideIndex);
+        });
+      }
     </script>
   </body>
 </html>

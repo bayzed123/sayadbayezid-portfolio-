@@ -6,7 +6,7 @@
       "description": "A full-fledged 24/7 AI customer service system. It seamlessly automates orders, processes voice/image messages, and tracks IDs to boost sales and eliminate hours of manual work. Built for a $1,600+ high-value business outcome.",
       "video_url": "https://www.image2url.com/r2/default/videos/1778234182274-27bf1cc3-fc30-483b-b4ec-0ed606effe74.mov",
       "tags": ["AI Chatbot", "WhatsApp API", "Business Automation"],
-      "is_latest": true
+      "is_latest": false
     },
     {
       "id": 2,
@@ -35,10 +35,15 @@
     {
       "id": 5,
       "title": "Tiny Tales: The Lifetime Baby Archive",
-      "description": "A heartwarming platform for preserving precious baby memories and milestones.",
+      "description": "The Digital Baby Diary is the ultimate website template to help you perfectly preserve your precious memories. With a beautifully crafted design, secure layout, and a structured timeline, this product is the key to keeping your favorite moments safe forever.",
       "link": "https://bayezaarch-7cx7fyrv.manus.space",
-      "tags": ["Baby Archive", "Memory Storage"],
-      "is_latest": false
+      "images": [
+        "https://i.postimg.cc/dVXQRnGP/IMG-1086.jpg",
+        "https://i.postimg.cc/T29RNTn7/IMG-1085.jpg",
+        "https://i.postimg.cc/2SXycCRt/IMG-1088.jpg"
+      ],
+      "tags": ["Baby Archive", "Memory Storage", "Digital Diary"],
+      "is_latest": true
     }
   ]
 }
