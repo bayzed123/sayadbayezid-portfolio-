@@ -1,0 +1,224 @@
+{
+  "en": {
+    "nav": {
+      "about": "About",
+      "services": "Services",
+      "achievements": "Achievements",
+      "projects": "Projects",
+      "blog": "Blog",
+      "contact": "Contact"
+    },
+    "hero": {
+      "title": "Full-stack Web Developer & Tech Provider",
+      "description": "Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in innovative digital ecosystem solutions and AI integration.",
+      "exploreWork": "Explore My Work",
+      "getInTouch": "Get in Touch"
+    },
+    "stats": {
+      "clients": "Happy Clients Worldwide",
+      "analyzed": "Satisfied & Analyzed Clients",
+      "experience": "Years Experience",
+      "retention": "Client Retention Rate"
+    },
+    "about": {
+      "title": "About Me",
+      "description": "As a Full-stack Web Developer, Digital Marketer, and Web Designer, I have built a reputation for delivering innovative digital solutions with 5+ years of professional experience. My expertise spans across web development, digital marketing, and tech entrepreneurship.",
+      "highlight1": "Full-stack Development",
+      "highlight2": "Digital Marketing",
+      "highlight3": "Tech Innovation"
+    },
+    "services": {
+      "title": "Services",
+      "webDevelopment": "Web Development",
+      "webDevelopmentDesc": "Custom websites and web applications built with modern technologies",
+      "digitalMarketing": "Digital Marketing",
+      "digitalMarketingDesc": "Strategic digital marketing solutions to grow your business",
+      "aiIntegration": "AI Integration",
+      "aiIntegrationDesc": "Cutting-edge AI solutions for business automation",
+      "consulting": "Tech Consulting",
+      "consultingDesc": "Expert guidance on digital transformation and tech strategy"
+    },
+    "achievements": {
+      "title": "Achievements",
+      "achievement1": "Award-Winning Developer",
+      "achievement2": "Industry Recognition",
+      "achievement3": "Tech Innovator"
+    },
+    "projects": {
+      "title": "Projects",
+      "viewProject": "View Project →",
+      "latestProject": "Latest Project"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "sendMessage": "Send Message"
+    },
+    "footer": {
+      "copyright": "© 2026 Sayad md Bayezid Hosan. All rights reserved.",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Read the latest articles and insights on web development, digital marketing, and tech entrepreneurship.",
+      "readMore": "Read More →",
+      "backToBlog": "← Back to Blog",
+      "loading": "Loading...",
+      "noBlogs": "No blog posts found",
+      "category": "Category",
+      "author": "Author",
+      "date": "Date"
+    },
+    "language": "Language"
+  },
+  "es": {
+    "nav": {
+      "about": "Acerca de",
+      "services": "Servicios",
+      "achievements": "Logros",
+      "projects": "Proyectos",
+      "blog": "Blog",
+      "contact": "Contacto"
+    },
+    "hero": {
+      "title": "Desarrollador Web Full-stack y Proveedor de Tecnología",
+      "description": "Sayad md Bayezid Hosan es un profesional Desarrollador Web Full-stack, Especialista en Marketing Digital y Diseñador Web con sede en Bangladesh. Fundador de Connect with Bayezid y GenZ Frontier, especializado en soluciones innovadoras de ecosistema digital e integración de IA.",
+      "exploreWork": "Explorar Mi Trabajo",
+      "getInTouch": "Ponte en Contacto"
+    },
+    "stats": {
+      "clients": "Clientes Felices en Todo el Mundo",
+      "analyzed": "Clientes Satisfechos y Analizados",
+      "experience": "Años de Experiencia",
+      "retention": "Tasa de Retención de Clientes"
+    },
+    "about": {
+      "title": "Acerca de Mí",
+      "description": "Como Desarrollador Web Full-stack, Especialista en Marketing Digital y Diseñador Web, he construido una reputación por entregar soluciones digitales innovadoras con más de 5 años de experiencia profesional. Mi experiencia abarca desarrollo web, marketing digital e innovación tecnológica.",
+      "highlight1": "Desarrollo Full-stack",
+      "highlight2": "Marketing Digital",
+      "highlight3": "Innovación Tecnológica"
+    },
+    "services": {
+      "title": "Servicios",
+      "webDevelopment": "Desarrollo Web",
+      "webDevelopmentDesc": "Sitios web y aplicaciones web personalizadas construidas con tecnologías modernas",
+      "digitalMarketing": "Marketing Digital",
+      "digitalMarketingDesc": "Soluciones estratégicas de marketing digital para hacer crecer tu negocio",
+      "aiIntegration": "Integración de IA",
+      "aiIntegrationDesc": "Soluciones de IA de vanguardia para automatización empresarial",
+      "consulting": "Consultoría Tecnológica",
+      "consultingDesc": "Asesoramiento experto en transformación digital y estrategia tecnológica"
+    },
+    "achievements": {
+      "title": "Logros",
+      "achievement1": "Desarrollador Galardonado",
+      "achievement2": "Reconocimiento de la Industria",
+      "achievement3": "Innovador Tecnológico"
+    },
+    "projects": {
+      "title": "Proyectos",
+      "viewProject": "Ver Proyecto →",
+      "latestProject": "Proyecto Más Reciente"
+    },
+    "contact": {
+      "title": "Contacto",
+      "email": "Correo Electrónico",
+      "phone": "Teléfono",
+      "location": "Ubicación",
+      "sendMessage": "Enviar Mensaje"
+    },
+    "footer": {
+      "copyright": "© 2026 Sayad md Bayezid Hosan. Todos los derechos reservados.",
+      "privacyPolicy": "Política de Privacidad"
+    },
+    "blog": {
+      "title": "Blog",
+      "description": "Lee los últimos artículos e insights sobre desarrollo web, marketing digital y emprendimiento tecnológico.",
+      "readMore": "Leer Más →",
+      "backToBlog": "← Volver al Blog",
+      "loading": "Cargando...",
+      "noBlogs": "No se encontraron publicaciones de blog",
+      "category": "Categoría",
+      "author": "Autor",
+      "date": "Fecha"
+    },
+    "language": "Idioma"
+  },
+  "ru": {
+    "nav": {
+      "about": "Обо мне",
+      "services": "Услуги",
+      "achievements": "Достижения",
+      "projects": "Проекты",
+      "blog": "Блог",
+      "contact": "Контакты"
+    },
+    "hero": {
+      "title": "Full-stack веб-разработчик и поставщик технологий",
+      "description": "Саяд мд Байезид Хосан - профессиональный Full-stack веб-разработчик, специалист по цифровому маркетингу и веб-дизайнер, базирующийся в Бангладеш. Основатель Connect with Bayezid и GenZ Frontier, специализирующийся на инновационных решениях цифровой экосистемы и интеграции ИИ.",
+      "exploreWork": "Изучить мою работу",
+      "getInTouch": "Связаться со мной"
+    },
+    "stats": {
+      "clients": "Довольных клиентов по всему миру",
+      "analyzed": "Удовлетворённых и проанализированных клиентов",
+      "experience": "Лет опыта",
+      "retention": "Процент удержания клиентов"
+    },
+    "about": {
+      "title": "Обо мне",
+      "description": "Как Full-stack веб-разработчик, специалист по цифровому маркетингу и веб-дизайнер, я заработал репутацию благодаря предоставлению инновационных цифровых решений с более чем 5-летним профессиональным опытом. Мой опыт охватывает веб-разработку, цифровой маркетинг и технологические инновации.",
+      "highlight1": "Full-stack разработка",
+      "highlight2": "Цифровой маркетинг",
+      "highlight3": "Технологические инновации"
+    },
+    "services": {
+      "title": "Услуги",
+      "webDevelopment": "Веб-разработка",
+      "webDevelopmentDesc": "Пользовательские веб-сайты и веб-приложения, построенные на современных технологиях",
+      "digitalMarketing": "Цифровой маркетинг",
+      "digitalMarketingDesc": "Стратегические решения цифрового маркетинга для роста вашего бизнеса",
+      "aiIntegration": "Интеграция ИИ",
+      "aiIntegrationDesc": "Передовые решения ИИ для автоматизации бизнеса",
+      "consulting": "Технологическое консультирование",
+      "consultingDesc": "Экспертное руководство по цифровой трансформации и технологической стратегии"
+    },
+    "achievements": {
+      "title": "Достижения",
+      "achievement1": "Отмеченный наградами разработчик",
+      "achievement2": "Признание в индустрии",
+      "achievement3": "Технологический инноватор"
+    },
+    "projects": {
+      "title": "Проекты",
+      "viewProject": "Посмотреть проект →",
+      "latestProject": "Последний проект"
+    },
+    "contact": {
+      "title": "Контакты",
+      "email": "Email",
+      "phone": "Телефон",
+      "location": "Местоположение",
+      "sendMessage": "Отправить сообщение"
+    },
+    "footer": {
+      "copyright": "© 2026 Саяд мд Байезид Хосан. Все права защищены.",
+      "privacyPolicy": "Политика конфиденциальности"
+    },
+    "blog": {
+      "title": "Блог",
+      "description": "Читайте последние статьи и идеи о веб-разработке, цифровом маркетинге и технологическом предпринимательстве.",
+      "readMore": "Читать далее →",
+      "backToBlog": "← Вернуться к блогу",
+      "loading": "Загрузка...",
+      "noBlogs": "Записи блога не найдены",
+      "category": "Категория",
+      "author": "Автор",
+      "date": "Дата"
+    },
+    "language": "Язык"
+  }
+}

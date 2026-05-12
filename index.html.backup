@@ -805,12 +805,12 @@
           <span></span>
         </button>
         <ul id="navMenu">
-          <li><a href="#about" data-i18n="nav.about">About</a></li>
-          <li><a href="#services" data-i18n="nav.services">Services</a></li>
-          <li><a href="#achievements" data-i18n="nav.achievements">Achievements</a></li>
-          <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-          <li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li>
-          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#achievements">Achievements</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="/blog.html">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </div>
     </nav>
@@ -820,11 +820,11 @@
       <div class="container">
         <div class="hero-content">
           <div>
-            <h1 data-i18n="hero.title">Full-stack Web Developer & Tech Provider</h1>
-            <p data-i18n="hero.description">Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in innovative digital ecosystem solutions and AI integration.</p>
+            <h1>Full-stack Web Developer & Tech Provider</h1>
+            <p>Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in innovative digital ecosystem solutions and AI integration.</p>
             <div class="hero-buttons">
-              <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" data-i18n="hero.exploreWork">Explore My Work</button>
-              <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" data-i18n="hero.getInTouch">Get in Touch</button>
+              <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})">Explore My Work</button>
+              <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})">Get in Touch</button>
             </div>
           </div>
           <div class="hero-image">
@@ -835,19 +835,19 @@
         <div class="stats">
           <div class="stat">
             <div class="stat-number">2,200+</div>
-            <div class="stat-label" data-i18n="stats.clients">Happy Clients Worldwide</div>
+            <div class="stat-label">Happy Clients Worldwide</div>
           </div>
           <div class="stat">
             <div class="stat-number">2,140</div>
-            <div class="stat-label" data-i18n="stats.analyzed">Satisfied & Analyzed Clients</div>
+            <div class="stat-label">Satisfied & Analyzed Clients</div>
           </div>
           <div class="stat">
             <div class="stat-number">5+</div>
-            <div class="stat-label" data-i18n="stats.experience">Years Experience</div>
+            <div class="stat-label">Years Experience</div>
           </div>
           <div class="stat">
             <div class="stat-number">98%</div>
-            <div class="stat-label" data-i18n="stats.retention">Client Retention Rate</div>
+            <div class="stat-label">Client Retention Rate</div>
           </div>
         </div>
       </div>
@@ -856,7 +856,7 @@
     <!-- About Section -->
     <section class="about" id="about">
       <div class="container">
-        <h2 class="section-title" data-i18n="about.title">About Me</h2>
+        <h2 class="section-title">About Me</h2>
         <div class="about-content">
           <div class="about-text">
             <p>As a Full-stack Web Developer, Digital Marketer, and Web Designer, I have built a reputation for delivering innovative digital solutions with 5+ years of experience. My expertise spans the entire digital ecosystem, from web development and AI integration to strategic digital marketing and tech entrepreneurship.</p>
@@ -877,7 +877,7 @@
     <!-- Services Section -->
     <section class="services" id="services">
       <div class="container">
-        <h2 class="section-title" data-i18n="services.title">Services</h2>
+        <h2 class="section-title">Services</h2>
         <div class="services-grid">
           <div class="service-card">
             <div class="service-icon">🌐</div>
@@ -916,7 +916,7 @@
     <!-- Achievements & Certifications Section -->
     <section class="achievements" id="achievements">
       <div class="container">
-        <h2 class="section-title" data-i18n="achievements.title">Achievements & Certifications</h2>
+        <h2 class="section-title">Achievements & Certifications</h2>
         <div class="achievements-grid">
           <div class="achievement-card">
             <img src="https://i.postimg.cc/2SXycCRt/IMG-1088.jpg" alt="Digital Marketing Certificate" class="achievement-image" />
@@ -975,7 +975,7 @@
 
 <section class="latest-project" id="latest-project" style="padding-bottom: 50px;">
     <div class="container">
-        <h2 class="section-title" data-i18n="projects.latestProject">Latest Project</h2>
+        <h2 class="section-title">Latest Project</h2>
         <div id="latest-project-container">
             <!-- Latest project will be loaded here -->
         </div>
@@ -986,7 +986,7 @@
     <!-- Projects Section -->
     <section class="projects" id="projects">
       <div class="container">
-        <h2 class="section-title" data-i18n="projects.title">Featured Projects</h2>
+        <h2 class="section-title">Featured Projects</h2>
         <div class="projects-grid" id="projects-grid">
           <!-- Projects will be loaded here -->
         </div>
@@ -1053,7 +1053,7 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
       <div class="container">
-        <h2 class="section-title" data-i18n="contact.title">Get in Touch</h2>
+        <h2 class="section-title">Get in Touch</h2>
         <div class="contact-grid">
           <div class="contact-card">
             <h3>Personal Contact</h3>
@@ -1093,7 +1093,7 @@
     <!-- Footer -->
     <footer>
       <div class="container">
-        <p data-i18n="footer.copyright">&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
+        <p>&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
         <p>
           <a href="https://connectbayezid-8dcdz46v.manus.space" target="_blank">Connect with Bayezid</a> | 
           <a href="https://www.genzfrontir.com" target="_blank">GenZ Frontier</a> | 
@@ -1521,10 +1521,6 @@
     ]
     </script>
     
-    <!-- i18n Scripts -->
-    <script src="/i18n/i18n.js"></script>
-    <script src="/i18n/dynamic-translator.js"></script>
-    
     <!-- Mobile Menu Toggle Script -->
     <script>
       const menuToggle = document.getElementById('menuToggle');
@@ -1559,7 +1555,6 @@
           const response = await fetch('/projects/projects.json');
           if (!response.ok) throw new Error('Failed to load projects');
           const data = await response.json();
-          window.projectsData = data; // Store globally for translator
           const projects = data.projects || [];
 
           const latestContainer = document.getElementById('latest-project-container');

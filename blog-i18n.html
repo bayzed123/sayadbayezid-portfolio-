@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title data-i18n="blog.title">Blog - Sayad md Bayezid Hosan</title>
+    <meta name="description" data-i18n="blog.description" content="Read the latest articles and insights from Sayad md Bayezid Hosan on web development, digital marketing, and tech entrepreneurship." />
+    <meta name="keywords" content="blog, web development, digital marketing, tech, entrepreneurship, Sayad Bayezid" />
+    <meta name="author" content="Sayad md Bayezid Hosan" />
+    <meta name="robots" content="index, follow" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" data-i18n="blog.title" content="Blog - Sayad md Bayezid Hosan" />
+    <meta property="og:description" data-i18n="blog.description" content="Read insights on web development, digital marketing, and tech entrepreneurship" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sayadbayezid.com/blog.html" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://sayadbayezid.com/blog.html" />
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- i18n Scripts -->
+    <script src="/i18n/i18n.js"></script>
+    <script src="/i18n/dynamic-translator.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+        --primary: #00D9FF;
+        --primary-dark: #0F1419;
+        --accent: #FF6B35;
+        --text-primary: #ffffff;
+        --text-secondary: #a0a0a0;
+        --bg-dark: #0F1419;
+        --bg-card: #1a1f2e;
+        --border-color: #2a2f3e;
+        --footer-bg: rgba(15, 20, 25, 0.8);
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(15, 20, 25, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
+        }
+        
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        nav ul {
+            display: none;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        @media (min-width: 768px) {
+            nav ul {
+                display: flex;
+            }
+        }
+        
+        nav a {
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 40vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, #1a2332 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            top: -100px;
+            left: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(30px); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            max-width: 600px;
+        }
+        
+        /* Blog Section */
+        .blog-section {
+            padding: 6rem 0;
+            background: var(--bg-dark);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .blog-card {
+            background: var(--bg-card);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 217, 255, 0.1);
+        }
+        
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
+        }
+        
+        .blog-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        
+        .blog-category {
+            display: inline-block;
+            background: rgba(0, 217, 255, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.3rem;
+            font-weight: 600;
+        }
+        
+        .blog-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        
+        .blog-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .blog-link {
+            display: inline-block;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: auto;
+        }
+        
+        .blog-link:hover {
+            color: var(--primary);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        footer a {
+            color: var(--primary);
+        }
+        
+        footer a:hover {
+            color: var(--accent);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Bayezid<span>.</span></div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/#about" data-i18n="nav.about">About</a></li>
+                <li><a href="/#services" data-i18n="nav.services">Services</a></li>
+                <li><a href="/#achievements" data-i18n="nav.achievements">Achievements</a></li>
+                <li><a href="/#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="/#contact" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="blog.title">Blog</h1>
+                <p data-i18n="blog.description">Read the latest articles and insights on web development, digital marketing, and tech entrepreneurship.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p data-i18n="blog.loading">Loading...</p>
+            </div>
+            <div class="blog-grid" id="blog-grid" style="display: none;">
+                <!-- Blog posts will be loaded here -->
+            </div>
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <h3 data-i18n="blog.noBlogs">No blog posts found</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p data-i18n="footer.copyright">&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
+            <p>
+                <a href="https://connectbayezid-8dcdz46v.manus.space" target="_blank">Connect with Bayezid</a> | 
+                <a href="https://www.genzfrontir.com" target="_blank">GenZ Frontier</a> | 
+                <a href="https://connectwithbayezid.blogspot.com" target="_blank">Blog</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Load and display blog posts
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('/blogs/index.json');
+                if (!response.ok) throw new Error('Failed to load blog index');
+                const data = await response.json();
+                window.blogData = data; // Store globally for translator
+                
+                const blogs = data.blogs || [];
+                const blogGrid = document.getElementById('blog-grid');
+                const loading = document.getElementById('loading');
+                const emptyState = document.getElementById('empty-state');
+                
+                if (blogs.length === 0) {
+                    loading.style.display = 'none';
+                    emptyState.style.display = 'block';
+                    return;
+                }
+                
+                const readMoreText = window.i18n ? window.i18n.t('blog.readMore') : 'Read More →';
+                
+                blogGrid.innerHTML = blogs.map(blog => `
+                    <div class="blog-card">
+                        <img src="${blog.image}" alt="${blog.title}" class="blog-image" />
+                        <div class="blog-content">
+                            <div class="blog-meta">
+                                <span class="blog-category">${blog.category}</span>
+                                <span>${blog.date}</span>
+                            </div>
+                            <h3>${blog.title}</h3>
+                            <p>${blog.excerpt}</p>
+                            <a href="/blog-loader.html?slug=${blog.slug}" class="blog-link">${readMoreText}</a>
+                        </div>
+                    </div>
+                `).join('');
+                
+                loading.style.display = 'none';
+                blogGrid.style.display = 'grid';
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('empty-state').style.display = 'block';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+    </script>
+</body>
+</html>
