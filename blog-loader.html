@@ -555,10 +555,28 @@
             return params.get('post');
         }
 
-        // Function to convert URLs in text to clickable links
+        // Function to convert URLs in text to clickable links or video players
         function linkify(text) {
             const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-            return text.replace(urlPattern, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
+            
+            return text.replace(urlPattern, function(url) {
+                // Check if the URL is a video file
+                const videoExtensions = ['.mp4', '.mov', '.webm', '.ogg'];
+                const isVideo = videoExtensions.some(ext => url.toLowerCase().endsWith(ext) || url.toLowerCase().includes(ext + '?'));
+                
+                if (isVideo) {
+                    return `
+                        <div class="video-container" style="margin: 1.5rem 0; border-radius: 0.75rem; overflow: hidden; border: 1px solid var(--border-color); background: #000;">
+                            <video controls style="width: 100%; display: block; max-height: 500px;">
+                                <source src="${url}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                    `;
+                }
+                
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+            });
         }
 
         // Function to render blog post
