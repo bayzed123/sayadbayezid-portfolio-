@@ -1565,9 +1565,11 @@
           if (latest) {
             let mediaHTML = '';
             if (latest.video_url) {
+              const isMov = latest.video_url.toLowerCase().includes('.mov');
+              const videoType = isMov ? 'video/quicktime' : 'video/mp4';
               mediaHTML = `
-                <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px;">
-                  <source src="${latest.video_url}" type="video/mp4">
+                <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px; background: #000;">
+                  <source src="${latest.video_url}" type="${videoType}">
                 </video>
               `;
             } else if (latest.images && latest.images.length > 0) {
@@ -1613,10 +1615,13 @@
           gridContainer.innerHTML = featuredProjects.map(project => {
             let gridMediaHTML = '';
             if (project.video_url) {
+              const isMov = project.video_url.toLowerCase().includes('.mov');
+              const videoType = isMov ? 'video/quicktime' : 'video/mp4';
               gridMediaHTML = `
-                <div class="grid-media">
-                  <video width="100%" muted playsinline style="border-radius: 12px 12px 0 0; object-fit: cover; height: 200px;">
-                    <source src="${project.video_url}" type="video/mp4">
+                <div class="grid-media" style="background: #000; border-radius: 12px 12px 0 0; overflow: hidden;">
+                  <video width="100%" controls muted playsinline style="display: block; object-fit: cover; height: 200px;">
+                    <source src="${project.video_url}" type="${videoType}">
+                    Your browser does not support the video tag.
                   </video>
                 </div>
               `;
