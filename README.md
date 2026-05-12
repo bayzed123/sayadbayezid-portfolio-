@@ -33,7 +33,7 @@ As a professional within the digital ecosystem, I operate as a Technical Expert 
 ---
 
 ## Professional Links
-
+- ** Projects Blog:** https://sayadbayezid.com/blog.html
 - **Blog:** https://connectwithbayezid.blogspot.com
 - **GitHub:** https://github.com/bayzed123
 - **LinkedIn:** https://www.linkedin.com/in/sayadbayezid
