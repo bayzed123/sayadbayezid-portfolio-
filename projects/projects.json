@@ -57,6 +57,22 @@
       "description": "A comprehensive full-stack web development project showcasing modern UI/UX design principles, responsive layouts, and premium styling. This project demonstrates meticulous digital visual craftsmanship with smooth animations, hover effects, and a professional color scheme inspired by industry leaders like Trexalab.",
       "video_url": "./assets/videos/latest_project.mp4",
       "tags": ["Full-Stack Web", "UI/UX Design", "Premium Styling"],
+      "is_latest": false
+    },
+    {
+      "id": 7,
+      "title": "Musfiq R. Farhan Official Portfolio",
+      "description": "A premium, cinematic portfolio for Bangladeshi superstar actor Musfiq R. Farhan. Features a luxury editorial bio, Netflix-style media carousels, and a real-time Firebase-powered fan wall. Developed by Sayad Md Bayezid Hosan.",
+      "video_url": "https://drive.google.com/file/d/1WlSlekjx8QMBgLHVeoSXghZkCrvrxmlI/view?usp=drivesdk",
+      "link": "https://www.musfiqrfarhan.blog",
+      "tags": ["Cinematic UI", "Firebase", "Actor Portfolio", "Luxury Design"],
+      "key_features": [
+        "Cinematic Hero Section with dynamic dark gradient",
+        "Netflix-Style Media Carousels for recent releases",
+        "Live Fan Wall powered by Google Firebase",
+        "Advanced SEO & Knowledge Graph Integration",
+        "Glassmorphic UI & Luxury Editorial Typography"
+      ],
       "is_latest": true
     }
   ]

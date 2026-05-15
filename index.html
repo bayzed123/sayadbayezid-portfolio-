@@ -1715,13 +1715,23 @@
           if (latest) {
             let mediaHTML = '';
             if (latest.video_url) {
-              const isMov = latest.video_url.toLowerCase().includes('.mov');
-              const videoType = isMov ? 'video/quicktime' : 'video/mp4';
-              mediaHTML = `
-                <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px; background: #000;">
-                  <source src="${latest.video_url}" type="${videoType}">
-                </video>
-              `;
+              if (latest.video_url.includes('drive.google.com')) {
+                const driveId = latest.video_url.match(/\/file\/d\/(.+?)\//)?.[1];
+                const embedUrl = driveId ? `https://drive.google.com/file/d/${driveId}/preview` : latest.video_url;
+                mediaHTML = `
+                  <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px 12px 0 0; background: #000;">
+                    <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="autoplay"></iframe>
+                  </div>
+                `;
+              } else {
+                const isMov = latest.video_url.toLowerCase().includes('.mov');
+                const videoType = isMov ? 'video/quicktime' : 'video/mp4';
+                mediaHTML = `
+                  <video width="100%" autoplay loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; max-height: 500px; background: #000;">
+                    <source src="${latest.video_url}" type="${videoType}">
+                  </video>
+                `;
+              }
             } else if (latest.images && latest.images.length > 0) {
               mediaHTML = `
                 <div class="slider-container">
@@ -1747,6 +1757,14 @@
                 <div class="project-content">
                   <h3>${latest.title}</h3>
                   <p>${latest.description}</p>
+                  ${latest.key_features ? `
+                    <div class="key-features" style="margin: 15px 0;">
+                      <h4 style="margin-bottom: 8px; color: var(--accent-color);">Key Features:</h4>
+                      <ul style="list-style: none; padding: 0;">
+                        ${latest.key_features.map(feature => `<li style="margin-bottom: 5px; display: flex; align-items: center;"><span style="color: var(--accent-color); margin-right: 8px;">•</span> ${feature}</li>`).join('')}
+                      </ul>
+                    </div>
+                  ` : ''}
                   <div class="project-tags">
                     ${latest.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
                   </div>
@@ -1766,16 +1784,26 @@
           gridContainer.innerHTML = featuredProjects.map(project => {
             let gridMediaHTML = '';
             if (project.video_url) {
-              const isMov = project.video_url.toLowerCase().includes('.mov');
-              const videoType = isMov ? 'video/quicktime' : 'video/mp4';
-              gridMediaHTML = `
-                <div class="grid-media" style="background: #000; border-radius: 12px 12px 0 0; overflow: hidden;">
-                  <video width="100%" autoplay loop muted playsinline controls style="display: block; object-fit: cover; height: 200px;">
-                    <source src="${project.video_url}" type="${videoType}">
-                    Your browser does not support the video tag.
-                  </video>
-                </div>
-              `;
+              if (project.video_url.includes('drive.google.com')) {
+                const driveId = project.video_url.match(/\/file\/d\/(.+?)\//)?.[1];
+                const embedUrl = driveId ? `https://drive.google.com/file/d/${driveId}/preview` : project.video_url;
+                gridMediaHTML = `
+                  <div class="grid-media" style="background: #000; border-radius: 12px 12px 0 0; overflow: hidden; position: relative; padding-bottom: 56.25%; height: 0;">
+                    <iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="autoplay"></iframe>
+                  </div>
+                `;
+              } else {
+                const isMov = project.video_url.toLowerCase().includes('.mov');
+                const videoType = isMov ? 'video/quicktime' : 'video/mp4';
+                gridMediaHTML = `
+                  <div class="grid-media" style="background: #000; border-radius: 12px 12px 0 0; overflow: hidden;">
+                    <video width="100%" autoplay loop muted playsinline controls style="display: block; object-fit: cover; height: 200px;">
+                      <source src="${project.video_url}" type="${videoType}">
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                `;
+              }
             } else if (project.images && project.images.length > 0) {
               if (project.images.length > 1) {
                 const sliderId = `slider-${project.id}`;
