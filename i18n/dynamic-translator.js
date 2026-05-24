@@ -52,6 +52,13 @@ class DynamicTranslator {
     projectsGrid.innerHTML = featuredProjects.map(project => 
       this.createProjectCard(project, language)
     ).join('');
+
+    // Re-initialize sliders for featured projects
+    featuredProjects.forEach(p => {
+      if (p.images && p.images.length > 1) {
+        if (typeof initSlider === 'function') initSlider(`slider-${p.id}`);
+      }
+    });
   }
 
   /**
@@ -104,7 +111,7 @@ class DynamicTranslator {
     `;
 
     if (project.images && project.images.length > 1) {
-      initSlider();
+      if (typeof initSlider === 'function') initSlider('slider-wrapper');
     }
   }
 

@@ -15,7 +15,7 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.youtube.com https://s.ytimg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:; frame-src https://www.youtube.com https://drive.google.com; media-src 'self' https:; object-src 'none';" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.youtube.com https://s.ytimg.com https://www.youtube.com/iframe_api; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https:; frame-src https://www.youtube.com https://drive.google.com; media-src 'self' https:; object-src 'none';" />
     <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=(), payment=()" />
     <title>Sayad md Bayezid Hosan | Full-stack Web Developer, Digital Marketer & Tech Provider</title>
     <meta name="description" content="Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer. Leading Tech Provider and Founder of Connect with Bayezid and GenZ Frontier. Expert in AI integration and digital ecosystem solutions." />
@@ -63,373 +63,7 @@
     <link rel="preload" as="font" href="https://fonts.gstatic.com/s/poppins/v21/pxiGyp8kv8JHgFVrLPTucHYHYGhUjcgtqg.woff2" crossorigin>
     <link rel="preload" as="font" href="https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHAPMtMOrMlC-V8tQ.woff2" crossorigin>
     
-    <style>*{margin:0;padding:0;box-sizing:border-box}:root{--primary:#00D9FF;--primary-dark:#0F1419;--accent:#FF6B35;--text-primary:#ffffff;--text-secondary:#a0a0a0;--bg-dark:#0F1419;--bg-card:#1a1f2e;--border-color:#2a2f3e}body{font-family:'Inter',sans-serif;background-color:var(--bg-dark);color:var(--text-primary);line-height:1.6}h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700}a{color:var(--primary);text-decoration:none;transition:all 0.3s ease}a:hover{color:var(--accent)}.container{max-width:1200px;margin:0 auto;padding:0 20px}.music-control-container{display:flex;align-items:center;gap:12px;margin-top:35px;margin-bottom:15px;background:rgba(0,217,255,0.1);padding:12px 20px;border-radius:50px;width:fit-content;border:2px solid var(--primary);transition:all 0.3s ease;z-index:100;position:relative;box-shadow:0 0 20px rgba(0,217,255,0.2)}.lang-switcher-item{display:flex;align-items:center;padding:0.5rem 1.5rem}.language-switcher{display:flex;gap:0.5rem}.lang-btn{padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);color:var(--text-secondary);border-radius:50px;cursor:pointer;font-size:0.8rem;font-weight:700;transition:all 0.3s ease;line-height:1}.lang-btn:hover{border-color:var(--primary);color:var(--primary);background:rgba(0,217,255,0.1)}.lang-btn.active{background:var(--primary);color:var(--bg-dark);border-color:var(--primary)}@media (min-width:768px){.lang-switcher-item{padding:0;margin-left:1.5rem}}.music-control-container:hover{background:rgba(255,255,255,0.1);border-color:var(--primary)}.music-btn{width:40px;height:40px;border-radius:50%;background:var(--primary);border:none;color:var(--bg-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,217,255,0.3)}.music-btn:hover{transform:scale(1.1);background:var(--accent);box-shadow:0 4px 15px rgba(255,107,53,0.3)}.music-text{font-size:0.9rem;font-weight:500;color:var(--text-primary)}.music-visualizer{display:flex;align-items:flex-end;gap:2px;height:15px}.music-bar{width:3px;background:var(--primary);border-radius:2px;animation:music-bounce 1s ease-in-out infinite alternate;height:5px}.music-bar:nth-child(2){animation-delay:0.2s}.music-bar:nth-child(3){animation-delay:0.4s}.music-bar:nth-child(4){animation-delay:0.6s}@keyframes music-bounce{0%{height:5px}100%{height:15px}}.music-bar.paused{animation-play-state:paused;height:5px}nav{position:sticky;top:0;z-index:50;background:rgba(15,20,25,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color);padding:1rem 0}nav .container{display:flex;justify-content:space-between;align-items:center}.logo{font-size:1.5rem;font-weight:700;font-family:'Poppins',sans-serif}.logo span{color:var(--primary)}nav ul{display:none;list-style:none;gap:2rem;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(15,20,25,0.95);padding:1rem 0;border-bottom:1px solid var(--border-color)}nav ul.active{display:flex}@media (min-width:768px){nav ul{display:flex !important;position:static;flex-direction:row;background:none;padding:0;border:none}}nav ul li{padding:0.5rem 1.5rem}@media (min-width:768px){nav ul li{padding:0}}.menu-toggle{display:flex;flex-direction:column;gap:0.4rem;background:none;border:none;cursor:pointer;padding:0.5rem}.menu-toggle span{width:25px;height:3px;background:var(--primary);border-radius:2px;transition:all 0.3s ease}.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}@media (min-width:768px){.menu-toggle{display:none}}nav a{font-size:0.875rem;font-weight:500;transition:color 0.3s ease;display:block}@media (min-width:768px){nav a{display:inline}}.hero{min-height:100vh;display:flex;align-items:center;padding:4rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%);position:relative;overflow:hidden}.hero::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(0,217,255,0.1) 0%,transparent 70%);border-radius:50%;top:-100px;left:-100px;animation:float 6s ease-in-out infinite}.hero::after{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(255,107,53,0.1) 0%,transparent 70%);border-radius:50%;bottom:-50px;right:-50px;animation:float 8s ease-in-out infinite reverse}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(30px)}}.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:2rem;align-items:center}@media (min-width:768px){.hero-content{grid-template-columns:1fr 1fr}}.hero h1{font-size:3rem;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#ffffff 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:1.1rem;color:var(--text-secondary);margin-bottom:2rem;line-height:1.8}.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}.btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;border:none;font-size:1rem}.btn-primary{background:var(--primary);color:var(--bg-dark)}.btn-primary:hover{background:var(--accent);transform:translateY(-2px)}.btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary)}.btn-secondary:hover{background:var(--primary);color:var(--bg-dark)}.hero-image{position:relative;display:flex;justify-content:center}.hero-image img{width:100%;max-width:400px;border-radius:1rem;border:2px solid var(--primary);box-shadow:0 0 40px rgba(0,217,255,0.3)}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border-color)}.stat{text-align:center}.stat-number{font-size:2.5rem;font-weight:700;color:var(--primary);font-family:'Poppins',sans-serif}.stat-label{color:var(--text-secondary);font-size:0.9rem;margin-top:0.5rem}.about{padding:6rem 0;background:var(--bg-dark)}.section-title{font-size:2.5rem;margin-bottom:3rem;text-align:center;font-family:'Poppins',sans-serif}.about-content{display:grid;grid-template-columns:1fr;gap:3rem;align-items:start}@media (min-width:768px){.about-content{grid-template-columns:1fr 1fr 1fr}}.about-text p{margin-bottom:1rem;color:var(--text-secondary);line-height:1.8}.about-text strong{color:var(--primary)}.about-image-container{position:relative;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2);transition:transform 0.3s ease}.about-image-container:hover{transform:scale(1.05)}.about-image-container img{width:100%;height:auto;display:block}.services{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.service-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.service-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.1)}.service-icon{font-size:3rem;margin-bottom:1rem;color:var(--primary)}.service-card h3{font-size:1.5rem;margin-bottom:0.75rem}.service-card p{color:var(--text-secondary);font-size:0.95rem}.achievements{padding:6rem 0;background:var(--bg-dark)}.achievements-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.achievement-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.achievement-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.15)}.achievement-image{width:100%;height:200px;object-fit:cover;display:block}.achievement-content{padding:1.5rem}.achievement-content h3{font-size:1.3rem;margin-bottom:0.75rem;color:var(--primary)}.achievement-content p{color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;line-height:1.6}.achievement-badge{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:0.75rem;font-weight:600;margin-right:0.5rem}.projects{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.project-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.project-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(255,107,53,0.1)}.project-image img{width:100%;height:200px;object-fit:cover}.project-content{padding:1.5rem}.project-content h3{font-size:1.5rem;margin-bottom:0.75rem}.project-content p{color:var(--text-secondary);font-size:0.95rem;margin-bottom:1rem}.project-tags{margin-bottom:1rem}.tag{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.3rem 0.7rem;border-radius:0.3rem;font-size:0.8rem;margin-right:0.5rem;margin-bottom:0.5rem}.project-link{display:inline-block;color:var(--accent);font-weight:600;margin-top:0.5rem}.slider-container{position:relative;width:100%;height:400px;overflow:hidden;border-radius:12px 12px 0 0}.slider-wrapper{display:flex;transition:transform 0.5s ease-in-out;height:100%}.slide{min-width:100%;height:100%}.slide img{width:100%;height:100%;object-fit:cover}.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;padding:10px 15px;cursor:pointer;z-index:10;border-radius:50%;font-size:1.2rem}.slider-btn:hover{background:var(--primary)}.prev-btn{left:10px}.next-btn{right:10px}.slider-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:8px}.dot{width:10px;height:10px;background:rgba(255,255,255,0.5);border-radius:50%;cursor:pointer}.dot.active{background:var(--primary)}.social-links{padding:4rem 0;text-align:center;border-top:1px solid var(--border-color);margin-top:4rem}.social-links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1.5rem;margin-top:2rem}.social-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;background:var(--bg-card);border:2px solid var(--border-color);border-radius:0.75rem;text-decoration:none;color:var(--text-primary);transition:all 0.3s ease;font-weight:600;font-size:0.9rem}.social-btn:hover{background:var(--primary);color:var(--bg-dark);border-color:var(--primary);transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.3)}.social-icon{font-size:2rem;margin-bottom:0.75rem}.social-link{display:inline-block;margin:0 1rem;font-size:1.1rem;color:var(--text-secondary)}.social-link:hover{color:var(--primary)}.contact{padding:6rem 0;background:linear-gradient(135deg,#1a2332 0%,var(--bg-dark) 100%)}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.contact-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color)}.contact-card h3{font-size:1.5rem;margin-bottom:1rem}.contact-info a,.contact-info p{display:block;margin-bottom:0.5rem;color:var(--text-secondary)}.contact-card .btn{margin-top:1.5rem;width:100%}.contact-image-container{margin-top:2rem;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2)}.contact-image-container img{width:100%;height:auto;display:block}footer{border-top:1px solid var(--border-color);padding:3rem 0;text-align:center;color:var(--text-secondary)}footer a{color:var(--primary)}footer a:hover{color:var(--accent)}@media (max-width:768px){.hero h1{font-size:2rem}.section-title{font-size:2rem}nav ul{display:none}}
-      .skip-to-content {
-        position: absolute;
-        top: -40px;
-        left: 0;
-        background: var(--primary);
-        color: var(--bg-dark);
-        padding: 8px;
-        text-decoration: none;
-        z-index: 100;
-        border-radius: 0 0 4px 0;
-      }
-      
-      .skip-to-content:focus {
-        top: 0;
-      }
-      
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-    </style>
-  </head>
-
-  <body>
-  <a href="#main-content" class="skip-to-content">Skip to main content</a>
-  
-    <!-- Navigation -->
-    <nav role="navigation">
-      <div class="container">
-        <div class="logo">Bayezid<span>.</span></div>
-        <button class="menu-toggle" id="menuToggle" aria-expanded="false"><span class="sr-only">Toggle navigation menu</span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-        <ul id="navMenu">
-          <li><a href="#about" data-i18n="nav.about">About</a></li>
-          <li><a href="#services" data-i18n="nav.services">Services</a></li>
-          <li><a href="#achievements" data-i18n="nav.achievements">Achievements</a></li>
-          <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
-          <li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li>
-          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
-          <li class="lang-switcher-item">
-            <div class="language-switcher" id="languageSwitcher">
-              <button class="lang-btn active" data-lang="en" title="English">EN</button>
-              <button class="lang-btn" data-lang="es" title="Español">ES</button>
-              <button class="lang-btn" data-lang="ru" title="Русский">RU</button>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" role="main" id="main-content">
-      <div class="container">
-        <div class="hero-content">
-          <div>
-            <h1 data-i18n="hero.title">Full-stack Web Developer & Tech Provider</h1>
-            <p data-i18n="hero.description">Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in innovative digital ecosystem solutions and AI integration.</p>
-            <div class="hero-buttons">
-              <button class="btn btn-primary" onclick="document.getElementById('projects').scrollIntoView({behavior: 'smooth'})" data-i18n="hero.exploreWork">Explore My Work</button>
-              <button class="btn btn-secondary" onclick="document.getElementById('contact').scrollIntoView({behavior: 'smooth'})" data-i18n="hero.getInTouch">Get in Touch</button>
-            </div>
-            
-            <!-- Music Control Moved to Hero -->
-            <div class="music-control-container">
-              <button id="music-toggle" class="music-btn" title="Toggle Background Music"><span class="sr-only">Toggle background music</span>
-                <span id="music-icon">▶</span>
-              </button>
-              <span class="music-text" id="music-status">Play Background Music</span>
-              <div class="music-visualizer" id="music-visualizer">
-                <div class="music-bar paused"></div>
-                <div class="music-bar paused"></div>
-                <div class="music-bar paused"></div>
-                <div class="music-bar paused"></div>
-              </div>
-            </div>
-          </div>
-          <div class="hero-image">
-            <img src="assets/images/optimized/hero.webp" alt="Sayad md Bayezid Hosan - Full-stack Web Developer" width="400" height="300" loading="lazy" />
-          </div>
-        </div>
-        
-        <div class="stats">
-          <div class="stat">
-            <div class="stat-number">2,200+</div>
-            <div class="stat-label" data-i18n="stats.clients">Happy Clients Worldwide</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">2,140</div>
-            <div class="stat-label" data-i18n="stats.analyzed">Satisfied & Analyzed Clients</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">5+</div>
-            <div class="stat-label" data-i18n="stats.experience">Years Experience</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">98%</div>
-            <div class="stat-label" data-i18n="stats.retention">Client Retention Rate</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-      <div class="container">
-        <h2 class="section-title" data-i18n="about.title">About Me</h2>
-        <div class="about-content">
-          <div class="about-text">
-            <p data-i18n="about.description">As a Full-stack Web Developer, Digital Marketer, and Web Designer, I have built a reputation for delivering innovative digital solutions with 5+ years of experience. My expertise spans the entire digital ecosystem, from web development and AI integration to strategic digital marketing and tech entrepreneurship.</p>
-            <p data-i18n="about.description2">As a leading Tech Provider, I specialize in permission-based technical solutions and managing digital business assets. I am dedicated to helping my audience navigate digital platforms safely and efficiently by combining academic knowledge with practical technical innovation.</p>
-          </div>
-          <div class="about-text">
-            <p><strong>Professional Background:</strong> Founder of Connect with Bayezid and GenZ Frontier. With 2,200+ happy clients worldwide and 98% client retention rate, I have established myself as a trusted tech provider in the global digital ecosystem.</p>
-            <p><strong>Education:</strong> Final-year undergraduate student at Northern University Bangladesh, Department of English (Expected Graduation: June 2026)</p>
-            <p><strong>Location:</strong> Auliabad, Kalihati, Tangail, Bangladesh</p>
-          </div>
-          <div class="about-image-container">
-            <img src="assets/images/optimized/portrait.webp" alt="Sayad md Bayezid Hosan - Creative Portrait" width="400" height="300" loading="lazy" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-      <div class="container">
-        <h2 class="section-title" data-i18n="services.title">Services</h2>
-        <div class="services-grid">
-          <div class="service-card">
-            <div class="service-icon">🌐</div>
-            <h3>Full-stack Web Development</h3>
-            <p>Building scalable, high-performance web applications using modern technologies like React, Node.js, and JavaScript.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🎨</div>
-            <h3>Web Design</h3>
-            <p>Creating visually stunning and user-centric designs that enhance brand identity and user experience.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">📱</div>
-            <h3>Digital Marketing</h3>
-            <p>Strategic digital marketing solutions to increase online visibility, engagement, and conversion rates.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🤖</div>
-            <h3>AI Integration</h3>
-            <p>Integrating artificial intelligence and machine learning into digital solutions for enhanced functionality.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">🎯</div>
-            <h3>Tech Provider</h3>
-            <p>Providing end-to-end digital infrastructure and business asset management with high integrity.</p>
-          </div>
-          <div class="service-card">
-            <div class="service-icon">📹</div>
-            <h3>Content Creation</h3>
-            <p>Educational videos and tech tips to help audiences navigate digital platforms safely.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Achievements & Certifications Section -->
-    <section class="achievements" id="achievements">
-      <div class="container">
-        <h2 class="section-title" data-i18n="achievements.title">Achievements & Certifications</h2>
-        <div class="achievements-grid">
-          <div class="achievement-card">
-            <img src="assets/images/optimized/cert-marketing.webp" alt="Digital Marketing Certificate" class="achievement-image" width="300" height="200" loading="lazy" />
-            <div class="achievement-content">
-              <h3>Digital Marketing Mastery</h3>
-              <p>Professional certification in advanced digital marketing strategies, including SEO, content marketing, and conversion optimization.</p>
-              <span class="achievement-badge">Certified</span>
-              <span class="achievement-badge">Marketing</span>
-            </div>
-          </div>
-          
-          <div class="achievement-card">
-            <img src="assets/images/optimized/cert-video.webp" alt="Video Editing Certificate" class="achievement-image" width="300" height="200" loading="lazy" />
-            <div class="achievement-content">
-              <h3>Professional Video Editing</h3>
-              <p>Expert-level certification in video production and editing. Master of visual storytelling with cutting-edge tools and creative techniques.</p>
-              <span class="achievement-badge">Certified</span>
-              <span class="achievement-badge">Video</span>
-            </div>
-          </div>
-          
-          <div class="achievement-card">
-            <img src="assets/images/optimized/cert-canva-students.webp" alt="Canva Engaged Students" class="achievement-image" width="300" height="200" loading="lazy" />
-            <div class="achievement-content">
-              <h3>Canva Engaged Students</h3>
-              <p>Recognized for creating engaging and impactful visual content using Canva. Expertise in design principles and audience engagement.</p>
-              <span class="achievement-badge">Achievement</span>
-              <span class="achievement-badge">Design</span>
-            </div>
-          </div>
-          
-          <div class="achievement-card">
-            <img src="assets/images/optimized/cert-canva-ai.webp" alt="Canva Work Smarter with AI" class="achievement-image" width="300" height="200" loading="lazy" />
-            <div class="achievement-content">
-              <h3>AI-Powered Design Innovation</h3>
-              <p>Certified in leveraging artificial intelligence within Canva to create smarter, faster, and more innovative designs. Future-ready design expertise.</p>
-              <span class="achievement-badge">Certified</span>
-              <span class="achievement-badge">AI</span>
-            </div>
-          </div>
-          
-          <div class="achievement-card">
-            <img src="assets/images/optimized/cert-meta.webp" alt="Meta Advertiser Certification" class="achievement-image" width="300" height="200" loading="lazy" />
-            <div class="achievement-content">
-              <h3>Meta Certified Advertiser</h3>
-              <p>Professional certification from Meta demonstrating expertise in Facebook and Instagram advertising, audience targeting, and campaign optimization.</p>
-              <span class="achievement-badge">Certified</span>
-              <span class="achievement-badge">Advertising</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-            </div>
-    </section>
-
-<section class="latest-project" id="latest-project" style="padding-bottom: 50px;">
-    <div class="container">
-        <h2 class="section-title" data-i18n="projects.latestProject">Latest Project</h2>
-        <div id="latest-project-container">
-            <!-- Latest project will be loaded here -->
-        </div>
-    </div>
-</section>
-   
-
-    <!-- Projects Section -->
-    <section class="projects" id="projects">
-      <div class="container">
-        <h2 class="section-title" data-i18n="projects.title">Featured Projects</h2>
-        <div class="projects-grid" id="projects-grid">
-          <!-- Projects will be loaded here -->
-        </div>
-      </div>
-    </section>
-
-    <!-- Social Links -->
-    <section>
-      <div class="container">
-        <h2 class="section-title">Connect With Me</h2>
-        <div class="social-links-grid">
-          <a href="https://www.linkedin.com/in/sayadbayezid" class="social-btn" aria-label="Visit LinkedIn profile">
-            <div class="social-icon">💼</div>
-            <span>LinkedIn</span>
-          </a>
-          <a href="https://github.com/bayzed123" class="social-btn" target="_blank" rel="noopener noreferrer me" title="GitHub">
-            <div class="social-icon">🐙</div>
-            <span>GitHub</span>
-          </a>
-          <a href="https://www.facebook.com/sayadbayezid" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Facebook Personal">
-            <div class="social-icon">👤</div>
-            <span>Facebook</span>
-          </a>
-          <a href="https://www.facebook.com/bayezidhosan" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Facebook Profile">
-            <div class="social-icon">👨</div>
-            <span>Profile</span>
-          </a>
-          <a href="https://www.facebook.com/bayzeddme" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Facebook Business">
-            <div class="social-icon">🏢</div>
-            <span>Business</span>
-          </a>
-          <a href="https://www.instagram.com/freelancer_bayezid0" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Instagram">
-            <div class="social-icon">📸</div>
-            <span>Instagram</span>
-          </a>
-          <a href="https://youtube.com/@cwbayezid" class="social-btn" target="_blank" rel="noopener noreferrer me" title="YouTube">
-            <div class="social-icon">📹</div>
-            <span>YouTube</span>
-          </a>
-          <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Crunchbase Personal">
-            <div class="social-icon">📊</div>
-            <span>Crunchbase</span>
-          </a>
-          <a href="https://www.crunchbase.com/organization/connect-with-bayezid" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Crunchbase CWB">
-            <div class="social-icon">🏆</div>
-            <span>CWB</span>
-          </a>
-          <a href="https://www.crunchbase.com/organization/genz-frontier" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Crunchbase GenZ">
-            <div class="social-icon">🚀</div>
-            <span>GenZ</span>
-          </a>
-          <a href="https://www.behance.net/syedbayxed" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Behance">
-            <div class="social-icon">🎨</div>
-            <span>Behance</span>
-          </a>
-          <a href="https://beacons.ai/connectwithbayezid" class="social-btn" target="_blank" rel="noopener noreferrer me" title="Beacons">
-            <div class="social-icon">✨</div>
-            <span>Beacons</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-      <div class="container">
-        <h2 class="section-title" data-i18n="contact.title">Get in Touch</h2>
-        <div class="contact-grid">
-          <div class="contact-card">
-            <h3>Personal Contact</h3>
-            <div class="contact-info">
-              <a href="mailto:Sayadmdbayezidhosan@gmail.com">Sayadmdbayezidhosan@gmail.com</a>
-              <a href="tel:+8801519601517">+880 1519 601517</a>
-              <a href="https://wa.me/message/TDYG575YENF6F1" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            </div>
-            <button class="btn btn-primary" onclick="window.location.href='mailto:Sayadmdbayezidhosan@gmail.com'">Send Email</button>
-          </div>
-          
-          <div class="contact-card">
-            <h3>Business Contact</h3>
-            <div class="contact-info">
-              <a href="mailto:cwb.agency@outlook.com">cwb.agency@outlook.com</a>
-              <a href="tel:+8801519601517">+880 1519 601517</a>
-              <a href="https://wa.me/message/TDYG575YENF6F1" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-            </div>
-            <button class="btn btn-primary" onclick="window.location.href='mailto:cwb.agency@outlook.com'">Send Email</button>
-          </div>
-          
-          <div class="contact-card">
-            <h3>Location</h3>
-            <div class="contact-info">
-              <p>Auliabad, Kalihati</p>
-              <p>Tangail, Bangladesh</p>
-              <a href="https://maps.google.com?q=Connect%20with%20Bayezid,%201970&ftid=0x37561d21b5d366ff:0xecdf106840337174&entry=gps" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
-            </div>
-            <div class="contact-image-container">
-              <img src="assets/images/optimized/portrait.webp" alt="Sayad md Bayezid Hosan - Creative Portrait" width="400" height="300" loading="lazy" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer role="contentinfo">
-      <div class="container">
-        <p data-i18n="footer.copyright">&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
-        <p>
-          <a href="https://connectbayezid-8dcdz46v.manus.space" target="_blank" rel="noopener noreferrer">Connect with Bayezid</a> | 
-          <a href="https://www.genzfrontir.com" target="_blank" rel="noopener noreferrer">GenZ Frontier</a> | 
-          <a href="https://connectwithbayezid.blogspot.com" target="_blank" rel="noopener noreferrer">Blog</a>
-        </p>
-        <p style="margin-top: 1rem; font-size: 0.9rem; color: #a0a0a0; border-top: 1px solid #2a2f3e; padding-top: 1rem;">
-          <strong>Portfolio & Blog System by</strong> <a href="https://www.sayadbayezid.com" target="_blank" rel="noopener noreferrer" style="color: #00D9FF; text-decoration: none;">Sayad Md Bayezid Hosan</a> | 
-          <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" rel="noopener noreferrer" style="color: #00D9FF; text-decoration: none;">Open Source</a>
-        </p>
-      </div>
-    </footer>
-
-    <!-- Perfect Schema Markup for SEO & Google Knowledge Panel (100% Score) -->
+    <style>*{margin:0;padding:0;box-sizing:border-box}:root{--primary:#00D9FF;--primary-dark:#0F1419;--accent:#FF6B35;--text-primary:#ffffff;--text-secondary:#a0a0a0;--bg-dark:#0F1419;--bg-card:#1a1f2e;--border-color:#2a2f3e}body{font-family:'Inter',sans-serif;background-color:var(--bg-dark);color:var(--text-primary);line-height:1.6}h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700}a{color:var(--primary);text-decoration:none;transition:all 0.3s ease}a:hover{color:var(--accent)}.container{max-width:1200px;margin:0 auto;padding:0 20px}.music-control-container{display:flex;align-items:center;gap:12px;margin-top:35px;margin-bottom:15px;background:rgba(0,217,255,0.1);padding:12px 20px;border-radius:50px;width:fit-content;border:2px solid var(--primary);transition:all 0.3s ease;z-index:100;position:relative;box-shadow:0 0 20px rgba(0,217,255,0.2)}.lang-switcher-item{display:flex;align-items:center;padding:0.5rem 1.5rem}.language-switcher{display:flex;gap:0.5rem}.lang-btn{padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);color:var(--text-secondary);border-radius:50px;cursor:pointer;font-size:0.8rem;font-weight:700;transition:all 0.3s ease;line-height:1}.lang-btn:hover{border-color:var(--primary);color:var(--primary);background:rgba(0,217,255,0.1)}.lang-btn.active{background:var(--primary);color:var(--bg-dark);border-color:var(--primary)}@media (min-width:768px){.lang-switcher-item{padding:0;margin-left:1.5rem}}.music-control-container:hover{background:rgba(255,255,255,0.1);border-color:var(--primary)}.music-btn{width:40px;height:40px;border-radius:50%;background:var(--primary);border:none;color:var(--bg-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,217,255,0.3)}.music-btn:hover{transform:scale(1.1);background:var(--accent);box-shadow:0 4px 15px rgba(255,107,53,0.3)}.music-text{font-size:0.9rem;font-weight:500;color:var(--text-primary)}.music-visualizer{display:flex;align-items:flex-end;gap:2px;height:15px}.music-bar{width:3px;background:var(--primary);border-radius:2px;animation:music-bounce 1s ease-in-out infinite alternate;height:5px}.music-bar:nth-child(2){animation-delay:0.2s}.music-bar:nth-child(3){animation-delay:0.4s}.music-bar:nth-child(4){animation-delay:0.6s}@keyframes music-bounce{0%{height:5px}100%{height:15px}}.music-bar.paused{animation-play-state:paused;height:5px}nav{position:sticky;top:0;z-index:50;background:rgba(15,20,25,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color);padding:1rem 0}nav .container{display:flex;justify-content:space-between;align-items:center}.logo{font-size:1.5rem;font-weight:700;font-family:'Poppins',sans-serif}.logo span{color:var(--primary)}nav ul{display:none;list-style:none;gap:2rem;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(15,20,25,0.95);padding:1rem 0;border-bottom:1px solid var(--border-color)}nav ul.active{display:flex}@media (min-width:768px){nav ul{display:flex !important;position:static;flex-direction:row;background:none;padding:0;border:none}}nav ul li{padding:0.5rem 1.5rem}@media (min-width:768px){nav ul li{padding:0}}.menu-toggle{display:flex;flex-direction:column;gap:0.4rem;background:none;border:none;cursor:pointer;padding:0.5rem}.menu-toggle span{width:25px;height:3px;background:var(--primary);border-radius:2px;transition:all 0.3s ease}.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}@media (min-width:768px){.menu-toggle{display:none}}nav a{font-size:0.875rem;font-weight:500;transition:color 0.3s ease;display:block}@media (min-width:768px){nav a{display:inline}}.hero{min-height:100vh;display:flex;align-items:center;padding:4rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%);position:relative;overflow:hidden}.hero::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(0,217,255,0.1) 0%,transparent 70%);border-radius:50%;top:-100px;left:-100px;animation:float 6s ease-in-out infinite}.hero::after{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(255,107,53,0.1) 0%,transparent 70%);border-radius:50%;bottom:-50px;right:-50px;animation:float 8s ease-in-out infinite reverse}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(30px)}}.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:2rem;align-items:center}@media (min-width:768px){.hero-content{grid-template-columns:1fr 1fr}}.hero h1{font-size:3rem;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#ffffff 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:1.1rem;color:var(--text-secondary);margin-bottom:2rem;line-height:1.8}.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}.btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;border:none;font-size:1rem}.btn-primary{background:var(--primary);color:var(--bg-dark)}.btn-primary:hover{background:var(--accent);transform:translateY(-2px)}.btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary)}.btn-secondary:hover{background:var(--primary);color:var(--bg-dark)}.hero-image{position:relative;display:flex;justify-content:center}.hero-image img{width:100%;max-width:400px;border-radius:1rem;border:2px solid var(--primary);box-shadow:0 0 40px rgba(0,217,255,0.3)}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border-color)}.stat{text-align:center}.stat-number{font-size:2.5rem;font-weight:700;color:var(--primary);font-family:'Poppins',sans-serif}.stat-label{color:var(--text-secondary);font-size:0.9rem;margin-top:0.5rem}.about{padding:6rem 0;background:var(--bg-dark)}.section-title{font-size:2.5rem;margin-bottom:3rem;text-align:center;font-family:'Poppins',sans-serif}.about-content{display:grid;grid-template-columns:1fr;gap:3rem;align-items:start}@media (min-width:768px){.about-content{grid-template-columns:1fr 1fr 1fr}}.about-text p{margin-bottom:1rem;color:var(--text-secondary);line-height:1.8}.about-text strong{color:var(--primary)}.about-image-container{position:relative;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2);transition:transform 0.3s ease}.about-image-container:hover{transform:scale(1.05)}.about-image-container img{width:100%;height:auto;display:block}.services{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.service-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.service-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.1)}.service-icon{font-size:3rem;margin-bottom:1rem;color:var(--primary)}.service-card h3{font-size:1.5rem;margin-bottom:0.75rem}.service-card p{color:var(--text-secondary);font-size:0.95rem}.achievements{padding:6rem 0;background:var(--bg-dark)}.achievements-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.achievement-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.achievement-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.15)}.achievement-image{width:100%;height:200px;object-fit:cover;display:block}.achievement-content{padding:1.5rem}.achievement-content h3{font-size:1.3rem;margin-bottom:0.75rem;color:var(--primary)}.achievement-content p{color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;line-height:1.6}.achievement-badge{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:0.75rem;font-weight:600;margin-right:0.5rem}.projects{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.project-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.project-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(255,107,53,0.1)}.project-image img{width:100%;height:200px;object-fit:cover}.project-content{padding:1.5rem}.project-content h3{font-size:1.5rem;margin-bottom:0.75rem}.project-content p{color:var(--text-secondary);font-size:0.95rem;margin-bottom:1rem}.project-tags{margin-bottom:1rem}.tag{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.3rem 0.7rem;border-radius:0.3rem;font-size:0.8rem;margin-right:0.5rem;margin-bottom:0.5rem}.project-link{display:inline-block;color:var(--accent);font-weight:600;margin-top:0.5rem}.slider-container{position:relative;width:100%;height:400px;overflow:hidden;border-radius:12px 12px 0 0}.slider-wrapper{display:flex;transition:transform 0.5s ease-in-out;height:100%}.slide{min-width:100%;height:100%}.slide img{width:100%;height:100%;object-fit:cover}.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;padding:10px 15px;cursor:pointer;z-index:10;border-radius:50%;font-size:1.2rem}.slider-btn:hover{background:var(--primary)}.prev-btn{left:10px}.next-btn{right:10px}.slider-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:8px}.dot{width:10px;height:10px;background:rgba(255,255,255,0.5);border-radius:50%;cursor:pointer}.dot.active{background:var(--primary)}.social-links{padding:4rem 0;text-align:center;border-top:1px solid var(--border-color);margin-top:4rem}.social-links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1.5rem;margin-top:2rem}.social-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;background:var(--bg-card);border:2px solid var(--border-color);border-radius:0.75rem;text-decoration:none;color:var(--text-primary);transition:all 0.3s ease;font-weight:600;font-size:0.9rem}.social-btn:hover{background:var(--primary);color:var(--bg-dark);border-color:var(--primary);transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.3)}.social-icon{font-size:2rem;margin-bottom:0.75rem}.social-link{display:inline-block;margin:0 1rem;font-size:1.1rem;color:var(--text-secondary)}.social-link:hover{color:var(--primary)}.contact{padding:6rem 0;background:linear-gradient(135deg,#1a2332 0%,var(--bg-dark) 100%)}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.contact-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color)}.contact-card h3{font-size:1.5rem;margin-bottom:1rem}.contact-info a,.contact-info p{display:block;margin-bottom:0.5rem;color:var(--text-secondary)}.contact-card .btn{margin-top:1.5rem;width:100%}.contact-image-container{margin-top:2rem;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2)}.contact-image-container img{width:100%;height:auto;display:block}footer{border-top:1px solid var(--border-color);padding:3rem 0;text-align:center;color:var(--text-secondary)}footer a{color:var(--primary)}footer a:hover{color:var(--accent)}@media (max-width:768px){.hero h1{font-size:2rem}.section-title{font-size:2rem}nav ul{display:none}}</style>
     <script type="application/ld+json">
 [
   {
@@ -437,68 +71,27 @@
     "@type": "Person",
     "@id": "https://sayadbayezid.com#person",
     "name": "Sayad md Bayezid Hosan",
-    "givenName": "Sayad md",
-    "familyName": "Bayezid Hosan",
-    "gender": "Male",
-    "birthDate": "2003-06-26",
-    "alternateName": [
-      "Bayezid",
-      "Sayad Bayezid",
-      "Bayezid Hosan",
-      "Mr. Bayezid",
-      "Sayad md Bayezid Hosan"
-    ],
-    "nickname": "Bayezid",
     "url": "https://sayadbayezid.com",
-    "image": [
-      {
-        "@type": "ImageObject",
-        "url": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-        "width": 400,
-        "height": 400
-      },
-      {
-        "@type": "ImageObject",
-        "url": "https://i.postimg.cc/0QvjMK2d/348943F3-71E0-4E67-B9ED-DB445FD0D602-Original.png",
-        "width": 400,
-        "height": 400
-      },
-      {
-        "@type": "ImageObject",
-        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Sayad_Md_Bayezid_Hosan_Portrait.jpg"
-      }
-    ],
-    "description": "Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier. Leading Tech Provider specializing in web development, AI integration, and innovative digital ecosystem solutions.",
-    "disambiguatingDescription": "Full-stack Web Developer, Digital Marketer, and Tech Provider from Bangladesh. Founder of Connect with Bayezid and GenZ Frontier.",
-    "jobTitle": [
-      "Full-stack Web Developer",
-      "Digital Marketer",
-      "Web Designer",
-      "Tech Provider",
-      "Technology Entrepreneur",
-      "AI Integration Specialist",
-      "Technical Expert"
-    ],
-    "affiliation": [
+    "image": {
+      "@type": "ImageObject",
+      "@id": "https://sayadbayezid.com#primaryimage",
+      "url": "https://sayadbayezid.com/assets/images/optimized/hero.webp",
+      "width": 1200,
+      "height": 630,
+      "caption": "Sayad md Bayezid Hosan Portrait"
+    },
+    "description": "Full-stack Web Developer, Digital Marketer, and Tech Provider. Founder of Connect with Bayezid and GenZ Frontier.",
+    "jobTitle": "Full-stack Web Developer",
+    "worksFor": [
       {
         "@type": "Organization",
-        "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
         "name": "Connect with Bayezid",
-        "url": "https://connectbayezid-8dcdz46v.manus.space",
-        "sameAs": [
-          "https://www.connectwithbayezid.it.com",
-          "https://www.facebook.com/bayzeddme"
-        ],
-        "description": "Digital brand and business hub for technology entrepreneurship and digital solutions",
-        "founder": {
-          "@type": "Person",
-          "name": "Sayad md Bayezid Hosan"
-        }
+        "sameAs": "https://connectbayezid-8dcdz46v.manus.space",
+        "description": "Digital brand and business hub specializing in web development and AI integration"
       },
       {
         "@type": "Organization",
         "name": "GenZ Frontier",
-        "url": "https://www.genzfrontir.com",
         "sameAs": "https://www.crunchbase.com/organization/genz-frontier",
         "description": "Digital newsportal for modern generation insights and tech trends",
         "founder": {
@@ -859,7 +452,6 @@
     ]
   }
 ]
-
     </script>
     <script type="application/ld+json">
     {
@@ -886,9 +478,554 @@
     <script defer src="i18n/i18n.js"></script>
     <script defer src="i18n/dynamic-translator.js"></script>
     
+    <style>
+      .skip-to-content {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--primary);
+        color: var(--bg-dark);
+        padding: 8px;
+        z-index: 100;
+      }
+      .skip-to-content:focus {
+        top: 0;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    
+    <nav role="navigation">
+      <div class="container">
+        <a href="/" class="logo">Sayad md <span>Bayezid</span></a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <ul id="navMenu">
+          <li><a href="#about" data-i18n="nav.about">About</a></li>
+          <li><a href="#services" data-i18n="nav.services">Services</a></li>
+          <li><a href="#achievements" data-i18n="nav.achievements">Achievements</a></li>
+          <li><a href="#projects" data-i18n="nav.projects">Projects</a></li>
+          <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+          <li class="lang-switcher-item">
+            <div class="language-switcher">
+              <button class="lang-btn" data-lang="en" aria-label="Switch to English">EN</button>
+              <button class="lang-btn" data-lang="es" aria-label="Switch to Spanish">ES</button>
+              <button class="lang-btn" data-lang="ru" aria-label="Switch to Russian">RU</button>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-  
-        <!-- Mobile Menu Toggle Script -->
-    <script>const menuToggle = document.getElementById('menuToggle');const navMenu = document.getElementById('navMenu');menuToggle.addEventListener('click',function(){menuToggle.classList.toggle('active');navMenu.classList.toggle('active');});const navLinks = navMenu.querySelectorAll('a');navLinks.forEach ( link=>{link.addEventListener('click',function(){menuToggle.classList.remove('active');navMenu.classList.remove('active');});});document.addEventListener('click',function ( event){if(!event.target.closest('nav')){menuToggle.classList.remove('active');navMenu.classList.remove('active');}});async function loadProjects(){try { const response = await fetch('/projects / projects.json');if(!response.ok ) throw new Error('Failed to load projects');const data = await response.json();window.projectsData = data ; const projects = data.projects||[];const latestContainer = document.getElementById('latest - project - container');const gridContainer = document.getElementById('projects - grid');const latest = projects.find ( p=>p.is_latest)||projects[0];if ( latest){let mediaHTML='';if ( latest.video_url){if ( latest.video_url.includes('drive.google.com')){const driveId = latest.video_url.match(/\/file\/d\/(.+?)\ const embedUrl = driveId ? `https : mediaHTML=`<div style="position : relative ; padding - bottom : 56.25%;height : 0;overflow : hidden ; border - radius : 12px 12px 0 0 ; background:#000;"><iframe src="${embedUrl}" style="position : absolute ; top : 0;left : 0;width : 100%;height : 100%;border : 0;" allow="autoplay"></iframe></div>`;}else { const isMov = latest.video_url.toLowerCase().includes('.mov');const videoType = isMov ? 'video / quicktime':'video / mp4';mediaHTML=`<video width="100%" autoplay loop muted playsinline controls style="border - radius : 12px 12px 0 0 ; object - fit : cover ; max - height : 500px ; background:#000;"><source src="${latest.video_url}" type="${videoType}"></video>`;}}else if ( latest.images&&latest.images.length > 0){mediaHTML=`<div class="slider - container"><div class="slider - wrapper" id="slider - wrapper">${latest.images.map ( img=>`<div class="slide"><img src="${img}" alt="${latest.title}"></div>`).join('')}</div>${latest.images.length > 1 ? `<button class="slider - btn prev - btn" onclick="moveSlide(-1)">❮</button><button class="slider - btn next - btn" onclick="moveSlide ( 1)">❯</button><div class="slider - dots">${latest.images.map((_ , i)=>`<div class="dot ${i===0 ? 'active':''}" onclick="currentSlide(${i})"></div>`).join('')}</div>`:''}</div>`;}else if ( latest.image_url){mediaHTML=`<img src="${latest.image_url}" alt="${latest.title}" style="border - radius : 12px 12px 0 0 ; object - fit : cover ; max - height : 500px ; width : 100%;">`;}latestContainer.innerHTML=`<div class="project - card" style="display : flex ; flex - direction : column ; width : 100%;max - width : 1000px ; margin : 0 auto;">${mediaHTML}<div class="project - content"><h3>${latest.title}</h3><p>${latest.description}</p>${latest.key_features ? `<div class="key - features" style="margin : 15px 0;"><h4 style="margin - bottom : 8px ; color : var(--accent - color);">Key Features:</h4><ul style="list - style : none ; padding : 0;">${latest.key_features.map ( feature=>`<li style="margin - bottom : 5px ; display : flex ; align - items : center;"><span style="color : var(--accent - color);margin - right : 8px;">•</span>${feature}</li>`).join('')}</ul></div>`:''}<div class="project - tags">${latest.tags.map ( tag=>`<span class="tag">${tag}</span>`).join('')}</div>${latest.link ? `<a href="${latest.link}" class="project - link" target="_blank" rel="noopener noreferrer" style="margin - top : 15px ; display : inline - block;">View Project →</a>`:''}</div></div>`;if ( latest.images&&latest.images.length > 1){initSlider('slider - wrapper');}}const featuredProjects = projects.filter ( p=>!p.is_latest);gridContainer.innerHTML = featuredProjects.map ( project=>{let gridMediaHTML='';if ( project.video_url){if ( project.video_url.includes('drive.google.com')){const driveId = project.video_url.match(/\/file\/d\/(.+?)\ const embedUrl = driveId ? `https : gridMediaHTML=`<div class="grid - media" style="background:#000 ; border - radius : 12px 12px 0 0 ; overflow : hidden ; position : relative ; padding - bottom : 56.25%;height : 0;"><iframe src="${embedUrl}" style="position : absolute ; top : 0;left : 0;width : 100%;height : 100%;border : 0;" allow="autoplay"></iframe></div>`;}else { const isMov = project.video_url.toLowerCase().includes('.mov');const videoType = isMov ? 'video / quicktime':'video / mp4';gridMediaHTML=`<div class="grid - media" style="background:#000 ; border - radius : 12px 12px 0 0 ; overflow : hidden;"><video width="100%" autoplay loop muted playsinline controls style="display : block ; object - fit : cover ; height : 200px;"><source src="${project.video_url}" type="${videoType}">Your browser does not support the video tag.</video></div>`;}}else if ( project.images&&project.images.length > 0){if ( project.images.length > 1){const sliderId=`slider-${project.id}`;gridMediaHTML=`<div class="slider - container" style="height : 200px;"><div class="slider - wrapper" id="${sliderId}">${project.images.map ( img=>`<div class="slide"><img src="${img}" alt="${project.title}"></div>`).join('')}</div><div class="slider - dots">${project.images.map((_ , i)=>`<div class="dot ${i===0 ? 'active':''}" data - slider="${sliderId}" data - index="${i}"></div>`).join('')}</div></div>`;}else { gridMediaHTML=`<div class="grid - media"><img src="${project.images[0]}" alt="${project.title}" style="border - radius : 12px 12px 0 0 ; object - fit : cover ; height : 200px ; width : 100%;"></div>`;}}else if ( project.image_url){gridMediaHTML=`<div class="grid - media"><img src="${project.image_url}" alt="${project.title}" style="border - radius : 12px 12px 0 0 ; object - fit : cover ; height : 200px ; width : 100%;"></div>`;}let audioHTML='';if ( project.audio_links&&project.audio_links.length > 0){audioHTML=`<div class="project - audio" style="margin - top : 15px;">${project.audio_links.map ( audio=>`<div style="margin - bottom : 10px;"><p style="font - size : 0.8rem ; color : var(--text - secondary);margin - bottom : 5px;">${audio.title}</p><audio controls style="width : 100%;height : 30px;"><source src="${audio.url}" type="audio / mpeg">Your browser does not support the audio element.</audio></div>`).join('')}</div>`;}return `<div class="project - card">${gridMediaHTML}<div class="project - content"><h3>${project.title}</h3><p>${project.description}</p>${audioHTML}<div class="project - tags" style="margin - top : 15px;">${project.tags.map ( tag=>`<span class="tag">${tag}</span>`).join('')}</div>${project.link ? `<a href="${project.link}" class="project - link" target="_blank" rel="noopener noreferrer" style="margin - top : 10px ; display : inline - block;">View Project →</a>`:''}</div></div>`;}).join('');featuredProjects.forEach ( p=>{if ( p.images&&p.images.length > 1){initSlider(`slider-${p.id}`);}});}catch ( error){console.error('Error loading projects:',error);}}document.addEventListener('DOMContentLoaded',()=>{loadProjects();const musicToggle = document.getElementById('music - toggle');const musicIcon = document.getElementById('music - icon');const musicStatus = document.getElementById('music - status');const musicBars = document.querySelectorAll('.music - bar');let player ; const tag = document.createElement('script');tag.src="https : const firstScriptTag = document.getElementsByTagName('script')[0];firstScriptTag.parentNode.insertBefore ( tag , firstScriptTag);const playerDiv = document.createElement('div');playerDiv.id='youtube - player';playerDiv.style.display='none';document.body.appendChild ( playerDiv);window.onYouTubeIframeAPIReady = function(){player = new YT.Player('youtube - player',{height:'0',width:'0',videoId:'eFDZOoVB2Ek',playerVars:{'autoplay':1,'loop':1,'playlist':'eFDZOoVB2Ek','controls':0,'showinfo':0,'modestbranding':1},events:{'onReady':onPlayerReady,'onStateChange':onPlayerStateChange}});};let isPlaying = false ; function onPlayerReady ( event){event.target.playVideo();event.target.setVolume ( 50);const startAutoplay=()=>{if(!isPlaying){player.playVideo();document.removeEventListener('click',startAutoplay);document.removeEventListener('touchstart',startAutoplay);document.removeEventListener('scroll',startAutoplay);}};document.addEventListener('click',startAutoplay);document.addEventListener('touchstart',startAutoplay);document.addEventListener('scroll',startAutoplay);}function onPlayerStateChange ( event){if ( event.data==YT.PlayerState.PLAYING){isPlaying = true ; updateUI ( true);}else if ( event.data==YT.PlayerState.PAUSED||event.data==YT.PlayerState.ENDED){isPlaying = false ; updateUI ( false);}}function updateUI ( playing){if ( playing){musicIcon.textContent='⏸';musicStatus.textContent='Music Playing';musicBars.forEach ( bar=>bar.classList.remove('paused'));}else { musicIcon.textContent='▶';musicStatus.textContent='Music Paused';musicBars.forEach ( bar=>bar.classList.add('paused'));}}musicToggle.addEventListener('click',(e)=>{e.stopPropagation();if ( isPlaying){player.pauseVideo();}else { player.playVideo();}});});const sliders={};function initSlider ( id){sliders[id]=0 ; const wrapper = document.getElementById ( id);if(!wrapper ) return ; const dots = wrapper.parentElement.querySelectorAll('.dot');dots.forEach ( dot=>{dot.addEventListener('click',(e)=>{const index = parseInt ( e.target.dataset.index);currentSlide ( id , index);});});setInterval(()=>moveSlide ( id , 1),5000);}window.moveSlide = function ( id , n){const wrapper = document.getElementById ( id);if(!wrapper ) return ; const slides = wrapper.querySelectorAll('.slide');if ( slides.length===0 ) return ; sliders[id]=(sliders[id]+n + slides.length)%slides.length ; updateSlider ( id);}window.currentSlide = function ( id , n){sliders[id]=n ; updateSlider ( id);}function updateSlider ( id){const wrapper = document.getElementById ( id);if(!wrapper ) return ; const dots = wrapper.parentElement.querySelectorAll('.dot');wrapper.style.transform=`translateX(-${sliders[id]*100}%)`;dots.forEach((dot , i)=>{dot.classList.toggle('active',i===sliders[id]);});}</script>
+    <main id="main-content" role="main">
+      <!-- Hero Section -->
+      <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-content">
+            <div class="hero-text">
+              <h1 data-i18n="hero.title">Full-stack Web Developer & Tech Provider</h1>
+              <p data-i18n="hero.description">Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier, specializing in innovative digital ecosystem solutions and AI integration.</p>
+              <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary" data-i18n="hero.exploreWork">Explore My Work</a>
+                <a href="#contact" class="btn btn-secondary" data-i18n="hero.getInTouch">Get in Touch</a>
+              </div>
+              
+              <div class="music-control-container" id="music-toggle">
+                <button class="music-btn" id="music-btn" aria-label="Toggle background music">
+                  <span id="music-icon">▶</span>
+                </button>
+                <div class="music-info">
+                  <div class="music-text" id="music-status">Music Paused</div>
+                  <div class="music-visualizer">
+                    <div class="music-bar paused"></div>
+                    <div class="music-bar paused"></div>
+                    <div class="music-bar paused"></div>
+                    <div class="music-bar paused"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="hero-image">
+              <img src="assets/images/optimized/hero.webp" alt="Sayad md Bayezid Hosan" width="400" height="400" />
+            </div>
+          </div>
+          
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-number">2,200+</div>
+              <div class="stat-label" data-i18n="stats.clients">Happy Clients Worldwide</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">98%</div>
+              <div class="stat-label" data-i18n="stats.retention">Client Retention Rate</div>
+            </div>
+            <div class="stat">
+              <div class="stat-number">5+</div>
+              <div class="stat-label" data-i18n="stats.experience">Years Experience</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="about" id="about">
+        <div class="container">
+          <h2 class="section-title" data-i18n="about.title">About Me</h2>
+          <div class="about-content">
+            <div class="about-text">
+              <p data-i18n="about.description">As a Full-stack Web Developer, Digital Marketer, and Web Designer, I have built a reputation for delivering innovative digital solutions with 5+ years of experience. My expertise spans the entire digital ecosystem, from web development and AI integration to strategic digital marketing and tech entrepreneurship.</p>
+              <p data-i18n="about.description2">As a leading Tech Provider, I specialize in permission-based technical solutions and managing digital business assets. I am dedicated to helping my audience navigate digital platforms safely and efficiently by combining academic knowledge with practical technical innovation.</p>
+            </div>
+            <div class="about-image-container">
+              <img src="assets/images/optimized/portrait.webp" alt="Sayad md Bayezid Hosan Portrait" width="400" height="500" loading="lazy" />
+            </div>
+            <div class="about-highlights">
+              <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3 data-i18n="about.highlight1">Full-stack Development</h3>
+              </div>
+              <div class="service-card">
+                <div class="service-icon">📈</div>
+                <h3 data-i18n="about.highlight2">Digital Marketing</h3>
+              </div>
+              <div class="service-card">
+                <div class="service-icon">🚀</div>
+                <h3 data-i18n="about.highlight3">Tech Innovation</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Section -->
+      <section class="services" id="services">
+        <div class="container">
+          <h2 class="section-title" data-i18n="services.title">Services</h2>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">🌐</div>
+              <h3 data-i18n="services.webDevelopment">Web Development</h3>
+              <p data-i18n="services.webDevelopmentDesc">Custom websites and web applications built with modern technologies</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">📣</div>
+              <h3 data-i18n="services.digitalMarketing">Digital Marketing</h3>
+              <p data-i18n="services.digitalMarketingDesc">Strategic digital marketing solutions to grow your business</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">🤖</div>
+              <h3 data-i18n="services.aiIntegration">AI Integration</h3>
+              <p data-i18n="services.aiIntegrationDesc">Cutting-edge AI solutions for business automation</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">💡</div>
+              <h3 data-i18n="services.consulting">Tech Consulting</h3>
+              <p data-i18n="services.consultingDesc">Expert guidance on digital transformation and tech strategy</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Achievements Section -->
+      <section class="achievements" id="achievements">
+        <div class="container">
+          <h2 class="section-title" data-i18n="achievements.title">Achievements & Certifications</h2>
+          <div class="achievements-grid">
+            <div class="achievement-card">
+              <img src="assets/images/optimized/cert-marketing.webp" alt="Digital Marketing Certificate" class="achievement-image" width="300" height="200" loading="lazy" />
+              <div class="achievement-content">
+                <h3>Digital Marketing Mastery</h3>
+                <p>Professional certification in advanced digital marketing strategies, including SEO, content marketing, and conversion optimization.</p>
+                <span class="achievement-badge">Certified</span>
+                <span class="achievement-badge">Marketing</span>
+              </div>
+            </div>
+            
+            <div class="achievement-card">
+              <img src="assets/images/optimized/cert-video.webp" alt="Video Editing Certificate" class="achievement-image" width="300" height="200" loading="lazy" />
+              <div class="achievement-content">
+                <h3>Professional Video Editing</h3>
+                <p>Expert-level certification in video production and editing. Master of visual storytelling with cutting-edge tools and creative techniques.</p>
+                <span class="achievement-badge">Certified</span>
+                <span class="achievement-badge">Video</span>
+              </div>
+            </div>
+            
+            <div class="achievement-card">
+              <img src="assets/images/optimized/cert-canva-students.webp" alt="Canva Engaged Students" class="achievement-image" width="300" height="200" loading="lazy" />
+              <div class="achievement-content">
+                <h3>Canva Engaged Students</h3>
+                <p>Recognized for creating engaging and impactful visual content using Canva. Expertise in design principles and audience engagement.</p>
+                <span class="achievement-badge">Achievement</span>
+                <span class="achievement-badge">Design</span>
+              </div>
+            </div>
+            
+            <div class="achievement-card">
+              <img src="assets/images/optimized/cert-canva-ai.webp" alt="Canva Work Smarter with AI" class="achievement-image" width="300" height="200" loading="lazy" />
+              <div class="achievement-content">
+                <h3>AI-Powered Design Innovation</h3>
+                <p>Certified in leveraging artificial intelligence within Canva to create smarter, faster, and more innovative designs. Future-ready design expertise.</p>
+                <span class="achievement-badge">Certified</span>
+                <span class="achievement-badge">AI</span>
+              </div>
+            </div>
+            
+            <div class="achievement-card">
+              <img src="assets/images/optimized/cert-meta.webp" alt="Meta Advertiser Certification" class="achievement-image" width="300" height="200" loading="lazy" />
+              <div class="achievement-content">
+                <h3>Meta Certified Advertiser</h3>
+                <p>Professional certification from Meta demonstrating expertise in Facebook and Instagram advertising, audience targeting, and campaign optimization.</p>
+                <span class="achievement-badge">Certified</span>
+                <span class="achievement-badge">Advertising</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Latest Project Section -->
+      <section class="latest-project" id="latest-project" style="padding-bottom: 50px;">
+        <div class="container">
+          <h2 class="section-title" data-i18n="projects.latestProject">Latest Project</h2>
+          <div id="latest-project-container">
+            <!-- Latest project will be loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section -->
+      <section class="projects" id="projects">
+        <div class="container">
+          <h2 class="section-title" data-i18n="projects.title">Featured Projects</h2>
+          <div class="projects-grid" id="projects-grid">
+            <!-- Projects will be loaded here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact" id="contact">
+        <div class="container">
+          <h2 class="section-title" data-i18n="contact.title">Get In Touch</h2>
+          <div class="contact-grid">
+            <div class="contact-card">
+              <div class="service-icon">📧</div>
+              <h3 data-i18n="contact.email">Email</h3>
+              <p><a href="mailto:Sayadmdbayezidhosan@gmail.com">Sayadmdbayezidhosan@gmail.com</a></p>
+              <p><a href="mailto:cwb.agency@outlook.com">cwb.agency@outlook.com</a></p>
+            </div>
+            <div class="contact-card">
+              <div class="service-icon">📱</div>
+              <h3 data-i18n="contact.phone">Phone</h3>
+              <p><a href="tel:+8801519601517">+880 1519-601517</a></p>
+              <p>WhatsApp Available</p>
+            </div>
+            <div class="contact-card">
+              <div class="service-icon">📍</div>
+              <h3 data-i18n="contact.location">Location</h3>
+              <p>Tangail, Bangladesh</p>
+              <p>Serving Clients Worldwide</p>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <div class="social-links-grid">
+              <a href="https://www.linkedin.com/in/sayadbayezid" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit LinkedIn profile">
+                <div class="social-icon">💼</div>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/bayzed123" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit GitHub profile">
+                <div class="social-icon">🐙</div>
+                <span>GitHub</span>
+              </a>
+              <a href="https://www.facebook.com/sayadbayezid" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit Facebook profile">
+                <div class="social-icon">👥</div>
+                <span>Facebook</span>
+              </a>
+              <a href="https://youtube.com/@cwbayezid" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit YouTube channel">
+                <div class="social-icon">📺</div>
+                <span>YouTube</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer role="contentinfo">
+      <div class="container">
+        <p data-i18n="footer.copyright">© 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
+        <p><a href="privacy-policy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a></p>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+      const menuToggle = document.getElementById('menuToggle');
+      const navMenu = document.getElementById('navMenu');
+      
+      menuToggle.addEventListener('click', function() {
+        const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !expanded);
+        menuToggle.classList.toggle('active');
+        navMenu.classList.toggle('active');
+      });
+
+      const navLinks = navMenu.querySelectorAll('a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          menuToggle.classList.remove('active');
+          navMenu.classList.remove('active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('nav')) {
+          menuToggle.classList.remove('active');
+          navMenu.classList.remove('active');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+
+      async function loadProjects() {
+        try {
+          const response = await fetch('projects/projects.json');
+          if (!response.ok) throw new Error('Failed to load projects');
+          const data = await response.json();
+          window.projectsData = data;
+          
+          const lang = window.i18n ? window.i18n.getLanguage() : 'en';
+          if (window.dynamicTranslator) {
+            window.dynamicTranslator.translateProjects(data, lang);
+          } else {
+            // Fallback if dynamicTranslator is not ready
+            renderProjects(data, lang);
+          }
+        } catch (error) {
+          console.error('Error loading projects:', error);
+        }
+      }
+
+      function renderProjects(data, lang) {
+        const projects = data.projects || [];
+        const latestContainer = document.getElementById('latest-project-container');
+        const gridContainer = document.getElementById('projects-grid');
+        
+        if (!latestContainer || !gridContainer) return;
+
+        const latest = projects.find(p => p.is_latest) || projects[0];
+        if (latest) {
+          latestContainer.innerHTML = createProjectCardHTML(latest, lang, true);
+          if (latest.images && latest.images.length > 1) {
+            initSlider('slider-wrapper');
+          }
+        }
+
+        const featuredProjects = projects.filter(p => !p.is_latest);
+        gridContainer.innerHTML = featuredProjects.map(p => createProjectCardHTML(p, lang, false)).join('');
+        
+        featuredProjects.forEach(p => {
+          if (p.images && p.images.length > 1) {
+            initSlider(`slider-${p.id}`);
+          }
+        });
+      }
+
+      function createProjectCardHTML(project, lang, isLatest) {
+        let mediaHTML = '';
+        const viewProjectText = window.i18n ? window.i18n.t('projects.viewProject', lang) : 'View Project →';
+
+        if (project.video_url) {
+          if (project.video_url.includes('drive.google.com')) {
+            const driveId = project.video_url.match(/\/file\/d\/(.+?)\//);
+            const embedUrl = driveId ? `https://drive.google.com/file/d/${driveId[1]}/preview` : project.video_url;
+            mediaHTML = `<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px 12px 0 0; background: #000;"><iframe src="${embedUrl}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" allow="autoplay"></iframe></div>`;
+          } else {
+            const isMov = project.video_url.toLowerCase().includes('.mov');
+            const videoType = isMov ? 'video/quicktime' : 'video/mp4';
+            mediaHTML = `<video width="100%" ${isLatest ? 'autoplay' : ''} loop muted playsinline controls style="border-radius: 12px 12px 0 0; object-fit: cover; ${isLatest ? 'max-height: 500px;' : 'height: 200px;'} background: #000;"><source src="${project.video_url}" type="${videoType}"></video>`;
+          }
+        } else if (project.images && project.images.length > 0) {
+          if (project.images.length > 1) {
+            const sliderId = isLatest ? 'slider-wrapper' : `slider-${project.id}`;
+            mediaHTML = `
+              <div class="slider-container" style="${isLatest ? '' : 'height: 200px;'}">
+                <div class="slider-wrapper" id="${sliderId}">
+                  ${project.images.map(img => `<div class="slide"><img src="${img}" alt="${project.title}"></div>`).join('')}
+                </div>
+                ${isLatest ? `
+                  <button class="slider-btn prev-btn" onclick="moveSlide('${sliderId}', -1)">❮</button>
+                  <button class="slider-btn next-btn" onclick="moveSlide('${sliderId}', 1)">❯</button>
+                ` : ''}
+                <div class="slider-dots">
+                  ${project.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}" data-slider="${sliderId}" data-index="${i}" onclick="currentSlide('${sliderId}', ${i})"></div>`).join('')}
+                </div>
+              </div>`;
+          } else {
+            mediaHTML = `<img src="${project.images[0]}" alt="${project.title}" style="border-radius: 12px 12px 0 0; object-fit: cover; ${isLatest ? 'max-height: 500px;' : 'height: 200px;'} width: 100%;">`;
+          }
+        }
+
+        let audioHTML = '';
+        if (project.audio_links && project.audio_links.length > 0) {
+          audioHTML = `<div class="project-audio" style="margin-top: 15px;">${project.audio_links.map(audio => `<div style="margin-bottom: 10px;"><p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 5px;">${audio.title}</p><audio controls style="width: 100%; height: 30px;"><source src="${audio.url}" type="audio/mpeg"></audio></div>`).join('')}</div>`;
+        }
+
+        const cardStyle = isLatest ? 'style="display: flex; flex-direction: column; width: 100%; max-width: 1000px; margin: 0 auto;"' : '';
+        
+        return `
+          <div class="project-card" ${cardStyle}>
+            ${mediaHTML}
+            <div class="project-content">
+              <h3>${project.title}</h3>
+              <p>${project.description}</p>
+              ${project.key_features && isLatest ? `
+                <div class="key-features" style="margin: 15px 0;">
+                  <h4 style="margin-bottom: 8px; color: var(--accent);">Key Features:</h4>
+                  <ul style="list-style: none; padding: 0;">
+                    ${project.key_features.map(f => `<li style="margin-bottom: 5px; display: flex; align-items: center;"><span style="color: var(--accent); margin-right: 8px;">•</span>${f}</li>`).join('')}
+                  </ul>
+                </div>` : ''}
+              ${audioHTML}
+              <div class="project-tags" style="margin-top: 15px;">
+                ${project.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+              </div>
+              ${project.link ? `<a href="${project.link}" class="project-link" target="_blank" rel="noopener noreferrer" style="margin-top: 15px; display: inline-block;">${viewProjectText}</a>` : ''}
+            </div>
+          </div>`;
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        loadProjects();
+        
+        // Music Player
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        const musicStatus = document.getElementById('music-status');
+        const musicBars = document.querySelectorAll('.music-bar');
+        let player;
+        let isPlaying = false;
+
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        const playerDiv = document.createElement('div');
+        playerDiv.id = 'youtube-player';
+        playerDiv.style.display = 'none';
+        document.body.appendChild(playerDiv);
+
+        window.onYouTubeIframeAPIReady = function() {
+          player = new YT.Player('youtube-player', {
+            height: '0',
+            width: '0',
+            videoId: 'eFDZOoVB2Ek',
+            playerVars: {
+              'autoplay': 1,
+              'loop': 1,
+              'playlist': 'eFDZOoVB2Ek',
+              'controls': 0,
+              'showinfo': 0,
+              'modestbranding': 1
+            },
+            events: {
+              'onReady': onPlayerReady,
+              'onStateChange': onPlayerStateChange
+            }
+          });
+        };
+
+        function onPlayerReady(event) {
+          event.target.setVolume(50);
+          const startAutoplay = () => {
+            if (!isPlaying) {
+              player.playVideo();
+              document.removeEventListener('click', startAutoplay);
+              document.removeEventListener('touchstart', startAutoplay);
+              document.removeEventListener('scroll', startAutoplay);
+            }
+          };
+          document.addEventListener('click', startAutoplay);
+          document.addEventListener('touchstart', startAutoplay);
+          document.addEventListener('scroll', startAutoplay);
+        }
+
+        function onPlayerStateChange(event) {
+          if (event.data == YT.PlayerState.PLAYING) {
+            isPlaying = true;
+            updateUI(true);
+          } else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+            isPlaying = false;
+            updateUI(false);
+          }
+        }
+
+        function updateUI(playing) {
+          musicIcon.textContent = playing ? '⏸' : '▶';
+          musicStatus.textContent = playing ? 'Music Playing' : 'Music Paused';
+          musicBars.forEach(bar => bar.classList.toggle('paused', !playing));
+        }
+
+        musicToggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (isPlaying) player.pauseVideo();
+          else player.playVideo();
+        });
+      });
+
+      const sliders = {};
+      function initSlider(id) {
+        sliders[id] = 0;
+        const wrapper = document.getElementById(id);
+        if (!wrapper) return;
+        
+        // Auto-slide
+        if (sliders[id + '_interval']) clearInterval(sliders[id + '_interval']);
+        sliders[id + '_interval'] = setInterval(() => moveSlide(id, 1), 5000);
+      }
+
+      window.moveSlide = function(id, n) {
+        const wrapper = document.getElementById(id);
+        if (!wrapper) return;
+        const slides = wrapper.querySelectorAll('.slide');
+        if (slides.length === 0) return;
+        sliders[id] = (sliders[id] + n + slides.length) % slides.length;
+        updateSlider(id);
+      }
+
+      window.currentSlide = function(id, n) {
+        sliders[id] = n;
+        updateSlider(id);
+      }
+
+      function updateSlider(id) {
+        const wrapper = document.getElementById(id);
+        if (!wrapper) return;
+        const dots = wrapper.parentElement.querySelectorAll('.dot');
+        wrapper.style.transform = `translateX(-${sliders[id]*100}%)`;
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === sliders[id]);
+        });
+      }
+    </script>
   </body>
 </html>
