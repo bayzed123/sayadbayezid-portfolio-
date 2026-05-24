@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Blog - Sayad md Bayezid Hosan</title>
-    <meta name="description" content="Read the latest articles and insights from Sayad md Bayezid Hosan on web development, digital marketing, and tech entrepreneurship." />
+    <title data-i18n="blog.title">Blog - Sayad md Bayezid Hosan</title>
+    <meta name="description" data-i18n="blog.description" content="Read the latest articles and insights from Sayad md Bayezid Hosan on web development, digital marketing, and tech entrepreneurship." />
     <meta name="keywords" content="blog, web development, digital marketing, tech, entrepreneurship, Sayad Bayezid" />
     <meta name="author" content="Sayad md Bayezid Hosan" />
     <meta name="robots" content="index, follow" />
     
     <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="Blog - Sayad md Bayezid Hosan" />
-    <meta property="og:description" content="Read insights on web development, digital marketing, and tech entrepreneurship" />
+    <meta property="og:title" data-i18n="blog.title" content="Blog - Sayad md Bayezid Hosan" />
+    <meta property="og:description" data-i18n="blog.description" content="Read insights on web development, digital marketing, and tech entrepreneurship" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://sayadbayezid.com/blog.html" />
     
@@ -22,6 +22,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- i18n Scripts -->
+    <script src="i18n/i18n.js"></script>
+    <script src="i18n/dynamic-translator.js"></script>
     
     <style>
         * {
@@ -101,11 +105,74 @@
             display: none;
             list-style: none;
             gap: 2rem;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(15, 20, 25, 0.95);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        nav ul.active {
+            display: flex;
         }
         
         @media (min-width: 768px) {
             nav ul {
-                display: flex;
+                display: flex !important;
+                position: static;
+                flex-direction: row;
+                background: none;
+                padding: 0;
+                border: none;
+            }
+        }
+
+        nav ul li {
+            padding: 0.5rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            nav ul li {
+                padding: 0;
+            }
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none;
             }
         }
         
@@ -113,6 +180,39 @@
             font-size: 0.875rem;
             font-weight: 500;
             transition: color 0.3s ease;
+        }
+
+        .lang-switcher-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
         }
         
         /* Hero Section */
@@ -170,13 +270,6 @@
         .blog-section {
             padding: 6rem 0;
             background: var(--bg-dark);
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            text-align: center;
-            font-family: 'Poppins', sans-serif;
         }
         
         .blog-grid {
@@ -331,17 +424,29 @@
 
 <body>
     <!-- Navigation -->
-    <nav>
+    <nav role="navigation">
         <div class="container">
-            <div class="logo">Bayezid<span>.</span></div>
-            <ul>
+            <a href="/" class="logo">Sayad md <span>Bayezid</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="navMenu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#services">Services</a></li>
-                <li><a href="/#achievements">Achievements</a></li>
-                <li><a href="/#projects">Projects</a></li>
-                <li><a href="/blog.html">Blog</a></li>
-                <li><a href="/#contact">Contact</a></li>
+                <li><a href="/#about" data-i18n="nav.about">About</a></li>
+                <li><a href="/#services" data-i18n="nav.services">Services</a></li>
+                <li><a href="/#achievements" data-i18n="nav.achievements">Achievements</a></li>
+                <li><a href="/#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="/#contact" data-i18n="nav.contact">Contact</a></li>
+                <li class="lang-switcher-item">
+                    <div class="language-switcher">
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="es">ES</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -350,9 +455,8 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Blog & Insights</h1>
-                <p>Explore articles and insights on web development, digital marketing, tech entrepreneurship, and innovative digital solutions.</p>
-        
+                <h1 data-i18n="blog.title">Blog</h1>
+                <p data-i18n="blog.description">Read the latest articles and insights on web development, digital marketing, and tech entrepreneurship.</p>
             </div>
         </div>
     </section>
@@ -360,11 +464,15 @@
     <!-- Blog Section -->
     <section class="blog-section">
         <div class="container">
-            <div id="blog-container">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading blog posts...</p>
-                </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p data-i18n="blog.loading">Loading...</p>
+            </div>
+            <div class="blog-grid" id="blog-grid" style="display: none;">
+                <!-- Blog posts will be loaded here -->
+            </div>
+            <div class="empty-state" id="empty-state" style="display: none;">
+                <h3 data-i18n="blog.noBlogs">No blog posts found</h3>
             </div>
         </div>
     </section>
@@ -372,105 +480,99 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 Sayad md Bayezid Hosan. All Rights Reserved.</p>
-            <p>
-                <a href="/">Home</a> | 
-                <a href="https://connectwithbayezid.blogspot.com" target="_blank">Blogger</a> | 
-                <a href="https://github.com/bayzed123" target="_blank">GitHub</a> | 
-                <a href="https://www.linkedin.com/in/sayadbayezid" target="_blank">LinkedIn</a>
-            </p>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 1rem;">
-                <strong>Portfolio & Blog System by</strong> <a href="https://www.sayadbayezid.com" target="_blank" style="color: var(--primary);">Sayad Md Bayezid Hosan</a> | 
-                <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" style="color: var(--primary);">Open Source</a>
+            <p data-i18n="footer.copyright">&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #a0a0a0; border-top: 1px solid #2a2f3e; padding-top: 1rem;">
+                <strong data-i18n="footer.systemBy">Portfolio & Blog System by</strong> <a href="https://www.sayadbayezid.com" target="_blank" style="color: #00D9FF; text-decoration: none;">Sayad Md Bayezid Hosan</a> | 
+                <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" style="color: #00D9FF; text-decoration: none;" data-i18n="footer.openSource">Open Source</a>
             </p>
         </div>
     </footer>
 
     <script>
-        // Function to generate URL-friendly slug from title
-        function generateSlug(title) {
-            return title
-                .toLowerCase()
-                .trim()
-                .replace(/[^\w\s-]/g, '') // Remove special characters
-                .replace(/\s+/g, '-') // Replace spaces with hyphens
-                .replace(/-+/g, '-'); // Replace multiple hyphens with single hyphen
-        }
-
-        // Function to fetch and display blog posts
+        // Load and display blog posts
         async function loadBlogPosts() {
-            const container = document.getElementById('blog-container');
-            
             try {
-                // Fetch the blogs/index.json file from the blogs folder
-                const response = await fetch('/blogs/index.json');
-                
-                if (!response.ok) {
-                    throw new Error('Failed to load blog posts');
-                }
-                
+                const response = await fetch('blogs/index.json');
+                if (!response.ok) throw new Error('Failed to load blog index');
                 const data = await response.json();
+                window.blogData = data; // Store globally for translator
+                
                 const blogs = data.blogs || [];
+                const blogGrid = document.getElementById('blog-grid');
+                const loading = document.getElementById('loading');
+                const emptyState = document.getElementById('empty-state');
                 
                 if (blogs.length === 0) {
-                    container.innerHTML = `
-                        <div class="empty-state">
-                            <h3>No Blog Posts Yet</h3>
-                            <p>Check back soon for new articles and insights!</p>
-                        </div>
-                    `;
+                    loading.style.display = 'none';
+                    emptyState.style.display = 'block';
                     return;
                 }
                 
-                // Sort blogs by date (newest first)
-                blogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+                const lang = window.i18n ? window.i18n.getLanguage() : 'en';
+                renderBlogs(blogs, lang);
                 
-                // Create blog grid
-                let html = '<div class="blog-grid">';
-                
-                blogs.forEach(blog => {
-                    const date = new Date(blog.date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric'
-                    });
-                    
-                    // Generate permalink using slug
-                    const slug = generateSlug(blog.title);
-                    const permalink = `/blog-loader.html?post=${slug}`;
-                    
-                    html += `
-                        <div class="blog-card">
-                            <img src="${blog.image || 'https://via.placeholder.com/400x200?text=' + encodeURIComponent(blog.title)}" alt="${blog.title}" class="blog-image" />
-                            <div class="blog-content">
-                                <div class="blog-meta">
-                                    <span class="blog-category">${blog.category || 'General'}</span>
-                                    <span>${date}</span>
-                                </div>
-                                <h3>${blog.title}</h3>
-                                <p>${blog.excerpt}</p>
-                                <a href="${permalink}" class="blog-link">Read More →</a>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                container.innerHTML = html;
-                
+                loading.style.display = 'none';
+                blogGrid.style.display = 'grid';
             } catch (error) {
                 console.error('Error loading blog posts:', error);
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <h3>Unable to Load Blog Posts</h3>
-                        <p>There was an error loading the blog posts. Please try again later.</p>
-                    </div>
-                `;
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('empty-state').style.display = 'block';
             }
         }
+
+        function renderBlogs(blogs, lang) {
+            const blogGrid = document.getElementById('blog-grid');
+            const readMoreText = window.i18n ? window.i18n.t('blog.readMore', lang) : 'Read More →';
+            
+            blogGrid.innerHTML = blogs.map(blog => `
+                <div class="blog-card">
+                    <img src="${blog.image}" alt="${blog.title}" class="blog-image" />
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-category">${blog.category}</span>
+                            <span>${blog.date}</span>
+                        </div>
+                        <h3>${blog.title}</h3>
+                        <p>${blog.excerpt}</p>
+                        <a href="blog-loader.html?slug=${blog.slug}" class="blog-link">${readMoreText}</a>
+                    </div>
+                </div>
+            `).join('');
+        }
         
-        // Load blog posts when the page loads
-        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !expanded);
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.i18n) {
+                window.i18n.init();
+            }
+            loadBlogPosts();
+
+            window.addEventListener('languageChanged', (event) => {
+                if (window.blogData && window.blogData.blogs) {
+                    renderBlogs(window.blogData.blogs, event.detail.language);
+                }
+            });
+        });
     </script>
 </body>
 </html>

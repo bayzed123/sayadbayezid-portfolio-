@@ -15,9 +15,11 @@ class I18n {
    * Initialize i18n system
    */
   async init() {
+    if (this.initialized) return;
     await this.loadTranslations();
     this.applyLanguage(this.currentLanguage);
     this.setupLanguageSwitcher();
+    this.initialized = true;
   }
 
   /**
@@ -123,6 +125,8 @@ class I18n {
         } else {
           element.value = translation;
         }
+      } else if (element.tagName === 'META') {
+        element.setAttribute('content', translation);
       } else if (element.hasAttribute('title')) {
         element.title = translation;
       } else if (element.hasAttribute('alt')) {

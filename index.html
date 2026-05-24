@@ -65,444 +65,424 @@
     
     <style>*{margin:0;padding:0;box-sizing:border-box}:root{--primary:#00D9FF;--primary-dark:#0F1419;--accent:#FF6B35;--text-primary:#ffffff;--text-secondary:#a0a0a0;--bg-dark:#0F1419;--bg-card:#1a1f2e;--border-color:#2a2f3e}body{font-family:'Inter',sans-serif;background-color:var(--bg-dark);color:var(--text-primary);line-height:1.6}h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700}a{color:var(--primary);text-decoration:none;transition:all 0.3s ease}a:hover{color:var(--accent)}.container{max-width:1200px;margin:0 auto;padding:0 20px}.music-control-container{display:flex;align-items:center;gap:12px;margin-top:35px;margin-bottom:15px;background:rgba(0,217,255,0.1);padding:12px 20px;border-radius:50px;width:fit-content;border:2px solid var(--primary);transition:all 0.3s ease;z-index:100;position:relative;box-shadow:0 0 20px rgba(0,217,255,0.2)}.lang-switcher-item{display:flex;align-items:center;padding:0.5rem 1.5rem}.language-switcher{display:flex;gap:0.5rem}.lang-btn{padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);color:var(--text-secondary);border-radius:50px;cursor:pointer;font-size:0.8rem;font-weight:700;transition:all 0.3s ease;line-height:1}.lang-btn:hover{border-color:var(--primary);color:var(--primary);background:rgba(0,217,255,0.1)}.lang-btn.active{background:var(--primary);color:var(--bg-dark);border-color:var(--primary)}@media (min-width:768px){.lang-switcher-item{padding:0;margin-left:1.5rem}}.music-control-container:hover{background:rgba(255,255,255,0.1);border-color:var(--primary)}.music-btn{width:40px;height:40px;border-radius:50%;background:var(--primary);border:none;color:var(--bg-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,217,255,0.3)}.music-btn:hover{transform:scale(1.1);background:var(--accent);box-shadow:0 4px 15px rgba(255,107,53,0.3)}.music-text{font-size:0.9rem;font-weight:500;color:var(--text-primary)}.music-visualizer{display:flex;align-items:flex-end;gap:2px;height:15px}.music-bar{width:3px;background:var(--primary);border-radius:2px;animation:music-bounce 1s ease-in-out infinite alternate;height:5px}.music-bar:nth-child(2){animation-delay:0.2s}.music-bar:nth-child(3){animation-delay:0.4s}.music-bar:nth-child(4){animation-delay:0.6s}@keyframes music-bounce{0%{height:5px}100%{height:15px}}.music-bar.paused{animation-play-state:paused;height:5px}nav{position:sticky;top:0;z-index:50;background:rgba(15,20,25,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color);padding:1rem 0}nav .container{display:flex;justify-content:space-between;align-items:center}.logo{font-size:1.5rem;font-weight:700;font-family:'Poppins',sans-serif}.logo span{color:var(--primary)}nav ul{display:none;list-style:none;gap:2rem;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(15,20,25,0.95);padding:1rem 0;border-bottom:1px solid var(--border-color)}nav ul.active{display:flex}@media (min-width:768px){nav ul{display:flex !important;position:static;flex-direction:row;background:none;padding:0;border:none}}nav ul li{padding:0.5rem 1.5rem}@media (min-width:768px){nav ul li{padding:0}}.menu-toggle{display:flex;flex-direction:column;gap:0.4rem;background:none;border:none;cursor:pointer;padding:0.5rem}.menu-toggle span{width:25px;height:3px;background:var(--primary);border-radius:2px;transition:all 0.3s ease}.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}@media (min-width:768px){.menu-toggle{display:none}}nav a{font-size:0.875rem;font-weight:500;transition:color 0.3s ease;display:block}@media (min-width:768px){nav a{display:inline}}.hero{min-height:100vh;display:flex;align-items:center;padding:4rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%);position:relative;overflow:hidden}.hero::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(0,217,255,0.1) 0%,transparent 70%);border-radius:50%;top:-100px;left:-100px;animation:float 6s ease-in-out infinite}.hero::after{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(255,107,53,0.1) 0%,transparent 70%);border-radius:50%;bottom:-50px;right:-50px;animation:float 8s ease-in-out infinite reverse}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(30px)}}.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:2rem;align-items:center}@media (min-width:768px){.hero-content{grid-template-columns:1fr 1fr}}.hero h1{font-size:3rem;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#ffffff 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:1.1rem;color:var(--text-secondary);margin-bottom:2rem;line-height:1.8}.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}.btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;border:none;font-size:1rem}.btn-primary{background:var(--primary);color:var(--bg-dark)}.btn-primary:hover{background:var(--accent);transform:translateY(-2px)}.btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary)}.btn-secondary:hover{background:var(--primary);color:var(--bg-dark)}.hero-image{position:relative;display:flex;justify-content:center}.hero-image img{width:100%;max-width:400px;border-radius:1rem;border:2px solid var(--primary);box-shadow:0 0 40px rgba(0,217,255,0.3)}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border-color)}.stat{text-align:center}.stat-number{font-size:2.5rem;font-weight:700;color:var(--primary);font-family:'Poppins',sans-serif}.stat-label{color:var(--text-secondary);font-size:0.9rem;margin-top:0.5rem}.about{padding:6rem 0;background:var(--bg-dark)}.section-title{font-size:2.5rem;margin-bottom:3rem;text-align:center;font-family:'Poppins',sans-serif}.about-content{display:grid;grid-template-columns:1fr;gap:3rem;align-items:start}@media (min-width:768px){.about-content{grid-template-columns:1fr 1fr 1fr}}.about-text p{margin-bottom:1rem;color:var(--text-secondary);line-height:1.8}.about-text strong{color:var(--primary)}.about-image-container{position:relative;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2);transition:transform 0.3s ease}.about-image-container:hover{transform:scale(1.05)}.about-image-container img{width:100%;height:auto;display:block}.services{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.service-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.service-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.1)}.service-icon{font-size:3rem;margin-bottom:1rem;color:var(--primary)}.service-card h3{font-size:1.5rem;margin-bottom:0.75rem}.service-card p{color:var(--text-secondary);font-size:0.95rem}.achievements{padding:6rem 0;background:var(--bg-dark)}.achievements-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.achievement-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.achievement-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.15)}.achievement-image{width:100%;height:200px;object-fit:cover;display:block}.achievement-content{padding:1.5rem}.achievement-content h3{font-size:1.3rem;margin-bottom:0.75rem;color:var(--primary)}.achievement-content p{color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;line-height:1.6}.achievement-badge{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:0.75rem;font-weight:600;margin-right:0.5rem}.projects{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.project-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.project-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(255,107,53,0.1)}.project-image img{width:100%;height:200px;object-fit:cover}.project-content{padding:1.5rem}.project-content h3{font-size:1.5rem;margin-bottom:0.75rem}.project-content p{color:var(--text-secondary);font-size:0.95rem;margin-bottom:1rem}.project-tags{margin-bottom:1rem}.tag{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.3rem 0.7rem;border-radius:0.3rem;font-size:0.8rem;margin-right:0.5rem;margin-bottom:0.5rem}.project-link{display:inline-block;color:var(--accent);font-weight:600;margin-top:0.5rem}.slider-container{position:relative;width:100%;height:400px;overflow:hidden;border-radius:12px 12px 0 0}.slider-wrapper{display:flex;transition:transform 0.5s ease-in-out;height:100%}.slide{min-width:100%;height:100%}.slide img{width:100%;height:100%;object-fit:cover}.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;padding:10px 15px;cursor:pointer;z-index:10;border-radius:50%;font-size:1.2rem}.slider-btn:hover{background:var(--primary)}.prev-btn{left:10px}.next-btn{right:10px}.slider-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:8px}.dot{width:10px;height:10px;background:rgba(255,255,255,0.5);border-radius:50%;cursor:pointer}.dot.active{background:var(--primary)}.social-links{padding:4rem 0;text-align:center;border-top:1px solid var(--border-color);margin-top:4rem}.social-links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1.5rem;margin-top:2rem}.social-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;background:var(--bg-card);border:2px solid var(--border-color);border-radius:0.75rem;text-decoration:none;color:var(--text-primary);transition:all 0.3s ease;font-weight:600;font-size:0.9rem}.social-btn:hover{background:var(--primary);color:var(--bg-dark);border-color:var(--primary);transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.3)}.social-icon{font-size:2rem;margin-bottom:0.75rem}.social-link{display:inline-block;margin:0 1rem;font-size:1.1rem;color:var(--text-secondary)}.social-link:hover{color:var(--primary)}.contact{padding:6rem 0;background:linear-gradient(135deg,#1a2332 0%,var(--bg-dark) 100%)}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.contact-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color)}.contact-card h3{font-size:1.5rem;margin-bottom:1rem}.contact-info a,.contact-info p{display:block;margin-bottom:0.5rem;color:var(--text-secondary)}.contact-card .btn{margin-top:1.5rem;width:100%}.contact-image-container{margin-top:2rem;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2)}.contact-image-container img{width:100%;height:auto;display:block}footer{border-top:1px solid var(--border-color);padding:3rem 0;text-align:center;color:var(--text-secondary)}footer a{color:var(--primary)}footer a:hover{color:var(--accent)}@media (max-width:768px){.hero h1{font-size:2rem}.section-title{font-size:2rem}nav ul{display:none}}</style>
     <script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "@id": "https://sayadbayezid.com#person",
-    "name": "Sayad md Bayezid Hosan",
-    "url": "https://sayadbayezid.com",
-    "image": {
-      "@type": "ImageObject",
-      "@id": "https://sayadbayezid.com#primaryimage",
-      "url": "https://sayadbayezid.com/assets/images/optimized/hero.webp",
-      "width": 1200,
-      "height": 630,
-      "caption": "Sayad md Bayezid Hosan Portrait"
-    },
-    "description": "Full-stack Web Developer, Digital Marketer, and Tech Provider. Founder of Connect with Bayezid and GenZ Frontier.",
-    "jobTitle": "Full-stack Web Developer",
-    "worksFor": [
+    [
       {
-        "@type": "Organization",
-        "name": "Connect with Bayezid",
-        "sameAs": "https://connectbayezid-8dcdz46v.manus.space",
-        "description": "Digital brand and business hub specializing in web development and AI integration"
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://sayadbayezid.com#person",
+        "name": "Sayad md Bayezid Hosan",
+        "givenName": "Sayad md",
+        "familyName": "Bayezid Hosan",
+        "gender": "Male",
+        "birthDate": "2003-06-26",
+        "alternateName": ["Bayezid", "Sayad Bayezid", "Bayezid Hosan", "Mr. Bayezid", "Sayad md Bayezid Hosan"],
+        "nickname": "Bayezid",
+        "url": "https://sayadbayezid.com",
+        "image": [
+          {
+            "@type": "ImageObject",
+            "url": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+            "width": 400,
+            "height": 400
+          },
+          {
+            "@type": "ImageObject",
+            "url": "https://i.postimg.cc/0QvjMK2d/348943F3-71E0-4E67-B9ED-DB445FD0D602-Original.png",
+            "width": 400,
+            "height": 400
+          }
+        ],
+        "description": "Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer based in Bangladesh. Founder of Connect with Bayezid and GenZ Frontier. Leading Tech Provider specializing in web development, AI integration, and innovative digital ecosystem solutions.",
+        "disambiguatingDescription": "Full-stack Web Developer, Digital Marketer, and Tech Provider from Bangladesh. Founder of Connect with Bayezid and GenZ Frontier.",
+        "jobTitle": [
+          "Full-stack Web Developer",
+          "Digital Marketer",
+          "Web Designer",
+          "Tech Provider",
+          "Technology Entrepreneur",
+          "AI Integration Specialist",
+          "Technical Expert"
+        ],
+        "affiliation": [
+          {
+            "@type": "Organization",
+            "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
+            "name": "Connect with Bayezid",
+            "url": "https://connectbayezid-8dcdz46v.manus.space",
+            "sameAs": [
+              "https://www.connectwithbayezid.it.com",
+              "https://www.facebook.com/bayzeddme"
+            ],
+            "description": "Digital brand and business hub for technology entrepreneurship and digital solutions",
+            "founder": {
+              "@type": "Person",
+              "name": "Sayad md Bayezid Hosan"
+            }
+          },
+          {
+            "@type": "Organization",
+            "name": "GenZ Frontier",
+            "url": "https://www.genzfrontir.com",
+            "sameAs": "https://www.crunchbase.com/organization/genz-frontier",
+            "description": "Digital newsportal for modern generation insights and tech trends",
+            "founder": {
+              "@type": "Person",
+              "name": "Sayad md Bayezid Hosan"
+            }
+          }
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/sayadbayezid",
+          "https://github.com/bayzed123",
+          "https://www.facebook.com/sayadbayezid",
+          "https://www.facebook.com/bayezidhosan",
+          "https://www.facebook.com/bayzeddme",
+          "https://www.instagram.com/freelancer_bayezid0",
+          "https://youtube.com/@cwbayezid",
+          "https://www.crunchbase.com/person/sayad-md-bayezid-hosan",
+          "https://www.crunchbase.com/organization/connect-with-bayezid",
+          "https://www.crunchbase.com/organization/genz-frontier",
+          "https://www.behance.net/syedbayxed",
+          "https://beacons.ai/connectwithbayezid",
+          "https://connectbayezid-8dcdz46v.manus.space",
+          "https://www.connectwithbayezid.it.com",
+          "https://connectwithbayezid.blogspot.com",
+          "https://www.genzfrontir.com",
+          "https://qr.genzfrontir.com"
+        ],
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "contactType": "Personal",
+            "email": "Sayadmdbayezidhosan@gmail.com",
+            "telephone": "+8801519601517",
+            "areaServed": "BD",
+            "availableLanguage": ["en", "bn"]
+          },
+          {
+            "@type": "ContactPoint",
+            "contactType": "Business",
+            "email": "cwb.agency@outlook.com",
+            "telephone": "+8801519601517",
+            "areaServed": "BD",
+            "availableLanguage": ["en", "bn"]
+          }
+        ],
+        "knowsAbout": [
+          "Full-stack Web Development",
+          "Web Design",
+          "Digital Marketing",
+          "Tech Provider Services",
+          "React Development",
+          "JavaScript",
+          "Node.js",
+          "AI Integration",
+          "Machine Learning",
+          "Content Creation",
+          "Tech Entrepreneurship",
+          "QR Code Generation",
+          "Digital Infrastructure",
+          "Business Asset Management",
+          "Privacy Compliance",
+          "Technical Solutions",
+          "Digital Branding",
+          "E-commerce Solutions",
+          "Video Editing",
+          "Canva Design",
+          "Meta Advertising"
+        ],
+        "workLocation": {
+          "@type": "Place",
+          "name": "Auliabad, Kalihati, Tangail, Bangladesh",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Auliabad",
+            "addressLocality": "Kalihati",
+            "addressRegion": "Tangail",
+            "postalCode": "1970",
+            "addressCountry": "BD"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 24.2155,
+            "longitude": 89.9271
+          }
+        },
+        "birthPlace": {
+          "@type": "Place",
+          "name": "Bangladesh"
+        },
+        "nationality": "BD",
+        "educationLevel": "Undergraduate",
+        "hasCredential": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Bachelor of Arts - Department of English",
+            "issuingOrganization": {
+              "@type": "EducationalOrganization",
+              "name": "Northern University Bangladesh"
+            },
+            "educationalLevel": "Undergraduate",
+            "credentialCategory": "Degree",
+            "url": "https://nub.edu.bd"
+          }
+        ],
+        "award": [
+          {
+            "@type": "Award",
+            "name": "98% Client Retention Rate",
+            "description": "Highest client satisfaction and retention in the digital services industry"
+          },
+          {
+            "@type": "Award",
+            "name": "2,200+ Happy Clients Worldwide",
+            "description": "Trusted by thousands of clients across multiple continents for innovative digital solutions"
+          },
+          {
+            "@type": "Award",
+            "name": "Digital Marketing Mastery",
+            "description": "Professional certification in advanced digital marketing strategies, SEO, and conversion optimization"
+          },
+          {
+            "@type": "Award",
+            "name": "Professional Video Editing",
+            "description": "Expert-level certification in video production and visual storytelling"
+          },
+          {
+            "@type": "Award",
+            "name": "Canva Engaged Students",
+            "description": "Recognition for creating engaging and impactful visual content"
+          },
+          {
+            "@type": "Award",
+            "name": "AI-Powered Design Innovation",
+            "description": "Certified in leveraging AI within Canva for innovative design solutions"
+          },
+          {
+            "@type": "Award",
+            "name": "Meta Certified Advertiser",
+            "description": "Professional certification from Meta for Facebook and Instagram advertising expertise"
+          }
+        ],
+        "certification": [
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Full-stack Web Development Expert",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Tech Industry"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Digital Marketing Specialist",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Digital Innovation Community"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Meta Certified Advertiser",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Meta"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Video Editing Professional",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Video Production Industry"
+            }
+          },
+          {
+            "@type": "EducationalOccupationalCredential",
+            "name": "Canva Design Expert",
+            "credentialCategory": "Professional Certification",
+            "recognizedBy": {
+              "@type": "Organization",
+              "name": "Canva"
+            }
+          }
+        ],
+        "hasOccupation": [
+          {
+            "@type": "Occupation",
+            "name": "Full-stack Web Developer",
+            "description": "Building and scaling digital brands with innovative business models"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Digital Marketer",
+            "description": "Strategic digital marketing and online visibility"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Web Designer",
+            "description": "User-centric web design and brand identity"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Tech Provider",
+            "description": "Providing end-to-end digital infrastructure solutions"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Video Editor",
+            "description": "Professional video production and visual storytelling"
+          },
+          {
+            "@type": "Occupation",
+            "name": "Design Specialist",
+            "description": "Creative design using modern tools and AI integration"
+          }
+        ],
+        "seeks": {
+          "@type": "Demand",
+          "businessFunction": "http://purl.org/goodrelations/v1#Consulting",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Full-stack Web Development and Digital Marketing Services"
+          }
+        },
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "Northern University Bangladesh",
+          "url": "https://nub.edu.bd"
+        },
+        "publishingPrinciples": "https://sayadbayezid.com",
+        "knowsLanguage": ["en", "bn"],
+        "relatedLink": [
+          "https://connectbayezid-8dcdz46v.manus.space",
+          "https://www.genzfrontir.com",
+          "https://qr.genzfrontir.com"
+        ],
+        "mainEntityOfPage": "https://sayadbayezid.com",
+        "potentialAction": {
+          "@type": "CommunicateAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://sayadbayezid.com#contact"
+          }
+        }
       },
       {
+        "@context": "https://schema.org",
         "@type": "Organization",
-        "name": "GenZ Frontier",
-        "sameAs": "https://www.crunchbase.com/organization/genz-frontier",
-        "description": "Digital newsportal for modern generation insights and tech trends",
+        "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
+        "name": "Connect with Bayezid",
+        "alternateName": "CWB",
+        "url": "https://connectbayezid-8dcdz46v.manus.space",
+        "sameAs": [
+          "https://www.connectwithbayezid.it.com",
+          "https://www.facebook.com/bayzeddme",
+          "https://www.crunchbase.com/organization/connect-with-bayezid"
+        ],
+        "logo": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+        "description": "Digital brand and business hub specializing in web development, AI integration, and innovative digital solutions",
         "founder": {
           "@type": "Person",
           "name": "Sayad md Bayezid Hosan"
-        }
-      }
-    ],
-    "sameAs": [
-      "https://www.wikidata.org/wiki/Q139815820",
-      "https://commons.wikimedia.org/wiki/File:Sayad_Md_Bayezid_Hosan_Portrait.jpg",
-      "https://www.linkedin.com/in/sayadbayezid",
-      "https://github.com/bayzed123",
-      "https://github.com/sayadbayezid",
-      "https://www.facebook.com/sayadbayezid",
-      "https://www.facebook.com/bayezidhosan",
-      "https://www.facebook.com/bayzeddme",
-      "https://www.instagram.com/freelancer_bayezid0",
-      "https://youtube.com/@cwbayezid",
-      "https://www.crunchbase.com/person/sayad-md-bayezid-hosan",
-      "https://www.crunchbase.com/organization/connect-with-bayezid",
-      "https://www.crunchbase.com/organization/genz-frontier",
-      "https://www.behance.net/syedbayxed",
-      "https://beacons.ai/connectwithbayezid",
-      "https://connectbayezid-8dcdz46v.manus.space",
-      "https://www.connectwithbayezid.it.com",
-      "https://connectwithbayezid.blogspot.com",
-      "https://www.genzfrontir.com",
-      "https://qr.genzfrontir.com",
-      "https://filmfreeway.com/SayadMdBayezidHosan",
-      "https://scholar.google.com/citations?hl=en&user=au8tZCjws_oC",
-      "https://about.me/sayadmdbayezidhosan",
-      "https://m.soundcloud.com/syed-bayzed",
-      "https://www.techtunes.io/techtuner"
-    ],
-    "contactPoint": [
-      {
-        "@type": "ContactPoint",
-        "contactType": "Personal",
-        "email": "Sayadmdbayezidhosan@gmail.com",
-        "telephone": "+8801519601517",
-        "areaServed": "BD",
-        "availableLanguage": [
-          "en",
-          "bn"
-        ]
-      },
-      {
-        "@type": "ContactPoint",
-        "contactType": "Business",
-        "email": "cwb.agency@outlook.com",
-        "telephone": "+8801519601517",
-        "areaServed": "BD",
-        "availableLanguage": [
-          "en",
-          "bn"
-        ]
-      }
-    ],
-    "knowsAbout": [
-      "Full-stack Web Development",
-      "Web Design",
-      "Digital Marketing",
-      "Tech Provider Services",
-      "React Development",
-      "JavaScript",
-      "Node.js",
-      "AI Integration",
-      "Machine Learning",
-      "Content Creation",
-      "Tech Entrepreneurship",
-      "QR Code Generation",
-      "Digital Infrastructure",
-      "Business Asset Management",
-      "Privacy Compliance",
-      "Technical Solutions",
-      "Digital Branding",
-      "E-commerce Solutions",
-      "Video Editing",
-      "Canva Design",
-      "Meta Advertising"
-    ],
-    "workLocation": {
-      "@type": "Place",
-      "name": "Auliabad, Kalihati, Tangail, Bangladesh",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Auliabad",
-        "addressLocality": "Kalihati",
-        "addressRegion": "Tangail",
-        "postalCode": "1970",
-        "addressCountry": "BD"
-      },
-      "geo": {
-        "@type": "GeoCoordinates",
-        "latitude": 24.2155,
-        "longitude": 89.9271
-      }
-    },
-    "birthPlace": {
-      "@type": "Place",
-      "name": "Bangladesh"
-    },
-    "nationality": "BD",
-    "educationLevel": "Undergraduate",
-    "hasCredential": [
-      {
-        "@type": "EducationalOccupationalCredential",
-        "name": "Bachelor of Arts - Department of English",
-        "issuingOrganization": {
-          "@type": "EducationalOrganization",
-          "name": "Northern University Bangladesh"
         },
-        "educationalLevel": "Undergraduate",
-        "credentialCategory": "Degree",
-        "url": "https://nub.edu.bd"
-      }
-    ],
-    "award": [
-      {
-        "@type": "Award",
-        "name": "98% Client Retention Rate",
-        "description": "Highest client satisfaction and retention in the digital services industry"
-      },
-      {
-        "@type": "Award",
-        "name": "2,200+ Happy Clients Worldwide",
-        "description": "Trusted by thousands of clients across multiple continents for innovative digital solutions"
-      },
-      {
-        "@type": "Award",
-        "name": "Digital Marketing Mastery",
-        "description": "Professional certification in advanced digital marketing strategies, SEO, and conversion optimization"
-      },
-      {
-        "@type": "Award",
-        "name": "Professional Video Editing",
-        "description": "Expert-level certification in video production and visual storytelling"
-      },
-      {
-        "@type": "Award",
-        "name": "Canva Engaged Students",
-        "description": "Recognition for creating engaging and impactful visual content"
-      },
-      {
-        "@type": "Award",
-        "name": "AI-Powered Design Innovation",
-        "description": "Certified in leveraging AI within Canva for innovative design solutions"
-      },
-      {
-        "@type": "Award",
-        "name": "Meta Certified Advertiser",
-        "description": "Professional certification from Meta for Facebook and Instagram advertising expertise"
-      }
-    ],
-    "certification": [
-      {
-        "@type": "EducationalOccupationalCredential",
-        "name": "Full-stack Web Development Expert",
-        "credentialCategory": "Professional Certification",
-        "recognizedBy": {
-          "@type": "Organization",
-          "name": "Tech Industry"
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Auliabad",
+          "addressLocality": "Kalihati",
+          "addressRegion": "Tangail",
+          "postalCode": "1970",
+          "addressCountry": "BD"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "email": "cwb.agency@outlook.com",
+          "telephone": "+8801519601517",
+          "contactType": "Business"
         }
       },
       {
-        "@type": "EducationalOccupationalCredential",
-        "name": "Digital Marketing Specialist",
-        "credentialCategory": "Professional Certification",
-        "recognizedBy": {
-          "@type": "Organization",
-          "name": "Digital Innovation Community"
-        }
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://sayadbayezid.com#webpage",
+        "url": "https://sayadbayezid.com",
+        "name": "Sayad md Bayezid Hosan | Full-stack Web Developer & Tech Provider",
+        "description": "Professional Full-stack Web Developer, Digital Marketer, and Web Designer. Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions.",
+        "isPartOf": {"@id": "https://sayadbayezid.com#website"},
+        "primaryImageOfPage": {"@id": "https://sayadbayezid.com#primaryimage"},
+        "image": {"@id": "https://sayadbayezid.com#primaryimage"},
+        "thumbnailUrl": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
+        "datePublished": "2026-05-04",
+        "dateModified": "2026-05-04",
+        "author": {"@id": "https://sayadbayezid.com#person"},
+        "creator": {"@id": "https://sayadbayezid.com#person"},
+        "inLanguage": "en",
+        "isAccessibleForFree": true,
+        "mainEntity": {"@id": "https://sayadbayezid.com#person"}
       },
       {
-        "@type": "EducationalOccupationalCredential",
-        "name": "Meta Certified Advertiser",
-        "credentialCategory": "Professional Certification",
-        "recognizedBy": {
-          "@type": "Organization",
-          "name": "Meta"
-        }
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://sayadbayezid.com#website",
+        "url": "https://sayadbayezid.com",
+        "name": "Sayad md Bayezid Hosan Portfolio",
+        "description": "Official portfolio and digital hub of Sayad md Bayezid Hosan",
+        "mainEntity": {"@id": "https://sayadbayezid.com#person"}
       },
       {
-        "@type": "EducationalOccupationalCredential",
-        "name": "Video Editing Professional",
-        "credentialCategory": "Professional Certification",
-        "recognizedBy": {
-          "@type": "Organization",
-          "name": "Video Production Industry"
-        }
-      },
-      {
-        "@type": "EducationalOccupationalCredential",
-        "name": "Canva Design Expert",
-        "credentialCategory": "Professional Certification",
-        "recognizedBy": {
-          "@type": "Organization",
-          "name": "Canva"
-        }
-      }
-    ],
-    "hasOccupation": [
-      {
-        "@type": "Occupation",
-        "name": "Full-stack Web Developer",
-        "description": "Building and scaling digital brands with innovative business models"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Digital Marketer",
-        "description": "Strategic digital marketing and online visibility"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Web Designer",
-        "description": "User-centric web design and brand identity"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Tech Provider",
-        "description": "Providing end-to-end digital infrastructure solutions"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Video Editor",
-        "description": "Professional video production and visual storytelling"
-      },
-      {
-        "@type": "Occupation",
-        "name": "Design Specialist",
-        "description": "Creative design using modern tools and AI integration"
-      }
-    ],
-    "seeks": {
-      "@type": "Demand",
-      "businessFunction": "http://purl.org/goodrelations/v1#Consulting",
-      "itemOffered": {
-        "@type": "Service",
-        "name": "Full-stack Web Development and Digital Marketing Services"
-      }
-    },
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "Northern University Bangladesh",
-      "url": "https://nub.edu.bd"
-    },
-    "publishingPrinciples": "https://sayadbayezid.com",
-    "knowsLanguage": [
-      "en",
-      "bn"
-    ],
-    "relatedLink": [
-      "https://connectbayezid-8dcdz46v.manus.space",
-      "https://www.genzfrontir.com",
-      "https://qr.genzfrontir.com"
-    ],
-    "mainEntityOfPage": "https://sayadbayezid.com",
-    "potentialAction": {
-      "@type": "CommunicateAction",
-      "target": {
-        "@type": "EntryPoint",
-        "urlTemplate": "https://sayadbayezid.com#contact"
-      }
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://connectbayezid-8dcdz46v.manus.space#organization",
-    "name": "Connect with Bayezid",
-    "alternateName": "CWB",
-    "url": "https://connectbayezid-8dcdz46v.manus.space",
-    "sameAs": [
-      "https://www.connectwithbayezid.it.com",
-      "https://www.facebook.com/bayzeddme",
-      "https://www.crunchbase.com/organization/connect-with-bayezid"
-    ],
-    "logo": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-    "description": "Digital brand and business hub specializing in web development, AI integration, and innovative digital solutions",
-    "founder": {
-      "@type": "Person",
-      "name": "Sayad md Bayezid Hosan"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Auliabad",
-      "addressLocality": "Kalihati",
-      "addressRegion": "Tangail",
-      "postalCode": "1970",
-      "addressCountry": "BD"
-    },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "email": "cwb.agency@outlook.com",
-      "telephone": "+8801519601517",
-      "contactType": "Business"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://sayadbayezid.com#webpage",
-    "url": "https://sayadbayezid.com",
-    "name": "Sayad md Bayezid Hosan | Full-stack Web Developer & Tech Provider",
-    "description": "Professional Full-stack Web Developer, Digital Marketer, and Web Designer. Founder of Connect with Bayezid and GenZ Frontier. Specializing in web development, AI integration, and innovative digital solutions.",
-    "isPartOf": {
-      "@id": "https://sayadbayezid.com#website"
-    },
-    "primaryImageOfPage": {
-      "@id": "https://sayadbayezid.com#primaryimage"
-    },
-    "image": {
-      "@id": "https://sayadbayezid.com#primaryimage"
-    },
-    "thumbnailUrl": "https://i.postimg.cc/8zs6Nvj1/27029CEE-5CD8-43AE-85D0-51C18A4BF0C8-Original.png",
-    "datePublished": "2026-05-04",
-    "dateModified": "2026-05-04",
-    "author": {
-      "@id": "https://sayadbayezid.com#person"
-    },
-    "creator": {
-      "@id": "https://sayadbayezid.com#person"
-    },
-    "inLanguage": "en",
-    "isAccessibleForFree": true,
-    "mainEntity": {
-      "@id": "https://sayadbayezid.com#person"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": "https://sayadbayezid.com#website",
-    "url": "https://sayadbayezid.com",
-    "name": "Sayad md Bayezid Hosan Portfolio",
-    "description": "Official portfolio and digital hub of Sayad md Bayezid Hosan",
-    "mainEntity": {
-      "@id": "https://sayadbayezid.com#person"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://sayadbayezid.com"
-      },
-      {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "About",
-        "item": "https://sayadbayezid.com#about"
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://sayadbayezid.com"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About",
+            "item": "https://sayadbayezid.com#about"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "Services",
+            "item": "https://sayadbayezid.com#services"
+          },
+          {
+            "@type": "ListItem",
+            "position": 4,
+            "name": "Achievements",
+            "item": "https://sayadbayezid.com#achievements"
+          },
+          {
+            "@type": "ListItem",
+            "position": 5,
+            "name": "Projects",
+            "item": "https://sayadbayezid.com#projects"
+          },
+          {
+            "@type": "ListItem",
+            "position": 6,
+            "name": "Contact",
+            "item": "https://sayadbayezid.com#contact"
+          }
+        ]
       }
     ]
-  }
-]
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Sayad md Bayezid Hosan",
-      "url": "https://sayadbayezid.com",
-      "image": "https://sayadbayezid.com/assets/images/optimized/hero.webp",
-      "description": "Full-stack Web Developer, Digital Marketer, and Tech Provider",
-      "sameAs": [
-        "https://www.linkedin.com/in/sayadbayezid",
-        "https://github.com/bayzed123",
-        "https://www.crunchbase.com/person/sayad-md-bayezid-hosan"
-      ],
-      "jobTitle": "Full-stack Web Developer",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Connect with Bayezid"
-      }
-    }
     </script>
     
     <!-- i18n Scripts -->
     <script defer src="i18n/i18n.js"></script>
     <script defer src="i18n/dynamic-translator.js"></script>
     
-    <style>
-      .skip-to-content {
-        position: absolute;
-        top: -40px;
-        left: 0;
-        background: var(--primary);
-        color: var(--bg-dark);
-        padding: 8px;
-        z-index: 100;
-      }
-      .skip-to-content:focus {
-        top: 0;
-      }
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-    </style>
+    <style>*{margin:0;padding:0;box-sizing:border-box}:root{--primary:#00D9FF;--primary-dark:#0F1419;--accent:#FF6B35;--text-primary:#ffffff;--text-secondary:#a0a0a0;--bg-dark:#0F1419;--bg-card:#1a1f2e;--border-color:#2a2f3e}body{font-family:'Inter',sans-serif;background-color:var(--bg-dark);color:var(--text-primary);line-height:1.6}h1,h2,h3,h4,h5,h6{font-family:'Poppins',sans-serif;font-weight:700}a{color:var(--primary);text-decoration:none;transition:all 0.3s ease}a:hover{color:var(--accent)}.container{max-width:1200px;margin:0 auto;padding:0 20px}.music-control-container{display:flex;align-items:center;gap:12px;margin-top:35px;margin-bottom:15px;background:rgba(0,217,255,0.1);padding:12px 20px;border-radius:50px;width:fit-content;border:2px solid var(--primary);transition:all 0.3s ease;z-index:100;position:relative;box-shadow:0 0 20px rgba(0,217,255,0.2)}.lang-switcher-item{display:flex;align-items:center;padding:0.5rem 1.5rem}.language-switcher{display:flex;gap:0.5rem}.lang-btn{padding:0.5rem 1rem;background:rgba(255,255,255,0.05);border:1px solid var(--border-color);color:var(--text-secondary);border-radius:50px;cursor:pointer;font-size:0.8rem;font-weight:700;transition:all 0.3s ease;line-height:1}.lang-btn:hover{border-color:var(--primary);color:var(--primary);background:rgba(0,217,255,0.1)}.lang-btn.active{background:var(--primary);color:var(--bg-dark);border-color:var(--primary)}@media (min-width:768px){.lang-switcher-item{padding:0;margin-left:1.5rem}}.music-control-container:hover{background:rgba(255,255,255,0.1);border-color:var(--primary)}.music-btn{width:40px;height:40px;border-radius:50%;background:var(--primary);border:none;color:var(--bg-dark);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(0,217,255,0.3)}.music-btn:hover{transform:scale(1.1);background:var(--accent);box-shadow:0 4px 15px rgba(255,107,53,0.3)}.music-text{font-size:0.9rem;font-weight:500;color:var(--text-primary)}.music-visualizer{display:flex;align-items:flex-end;gap:2px;height:15px}.music-bar{width:3px;background:var(--primary);border-radius:2px;animation:music-bounce 1s ease-in-out infinite alternate;height:5px}.music-bar:nth-child(2){animation-delay:0.2s}.music-bar:nth-child(3){animation-delay:0.4s}.music-bar:nth-child(4){animation-delay:0.6s}@keyframes music-bounce{0%{height:5px}100%{height:15px}}.music-bar.paused{animation-play-state:paused;height:5px}nav{position:sticky;top:0;z-index:50;background:rgba(15,20,25,0.8);backdrop-filter:blur(10px);border-bottom:1px solid var(--border-color);padding:1rem 0}nav .container{display:flex;justify-content:space-between;align-items:center}.logo{font-size:1.5rem;font-weight:700;font-family:'Poppins',sans-serif}.logo span{color:var(--primary)}nav ul{display:none;list-style:none;gap:2rem;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(15,20,25,0.95);padding:1rem 0;border-bottom:1px solid var(--border-color)}nav ul.active{display:flex}@media (min-width:768px){nav ul{display:flex !important;position:static;flex-direction:row;background:none;padding:0;border:none}}nav ul li{padding:0.5rem 1.5rem}@media (min-width:768px){nav ul li{padding:0}}.menu-toggle{display:flex;flex-direction:column;gap:0.4rem;background:none;border:none;cursor:pointer;padding:0.5rem}.menu-toggle span{width:25px;height:3px;background:var(--primary);border-radius:2px;transition:all 0.3s ease}.menu-toggle.active span:nth-child(1){transform:rotate(45deg) translate(8px,8px)}.menu-toggle.active span:nth-child(2){opacity:0}.menu-toggle.active span:nth-child(3){transform:rotate(-45deg) translate(7px,-7px)}@media (min-width:768px){.menu-toggle{display:none}}nav a{font-size:0.875rem;font-weight:500;transition:color 0.3s ease;display:block}@media (min-width:768px){nav a{display:inline}}.hero{min-height:100vh;display:flex;align-items:center;padding:4rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%);position:relative;overflow:hidden}.hero::before{content:'';position:absolute;width:400px;height:400px;background:radial-gradient(circle,rgba(0,217,255,0.1) 0%,transparent 70%);border-radius:50%;top:-100px;left:-100px;animation:float 6s ease-in-out infinite}.hero::after{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,rgba(255,107,53,0.1) 0%,transparent 70%);border-radius:50%;bottom:-50px;right:-50px;animation:float 8s ease-in-out infinite reverse}@keyframes float{0%,100%{transform:translateY(0px)}50%{transform:translateY(30px)}}.hero-content{position:relative;z-index:1;display:grid;grid-template-columns:1fr;gap:2rem;align-items:center}@media (min-width:768px){.hero-content{grid-template-columns:1fr 1fr}}.hero h1{font-size:3rem;line-height:1.2;margin-bottom:1rem;background:linear-gradient(135deg,#ffffff 0%,var(--primary) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}.hero p{font-size:1.1rem;color:var(--text-secondary);margin-bottom:2rem;line-height:1.8}.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap}.btn{padding:0.75rem 1.5rem;border-radius:0.5rem;font-weight:600;cursor:pointer;transition:all 0.3s ease;border:none;font-size:1rem}.btn-primary{background:var(--primary);color:var(--bg-dark)}.btn-primary:hover{background:var(--accent);transform:translateY(-2px)}.btn-secondary{background:transparent;color:var(--primary);border:2px solid var(--primary)}.btn-secondary:hover{background:var(--primary);color:var(--bg-dark)}.hero-image{position:relative;display:flex;justify-content:center}.hero-image img{width:100%;max-width:400px;border-radius:1rem;border:2px solid var(--primary);box-shadow:0 0 40px rgba(0,217,255,0.3)}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:4rem;padding-top:2rem;border-top:1px solid var(--border-color)}.stat{text-align:center}.stat-number{font-size:2.5rem;font-weight:700;color:var(--primary);font-family:'Poppins',sans-serif}.stat-label{color:var(--text-secondary);font-size:0.9rem;margin-top:0.5rem}.about{padding:6rem 0;background:var(--bg-dark)}.section-title{font-size:2.5rem;margin-bottom:3rem;text-align:center;font-family:'Poppins',sans-serif}.about-content{display:grid;grid-template-columns:1fr;gap:3rem;align-items:start}@media (min-width:768px){.about-content{grid-template-columns:1fr 1fr 1fr}}.about-text p{margin-bottom:1rem;color:var(--text-secondary);line-height:1.8}.about-text strong{color:var(--primary)}.about-image-container{position:relative;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2);transition:transform 0.3s ease}.about-image-container:hover{transform:scale(1.05)}.about-image-container img{width:100%;height:auto;display:block}.services{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.service-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.service-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.1)}.service-icon{font-size:3rem;margin-bottom:1rem;color:var(--primary)}.service-card h3{font-size:1.5rem;margin-bottom:0.75rem}.service-card p{color:var(--text-secondary);font-size:0.95rem}.achievements{padding:6rem 0;background:var(--bg-dark)}.achievements-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}.achievement-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.achievement-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.15)}.achievement-image{width:100%;height:200px;object-fit:cover;display:block}.achievement-content{padding:1.5rem}.achievement-content h3{font-size:1.3rem;margin-bottom:0.75rem;color:var(--primary)}.achievement-content p{color:var(--text-secondary);font-size:0.9rem;margin-bottom:1rem;line-height:1.6}.achievement-badge{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.4rem 0.8rem;border-radius:0.3rem;font-size:0.75rem;font-weight:600;margin-right:0.5rem}.projects{padding:6rem 0;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2332 100%)}.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.project-card{background:var(--bg-card);border-radius:0.75rem;overflow:hidden;border:1px solid var(--border-color);transition:transform 0.3s ease,box-shadow 0.3s ease}.project-card:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(255,107,53,0.1)}.project-image img{width:100%;height:200px;object-fit:cover}.project-content{padding:1.5rem}.project-content h3{font-size:1.5rem;margin-bottom:0.75rem}.project-content p{color:var(--text-secondary);font-size:0.95rem;margin-bottom:1rem}.project-tags{margin-bottom:1rem}.tag{display:inline-block;background:rgba(0,217,255,0.1);color:var(--primary);padding:0.3rem 0.7rem;border-radius:0.3rem;font-size:0.8rem;margin-right:0.5rem;margin-bottom:0.5rem}.project-link{display:inline-block;color:var(--accent);font-weight:600;margin-top:0.5rem}.slider-container{position:relative;width:100%;height:400px;overflow:hidden;border-radius:12px 12px 0 0}.slider-wrapper{display:flex;transition:transform 0.5s ease-in-out;height:100%}.slide{min-width:100%;height:100%}.slide img{width:100%;height:100%;object-fit:cover}.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.5);color:white;border:none;padding:10px 15px;cursor:pointer;z-index:10;border-radius:50%;font-size:1.2rem}.slider-btn:hover{background:var(--primary)}.prev-btn{left:10px}.next-btn{right:10px}.slider-dots{position:absolute;bottom:15px;left:50%;transform:translateX(-50%);display:flex;gap:8px}.dot{width:10px;height:10px;background:rgba(255,255,255,0.5);border-radius:50%;cursor:pointer}.dot.active{background:var(--primary)}.social-links{padding:4rem 0;text-align:center;border-top:1px solid var(--border-color);margin-top:4rem}.social-links-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:1.5rem;margin-top:2rem}.social-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;background:var(--bg-card);border:2px solid var(--border-color);border-radius:0.75rem;text-decoration:none;color:var(--text-primary);transition:all 0.3s ease;font-weight:600;font-size:0.9rem}.social-btn:hover{background:var(--primary);color:var(--bg-dark);border-color:var(--primary);transform:translateY(-5px);box-shadow:0 10px 20px rgba(0,217,255,0.3)}.social-icon{font-size:2rem;margin-bottom:0.75rem}.social-link{display:inline-block;margin:0 1rem;font-size:1.1rem;color:var(--text-secondary)}.social-link:hover{color:var(--primary)}.contact{padding:6rem 0;background:linear-gradient(135deg,#1a2332 0%,var(--bg-dark) 100%)}.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.contact-card{background:var(--bg-card);padding:2rem;border-radius:0.75rem;text-align:center;border:1px solid var(--border-color)}.contact-card h3{font-size:1.5rem;margin-bottom:1rem}.contact-info a,.contact-info p{display:block;margin-bottom:0.5rem;color:var(--text-secondary)}.contact-card .btn{margin-top:1.5rem;width:100%}.contact-image-container{margin-top:2rem;border-radius:0.75rem;overflow:hidden;border:2px solid var(--primary);box-shadow:0 0 20px rgba(0,217,255,0.2)}.contact-image-container img{width:100%;height:auto;display:block}footer{border-top:1px solid var(--border-color);padding:3rem 0;text-align:center;color:var(--text-secondary)}footer a{color:var(--primary)}footer a:hover{color:var(--accent)}@media (max-width:768px){.hero h1{font-size:2rem}.section-title{font-size:2rem}nav ul{display:none}}</style>
   </head>
   <body>
     <a href="#main-content" class="skip-to-content">Skip to content</a>
@@ -747,21 +727,53 @@
           
           <div class="social-links">
             <div class="social-links-grid">
-              <a href="https://www.linkedin.com/in/sayadbayezid" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit LinkedIn profile">
+              <a href="https://www.linkedin.com/in/sayadbayezid" class="social-btn" target="_blank" rel="me" title="LinkedIn">
                 <div class="social-icon">💼</div>
                 <span>LinkedIn</span>
               </a>
-              <a href="https://github.com/bayzed123" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit GitHub profile">
+              <a href="https://github.com/bayzed123" class="social-btn" target="_blank" rel="me" title="GitHub">
                 <div class="social-icon">🐙</div>
                 <span>GitHub</span>
               </a>
-              <a href="https://www.facebook.com/sayadbayezid" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit Facebook profile">
-                <div class="social-icon">👥</div>
+              <a href="https://www.facebook.com/sayadbayezid" class="social-btn" target="_blank" rel="me" title="Facebook Personal">
+                <div class="social-icon">👤</div>
                 <span>Facebook</span>
               </a>
-              <a href="https://youtube.com/@cwbayezid" class="social-btn" target="_blank" rel="noopener noreferrer" aria-label="Visit YouTube channel">
-                <div class="social-icon">📺</div>
+              <a href="https://www.facebook.com/bayezidhosan" class="social-btn" target="_blank" rel="me" title="Facebook Profile">
+                <div class="social-icon">👨</div>
+                <span>Profile</span>
+              </a>
+              <a href="https://www.facebook.com/bayzeddme" class="social-btn" target="_blank" rel="me" title="Facebook Business">
+                <div class="social-icon">🏢</div>
+                <span>Business</span>
+              </a>
+              <a href="https://www.instagram.com/freelancer_bayezid0" class="social-btn" target="_blank" rel="me" title="Instagram">
+                <div class="social-icon">📸</div>
+                <span>Instagram</span>
+              </a>
+              <a href="https://youtube.com/@cwbayezid" class="social-btn" target="_blank" rel="me" title="YouTube">
+                <div class="social-icon">📹</div>
                 <span>YouTube</span>
+              </a>
+              <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" class="social-btn" target="_blank" rel="me" title="Crunchbase Personal">
+                <div class="social-icon">📊</div>
+                <span>Crunchbase</span>
+              </a>
+              <a href="https://www.crunchbase.com/organization/connect-with-bayezid" class="social-btn" target="_blank" rel="me" title="Crunchbase CWB">
+                <div class="social-icon">🏆</div>
+                <span>CWB</span>
+              </a>
+              <a href="https://www.crunchbase.com/organization/genz-frontier" class="social-btn" target="_blank" rel="me" title="Crunchbase GenZ">
+                <div class="social-icon">🚀</div>
+                <span>GenZ</span>
+              </a>
+              <a href="https://www.behance.net/syedbayxed" class="social-btn" target="_blank" rel="me" title="Behance">
+                <div class="social-icon">🎨</div>
+                <span>Behance</span>
+              </a>
+              <a href="https://beacons.ai/connectwithbayezid" class="social-btn" target="_blank" rel="me" title="Beacons">
+                <div class="social-icon">✨</div>
+                <span>Beacons</span>
               </a>
             </div>
           </div>
@@ -772,6 +784,10 @@
     <footer role="contentinfo">
       <div class="container">
         <p data-i18n="footer.copyright">© 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #a0a0a0; border-top: 1px solid #2a2f3e; padding-top: 1rem;">
+          <strong data-i18n="footer.systemBy">Portfolio & Blog System by</strong> <a href="https://www.sayadbayezid.com" target="_blank" style="color: #00D9FF; text-decoration: none;">Sayad Md Bayezid Hosan</a> | 
+          <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" style="color: #00D9FF; text-decoration: none;" data-i18n="footer.openSource">Open Source</a>
+        </p>
         <p><a href="privacy-policy.html" data-i18n="footer.privacyPolicy">Privacy Policy</a></p>
       </div>
     </footer>
@@ -797,14 +813,6 @@
         });
       });
 
-      document.addEventListener('click', function(event) {
-        if (!event.target.closest('nav')) {
-          menuToggle.classList.remove('active');
-          navMenu.classList.remove('active');
-          menuToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-
       async function loadProjects() {
         try {
           const response = await fetch('projects/projects.json');
@@ -816,7 +824,6 @@
           if (window.dynamicTranslator) {
             window.dynamicTranslator.translateProjects(data, lang);
           } else {
-            // Fallback if dynamicTranslator is not ready
             renderProjects(data, lang);
           }
         } catch (error) {
@@ -914,8 +921,20 @@
       }
 
       document.addEventListener('DOMContentLoaded', () => {
+        // Initialize i18n and dynamic translator
+        if (window.i18n) {
+          window.i18n.init();
+        }
+
         loadProjects();
         
+        // Listen for language changes to re-render projects
+        window.addEventListener('languageChanged', (event) => {
+          if (window.projectsData) {
+            renderProjects(window.projectsData, event.detail.language);
+          }
+        });
+
         // Music Player
         const musicToggle = document.getElementById('music-toggle');
         const musicIcon = document.getElementById('music-icon');
@@ -998,7 +1017,6 @@
         const wrapper = document.getElementById(id);
         if (!wrapper) return;
         
-        // Auto-slide
         if (sliders[id + '_interval']) clearInterval(sliders[id + '_interval']);
         sliders[id + '_interval'] = setInterval(() => moveSlide(id, 1), 5000);
       }

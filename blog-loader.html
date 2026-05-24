@@ -23,6 +23,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     
+    <!-- i18n Scripts -->
+    <script src="i18n/i18n.js"></script>
+    <script src="i18n/dynamic-translator.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -100,12 +104,108 @@
             display: none;
             list-style: none;
             gap: 2rem;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(15, 20, 25, 0.95);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        nav ul.active {
+            display: flex;
         }
         
         @media (min-width: 768px) {
             nav ul {
-                display: flex;
+                display: flex !important;
+                position: static;
+                flex-direction: row;
+                background: none;
+                padding: 0;
+                border: none;
             }
+        }
+
+        nav ul li {
+            padding: 0.5rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            nav ul li {
+                padding: 0;
+            }
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        .lang-switcher-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .language-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-btn {
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .lang-btn.active {
+            background: var(--primary);
+            color: var(--bg-dark);
+            border-color: var(--primary);
         }
         
         nav a {
@@ -458,17 +558,29 @@
 
 <body>
     <!-- Navigation -->
-    <nav>
+    <nav role="navigation">
         <div class="container">
-            <div class="logo">Bayezid<span>.</span></div>
-            <ul>
+            <a href="/" class="logo">Sayad md <span>Bayezid</span></a>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul id="navMenu">
                 <li><a href="/">Home</a></li>
-                <li><a href="/#about">About</a></li>
-                <li><a href="/#services">Services</a></li>
-                <li><a href="/#achievements">Achievements</a></li>
-                <li><a href="/#projects">Projects</a></li>
-                <li><a href="/blog.html">Blog</a></li>
-                <li><a href="/#contact">Contact</a></li>
+                <li><a href="/#about" data-i18n="nav.about">About</a></li>
+                <li><a href="/#services" data-i18n="nav.services">Services</a></li>
+                <li><a href="/#achievements" data-i18n="nav.achievements">Achievements</a></li>
+                <li><a href="/#projects" data-i18n="nav.projects">Projects</a></li>
+                <li><a href="blog.html" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="/#contact" data-i18n="nav.contact">Contact</a></li>
+                <li class="lang-switcher-item">
+                    <div class="language-switcher">
+                        <button class="lang-btn" data-lang="en">EN</button>
+                        <button class="lang-btn" data-lang="es">ES</button>
+                        <button class="lang-btn" data-lang="ru">RU</button>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -476,9 +588,9 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <a href="/blog.html" class="back-link">← Back to Blog</a>
+            <a href="blog.html" class="back-link" data-i18n="blog.backToBlog">← Back to Blog</a>
             <div class="hero-content">
-                <h1 id="blog-title">Loading...</h1>
+                <h1 id="blog-title" data-i18n="blog.loading">Loading...</h1>
                 <div class="hero-meta">
                     <span class="blog-category" id="blog-category">General</span>
                     <span id="blog-author">By Sayad Md Bayezid Hosan</span>
@@ -497,7 +609,7 @@
             <div id="content-container">
                 <div class="loading">
                     <div class="spinner"></div>
-                    <p>Loading blog post...</p>
+                    <p data-i18n="blog.loading">Loading blog post...</p>
                 </div>
             </div>
         </div>
@@ -506,17 +618,10 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2026 Sayad md Bayezid Hosan. All Rights Reserved.</p>
-            <p>
-                <a href="/">Home</a> | 
-                <a href="/blog.html">Blog</a> | 
-                <a href="https://connectwithbayezid.blogspot.com" target="_blank">Blogger</a> | 
-                <a href="https://github.com/bayzed123" target="_blank">GitHub</a> | 
-                <a href="https://www.linkedin.com/in/sayadbayezid" target="_blank">LinkedIn</a>
-            </p>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-secondary); border-top: 1px solid var(--border-color); padding-top: 1rem;">
-                <strong>Portfolio & Blog System by</strong> <a href="https://www.sayadbayezid.com" target="_blank" style="color: var(--primary);">Sayad Md Bayezid Hosan</a> | 
-                <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" style="color: var(--primary);">Open Source</a>
+            <p data-i18n="footer.copyright">&copy; 2026 Sayad md Bayezid Hosan. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #a0a0a0; border-top: 1px solid #2a2f3e; padding-top: 1rem;">
+                <strong data-i18n="footer.systemBy">Portfolio & Blog System by</strong> <a href="https://www.sayadbayezid.com" target="_blank" style="color: #00D9FF; text-decoration: none;">Sayad Md Bayezid Hosan</a> | 
+                <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" style="color: #00D9FF; text-decoration: none;" data-i18n="footer.openSource">Open Source</a>
             </p>
         </div>
     </footer>
@@ -552,7 +657,7 @@
         // Function to get slug from query parameter
         function getSlugFromQuery() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('post');
+            return params.get('slug') || params.get('post');
         }
 
         // Function to convert URLs in text to clickable links or video players
@@ -731,7 +836,7 @@
                     // Show up to 3 related posts
                     related.slice(0, 3).forEach(post => {
                         relatedHTML += `
-                            <a href="/blog-loader.html?post=${post.slug}" class="related-card">
+                            <a href="blog-loader.html?slug=${post.slug}" class="related-card">
                                 <h4>${post.title}</h4>
                                 <p>${post.excerpt.substring(0, 100)}...</p>
                                 <span class="related-link">Read Article →</span>
@@ -791,8 +896,34 @@
             }
         }
 
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            menuToggle.setAttribute('aria-expanded', !expanded);
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+
         // Load blog post when page loads
-        document.addEventListener('DOMContentLoaded', loadBlogPost);
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.i18n) {
+                window.i18n.init();
+            }
+            loadBlogPost();
+        });
     </script>
 </body>
 </html>

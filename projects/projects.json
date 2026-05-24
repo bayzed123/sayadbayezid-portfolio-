@@ -45,10 +45,18 @@
     },
     {
       "id": 4,
-      "title": "SmartGen QR Code Generator",
-      "description": "The world's most advanced free QR code generator. Built for speed, privacy, and full customization.",
+      "title": "SmartGen Tools - 40+ Free Utilities",
+      "description": "The ultimate master guide to SmartGen Tools: 40+ free utilities for professionals. A comprehensive suite including QR code generators, image optimizers, and productivity boosters. Built for speed, privacy, and full customization to empower your digital workflow.",
       "link": "https://qr.genzfrontir.com/",
-      "tags": ["Utility", "Web Tool"],
+      "tags": ["Utility", "Web Tool", "AI Integration"],
+      "key_features": [
+        "40+ Professional Utility Tools",
+        "Advanced QR Code Generator",
+        "Image Optimization & Conversion",
+        "Privacy-focused Data Processing",
+        "Seamless User Experience",
+        "Full Customization Options"
+      ],
       "is_latest": false
     },
     {

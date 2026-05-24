@@ -82,10 +82,10 @@ class DynamicTranslator {
             ${project.images.map(img => `<div class="slide"><img src="${img}" alt="${project.title}"></div>`).join('')}
           </div>
           ${project.images.length > 1 ? `
-            <button class="slider-btn prev-btn" onclick="moveSlide(-1)">❮</button>
-            <button class="slider-btn next-btn" onclick="moveSlide(1)">❯</button>
+            <button class="slider-btn prev-btn" onclick="moveSlide('slider-wrapper', -1)">❮</button>
+            <button class="slider-btn next-btn" onclick="moveSlide('slider-wrapper', 1)">❯</button>
             <div class="slider-dots">
-              ${project.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}" onclick="currentSlide(${i})"></div>`).join('')}
+              ${project.images.map((_, i) => `<div class="dot ${i === 0 ? 'active' : ''}" onclick="currentSlide('slider-wrapper', ${i})"></div>`).join('')}
             </div>
           ` : ''}
         </div>

@@ -59,7 +59,9 @@
     },
     "footer": {
       "copyright": "© 2026 Sayad md Bayezid Hosan. All rights reserved.",
-      "privacyPolicy": "Privacy Policy"
+      "privacyPolicy": "Privacy Policy",
+      "systemBy": "Portfolio & Blog System by",
+      "openSource": "Open Source"
     },
     "blog": {
       "title": "Blog",
@@ -134,7 +136,9 @@
     },
     "footer": {
       "copyright": "© 2026 Sayad md Bayezid Hosan. Todos los derechos reservados.",
-      "privacyPolicy": "Política de Privacidad"
+      "privacyPolicy": "Política de Privacidad",
+      "systemBy": "Sistema de Portafolio y Blog por",
+      "openSource": "Código Abierto"
     },
     "blog": {
       "title": "Blog",
@@ -209,7 +213,9 @@
     },
     "footer": {
       "copyright": "© 2026 Саяд мд Байезид Хосан. Все права защищены.",
-      "privacyPolicy": "Политика конфиденциальности"
+      "privacyPolicy": "Политика конфиденциальности",
+      "systemBy": "Система портфолио и блога от",
+      "openSource": "Открытый исходный код"
     },
     "blog": {
       "title": "Блог",

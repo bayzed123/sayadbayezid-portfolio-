@@ -7,9 +7,14 @@ from datetime import datetime
 
 def generate_slug(title):
     slug = title.lower().strip()
+    # Remove emojis and other special characters
     slug = re.sub(r'[^\w\s-]', '', slug)
+    # Replace whitespace with hyphens
     slug = re.sub(r'\s+', '-', slug)
+    # Collapse multiple hyphens
     slug = re.sub(r'-+', '-', slug)
+    # Remove leading/trailing hyphens
+    slug = slug.strip('-')
     return slug
 
 def process_html_file(file_path):
