@@ -1,7 +1,7 @@
 # Sayad Md Bayezid Hosan - Professional Portfolio
 
 **Author:** Sayad Md Bayezid Hosan  
-<img src="https://commons.wikimedia.org/wiki/Special:FilePath/Sayad_Md_Bayezid_Hosan_Portrait.jpg" alt="Sayad Md Bayezid Hosan" width="100%">
+
 
 **All Rights Reserved © 2026**
 
