@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Sayad Md Bayezid Hosan</title>
+    <style>
+        /* Global Styles & Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a; /* Dark Theme */
+            color: #f8fafc;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar Placeholder */
+        .navbar {
+            padding: 20px 50px;
+            background: rgba(15, 23, 42, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .navbar a {
+            color: #38bdf8;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Contact Section Container */
+        .contact-container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            flex: 1; /* Pushes footer to bottom */
+        }
+
+        /* Section Headings */
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+        .section-subtitle {
+            color: #94a3b8;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Contact Form Styles */
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #38bdf8;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: #38bdf8;
+            color: #0f172a;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            background: #0ea5e9;
+        }
+
+        /* Direct Info Styles */
+        .direct-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-card h3 {
+            color: #38bdf8;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .info-card p {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .info-card p strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* --- Marquee Footer Styles --- */
+        .custom-footer-marquee {
+            width: 100%;
+            overflow: hidden;
+            background-color: #0f172a;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .marquee-wrapper {
+            display: flex;
+            overflow: hidden;
+            user-select: none;
+            width: 100%;
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 40px;
+            min-width: 200%;
+            padding-left: 40px;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #f8fafc;
+            text-decoration: none;
+            white-space: nowrap;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .marquee-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            color: #38bdf8;
+        }
+
+        .marquee-item img {
+            width: 24px;
+            height: 24px;
+            filter: invert(1);
+        }
+
+        .scroll-left { animation: scrollLeft 35s linear infinite; }
+        .scroll-right { animation: scrollRight 35s linear infinite; }
+        .marquee-wrapper:hover .marquee-track { animation-play-state: paused; }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes scrollRight {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Simple Navbar Placeholder -->
+    <nav class="navbar">
+        <a href="/">← Back to Home</a>
+    </nav>
+
+    <!-- Main Contact Section -->
+    <div class="contact-container">
+        
+        <!-- Left Column: Contact Form -->
+        <div class="form-section">
+            <h1 class="section-title">Get in Touch</h1>
+            <p class="section-subtitle">Have a project in mind, looking for a technical consultation, or just want to say hi? Fill out the form below and I'll get back to you soon.</p>
+            
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" class="form-control" placeholder="Project Discussion" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" class="form-control" placeholder="Write your message here..." required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+
+        <!-- Right Column: Direct Info -->
+        <div class="direct-info">
+            <!-- Updated Email Section -->
+            <div class="info-card">
+                <h3>Email</h3>
+                <p><strong>Personal:</strong> sayadmdbayezidhosan@gmail.com</p>
+                <p><strong>Business:</strong> cwb.agency@outlook.com</p>
+            </div>
+            <div class="info-card">
+                <h3>Business Entities</h3>
+                <p>Connect With Bayezid<br>GenZ Frontier</p>
+            </div>
+            <div class="info-card">
+                <h3>Location</h3>
+                <p>Dhaka, Bangladesh</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Marquee Footer Section -->
+    <footer class="custom-footer-marquee">
+        <!-- Track 1: Business & Dev -->
+        <div class="marquee-wrapper">
+            <div class="marquee-track scroll-left">
+                <!-- Original Items -->
+                <a href="https://www.linkedin.com/in/sayadbayezid" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/linkedin" alt="LinkedIn"> LinkedIn</a>
+                <a href="https://www.linkedin.com/company/connectbayezid/" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/linkedin" alt="CWB LinkedIn"> Connect With Bayezid</a>
+                <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/crunchbase" alt="Crunchbase"> Crunchbase</a>
+                <a href="https://github.com/sayadbayezid" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub"> GitHub Pro</a>
+                <a href="https://github.com/bayzed123" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub"> GitHub OS</a>
+                <a href="https://www.connectwithbayezid.it.com" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/google" alt="CWB Web"> CWB Web</a>
+                <a href="https://www.sayadbayezid.com" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/devdotto" alt="Portfolio"> Portfolio</a>
+                <a href="https://www.genzfrontir.com" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/blogger" alt="GenZ"> GenZ Frontier</a>
+                <a href="https://scholar.google.com/citations?hl=en&user=au8tZCjws_oC" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/googlescholar" alt="Scholar"> Google Scholar</a>
+                
+                <!-- Duplicate Items -->
+                <a href="https://www.linkedin.com/in/sayadbayezid" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/linkedin" alt="LinkedIn"> LinkedIn</a>
+                <a href="https://www.linkedin.com/company/connectbayezid/" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/linkedin" alt="CWB LinkedIn"> Connect With Bayezid</a>
+                <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/crunchbase" alt="Crunchbase"> Crunchbase</a>
+                <a href="https://github.com/sayadbayezid" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub"> GitHub Pro</a>
+                <a href="https://github.com/bayzed123" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/github" alt="GitHub"> GitHub OS</a>
+                <a href="https://www.connectwithbayezid.it.com" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/google" alt="CWB Web"> CWB Web</a>
+                <a href="https://www.sayadbayezid.com" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/devdotto" alt="Portfolio"> Portfolio</a>
+                <a href="https://www.genzfrontir.com" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/blogger" alt="GenZ"> GenZ Frontier</a>
+                <a href="https://scholar.google.com/citations?hl=en&user=au8tZCjws_oC" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/googlescholar" alt="Scholar"> Google Scholar</a>
+            </div>
+        </div>
+
+        <!-- Track 2: Media & Social -->
+        <div class="marquee-wrapper">
+            <div class="marquee-track scroll-right">
+                <!-- Original Items -->
+                <a href="https://www.facebook.com/sayadbayezid" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"> Facebook (53k)</a>
+                <a href="https://www.facebook.com/bayezidhosan" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"> Profile (49k)</a>
+                <a href="https://youtube.com/@cwbayezid?si=Ioo7cR6ne1I5o6ot" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/youtube" alt="YouTube"> YouTube</a>
+                <a href="https://www.instagram.com/freelancer_bayezid0?" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram"> Instagram</a>
+                <a href="https://www.behance.net/syedbayxed" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/behance" alt="Behance"> Behance</a>
+                <a href="https://m.soundcloud.com/syed-bayzed" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/soundcloud" alt="SoundCloud"> SoundCloud</a>
+                <a href="https://www.techtunes.io" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/techtunes" alt="Techtunes"> Techtunes</a>
+                <a href="https://filmfreeway.com/SayadMdBayezidHosan" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/filmfreeway" alt="FilmFreeway"> FilmFreeway</a>
+                
+                <!-- Duplicate Items -->
+                <a href="https://www.facebook.com/sayadbayezid" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"> Facebook (53k)</a>
+                <a href="https://www.facebook.com/bayezidhosan" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/facebook" alt="Facebook"> Profile (49k)</a>
+                <a href="https://youtube.com/@cwbayezid?si=Ioo7cR6ne1I5o6ot" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/youtube" alt="YouTube"> YouTube</a>
+                <a href="https://www.instagram.com/freelancer_bayezid0?" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/instagram" alt="Instagram"> Instagram</a>
+                <a href="https://www.behance.net/syedbayxed" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/behance" alt="Behance"> Behance</a>
+                <a href="https://m.soundcloud.com/syed-bayzed" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/soundcloud" alt="SoundCloud"> SoundCloud</a>
+                <a href="https://www.techtunes.io" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/techtunes" alt="Techtunes"> Techtunes</a>
+                <a href="https://filmfreeway.com/SayadMdBayezidHosan" target="_blank" rel="noopener noreferrer" class="marquee-item"><img src="https://cdn.simpleicons.org/filmfreeway" alt="FilmFreeway"> FilmFreeway</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
