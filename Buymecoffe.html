@@ -1,0 +1,1521 @@
+<!doctype html>
+<html lang="bn" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dollar &amp; Mastercard Sales</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Hind+Siliguri:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    
+    .bangla-font {
+      font-family: 'Hind Siliguri', sans-serif;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .animate-fade-in {
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .card-icon {
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .gradient-bg {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    }
+    
+    .gradient-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    
+    .hero-title {
+      background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+    }
+    
+    .amount-btn {
+      border: 2px solid rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.05);
+      transition: all 0.3s ease;
+    }
+    
+    .amount-btn:hover {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+      transform: scale(1.05);
+    }
+    
+    .amount-btn.active {
+      border-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+    }
+    
+    .custom-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(16, 185, 129, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .custom-input:focus {
+      outline: none;
+      border-color: #10b981;
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+    
+    .price-display {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+      border: 2px solid rgba(16, 185, 129, 0.3);
+      animation: glow 2s ease-in-out infinite;
+    }
+    
+    .payment-option {
+      border: 2px solid rgba(16, 185, 129, 0.2);
+      background: rgba(16, 185, 129, 0.05);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .payment-option:hover {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.15);
+      transform: translateY(-2px);
+    }
+    
+    .payment-option.selected {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .copy-btn {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(16, 185, 129, 0.2);
+      border-color: #10b981;
+    }
+    
+    .copy-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .screenshot-preview-img {
+      max-width: 100%;
+      max-height: 200px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .whatsapp-float:hover {
+      animation: none;
+      transform: scale(1.15);
+    }
+    
+    .order-details-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 2px solid rgba(16, 185, 129, 0.4);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+    }
+    
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+    
+    .detail-label {
+      min-width: 140px;
+      font-weight: 700;
+      color: #10b981;
+      flex-shrink: 0;
+    }
+    
+    .detail-value {
+      color: #ffffff;
+      word-break: break-word;
+      flex: 1;
+    }
+    
+    .nav-tab {
+      border: 2px solid rgba(16, 185, 129, 0.2);
+      background: rgba(16, 185, 129, 0.05);
+    }
+    
+    .nav-tab.active {
+      border-color: #10b981;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+    }
+    
+    .nav-tab:hover:not(.active) {
+      border-color: #10b981;
+      background: rgba(16, 185, 129, 0.1);
+    }
+    
+    .mastercard-bg {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .mastercard-card {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+    }
+    
+    .virtual-card-3d {
+      width: 100%;
+      max-width: 420px;
+      height: 260px;
+      perspective: 1000px;
+      margin: 0 auto;
+    }
+    
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      animation: cardFloat 4s ease-in-out infinite;
+    }
+    
+    @keyframes cardFloat {
+      0%, 100% { transform: rotateY(0deg) translateY(0px); }
+      25% { transform: rotateY(5deg) translateY(-10px); }
+      50% { transform: rotateY(0deg) translateY(0px); }
+      75% { transform: rotateY(-5deg) translateY(-10px); }
+    }
+    
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-front {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    
+    .card-chip {
+      width: 50px;
+      height: 40px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .chip-line {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .card-number {
+      font-family: 'Courier New', monospace;
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card-holder-name {
+      font-size: 16px;
+      font-weight: bold;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .card-expiry {
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .mastercard-logo {
+      display: flex;
+      gap: -10px;
+    }
+    
+    .circle-red {
+      width: 40px;
+      height: 40px;
+      background: #eb001b;
+      border-radius: 50%;
+      opacity: 0.9;
+    }
+    
+    .circle-orange {
+      width: 40px;
+      height: 40px;
+      background: #ff5f00;
+      border-radius: 50%;
+      margin-left: -15px;
+      opacity: 0.9;
+    }
+    
+    .card-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shine 3s infinite;
+    }
+    
+    @keyframes shine {
+      0% { left: -100%; }
+      50%, 100% { left: 200%; }
+    }
+    
+    .clock-date-widget {
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+      border: 2px solid rgba(102, 126, 234, 0.4);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    
+    .digital-clock {
+      font-family: 'Courier New', monospace;
+      font-size: 42px;
+      font-weight: bold;
+      color: #a78bfa;
+      text-shadow: 0 0 20px rgba(167, 139, 250, 0.5);
+      letter-spacing: 2px;
+    }
+    
+    .date-display {
+      font-size: 18px;
+      color: #c4b5fd;
+      font-weight: 600;
+    }
+    
+    .user-counter {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+      border: 2px solid rgba(16, 185, 129, 0.5);
+      border-radius: 16px;
+      padding: 20px;
+      animation: counterPulse 2s ease-in-out infinite;
+    }
+    
+    @keyframes counterPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
+      50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(16, 185, 129, 0.5); }
+    }
+    
+    .user-count {
+      font-size: 48px;
+      font-weight: black;
+      color: #10b981;
+      text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
+      font-family: 'Courier New', monospace;
+    }
+    
+    .count-label {
+      font-size: 16px;
+      color: #6ee7b7;
+      font-weight: 600;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full w-full m-0 p-0 gradient-bg text-white"><!-- Floating WhatsApp Button --> <a href="https://wa.me/8801519601517" target="_blank" rel="noopener noreferrer" class="whatsapp-float">
+   <div class="relative">
+    <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+     <svg width="32" height="32" viewbox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+     </svg>
+    </div>
+    <div class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center"><span class="text-xs font-bold text-white">24/7</span>
+    </div>
+   </div></a>
+  <div class="min-h-screen w-full"><!-- Navigation Tabs -->
+   <div class="sticky top-0 z-50 px-4 pt-6 pb-4" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-bottom: 2px solid rgba(16, 185, 129, 0.2);">
+    <div class="max-w-4xl mx-auto">
+     <div class="grid grid-cols-2 gap-3"><button onclick="showSection('dollar')" id="dollar-tab" class="nav-tab active py-3 px-4 rounded-xl font-bold text-base sm:text-lg transition-all"> 💵 Dollar Sales </button> <button onclick="showSection('mastercard')" id="mastercard-tab" class="nav-tab py-3 px-4 rounded-xl font-bold text-base sm:text-lg transition-all bangla-font"> 💳 Virtual Mastercard </button>
+     </div>
+    </div>
+   </div><!-- Dollar Sales Section -->
+   <section id="dollar-section" class="px-4 py-16">
+    <div class="max-w-4xl mx-auto"><!-- Section Header -->
+     <div class="text-center mb-12 animate-fade-in">
+      <div class="flex items-center justify-center gap-3 mb-4">
+       <div class="w-16 h-16 rounded-xl flex items-center justify-center animate-float" style="background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);">
+        <svg width="36" height="36" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+       </div>
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-black mb-4 hero-title">Dollar Sales</h2>
+      <p class="text-xl text-gray-300 mb-2">Best Rate Dollar - Fast &amp; Secure</p>
+      <p class="text-sm text-emerald-400 font-semibold">⚡ Delivery in Just 5 Minutes!</p>
+     </div><!-- Main Form Card -->
+     <div class="gradient-card rounded-2xl p-6 sm:p-8 mb-6 animate-fade-in"><!-- Rate Information -->
+      <div class="grid sm:grid-cols-2 gap-4 mb-8">
+       <div class="text-center p-6 rounded-xl" style="background: rgba(16, 185, 129, 0.1); border: 2px solid rgba(16, 185, 129, 0.4);">
+        <div class="text-sm text-gray-400 mb-1">
+         $3-9 Dollar Rate
+        </div>
+        <div class="text-4xl font-black text-emerald-400">
+         137 BDT
+        </div>
+        <div class="text-xs text-gray-500 mt-1">
+         Per Dollar
+        </div>
+       </div>
+       <div class="text-center p-6 rounded-xl" style="background: rgba(59, 130, 246, 0.1); border: 2px solid rgba(59, 130, 246, 0.4);">
+        <div class="text-sm text-gray-400 mb-1">
+         $10+ Dollar Rate
+        </div>
+        <div class="text-4xl font-black text-blue-400">
+         135 BDT
+        </div>
+        <div class="text-xs text-gray-500 mt-1">
+         Per Dollar
+        </div>
+       </div>
+      </div><!-- Quick Amount Buttons -->
+      <div class="mb-6"><label class="block text-sm font-semibold mb-3 text-gray-300">Quick Select Amount</label>
+       <div class="grid grid-cols-3 gap-3"><button type="button" onclick="selectAmount(10)" class="amount-btn py-3 rounded-lg font-bold text-lg"> $10 </button> <button type="button" onclick="selectAmount(15)" class="amount-btn py-3 rounded-lg font-bold text-lg"> $15 </button> <button type="button" onclick="selectAmount(20)" class="amount-btn py-3 rounded-lg font-bold text-lg"> $20 </button> <button type="button" onclick="selectAmount(25)" class="amount-btn py-3 rounded-lg font-bold text-lg"> $25 </button> <button type="button" onclick="selectAmount(50)" class="amount-btn py-3 rounded-lg font-bold text-lg"> $50 </button> <button type="button" onclick="selectAmount(100)" class="amount-btn py-3 rounded-lg font-bold text-lg"> $100 </button>
+       </div>
+      </div><!-- Custom Amount Input -->
+      <div class="mb-6"><label for="custom-amount" class="block text-sm font-semibold mb-3 text-gray-300"> Or Enter Your Amount (Minimum $3) </label>
+       <div class="relative"><span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-2xl font-bold text-emerald-400">$</span> <input type="number" id="custom-amount" min="3" step="0.01" placeholder="3.00" class="custom-input w-full pl-12 pr-4 py-4 rounded-lg text-white text-xl font-bold" oninput="calculatePrice()">
+       </div>
+       <p class="text-xs text-gray-500 mt-2">* Minimum Order: $3 | Decimal up to $0.01 accepted</p>
+      </div><!-- Price Display -->
+      <div id="price-display" class="price-display p-6 rounded-xl mb-6 text-center">
+       <div class="text-sm text-gray-400 mb-2">
+        Total Price
+       </div>
+       <div class="flex items-center justify-center gap-3"><span id="dollar-amount" class="text-2xl font-bold text-white">$0.00</span> <span class="text-gray-400">=</span> <span id="taka-amount" class="text-4xl font-bold text-emerald-400">0 BDT</span>
+       </div>
+       <div id="rate-info" class="text-sm text-gray-500 mt-2">
+        Rate: 0 BDT/Dollar
+       </div>
+      </div><!-- Customer Information Form -->
+      <form id="order-form" onsubmit="handleOrder(event)" class="space-y-4 mb-6">
+       <div><label for="customer-name" class="block text-sm font-semibold mb-2 text-gray-300">Your Name *</label> <input type="text" id="customer-name" name="name" placeholder="Enter your full name" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div>
+       <div><label for="customer-email" class="block text-sm font-semibold mb-2 text-gray-300">Email Address *</label> <input type="email" id="customer-email" name="email" placeholder="example@email.com" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div>
+       <div><label for="customer-whatsapp" class="block text-sm font-semibold mb-2 text-gray-300">WhatsApp Number *</label> <input type="tel" id="customer-whatsapp" name="whatsapp" placeholder="01XXXXXXXXX" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div>
+       <div><label for="sender-number" class="block text-sm font-semibold mb-2 text-gray-300"> Your Payment Number/Account * <span class="text-xs text-gray-500 font-normal ml-2">(Number you're sending money from)</span> </label> <input type="text" id="sender-number" name="sender_number" placeholder="e.g., 01XXXXXXXXX or Account Number" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+        <p class="text-xs text-gray-500 mt-1">Enter the Bkash/Nagad/Rocket number or Bank account you're paying from</p>
+       </div>
+       <div><label for="customer-details" class="block text-sm font-semibold mb-2 text-gray-300">Dollar Receiving Details (PayPal/Skrill/Wise Email/ID) *</label> <textarea id="customer-details" name="details" rows="3" placeholder="Enter the email or ID where you want to receive dollars" class="custom-input w-full px-4 py-3 rounded-lg text-white resize-none" required></textarea>
+       </div>
+      </form><!-- Payment Gateway Section -->
+      <div class="mb-6">
+       <h3 class="text-xl font-bold mb-4 text-center">Select Payment Method</h3><!-- Important Note About Charges -->
+       <div class="mb-4 p-4 rounded-lg" style="background: rgba(251, 191, 36, 0.1); border: 2px solid rgba(251, 191, 36, 0.5);">
+        <div class="flex items-start gap-2"><span class="text-2xl">⚠️</span>
+         <div>
+          <p class="font-bold text-yellow-400 mb-1">Important:</p>
+          <p class="text-sm text-gray-300">For Bkash/Nagad/Rocket, you MUST <strong class="text-yellow-400">add charges</strong> when sending money.</p>
+          <p class="text-xs text-gray-400 mt-1">16 BDT charge per 1000 BDT</p>
+         </div>
+        </div>
+       </div>
+       <div class="space-y-3"><!-- Bkash -->
+        <div class="payment-option p-4 rounded-lg" onclick="selectPaymentMethod('bkash')">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);"><span class="text-2xl">📱</span>
+           </div>
+           <div>
+            <p class="font-bold text-lg text-pink-400">Bkash (Send Money)</p>
+            <p class="text-xs text-yellow-400">⚠️ Add charge &amp; send money</p>
+           </div>
+          </div>
+          <div id="bkash-check" class="hidden">
+           <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+           </svg>
+          </div>
+         </div>
+         <div class="flex items-center gap-2"><code class="text-lg font-mono text-white bg-black/30 px-3 py-1 rounded" id="bkash-number">01791527854</code> <button type="button" onclick="copyNumber('01791527854', event)" class="copy-btn px-3 py-1 rounded text-xs font-semibold text-emerald-400"> Copy </button>
+         </div>
+        </div><!-- Nagad -->
+        <div class="payment-option p-4 rounded-lg" onclick="selectPaymentMethod('nagad')">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);"><span class="text-2xl">💰</span>
+           </div>
+           <div>
+            <p class="font-bold text-lg text-orange-400">Nagad (Send Money)</p>
+            <p class="text-xs text-yellow-400">⚠️ Add charge &amp; send money</p>
+           </div>
+          </div>
+          <div id="nagad-check" class="hidden">
+           <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+           </svg>
+          </div>
+         </div>
+         <div class="flex items-center gap-2"><code class="text-lg font-mono text-white bg-black/30 px-3 py-1 rounded" id="nagad-number">01519601517</code> <button type="button" onclick="copyNumber('01519601517', event)" class="copy-btn px-3 py-1 rounded text-xs font-semibold text-emerald-400"> Copy </button>
+         </div>
+        </div><!-- Rocket -->
+        <div class="payment-option p-4 rounded-lg" onclick="selectPaymentMethod('rocket')">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"><span class="text-2xl">🚀</span>
+           </div>
+           <div>
+            <p class="font-bold text-lg text-purple-400">Rocket (Send Money)</p>
+            <p class="text-xs text-yellow-400">⚠️ Add charge &amp; send money</p>
+           </div>
+          </div>
+          <div id="rocket-check" class="hidden">
+           <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+           </svg>
+          </div>
+         </div>
+         <div class="flex items-center gap-2"><code class="text-lg font-mono text-white bg-black/30 px-3 py-1 rounded" id="rocket-number">01519601517</code> <button type="button" onclick="copyNumber('01519601517', event)" class="copy-btn px-3 py-1 rounded text-xs font-semibold text-emerald-400"> Copy </button>
+         </div>
+        </div><!-- Binance -->
+        <div class="payment-option p-4 rounded-lg" onclick="selectPaymentMethod('binance')">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #f0b90b 0%, #f8d12f 100%);"><span class="text-2xl">₿</span>
+           </div>
+           <div>
+            <p class="font-bold text-lg text-yellow-400">Binance</p>
+            <p class="text-xs text-gray-400">No charge</p>
+           </div>
+          </div>
+          <div id="binance-check" class="hidden">
+           <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+           </svg>
+          </div>
+         </div>
+         <div class="flex items-center gap-2"><code class="text-lg font-mono text-white bg-black/30 px-3 py-1 rounded" id="binance-uid">1157359156</code> <button type="button" onclick="copyNumber('1157359156', event)" class="copy-btn px-3 py-1 rounded text-xs font-semibold text-emerald-400"> Copy </button>
+         </div>
+         <p class="text-xs text-gray-400 mt-2">Pay using Binance UID</p>
+        </div><!-- Bank Transfer -->
+        <div class="payment-option p-4 rounded-lg" onclick="selectPaymentMethod('bank')">
+         <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-3">
+           <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);"><span class="text-2xl">🏦</span>
+           </div>
+           <div>
+            <p class="font-bold text-lg text-blue-400">Bank Transfer</p>
+            <p class="text-xs text-gray-400">No charge</p>
+           </div>
+          </div>
+          <div id="bank-check" class="hidden">
+           <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+           </svg>
+          </div>
+         </div>
+         <div class="text-sm text-gray-300 space-y-1">
+          <p><strong>Bank:</strong> Eastern Bank PLC</p>
+          <p><strong>Name:</strong> Sayad Md Bayezid Hosan</p>
+          <p><strong>Branch:</strong> Tangail Branch</p>
+         </div>
+        </div>
+       </div><!-- Transaction ID Input -->
+       <div class="mt-4"><label for="transaction-id" class="block text-sm font-semibold mb-2 text-gray-300">Transaction ID / Reference Number *</label> <input type="text" id="transaction-id" name="txn_id" placeholder="e.g., 8N7S6D5 or TRX123456" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div><!-- Payment Screenshot Upload -->
+       <div class="mt-4"><label class="block text-sm font-semibold mb-2 text-gray-300"> Upload Payment Screenshot * <span class="text-xs text-gray-500 font-normal ml-2">(PNG, JPG, JPEG - Max 5MB)</span> </label>
+        <div class="relative"><input type="file" id="payment-screenshot" name="screenshot" accept="image/png, image/jpeg, image/jpg" class="hidden" onchange="handleScreenshotUpload(event)" required> <label for="payment-screenshot" id="upload-label" class="custom-input w-full px-4 py-4 rounded-lg text-white flex items-center justify-center gap-3 cursor-pointer hover:border-emerald-400">
+          <svg width="24" height="24" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg><span id="upload-text">📸 Click to Select Screenshot</span> </label>
+        </div>
+        <div id="screenshot-preview" class="hidden mt-3 p-4 rounded-lg" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
+         <div class="flex items-start gap-3 mb-3">
+          <div class="flex-1">
+           <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+             <svg width="20" height="20" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" />
+             </svg><span id="file-name" class="text-sm text-emerald-400 font-semibold"></span>
+            </div><button type="button" onclick="removeScreenshot()" class="text-red-400 hover:text-red-300 text-sm font-semibold"> ✕ Remove </button>
+           </div>
+           <div id="file-size" class="text-xs text-gray-400"></div>
+          </div>
+         </div><img id="screenshot-img" src="" alt="Payment Screenshot" class="screenshot-preview-img w-full">
+        </div>
+       </div>
+      </div><!-- Charge Calculator (for Bkash/Nagad/Rocket) -->
+      <div id="charge-calculator" class="mb-6 hidden">
+       <div class="p-5 rounded-xl" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(245, 158, 11, 0.15) 100%); border: 2px solid rgba(251, 191, 36, 0.4);">
+        <div class="flex items-start gap-3 mb-4"><span class="text-3xl">💰</span>
+         <div class="flex-1">
+          <h4 class="font-bold text-yellow-400 text-lg mb-1">Charge Calculator</h4>
+          <p class="text-sm text-gray-300">16 BDT charge per 1000 BDT</p>
+         </div>
+        </div>
+        <div class="space-y-3"><!-- Base Amount -->
+         <div class="flex justify-between items-center p-3 rounded-lg" style="background: rgba(0, 0, 0, 0.2);"><span class="text-gray-300">Base Amount:</span> <span id="base-amount" class="text-xl font-bold text-white">0 BDT</span>
+         </div><!-- Charge Amount -->
+         <div class="flex justify-between items-center p-3 rounded-lg" style="background: rgba(251, 191, 36, 0.1);"><span class="text-yellow-400 font-semibold">+ Charge (16/1000):</span> <span id="charge-amount" class="text-xl font-bold text-yellow-400">0 BDT</span>
+         </div><!-- Total with Charge -->
+         <div class="flex justify-between items-center p-4 rounded-lg" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%); border: 2px solid rgba(16, 185, 129, 0.4);"><span class="text-emerald-400 font-bold text-lg">Total Send Money:</span> <span id="total-with-charge" class="text-3xl font-bold text-emerald-400">0 BDT</span>
+         </div>
+        </div>
+        <div class="mt-4 p-3 rounded-lg" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3);">
+         <p class="text-sm text-red-400"><strong>⚠️ Important:</strong> Send <strong id="total-display-note" class="text-emerald-400">0 BDT</strong> with charge included!</p>
+        </div>
+       </div>
+      </div><!-- Submit Button --> <button type="submit" form="order-form" id="submit-btn" class="btn-primary w-full py-4 rounded-xl font-bold text-xl text-white" style="background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);"> Confirm Order </button> <!-- Success Message -->
+      <div id="success-message" class="mt-6 p-6 rounded-xl hidden" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%); border: 2px solid #10b981;">
+       <div class="flex items-center gap-3 mb-4">
+        <svg width="28" height="28" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="#10b981" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+        <h3 class="text-xl font-bold text-emerald-400">Order Details Ready!</h3>
+       </div><!-- Order Details Display Box -->
+       <div id="order-details-text" class="order-details-box">
+        <div class="detail-row"><span class="detail-label">👤 Name:</span> <span class="detail-value" id="display-name"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">📧 Email:</span> <span class="detail-value" id="display-email"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">📱 WhatsApp:</span> <span class="detail-value" id="display-whatsapp"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">💳 Sender Number:</span> <span class="detail-value" id="display-sender"></span>
+        </div>
+        <div class="detail-row" style="border-top: 2px solid rgba(16, 185, 129, 0.3); margin-top: 8px; padding-top: 16px;"><span class="detail-label">💵 Dollar Amount:</span> <span class="detail-value font-bold text-xl" id="display-dollar"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">📊 Rate:</span> <span class="detail-value" id="display-rate"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">💰 Total Price:</span> <span class="detail-value font-bold text-xl" id="display-price"></span>
+        </div>
+        <div class="detail-row" style="border-top: 2px solid rgba(16, 185, 129, 0.3); margin-top: 8px; padding-top: 16px;"><span class="detail-label">💳 Payment Method:</span> <span class="detail-value" id="display-payment"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">🔖 Transaction ID:</span> <span class="detail-value font-mono" id="display-txn"></span>
+        </div>
+        <div id="display-charge-section" class="detail-row hidden"><span class="detail-label">⚠️ With Charge:</span> <span class="detail-value font-bold text-red-400" id="display-charge"></span>
+        </div>
+        <div class="detail-row" style="border-top: 2px solid rgba(16, 185, 129, 0.3); margin-top: 8px; padding-top: 16px;"><span class="detail-label">📝 Dollar Account:</span> <span class="detail-value" id="display-details"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">📸 Screenshot:</span> <span class="detail-value" id="display-screenshot"></span>
+        </div>
+       </div><!-- Copy Button --> <button type="button" onclick="copyOrderDetails()" id="copy-order-btn" class="w-full py-3 px-4 rounded-lg font-bold text-white mb-3 transition-all" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"> 📋 Copy All Details </button> <!-- WhatsApp Button --> <a id="dollar-whatsapp-link" href="https://wa.me/8801519601517" target="_blank" rel="noopener noreferrer" class="block w-full py-3 px-4 rounded-lg font-bold text-white text-center transition-all" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);"> 💬 Send via WhatsApp </a>
+       <div class="mt-4 p-3 rounded-lg" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+        <p class="text-xs text-gray-300 text-center">✅ <strong>Step 1:</strong> Click "Copy All Details" button<br>
+          ✅ <strong>Step 2:</strong> Click "Send via WhatsApp"<br>
+          ✅ <strong>Step 3:</strong> Paste in WhatsApp &amp; send screenshot</p>
+       </div>
+      </div>
+     </div><!-- Important Notes -->
+     <div class="gradient-card rounded-xl p-6 mb-6">
+      <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><span class="text-2xl">📋</span> <span>Important Information</span></h3>
+      <ul class="space-y-2 text-sm text-gray-300">
+       <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>Minimum Order: <strong>$3 Dollar</strong></span></li>
+       <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>$3-9 Dollar Rate: <strong>137 BDT</strong> per dollar</span></li>
+       <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>$10+ Dollar Rate: <strong>135 BDT</strong> per dollar</span></li>
+       <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>Dollar Delivery: <strong>5 Minutes</strong> (10 mins if technical issue)</span></li>
+       <li class="flex items-start gap-2"><span class="text-yellow-400 mt-1">⚠️</span> <span><strong class="text-yellow-400">Bkash/Nagad/Rocket Charge:</strong> MUST add charge when sending money (16 BDT per 1000 BDT)</span></li>
+       <li class="flex items-start gap-2"><span class="text-emerald-400 mt-1">✓</span> <span>After payment, provide Transaction ID &amp; Screenshot</span></li>
+       <li class="flex items-start gap-2"><span class="text-blue-400 mt-1">💬</span> <span>For any issue, contact on WhatsApp - <strong>24/7 Support</strong></span></li>
+      </ul>
+     </div>
+    </div>
+   </section><!-- Mastercard Section (Bangla) -->
+   <section id="mastercard-section" class="px-4 py-16 hidden bangla-font">
+    <div class="max-w-4xl mx-auto"><!-- Section Header -->
+     <div class="text-center mb-12 animate-fade-in">
+      <div class="flex items-center justify-center gap-3 mb-4">
+       <div class="w-16 h-16 rounded-xl flex items-center justify-center card-icon mastercard-bg">
+        <svg width="36" height="36" viewbox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="20" height="14" rx="2" fill="white" fill-opacity="0.2" stroke="white" stroke-width="2" /> <path d="M2 10h20" stroke="white" stroke-width="2" /> <rect x="5" y="14" width="5" height="2" rx="1" fill="white" /> <rect x="12" y="14" width="5" height="2" rx="1" fill="white" />
+        </svg>
+       </div>
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-extrabold mb-3" style="color: #a78bfa;">ডুয়েল কারেন্সি ভার্চুয়াল মাস্টারকার্ড</h2>
+      <p class="text-xl text-gray-300 mb-2 font-bold">সার্ভিস এবং অ্যাক্টিভেশন ফি মাত্র <span class="text-yellow-400 font-bold">১৯৯ টাকা</span></p>
+      <p class="text-sm text-purple-400 font-semibold">১-৫ মিনিটে কার্ড ডেলিভারি • ৩ বছরের মেয়াদ • ২৪/৭ ফ্রি সাপোর্ট</p>
+     </div><!-- Animated Virtual Card Display -->
+     <div class="mb-12 animate-fade-in">
+      <div class="virtual-card-3d">
+       <div class="card-inner">
+        <div class="card-face card-front">
+         <div class="card-shine"></div><!-- Card Top Section -->
+         <div class="flex justify-between items-start">
+          <div class="card-chip">
+           <div class="chip-line" style="top: 10px;"></div>
+           <div class="chip-line" style="top: 20px;"></div>
+           <div class="chip-line" style="top: 30px;"></div>
+          </div>
+          <div class="mastercard-logo">
+           <div class="circle-red"></div>
+           <div class="circle-orange"></div>
+          </div>
+         </div><!-- Card Number -->
+         <div class="card-number">
+          5412 7512 3456 7890
+         </div><!-- Card Bottom Section -->
+         <div class="flex justify-between items-end">
+          <div>
+           <div class="text-xs text-gray-200 mb-1 uppercase" style="opacity: 0.8;">
+            Card Holder
+           </div>
+           <div class="card-holder-name">
+            Sayad Md Bayezid Hosan
+           </div>
+          </div>
+          <div class="text-right">
+           <div class="text-xs text-gray-200 mb-1 uppercase" style="opacity: 0.8;">
+            Valid Thru
+           </div>
+           <div class="card-expiry" id="card-expiry-date">
+            12/27
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div><!-- Clock, Date & User Counter Section -->
+     <div class="grid sm:grid-cols-2 gap-6 mb-12 animate-fade-in"><!-- Clock & Date Widget -->
+      <div class="clock-date-widget text-center">
+       <div class="mb-3">
+        <div class="digital-clock" id="digital-clock">
+         00:00:00
+        </div>
+       </div>
+       <div class="date-display bangla-font" id="current-date-display">
+        Loading...
+       </div>
+      </div><!-- Active Users Counter -->
+      <div class="user-counter text-center">
+       <div class="mb-2">
+        <div class="user-count" id="active-user-count">
+         17000
+        </div>
+       </div>
+       <div class="count-label bangla-font">
+        একটিভ ভার্চুয়াল কার্ড ইউজার
+       </div>
+       <div class="text-xs text-emerald-300 mt-2 bangla-font">
+        রিয়েল টাইম আপডেট হচ্ছে
+       </div>
+      </div>
+     </div><!-- Problem Statement & Full Details -->
+     <div class="mastercard-card rounded-2xl p-6 sm:p-8 mb-8 animate-fade-in">
+      <div class="mb-6">
+       <h3 class="text-2xl font-bold mb-4 text-gray-200">পাসপোর্ট নেই বলে কি সমস্যায় পড়েছেন?</h3>
+       <p class="text-gray-300 text-base sm:text-lg leading-relaxed mb-4">পাসপোর্ট নেই বলে কি আপনার <strong class="text-purple-400">ফেসবুক বুস্টিং</strong> বা <strong class="text-purple-400">ইন্টারন্যাশনাল পেমেন্ট</strong> আটকে আছে? একজন Tech Provider হিসেবে আমি জানি, একটি সঠিক পেমেন্ট মেথড না থাকা মানে আপনার <strong class="text-red-400">ব্যবসার গ্রোথ থমকে যাওয়া</strong>।</p>
+       <p class="text-gray-300 text-base sm:text-lg leading-relaxed">আপনার এই সমস্যার সহজ এবং স্থায়ী সমাধান দিতে <strong class="text-purple-400">Connect With Bayezid</strong> নিয়ে এলো ভার্চুয়াল কার্ড সার্ভিস। <strong class="text-emerald-400">২৪ঘন্টা ৭ দিন লাইভ সাপোর্ট ফ্রি</strong>।</p>
+      </div>
+      <div class="p-5 sm:p-6 rounded-xl mb-6" style="background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.2) 100%); border: 2px solid rgba(239, 68, 68, 0.5);">
+       <div class="text-center">
+        <p class="text-yellow-400 font-bold text-lg sm:text-xl mb-2">স্পেশাল অফার প্রাইস</p>
+        <p class="text-white text-3xl sm:text-4xl font-black mb-2">মাত্র ১৯৯ টাকা!</p>
+        <p class="text-gray-300 text-sm">(শুধুমাত্র আজকের জন্য)</p>
+       </div>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-bold mb-5 text-gray-200">কেন আমাদের এই ডুয়েল কারেন্সি কার্ডটি আপনার সেরা পছন্দ হবে?</h3>
+      <ul class="space-y-4 mb-8">
+       <li class="flex items-start text-gray-300 text-sm sm:text-base leading-relaxed"><span class="text-green-400 font-bold mr-3 text-lg sm:text-xl flex-shrink-0">•</span>
+        <div><strong class="text-white">পাসপোর্ট ছাড়াই অনুমোদন:</strong> কোনো পাসপোর্ট বা ব্যাংকের ঝামেলার প্রয়োজন নেই; শুধুমাত্র <strong class="text-purple-400">১০ ডিজিট বা স্মার্ট NID</strong> থাকলেই হবে।
+        </div></li>
+       <li class="flex items-start text-gray-300 text-sm sm:text-base leading-relaxed"><span class="text-green-400 font-bold mr-3 text-lg sm:text-xl flex-shrink-0">•</span>
+        <div><strong class="text-white">ভেরিফিকেশন হলেই কার্ড অ্যাক্টিভ:</strong> অনেকে মনে করেন ডলার লোড করার পর কার্ড অ্যাক্টিভ হয়, কিন্তু আমাদের এখানে <strong class="text-emerald-400">NID ভেরিফিকেশন সম্পন্ন হলেই</strong> কার্ডটি সাথে সাথে অ্যাক্টিভ হয়ে যায়। আপনি যখন ইচ্ছে তখন ডলার লোড করে খরচ করতে পারবেন।
+        </div></li>
+       <li class="flex items-start text-gray-300 text-sm sm:text-base leading-relaxed"><span class="text-green-400 font-bold mr-3 text-lg sm:text-xl flex-shrink-0">•</span>
+        <div><strong class="text-white">সহজেই ডলার লোড (Reloadable):</strong> ডলার লোড নিয়ে আর কোনো টেনশন নেই! আপনি ঘরে বসেই <strong class="text-pink-400">বিকাশ, নগদ বা রকেট-এর</strong> মাধ্যমে সরাসরি আমাদের কাছ থেকেই যেকোনো সময় প্রয়োজনমতো ডলার লোড করে নিতে পারবেন।
+        </div></li>
+       <li class="flex items-start text-gray-300 text-sm sm:text-base leading-relaxed"><span class="text-green-400 font-bold mr-3 text-lg sm:text-xl flex-shrink-0">•</span>
+        <div><strong class="text-white">ভ্যাটমুক্ত পেমেন্ট:</strong> ফেসবুক থেকে স্টার কেনা (ভ্যাট ছাড়াই) এবং <strong class="text-blue-400">ফেসবুক, ইউটিউব ও গুগল অ্যাডস-এ</strong> নিরবচ্ছিন্ন পেমেন্ট সুবিধা।
+        </div></li>
+       <li class="flex items-start text-gray-300 text-sm sm:text-base leading-relaxed"><span class="text-green-400 font-bold mr-3 text-lg sm:text-xl flex-shrink-0">•</span>
+        <div><strong class="text-white">গ্লোবাল এক্সেস:</strong> <strong class="text-yellow-400">PayPal, Fiverr, Upwork, Amazon, এবং Canva</strong> সহ যেকোনো আন্তর্জাতিক প্ল্যাটফর্মে পেমেন্ট ও ডলার উইথড্র করার সুবিধা।
+        </div></li>
+       <li class="flex items-start text-gray-300 text-sm sm:text-base leading-relaxed"><span class="text-green-400 font-bold mr-3 text-lg sm:text-xl flex-shrink-0">•</span>
+        <div><strong class="text-white">নিরাপত্তা ও নিয়ন্ত্রণ:</strong> <strong class="text-emerald-400">৩ বছর মেয়াদী</strong> এই কার্ডটি পুরোপুরি নিরাপদ। আপনি নিজেই পাসওয়ার্ড পরিবর্তন ও Two-Step Verification অন করতে পারবেন।
+        </div></li>
+      </ul>
+      <div class="p-5 sm:p-6 rounded-xl mb-6" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.15) 100%); border: 2px solid rgba(16, 185, 129, 0.5);">
+       <h4 class="text-lg sm:text-xl font-bold mb-4 text-emerald-400">অর্ডার করার নিয়ম (১-৫ মিনিটে ডেলিভারি):</h4>
+       <ol class="space-y-3 text-gray-300 text-sm sm:text-base">
+        <li class="flex items-start"><span class="font-bold text-purple-400 mr-3 flex-shrink-0">1.</span>
+         <div>
+          <strong class="text-white">অর্ডার কনফার্ম:</strong> মাত্র ১৯৯ টাকা দিয়ে আপনার অর্ডারটি শুরু করুন।
+         </div></li>
+        <li class="flex items-start"><span class="font-bold text-purple-400 mr-3 flex-shrink-0">2.</span>
+         <div>
+          <strong class="text-white">এক্সপার্ট গাইডলাইন:</strong> পেমেন্ট কনফার্ম হওয়ার পর আমাদের টিম আপনাকে বিস্তারিত গাইড করবে।
+         </div></li>
+        <li class="flex items-start"><span class="font-bold text-purple-400 mr-3 flex-shrink-0">3.</span>
+         <div>
+          <strong class="text-white">সহজ ভেরিফিকেশন:</strong> নিজের স্মার্ট NID কার্ড ও ফেস ভেরিফিকেশন সম্পন্ন করুন।
+         </div></li>
+        <li class="flex items-start"><span class="font-bold text-purple-400 mr-3 flex-shrink-0">4.</span>
+         <div>
+          <strong class="text-white">ইনস্ট্যান্ট ব্যবহার:</strong> ভেরিফাই হওয়ার পর কার্ডটি সাথে সাথে সচল হবে। নিজেই ডলার লোড করে পেমেন্ট শুরু করতে পারবেন।
+         </div></li>
+       </ol>
+      </div>
+      <div class="p-5 sm:p-6 rounded-xl mb-6" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(37, 99, 235, 0.15) 100%); border: 2px solid rgba(59, 130, 246, 0.5);">
+       <p class="text-base sm:text-lg text-gray-200 leading-relaxed mb-4"><strong class="text-blue-400">ডিজিটাল পেমেন্টের দুনিয়ায় স্মার্ট হয়ে উঠুন আজই!</strong></p>
+       <p class="text-gray-300 text-sm sm:text-base leading-relaxed">আপনার বিজনেসকে গ্লোবাল স্ট্যান্ডার্ডে নিয়ে যেতে এই ছোট বিনিয়োগটি হতে পারে আপনার সেরা সিদ্ধান্ত। মনে রাখবেন, আমরা শুধু কার্ড দিচ্ছি না, দিচ্ছি <strong class="text-emerald-400">২৪/৭ সাপোর্ট</strong>।</p>
+      </div><!-- FAQ Section -->
+      <div class="mb-6">
+       <h4 class="text-xl font-bold mb-4 text-gray-200">সাধারণ প্রশ্ন ও উত্তর</h4>
+       <div class="space-y-4"><!-- FAQ 1 -->
+        <div class="p-4 rounded-lg" style="background: rgba(102, 126, 234, 0.05); border: 1px solid rgba(102, 126, 234, 0.3);">
+         <p class="font-bold text-purple-400 mb-2">এই কার্ডে কি আগে থেকে ডলার থাকবে?</p>
+         <p class="text-gray-300 text-sm">আমাদের এই ১৯৯ টাকা হচ্ছে শুধুমাত্র আপনার অ্যাকাউন্ট সেটআপ এবং কার্ডটি সচল (Activation) করার সার্ভিস ফি। যেহেতু এটি আপনার ব্যক্তিগত ভার্চুয়াল মাস্টারকার্ড, তাই এর ভেতরে কোনো ডলার আগে থেকে থাকবে না। আমরা শুধু কার্ডটি অ্যাক্টিভ করে দেবো, এরপর আপনি আপনার প্রয়োজন অনুযায়ী ডলার লোড করে যেকোনো ইন্টারন্যাশনাল পেমেন্টে খরচ করতে পারবেন।</p>
+        </div><!-- FAQ 2 -->
+        <div class="p-4 rounded-lg" style="background: rgba(102, 126, 234, 0.05); border: 1px solid rgba(102, 126, 234, 0.3);">
+         <p class="font-bold text-purple-400 mb-2">কার্ডটি নিতে কি কোনো মাসিক বা বাৎসরিক চার্জ আছে?</p>
+         <p class="text-gray-300 text-sm">না, আমাদের কার্ডের কোনো মাসিক বা বাৎসরিক মেইনটেইনেন্স ফি নেই। আপনি মাত্র ১৯৯ টাকা দিয়ে একবার কার্ডটি অ্যাক্টিভ করে নিলে সেটি দীর্ঘ তিন বছর সময় ব্যবহার করতে পারবেন। পরে আবার রেনিও করতে পারবেন কোন টাকা লাগবে না।</p>
+        </div><!-- FAQ 3 -->
+        <div class="p-4 rounded-lg" style="background: rgba(102, 126, 234, 0.05); border: 1px solid rgba(102, 126, 234, 0.3);">
+         <p class="font-bold text-purple-400 mb-2">এই কার্ড দিয়ে আমি কি কি কাজ করতে পারব?</p>
+         <p class="text-gray-300 text-sm">এই কার্ডটি দিয়ে আপনি ফেসবুক এবং গুগল অ্যাডস রান করা থেকে শুরু করে ইউটিউব প্রিমিয়াম, নেটফ্লিক্স এবং বিশ্বের যেকোনো ইন্টারন্যাশনাল ওয়েবসাইট থেকে কেনাকাটা করতে পারবেন। এটি একটি গ্লোবাল মাস্টারকার্ড, যা আপনার পেমেন্ট সমস্যার শতভাগ সমাধান দেবে।</p>
+        </div><!-- FAQ 4 -->
+        <div class="p-4 rounded-lg" style="background: rgba(102, 126, 234, 0.05); border: 1px solid rgba(102, 126, 234, 0.3);">
+         <p class="font-bold text-purple-400 mb-2">কার্ডটি কিভাবে পাবো?</p>
+         <p class="text-gray-300 text-sm">কার্ডটি পেতে এখনই আমাদের ইনবক্সে আপনার NID অনুযায়ী নাম, date of birth, ইমেইল অ্যাড্রেস, WhatsApp number দিন। সার্ভিস ফি জমা দেওয়ার ১-৫ মিনিটের মধ্যে কার্ড একটিভ হয়ে যাবে। একটিভ করতে ডলার ভরার প্রয়োজন নেই। আগে থেকেই আমরা কার্ড একটিভ করবো এবং কাস্টমার প্রয়োজন অনুযায়ী ডলার রিচার্জ করে নিতে পারবে নিজে নিজে বিকাশ, নগদ, বাইনান্স, রকেট এর মাধ্যমে।</p>
+        </div>
+       </div>
+      </div>
+      <div class="p-5 rounded-lg" style="background: rgba(251, 191, 36, 0.15); border: 2px solid rgba(251, 191, 36, 0.4);">
+       <p class="text-sm text-yellow-300 font-semibold leading-relaxed"><span class="text-lg">⚠️</span> <strong>মনে রাখবেন:</strong> এই ১৯৯ টাকা শুধুমাত্র সার্ভিস ফি + কার্ডটি সচল করার ফি, এর ভেতরে কোনো ডলার থাকবে না। কার্ডটি একটিভ হওয়ার পর আপনি আপনার প্রয়োজন অনুযায়ী ডলার লোড করে খরচ করতে পারবেন।</p>
+      </div>
+     </div><!-- Order Form -->
+     <div class="mastercard-card rounded-2xl p-6 sm:p-8 animate-fade-in">
+      <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center text-gray-200">অর্ডার করতে ফর্মটি পূরণ করুন</h3>
+      <form id="mastercard-form" onsubmit="handleMastercardOrder(event)" class="space-y-4">
+       <div><label for="mc-name" class="block text-sm font-semibold mb-2 text-gray-300">NID অনুযায়ী পূর্ণ নাম *</label> <input type="text" id="mc-name" name="name" placeholder="আপনার পূর্ণ নাম লিখুন" class="custom-input w-full px-4 py-3 rounded-lg text-white bangla-font" required>
+       </div>
+       <div><label for="mc-email" class="block text-sm font-semibold mb-2 text-gray-300">ইমেইল অ্যাড্রেস *</label> <input type="email" id="mc-email" name="email" placeholder="example@gmail.com" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div>
+       <div><label for="mc-whatsapp" class="block text-sm font-semibold mb-2 text-gray-300">হোয়াটসঅ্যাপ নম্বর *</label> <input type="tel" id="mc-whatsapp" name="whatsapp" placeholder="01XXXXXXXXX" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div>
+       <div><label for="mc-dob" class="block text-sm font-semibold mb-2 text-gray-300">জন্ম তারিখ (NID অনুযায়ী) *</label> <input type="date" id="mc-dob" name="dob" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div><!-- Payment Info Box -->
+       <div class="p-5 rounded-lg" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); border: 2px solid rgba(102, 126, 234, 0.4);">
+        <p class="font-bold text-gray-200 mb-2 text-lg">পেমেন্ট মেথড:</p>
+        <div class="space-y-2 text-gray-300">
+         <div class="flex items-center justify-between bg-black/20 px-3 py-2 rounded"><span class="font-semibold text-sm sm:text-base">বিকাশ (Personal):</span>
+          <div class="flex items-center gap-2"><code class="font-mono font-bold text-pink-400 text-sm sm:text-base">01791527854</code> <button type="button" onclick="copyNumber('01791527854', event)" class="copy-btn bg-pink-600 hover:bg-pink-700 text-white px-2 sm:px-3 py-1 rounded text-xs font-semibold"> Copy </button>
+          </div>
+         </div>
+         <div class="flex items-center justify-between bg-black/20 px-3 py-2 rounded"><span class="font-semibold text-sm sm:text-base">নগদ (Personal):</span>
+          <div class="flex items-center gap-2"><code class="font-mono font-bold text-orange-400 text-sm sm:text-base">01519601517</code> <button type="button" onclick="copyNumber('01519601517', event)" class="copy-btn bg-orange-600 hover:bg-orange-700 text-white px-2 sm:px-3 py-1 rounded text-xs font-semibold"> Copy </button>
+          </div>
+         </div>
+        </div>
+        <p class="text-sm text-gray-300 mt-3 font-semibold">মোট টাকা: <span class="text-green-400 text-lg">১৯৯ টাকা</span></p>
+        <p class="text-xs text-gray-400 mt-1">টাকা পাঠিয়ে ট্রানজেকশন আইডি নিচে দিন</p>
+       </div>
+       <div><label for="mc-txn" class="block text-sm font-semibold mb-2 text-gray-300">Transaction ID *</label> <input type="text" id="mc-txn" name="txn_id" placeholder="যেমন: 8N7S6D5" class="custom-input w-full px-4 py-3 rounded-lg text-white" required>
+       </div><button type="submit" id="mc-submit-btn" class="btn-primary w-full py-4 rounded-lg font-bold text-lg text-white mastercard-bg"> অর্ডার কনফার্ম করুন </button>
+      </form><!-- Success Message -->
+      <div id="mc-success-message" class="mt-6 p-6 rounded-xl hidden" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%); border: 2px solid #667eea;">
+       <div class="flex items-center gap-3 mb-4">
+        <svg width="28" height="28" viewbox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#22c55e" /> <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+        <h3 class="text-xl font-bold" style="color: #a78bfa;">অর্ডার সফল হয়েছে!</h3>
+       </div>
+       <div id="mc-order-details" class="order-details-box">
+        <div class="detail-row"><span class="detail-label">নাম:</span> <span class="detail-value bangla-font" id="mc-display-name"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">ইমেইল:</span> <span class="detail-value" id="mc-display-email"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">হোয়াটসঅ্যাপ:</span> <span class="detail-value" id="mc-display-whatsapp"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">জন্ম তারিখ:</span> <span class="detail-value bangla-font" id="mc-display-dob"></span>
+        </div>
+        <div class="detail-row" style="border-top: 2px solid rgba(16, 185, 129, 0.3); margin-top: 8px; padding-top: 16px;"><span class="detail-label">Transaction ID:</span> <span class="detail-value font-mono" id="mc-display-txn"></span>
+        </div>
+        <div class="detail-row"><span class="detail-label">পেমেন্ট:</span> <span class="detail-value font-bold text-xl bangla-font">১৯৯ টাকা</span>
+        </div>
+       </div><button type="button" onclick="copyMastercardDetails()" id="copy-mc-btn" class="w-full py-3 px-4 rounded-lg font-bold text-white mb-3 transition-all" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"> সব তথ্য কপি করুন </button> <a id="mc-whatsapp-link" href="https://wa.me/8801519601517" target="_blank" rel="noopener noreferrer" class="block w-full py-3 px-4 rounded-lg font-bold text-white text-center transition-all" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);"> হোয়াটসঅ্যাপে পাঠান </a>
+       <div class="mt-4 p-3 rounded-lg" style="background: rgba(59, 130, 246, 0.1); border: 1px solid rgba(59, 130, 246, 0.3);">
+        <p class="text-xs text-gray-300 text-center leading-relaxed">আপনার কার্ড <strong>১-৫ মিনিটের মধ্যে</strong> হোয়াটসঅ্যাপে পৌঁছে যাবে!</p>
+       </div>
+      </div>
+     </div><!-- Additional Info -->
+     <div class="mt-12 mastercard-card rounded-2xl p-6 sm:p-8 animate-fade-in">
+      <h3 class="text-xl sm:text-2xl font-bold mb-6 text-center text-gray-200">কার্ড সম্পর্কে বিস্তারিত তথ্য</h3>
+      <div class="grid sm:grid-cols-3 gap-6">
+       <div class="text-center p-6 rounded-xl" style="background: rgba(102, 126, 234, 0.1);">
+        <div class="text-4xl mb-3">
+         ⚡
+        </div>
+        <h4 class="font-bold text-lg mb-2 text-gray-200">দ্রুত ডেলিভারি</h4>
+        <p class="text-sm text-gray-400">পেমেন্টের ১-৫ মিনিটে কার্ড হাতে পাবেন</p>
+       </div>
+       <div class="text-center p-6 rounded-xl" style="background: rgba(16, 185, 129, 0.1);">
+        <div class="text-4xl mb-3">
+         💰
+        </div>
+        <h4 class="font-bold text-lg mb-2 text-gray-200">সাশ্রয়ী মূল্য</h4>
+        <p class="text-sm text-gray-400">মাত্র ১৯৯ টাকায় ৩ বছরের কার্ড</p>
+       </div>
+       <div class="text-center p-6 rounded-xl" style="background: rgba(139, 92, 246, 0.1);">
+        <div class="text-4xl mb-3">
+         🌍
+        </div>
+        <h4 class="font-bold text-lg mb-2 text-gray-200">গ্লোবাল সাপোর্ট</h4>
+        <p class="text-sm text-gray-400">সব ধরনের আন্তর্জাতিক পেমেন্ট</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+    let selectedAmount = 0;
+    let selectedPaymentMethod = null;
+    let uploadedScreenshot = null;
+    let currentOrderData = {};
+    
+    let currentMastercardData = {};
+    
+    // Base date for user count calculation (January 1, 2024)
+    const BASE_DATE = new Date('2024-01-01T00:00:00');
+    const BASE_USER_COUNT = 17000;
+    const USERS_PER_MINUTE = 1;
+    
+    // Calculate current active users based on real-time (increases every minute, never stops)
+    function calculateActiveUsers() {
+      const now = new Date();
+      const timeDiff = now - BASE_DATE;
+      const minutesPassed = Math.floor(timeDiff / (1000 * 60));
+      
+      const totalUsers = BASE_USER_COUNT + (minutesPassed * USERS_PER_MINUTE);
+      
+      return totalUsers;
+    }
+    
+    // Update card expiry date (3 years from today)
+    function updateCardExpiryDate() {
+      const today = new Date();
+      const expiryDate = new Date(today);
+      expiryDate.setFullYear(expiryDate.getFullYear() + 3);
+      
+      const month = String(expiryDate.getMonth() + 1).padStart(2, '0');
+      const year = String(expiryDate.getFullYear()).slice(-2);
+      
+      document.getElementById('card-expiry-date').textContent = `${month}/${year}`;
+    }
+    
+    // Update digital clock
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
+      
+      // Update date in Bangla
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      };
+      const banglaDate = now.toLocaleDateString('bn-BD', options);
+      document.getElementById('current-date-display').textContent = banglaDate;
+    }
+    
+    // Update active user count
+    function updateUserCount() {
+      const currentCount = calculateActiveUsers();
+      document.getElementById('active-user-count').textContent = currentCount.toLocaleString('en-US');
+    }
+    
+    // Initialize all real-time features
+    function initializeRealTimeFeatures() {
+      updateCardExpiryDate();
+      updateClock();
+      updateUserCount();
+      
+      // Update clock every second
+      setInterval(updateClock, 1000);
+      
+      // Update user count every minute (60000 ms)
+      setInterval(updateUserCount, 60000);
+    }
+    
+    // Initialize when page loads
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeRealTimeFeatures);
+    } else {
+      initializeRealTimeFeatures();
+    }
+    
+    function showSection(section) {
+      const dollarSection = document.getElementById('dollar-section');
+      const mastercardSection = document.getElementById('mastercard-section');
+      const dollarTab = document.getElementById('dollar-tab');
+      const mastercardTab = document.getElementById('mastercard-tab');
+      
+      dollarSection.classList.add('hidden');
+      mastercardSection.classList.add('hidden');
+      dollarTab.classList.remove('active');
+      mastercardTab.classList.remove('active');
+      
+      if (section === 'dollar') {
+        dollarSection.classList.remove('hidden');
+        dollarTab.classList.add('active');
+      } else if (section === 'mastercard') {
+        mastercardSection.classList.remove('hidden');
+        mastercardTab.classList.add('active');
+      }
+      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function handleMastercardOrder(event) {
+      event.preventDefault();
+      
+      const formData = new FormData(event.target);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const whatsapp = formData.get('whatsapp');
+      const dob = formData.get('dob');
+      const txnId = formData.get('txn_id');
+      
+      const submitBtn = document.getElementById('mc-submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'প্রসেস করা হচ্ছে...';
+      
+      const dobFormatted = new Date(dob).toLocaleDateString('bn-BD', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      
+      currentMastercardData = {
+        name: name,
+        email: email,
+        whatsapp: whatsapp,
+        dob: dobFormatted,
+        dobRaw: dob,
+        txnId: txnId
+      };
+      
+      document.getElementById('mc-display-name').textContent = name;
+      document.getElementById('mc-display-email').textContent = email;
+      document.getElementById('mc-display-whatsapp').textContent = whatsapp;
+      document.getElementById('mc-display-dob').textContent = dobFormatted;
+      document.getElementById('mc-display-txn').textContent = txnId;
+      
+      setTimeout(() => {
+        const successMsg = document.getElementById('mc-success-message');
+        successMsg.classList.remove('hidden');
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        event.target.reset();
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'অর্ডার কনফার্ম করুন';
+      }, 800);
+    }
+    
+    function copyMastercardDetails() {
+      let orderText = `নতুন ভার্চুয়াল মাস্টারকার্ড অর্ডার\n\n`;
+      orderText += `নাম: ${currentMastercardData.name}\n`;
+      orderText += `ইমেইল: ${currentMastercardData.email}\n`;
+      orderText += `হোয়াটসঅ্যাপ: ${currentMastercardData.whatsapp}\n`;
+      orderText += `জন্ম তারিখ: ${currentMastercardData.dob}\n`;
+      orderText += `Transaction ID: ${currentMastercardData.txnId}\n`;
+      orderText += `পেমেন্ট: ১৯৯ টাকা\n`;
+      orderText += `সময়: ${new Date().toLocaleString('bn-BD')}\n\n`;
+      orderText += `দ্রুত কার্ড ডেলিভারি করুন!`;
+      
+      const textarea = document.createElement('textarea');
+      textarea.value = orderText;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        const btn = document.getElementById('copy-mc-btn');
+        const originalText = btn.textContent;
+        btn.textContent = '✓ কপি হয়েছে!';
+        btn.style.background = '#10b981';
+        
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Copy failed:', err);
+      } finally {
+        document.body.removeChild(textarea);
+      }
+      
+      // Update WhatsApp link with pre-filled message
+      const whatsappMsg = encodeURIComponent(orderText);
+      document.getElementById('mc-whatsapp-link').href = `https://wa.me/8801519601517?text=${whatsappMsg}`;
+    }
+    
+    function copyNumber(number, event) {
+      event.stopPropagation();
+      
+      const textarea = document.createElement('textarea');
+      textarea.value = number;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        const btn = event.currentTarget;
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied!';
+        btn.style.background = 'rgba(16, 185, 129, 0.3)';
+        
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Copy failed:', err);
+        const btn = event.currentTarget;
+        btn.textContent = '❌ Failed';
+        setTimeout(() => {
+          btn.textContent = 'Copy';
+        }, 2000);
+      } finally {
+        document.body.removeChild(textarea);
+      }
+    }
+    
+    function handleScreenshotUpload(event) {
+      const file = event.target.files[0];
+      
+      if (!file) return;
+      
+      if (file.size > 5 * 1024 * 1024) {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'mt-2 p-2 rounded text-sm text-red-400';
+        errorMsg.style.background = 'rgba(239, 68, 68, 0.1)';
+        errorMsg.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        errorMsg.textContent = '⚠️ File size cannot exceed 5MB';
+        
+        const uploadLabel = document.getElementById('upload-label');
+        uploadLabel.parentElement.insertBefore(errorMsg, uploadLabel.nextSibling);
+        
+        setTimeout(() => errorMsg.remove(), 3000);
+        event.target.value = '';
+        return;
+      }
+      
+      if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.type)) {
+        const errorMsg = document.createElement('div');
+        errorMsg.className = 'mt-2 p-2 rounded text-sm text-red-400';
+        errorMsg.style.background = 'rgba(239, 68, 68, 0.1)';
+        errorMsg.style.border = '1px solid rgba(239, 68, 68, 0.3)';
+        errorMsg.textContent = '⚠️ Only PNG, JPG, JPEG files accepted';
+        
+        const uploadLabel = document.getElementById('upload-label');
+        uploadLabel.parentElement.insertBefore(errorMsg, uploadLabel.nextSibling);
+        
+        setTimeout(() => errorMsg.remove(), 3000);
+        event.target.value = '';
+        return;
+      }
+      
+      uploadedScreenshot = file;
+      
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('screenshot-img').src = e.target.result;
+        document.getElementById('file-name').textContent = file.name;
+        document.getElementById('file-size').textContent = `Size: ${(file.size / 1024).toFixed(2)} KB`;
+        document.getElementById('screenshot-preview').classList.remove('hidden');
+        document.getElementById('upload-text').textContent = '✓ Screenshot Uploaded';
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    function removeScreenshot() {
+      uploadedScreenshot = null;
+      document.getElementById('payment-screenshot').value = '';
+      document.getElementById('screenshot-preview').classList.add('hidden');
+      document.getElementById('upload-text').textContent = '📸 Click to Select Screenshot';
+    }
+    
+    function calculatePrice() {
+      const input = document.getElementById('custom-amount');
+      const amount = parseFloat(input.value) || 0;
+      
+      document.querySelectorAll('.amount-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      updatePriceDisplay(amount);
+      selectedAmount = amount;
+      
+      if (['bkash', 'nagad', 'rocket'].includes(selectedPaymentMethod) && amount >= 3) {
+        const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
+        const totalTaka = Math.round(amount * rate);
+        updateChargeCalculator(totalTaka);
+      }
+    }
+    
+    function selectAmount(amount) {
+      const input = document.getElementById('custom-amount');
+      input.value = amount;
+      
+      document.querySelectorAll('.amount-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+      
+      updatePriceDisplay(amount);
+      selectedAmount = amount;
+      
+      if (['bkash', 'nagad', 'rocket'].includes(selectedPaymentMethod)) {
+        const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
+        const totalTaka = Math.round(amount * rate);
+        updateChargeCalculator(totalTaka);
+      }
+    }
+    
+    function updatePriceDisplay(dollarAmount) {
+      const dollarDisplay = document.getElementById('dollar-amount');
+      const takaDisplay = document.getElementById('taka-amount');
+      const rateInfo = document.getElementById('rate-info');
+      
+      if (dollarAmount < 3) {
+        dollarDisplay.textContent = `$${dollarAmount.toFixed(2)}`;
+        takaDisplay.textContent = '0 BDT';
+        rateInfo.textContent = 'Minimum $3 dollar order required';
+        rateInfo.style.color = '#ef4444';
+        return;
+      }
+      
+      let rate;
+      let totalTaka;
+      
+      if (dollarAmount >= 3 && dollarAmount <= 9) {
+        rate = 137;
+        totalTaka = dollarAmount * rate;
+        rateInfo.textContent = `Rate: 137 BDT/Dollar ($3-9 range)`;
+        rateInfo.style.color = '#10b981';
+      } else {
+        rate = 135;
+        totalTaka = dollarAmount * rate;
+        rateInfo.textContent = `Rate: 135 BDT/Dollar ($10+ range)`;
+        rateInfo.style.color = '#3b82f6';
+      }
+      
+      dollarDisplay.textContent = `$${dollarAmount.toFixed(2)}`;
+      takaDisplay.textContent = Math.round(totalTaka) + ' BDT';
+    }
+    
+    function selectPaymentMethod(method) {
+      selectedPaymentMethod = method;
+      
+      document.querySelectorAll('.payment-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      document.querySelectorAll('[id$="-check"]').forEach(check => {
+        check.classList.add('hidden');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      document.getElementById(`${method}-check`).classList.remove('hidden');
+      
+      const calculator = document.getElementById('charge-calculator');
+      if (['bkash', 'nagad', 'rocket'].includes(method)) {
+        calculator.classList.remove('hidden');
+        
+        const amount = parseFloat(document.getElementById('custom-amount').value) || 0;
+        if (amount >= 3) {
+          const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
+          const totalTaka = Math.round(amount * rate);
+          updateChargeCalculator(totalTaka);
+        }
+      } else {
+        calculator.classList.add('hidden');
+      }
+    }
+    
+    function updateChargeCalculator(baseAmount) {
+      const chargeAmount = Math.round(baseAmount * 16 / 1000);
+      const totalWithCharge = baseAmount + chargeAmount;
+      
+      document.getElementById('base-amount').textContent = baseAmount + ' BDT';
+      document.getElementById('charge-amount').textContent = chargeAmount + ' BDT';
+      document.getElementById('total-with-charge').textContent = totalWithCharge + ' BDT';
+      document.getElementById('total-display-note').textContent = totalWithCharge + ' BDT';
+    }
+    
+    function handleOrder(event) {
+      event.preventDefault();
+      
+      const amount = parseFloat(document.getElementById('custom-amount').value) || 0;
+      
+      if (amount < 3) {
+        showInlineMessage('Minimum $3 dollar order required', 'error');
+        return;
+      }
+      
+      if (!selectedPaymentMethod) {
+        showInlineMessage('Please select a payment method', 'error');
+        return;
+      }
+      
+      const txnId = document.getElementById('transaction-id').value.trim();
+      if (!txnId) {
+        showInlineMessage('Please provide Transaction ID', 'error');
+        return;
+      }
+      
+      if (!uploadedScreenshot) {
+        showInlineMessage('Please upload payment screenshot', 'error');
+        return;
+      }
+      
+      const formData = new FormData(event.target);
+      const name = formData.get('name');
+      const email = formData.get('email');
+      const whatsapp = formData.get('whatsapp');
+      const senderNumber = formData.get('sender_number');
+      const details = formData.get('details');
+      
+      const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
+      const totalPrice = Math.round(amount * rate);
+      
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Processing...';
+      
+      const paymentMethodNames = {
+        'bkash': 'Bkash - 01791527854',
+        'nagad': 'Nagad - 01519601517',
+        'rocket': 'Rocket - 01519601517',
+        'binance': 'Binance - UID: 1157359156',
+        'bank': 'Bank Transfer - Eastern Bank PLC'
+      };
+      
+      let chargeInfo = '';
+      if (['bkash', 'nagad', 'rocket'].includes(selectedPaymentMethod)) {
+        const chargeAmount = Math.round(totalPrice * 16 / 1000);
+        const totalWithCharge = totalPrice + chargeAmount;
+        chargeInfo = `${totalWithCharge} BDT (${totalPrice} + ${chargeAmount} charge)`;
+      }
+      
+      currentOrderData = {
+        name: name,
+        email: email,
+        whatsapp: whatsapp,
+        senderNumber: senderNumber,
+        dollarAmount: `$${amount.toFixed(2)}`,
+        rate: `${rate} BDT/Dollar`,
+        totalPrice: `${totalPrice} BDT`,
+        paymentMethod: paymentMethodNames[selectedPaymentMethod],
+        txnId: txnId,
+        chargeInfo: chargeInfo,
+        details: details,
+        screenshot: `${uploadedScreenshot.name} (${(uploadedScreenshot.size / 1024).toFixed(2)} KB)`
+      };
+      
+      document.getElementById('display-name').textContent = name;
+      document.getElementById('display-email').textContent = email;
+      document.getElementById('display-whatsapp').textContent = whatsapp;
+      document.getElementById('display-sender').textContent = senderNumber;
+      document.getElementById('display-dollar').textContent = `$${amount.toFixed(2)}`;
+      document.getElementById('display-rate').textContent = `${rate} BDT/Dollar`;
+      document.getElementById('display-price').textContent = `${totalPrice} BDT`;
+      document.getElementById('display-payment').textContent = paymentMethodNames[selectedPaymentMethod];
+      document.getElementById('display-txn').textContent = txnId;
+      document.getElementById('display-details').textContent = details;
+      document.getElementById('display-screenshot').textContent = `${uploadedScreenshot.name} (${(uploadedScreenshot.size / 1024).toFixed(2)} KB)`;
+      
+      if (chargeInfo) {
+        document.getElementById('display-charge-section').classList.remove('hidden');
+        document.getElementById('display-charge').textContent = chargeInfo;
+      } else {
+        document.getElementById('display-charge-section').classList.add('hidden');
+      }
+      
+      setTimeout(() => {
+        const successMsg = document.getElementById('success-message');
+        successMsg.classList.remove('hidden');
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        event.target.reset();
+        document.getElementById('custom-amount').value = '';
+        selectedAmount = 0;
+        selectedPaymentMethod = null;
+        removeScreenshot();
+        updatePriceDisplay(0);
+        
+        document.querySelectorAll('.payment-option').forEach(option => {
+          option.classList.remove('selected');
+        });
+        document.querySelectorAll('[id$="-check"]').forEach(check => {
+          check.classList.add('hidden');
+        });
+        
+        document.getElementById('charge-calculator').classList.add('hidden');
+        document.getElementById('transaction-id').value = '';
+        
+        document.querySelectorAll('.amount-btn').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Confirm Order';
+      }, 500);
+    }
+    
+    function copyOrderDetails() {
+      let orderText = `🛒 NEW DOLLAR ORDER!\n\n`;
+      orderText += `👤 Name: ${currentOrderData.name}\n`;
+      orderText += `📧 Email: ${currentOrderData.email}\n`;
+      orderText += `📱 WhatsApp: ${currentOrderData.whatsapp}\n`;
+      orderText += `💳 Sender Number/Account: ${currentOrderData.senderNumber}\n\n`;
+      orderText += `💵 Dollar Amount: ${currentOrderData.dollarAmount}\n`;
+      orderText += `📊 Rate: ${currentOrderData.rate}\n`;
+      orderText += `💰 Total Price: ${currentOrderData.totalPrice}\n\n`;
+      orderText += `💳 Payment Method: ${currentOrderData.paymentMethod}\n`;
+      orderText += `🔖 Transaction ID: ${currentOrderData.txnId}\n`;
+      if (currentOrderData.chargeInfo) {
+        orderText += `⚠️ Paid with Charge: ${currentOrderData.chargeInfo}\n`;
+      }
+      orderText += `\n📝 Dollar Receiving Account:\n${currentOrderData.details}\n\n`;
+      orderText += `📸 Screenshot: ${currentOrderData.screenshot}\n`;
+      orderText += `⏰ Time: ${new Date().toLocaleString('en-US')}\n\n`;
+      orderText += `⚡ Fast Delivery: 5-10 Minutes`;
+      
+      const textarea = document.createElement('textarea');
+      textarea.value = orderText;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        const btn = document.getElementById('copy-order-btn');
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied Successfully!';
+        btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+        
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Copy failed:', err);
+        const btn = document.getElementById('copy-order-btn');
+        btn.textContent = '❌ Copy Failed';
+        setTimeout(() => {
+          btn.textContent = '📋 Copy All Details';
+        }, 2000);
+      } finally {
+        document.body.removeChild(textarea);
+      }
+      
+      // Update WhatsApp link with pre-filled message
+      const whatsappMsg = encodeURIComponent(orderText);
+      document.getElementById('dollar-whatsapp-link').href = `https://wa.me/8801519601517?text=${whatsappMsg}`;
+    }
+    
+    function showInlineMessage(message, type) {
+      const existingMsg = document.querySelector('.inline-message');
+      if (existingMsg) existingMsg.remove();
+      
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'inline-message mt-4 p-4 rounded-lg text-center';
+      
+      if (type === 'error') {
+        msgDiv.style.background = 'rgba(239, 68, 68, 0.1)';
+        msgDiv.style.border = '2px solid rgba(239, 68, 68, 0.5)';
+        msgDiv.innerHTML = `<p class="text-red-400 font-semibold">⚠️ ${message}</p>`;
+      }
+      
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.parentElement.insertBefore(msgDiv, submitBtn);
+      
+      setTimeout(() => msgDiv.remove(), 4000);
+    }
+    
+    updatePriceDisplay(0);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c767126637b5fe4',t:'MTc3MDAwMTI2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
