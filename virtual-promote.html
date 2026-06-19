@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BD Promote Service</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.9); }
+    }
+    
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes gradient-move {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
+    
+    .gradient-bg {
+      background: linear-gradient(-45deg, #1e293b, #312e81, #1e1b4b, #0f172a);
+      background-size: 400% 400%;
+      animation: gradient-move 15s ease infinite;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.3s ease;
+    }
+    
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(34, 197, 94, 0.4);
+      transform: translateY(-5px);
+    }
+    
+    .service-card {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    .service-card:hover::before {
+      left: 100%;
+    }
+    
+    .whatsapp-float {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+      width: 65px;
+      height: 65px;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulse-glow 2s infinite;
+      text-decoration: none;
+    }
+    
+    .whatsapp-float:hover {
+      transform: scale(1.15);
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #22c55e, #3b82f6);
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+      transition: all 0.3s ease;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+    
+    .status-badge {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .status-processing {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+      border: 1px solid rgba(59, 130, 246, 0.3);
+    }
+    
+    .status-completed {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+    
+    .filter-btn {
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    .filter-btn.active {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+      .whatsapp-float {
+        width: 55px;
+        height: 55px;
+        font-size: 26px;
+      }
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full gradient-bg text-white overflow-auto">
+  <div class="main-wrapper min-h-full w-full"><!-- Admin Login Modal -->
+   <div id="adminLoginModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+    <div class="glass-card rounded-3xl p-8 max-w-md w-full animate-slide-up">
+     <div class="text-center mb-6">
+      <div class="text-6xl mb-4 animate-float">
+       🔐
+      </div>
+      <h2 class="text-3xl font-bold bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">Admin Login</h2>
+      <p class="text-gray-400 mt-2">Enter your credentials</p>
+     </div>
+     <div class="space-y-4">
+      <div><label class="block text-sm text-gray-300 mb-2">Email</label> <input type="email" id="adminEmailInput" placeholder="cwb.agency@outlook.com" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-all">
+      </div>
+      <div><label class="block text-sm text-gray-300 mb-2">Password</label> <input type="password" id="adminPasswordInput" placeholder="Enter password" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-all">
+      </div><button onclick="attemptAdminLogin()" id="adminLoginBtn" class="w-full py-4 bg-gradient-to-r from-green-500 to-green-600 rounded-xl font-bold text-lg hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105"> 🔓 Login </button> <button onclick="closeAdminLogin()" class="w-full py-3 bg-gray-500/30 hover:bg-gray-500/50 rounded-xl font-semibold transition-all"> Cancel </button>
+     </div>
+     <div id="adminLoginError" class="hidden mt-4 p-3 bg-red-500/20 border border-red-500 rounded-xl text-red-400 text-center font-semibold">
+     </div>
+    </div>
+   </div><!-- Main App -->
+   <div id="mainApp"><!-- Header -->
+    <header class="glass-card sticky top-0 z-40 p-5 border-b border-white/10">
+     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+       <div class="text-5xl animate-float">
+        🇧🇩
+       </div>
+       <div>
+        <h1 id="siteTitle" class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-green-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">BD Promote Service</h1>
+        <p class="text-sm text-gray-300">100% Real &amp; Trusted Service</p>
+       </div>
+      </div>
+      <div class="flex items-center gap-3">
+       <div class="glass-card rounded-xl px-4 py-3 text-center">
+        <div id="currentTime" class="text-2xl font-bold text-green-400"></div>
+        <div id="currentDate" class="text-xs text-gray-400 mt-1"></div>
+       </div><button id="adminBtn" onclick="openAdminLogin()" class="glass-card px-5 py-3 rounded-xl hover:bg-purple-500/20 transition-all font-semibold"> 👨‍💼 Admin </button> <button id="logoutBtn" onclick="logoutAdmin()" class="hidden glass-card px-5 py-3 rounded-xl hover:bg-red-500/20 transition-all font-semibold"> 🚪 Logout </button>
+      </div>
+     </div>
+    </header><!-- Admin Tabs -->
+    <div id="adminTabs" class="hidden max-w-7xl mx-auto px-4 mt-6">
+     <div class="flex flex-wrap gap-3 justify-center"><button onclick="showTab('orders')" class="filter-btn active px-6 py-3 rounded-xl glass-card" data-tab="orders"> 📦 All Orders </button>
+     </div>
+    </div><!-- Main Content -->
+    <main class="max-w-7xl mx-auto p-4 pb-32 mt-6"><!-- Services Section -->
+     <div id="servicesSection">
+      <div class="text-center mb-8 animate-slide-up">
+       <h2 class="text-4xl font-bold mb-3">Our Services</h2>
+       <p class="text-gray-300 text-lg">Choose from our premium social media services</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('page_like', 'Page Like+Follower', 200, 1000)" style="animation-delay: 0.1s">
+        <div class="flex items-start gap-4 mb-4">
+         <div class="text-5xl leading-none flex-shrink-0">
+          👍
+         </div>
+         <div class="flex-1">
+          <h3 class="font-bold text-xl leading-tight mb-2">Page Like+Follower</h3>
+          <p class="text-green-400 font-bold text-lg">৳200 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Real likes &amp; followers for your Facebook page</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('profile_follower', 'Profile Follower', 200, 1000)" style="animation-delay: 0.2s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          👤
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Profile Follower</h3>
+          <p class="text-green-400 font-bold text-lg">৳200 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Boost your Facebook profile followers</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('post_like', 'Post Like (React)', 250, 1000)" style="animation-delay: 0.3s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          ❤️
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Post Like (React)</h3>
+          <p class="text-green-400 font-bold text-lg">৳250 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Get real likes &amp; reactions on your posts</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('group_join', 'Group Join', 250, 1000)" style="animation-delay: 0.4s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          👥
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Group Join</h3>
+          <p class="text-green-400 font-bold text-lg">৳250 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Grow your Facebook group members</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('instagram_follow', 'Instagram Follow', 250, 1000)" style="animation-delay: 0.5s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          📷
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Instagram Follow</h3>
+          <p class="text-green-400 font-bold text-lg">৳250 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Increase Instagram followers instantly</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('video_views', 'Video Views', 50, 1000)" style="animation-delay: 0.6s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          ▶️
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Video Views</h3>
+          <p class="text-green-400 font-bold text-lg">৳50 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Boost video views on any platform</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('comments', 'Comments', 90, 100)" style="animation-delay: 0.7s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          💬
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Comments</h3>
+          <p class="text-green-400 font-bold text-lg">৳90 / 100</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Real comments on your posts</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('review', 'Review', 4, 1)" style="animation-delay: 0.8s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          ⭐
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">Review</h3>
+          <p class="text-green-400 font-bold text-lg">৳4 / piece</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Positive reviews for your page</p>
+       </div>
+       <div class="service-card glass-card rounded-2xl p-6 cursor-pointer animate-slide-up" onclick="selectService('tiktok', 'TikTok Follower', 200, 1000)" style="animation-delay: 0.9s">
+        <div class="flex items-center gap-4 mb-4">
+         <div class="text-5xl">
+          🎵
+         </div>
+         <div>
+          <h3 class="font-bold text-xl">TikTok Follower</h3>
+          <p class="text-green-400 font-bold text-lg">৳200 / 1000</p>
+         </div>
+        </div>
+        <p class="text-gray-300 text-sm">Grow your TikTok audience fast</p>
+       </div>
+      </div><!-- Order Form -->
+      <div id="orderForm" class="hidden mt-10 glass-card rounded-3xl p-8 animate-slide-up">
+       <h2 class="text-3xl font-bold mb-6 text-center"><span class="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent"> Order Calculator </span></h2>
+       <div class="bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-2xl p-5 mb-6 border border-green-500/30">
+        <h3 id="selectedServiceName" class="text-2xl font-bold text-center text-green-400"></h3>
+        <p id="selectedServicePrice" class="text-center text-gray-300 mt-1"></p>
+       </div>
+       <div class="glass-card rounded-2xl p-6 mb-6 border border-blue-500/30">
+        <h4 class="font-bold text-lg mb-4 text-blue-400">📋 Service Details</h4>
+        <div class="space-y-3 text-sm">
+         <div class="flex items-start gap-3"><span class="text-2xl">⏱️</span>
+          <div>
+           <p class="font-semibold text-white">Start Time:</p>
+           <p class="text-gray-300">Instant to 30 minutes</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-2xl">🚀</span>
+          <div>
+           <p class="font-semibold text-white">Speed:</p>
+           <p class="text-gray-300">Up to 100K per day</p>
+          </div>
+         </div>
+         <div class="flex items-start gap-3"><span class="text-2xl">��️</span>
+          <div>
+           <p class="font-semibold text-white">Guarantee:</p>
+           <p class="text-gray-300">100% guarantee (5% drop possible in future)</p>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="mb-6"><label class="block text-lg font-semibold mb-3">Select Quantity</label> <input type="number" id="quantityInput" min="20" max="10000" value="100" class="w-full p-4 rounded-xl bg-white/10 border-2 border-green-500/50 text-white text-center text-3xl font-bold mb-4 focus:outline-none focus:border-green-400 transition-all" oninput="updateFromInput()"> <input type="range" id="quantitySlider" min="20" max="10000" value="100" class="w-full mb-2" oninput="updateFromSlider()">
+        <div class="flex justify-between text-sm text-gray-400"><span>Min: <span id="minQty">20</span></span> <span>Max: <span id="maxQty">10,000</span></span>
+        </div>
+       </div>
+       <div class="grid grid-cols-2 gap-5 mb-6">
+        <div class="glass-card rounded-2xl p-5 text-center border border-blue-500/30">
+         <p class="text-gray-400 text-sm mb-1">Quantity</p>
+         <p id="quantityDisplay" class="text-4xl font-bold text-blue-400">100</p>
+        </div>
+        <div class="glass-card rounded-2xl p-5 text-center border border-green-500/30">
+         <p class="text-gray-400 text-sm mb-1">Total Price</p>
+         <p id="priceDisplay" class="text-4xl font-bold text-green-400">৳0</p>
+        </div>
+       </div>
+       <div class="space-y-4 mb-6">
+        <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Your Name *</label> <input type="text" id="orderName" placeholder="Enter your full name" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-all">
+        </div>
+        <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Email Address *</label> <input type="email" id="orderEmail" placeholder="your@email.com" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-all">
+        </div>
+        <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Phone Number *</label> <input type="tel" id="orderPhone" placeholder="01XXXXXXXXX" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-all">
+        </div>
+        <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Service Link *</label> <input type="text" id="orderLink" placeholder="Paste your page/profile/post link here" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-all">
+         <p class="text-xs text-yellow-400 mt-2">⚠️ Make sure to provide the correct link</p>
+        </div>
+       </div><!-- Payment Section -->
+       <div class="glass-card rounded-2xl p-6 mb-6 border-2 border-yellow-500/50">
+        <h3 class="text-2xl font-bold mb-4 text-center"><span class="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent"> 💳 Payment Information </span></h3>
+        <div class="bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-xl p-5 mb-5 border border-orange-500/30">
+         <p class="text-center text-lg font-bold text-orange-300 mb-3">📱 Payment Methods</p>
+         <div class="space-y-3">
+          <div class="bg-white/10 rounded-lg p-4">
+           <p class="font-bold text-green-400 mb-2">💸 Bkash (Personal)</p>
+           <div class="flex items-center justify-between gap-3 bg-black/30 rounded-lg p-3 border border-green-500/30">
+            <p class="text-white text-xl font-mono">01791527854</p><button onclick="copyNumber('01791527854', 'bkash')" id="copyBkash" class="px-4 py-2 bg-green-500/30 hover:bg-green-500/50 text-green-400 rounded-lg text-sm font-semibold transition-all whitespace-nowrap"> 📋 Copy </button>
+           </div>
+           <p class="text-xs text-gray-400 mt-1">Send Money করুন</p>
+          </div>
+          <div class="bg-white/10 rounded-lg p-4">
+           <p class="font-bold text-purple-400 mb-2">💳 Nagad (Personal)</p>
+           <div class="flex items-center justify-between gap-3 bg-black/30 rounded-lg p-3 border border-purple-500/30">
+            <p class="text-white text-xl font-mono">01519601517</p><button onclick="copyNumber('01519601517', 'nagad')" id="copyNagad" class="px-4 py-2 bg-purple-500/30 hover:bg-purple-500/50 text-purple-400 rounded-lg text-sm font-semibold transition-all whitespace-nowrap"> 📋 Copy </button>
+           </div>
+           <p class="text-xs text-gray-400 mt-1">Send Money করুন</p>
+          </div>
+          <div class="bg-white/10 rounded-lg p-4">
+           <p class="font-bold text-blue-400 mb-2">💵 Rocket (Personal)</p>
+           <div class="flex items-center justify-between gap-3 bg-black/30 rounded-lg p-3 border border-blue-500/30">
+            <p class="text-white text-xl font-mono">01519601517</p><button onclick="copyNumber('01519601517', 'rocket')" id="copyRocket" class="px-4 py-2 bg-blue-500/30 hover:bg-blue-500/50 text-blue-400 rounded-lg text-sm font-semibold transition-all whitespace-nowrap"> 📋 Copy </button>
+           </div>
+           <p class="text-xs text-gray-400 mt-1">Send Money করুন</p>
+          </div>
+          <div class="bg-white/10 rounded-lg p-4">
+           <p class="font-bold text-yellow-400 mb-2">💰 Binance</p>
+           <div class="flex items-center justify-between gap-3 bg-black/30 rounded-lg p-3 border border-yellow-500/30">
+            <p class="text-white text-xl font-mono">1157359156</p><button onclick="copyNumber('1157359156', 'binance')" id="copyBinance" class="px-4 py-2 bg-yellow-500/30 hover:bg-yellow-500/50 text-yellow-400 rounded-lg text-sm font-semibold transition-all whitespace-nowrap"> 📋 Copy </button>
+           </div>
+           <p class="text-xs text-gray-400 mt-1">Binance Pay ID</p>
+          </div>
+         </div>
+        </div>
+        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-5">
+         <p class="text-yellow-400 font-semibold mb-2">⚠️ Important Instructions:</p>
+         <ul class="text-sm text-gray-300 space-y-1 ml-4 list-disc">
+          <li>উপরের যেকোনো একটি নাম্বারে <strong class="text-white">Send Money</strong> করুন</li>
+          <li>সঠিক পরিমাণ টাকা পাঠান (Total Amount দেখুন উপরে)</li>
+          <li>Payment করার পর Transaction ID লিখুন নিচে</li>
+          <li>Payment Screenshot যুক্ত করুন (Optional কিন্তু Recommended)</li>
+         </ul>
+        </div>
+        <div class="space-y-4">
+         <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Payment Method *</label> <select id="paymentMethod" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:border-yellow-400 transition-all"> <option value="">Select payment method</option> <option value="Bkash">Bkash</option> <option value="Nagad">Nagad</option> <option value="Rocket">Rocket</option> <option value="Binance">Binance</option> </select>
+         </div>
+         <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Transaction ID / TrxID *</label> <input type="text" id="transactionId" placeholder="Enter transaction ID (e.g., 9A1B2C3D4E)" class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400 transition-all">
+          <p class="text-xs text-gray-400 mt-1">💡 SMS এ পাওয়া Transaction ID লিখুন</p>
+         </div>
+         <div><label class="block text-sm text-gray-300 mb-2 font-semibold">Payment Screenshot URL (Optional)</label> <input type="text" id="paymentScreenshot" placeholder="https://imgur.com/... or https://imgbb.com/..." class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-yellow-400 transition-all">
+          <p class="text-xs text-gray-400 mt-1">📸 Screenshot upload করে link পেস্ট করুন (ImgBB / Imgur)</p>
+         </div>
+        </div>
+       </div><button onclick="submitOrder()" id="orderSubmitBtn" class="w-full py-5 bg-gradient-to-r from-green-500 to-green-600 rounded-xl font-bold text-xl hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-lg"> ✅ Place Order Now </button>
+      </div>
+     </div><!-- Admin Orders Section -->
+     <div id="ordersSection" class="hidden">
+      <div class="glass-card rounded-2xl p-6 mb-6">
+       <h2 class="text-3xl font-bold mb-4 text-center bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">📦 All Orders Management</h2>
+       <p class="text-center text-gray-300">View and manage all customer orders</p>
+      </div>
+      <div class="mb-6"><input type="text" id="orderSearchInput" placeholder="🔍 Search by Order ID, Name, Email, or Service..." class="w-full p-4 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:border-purple-400 transition-all" oninput="filterOrders()">
+      </div>
+      <div class="flex flex-wrap gap-3 mb-6"><button onclick="filterByStatus('all')" class="filter-btn active glass-card px-5 py-3 rounded-xl" data-status="all"> 📋 All (<span id="countAll">0</span>) </button> <button onclick="filterByStatus('processing')" class="filter-btn glass-card px-5 py-3 rounded-xl" data-status="processing"> 🔄 Processing (<span id="countProcessing">0</span>) </button> <button onclick="filterByStatus('completed')" class="filter-btn glass-card px-5 py-3 rounded-xl" data-status="completed"> ✅ Completed (<span id="countCompleted">0</span>) </button>
+      </div>
+      <div id="ordersList" class="space-y-4">
+       <p class="text-center text-gray-400 py-12">No orders yet</p>
+      </div>
+     </div>
+    </main><!-- WhatsApp Float Button --> <a href="https://wa.me/8801519601517?text=আসসালামু%20আলাইকুম%2C%0A%0Aআমি%20আপনার%20Service%20সম্পর্কে%20জানতে%20চাই।%20দয়া%20করে%20বিস্তারিত%20জান���ন।%0A%0AOrder%20করতে%20চাইলে%20উপরে%20Order%20Form%20fill%20করে%20Copy%20করুন%20এবং%20এখানে%20Paste%20করে%20Send%20করুন।%0A%0Aধন্যবাদ%20🙏" target="_blank" rel="noopener noreferrer" class="whatsapp-float" title="Contact us on WhatsApp"> 💬 </a> <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+     <div class="glass-card rounded-3xl p-8 max-w-2xl w-full animate-slide-up">
+      <div class="text-center mb-6">
+       <div class="text-7xl mb-4">
+        ✅
+       </div>
+       <h2 class="text-3xl font-bold text-green-400 mb-2">Order Placed Successfully!</h2>
+       <p class="text-gray-300">Your order has been received</p>
+      </div>
+      <div class="bg-white/5 rounded-2xl p-5 mb-6">
+       <div class="grid grid-cols-2 gap-4 text-center">
+        <div>
+         <p class="text-gray-400 text-sm">Order ID</p>
+         <p id="modalOrderId" class="text-white font-bold text-lg"></p>
+        </div>
+        <div>
+         <p class="text-gray-400 text-sm">Total Amount</p>
+         <p id="modalPrice" class="text-green-400 font-bold text-lg"></p>
+        </div>
+       </div>
+      </div>
+      <div class="bg-white/5 rounded-2xl p-4 mb-4">
+       <p class="text-sm text-gray-300 mb-3">📋 <strong>Order Details:</strong></p>
+       <div id="orderDetailsText" class="bg-black/30 rounded-xl p-4 text-sm text-gray-200 font-mono whitespace-pre-wrap max-h-48 overflow-y-auto border border-white/10">
+       </div>
+      </div>
+      <div class="space-y-3"><button onclick="copyOrderDetails()" id="copyBtn" class="w-full py-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl font-bold text-lg hover:from-blue-600 hover:to-blue-700 transition-all transform hover:scale-105"> 📋 Copy Order Details </button>
+       <div class="bg-green-500/10 border-2 border-green-500/50 rounded-xl p-4">
+        <p class="text-green-400 text-sm font-semibold mb-2 text-center">✅ পরবর্তী ধাপ:</p>
+        <ol class="text-sm text-gray-300 space-y-1 ml-4 list-decimal">
+         <li>উপরে <strong class="text-white">"Copy Order Details"</strong> এ ক্লিক করুন</li>
+         <li>��িচের সবুজ <strong class="text-white">WhatsApp বাটন</strong> এ ক্লিক করুন</li>
+         <li>WhatsApp খুলে <strong class="text-white">Message Box এ Long Press → Paste</strong> করুন</li>
+         <li><strong class="text-white">Send</strong> বাটনে ক্লিক করুন ✅</li>
+        </ol>
+       </div><a href="https://wa.me/8801519601517" target="_blank" rel="noopener noreferrer" class="block w-full py-5 bg-gradient-to-r from-green-500 to-green-600 rounded-xl font-bold text-xl text-center hover:from-green-600 hover:to-green-700 transition-all transform hover:scale-105 shadow-lg"> 💬 Open WhatsApp &amp; Send Order </a> <button onclick="closeSuccessModal()" class="w-full py-3 bg-gray-500/30 hover:bg-gray-500/50 rounded-xl font-semibold transition-all"> Close </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      site_title: 'BD Promote Service',
+      whatsapp_number: '01519601517',
+      admin_email: 'cwb.agency@outlook.com',
+      admin_password: 'SmbSmb64'
+    };
+    
+    let config = { ...defaultConfig };
+    let allOrders = [];
+    let isAdmin = false;
+    let selectedService = null;
+    let currentFilter = 'all';
+    let searchTerm = '';
+    let lastOrderData = null;
+
+    const services = {
+      page_like: { name: 'Page Like+Follower', price: 200, unit: 1000 },
+      profile_follower: { name: 'Profile Follower', price: 200, unit: 1000 },
+      post_like: { name: 'Post Like (React)', price: 250, unit: 1000 },
+      group_join: { name: 'Group Join', price: 250, unit: 1000 },
+      instagram_follow: { name: 'Instagram Follow', price: 250, unit: 1000 },
+      video_views: { name: 'Video Views', price: 50, unit: 1000 },
+      comments: { name: 'Comments', price: 90, unit: 100 },
+      review: { name: 'Review', price: 4, unit: 1 },
+      tiktok: { name: 'TikTok Follower', price: 200, unit: 1000 }
+    };
+
+    function updateClock() {
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+      const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      
+      const timeEl = document.getElementById('currentTime');
+      const dateEl = document.getElementById('currentDate');
+      if (timeEl) timeEl.textContent = timeStr;
+      if (dateEl) dateEl.textContent = dateStr;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    function generateOrderId() {
+      const now = new Date();
+      const year = now.getFullYear().toString().slice(-2);
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const random = Math.floor(Math.random() * 90000) + 10000;
+      return `ORD-${year}${month}${day}-${random}`;
+    }
+
+    function openAdminLogin() {
+      document.getElementById('adminLoginModal').classList.remove('hidden');
+      document.getElementById('adminLoginError').classList.add('hidden');
+    }
+
+    function closeAdminLogin() {
+      document.getElementById('adminLoginModal').classList.add('hidden');
+      document.getElementById('adminEmailInput').value = '';
+      document.getElementById('adminPasswordInput').value = '';
+      document.getElementById('adminLoginError').classList.add('hidden');
+    }
+
+    async function attemptAdminLogin() {
+      const email = document.getElementById('adminEmailInput').value.trim().toLowerCase();
+      const password = document.getElementById('adminPasswordInput').value.trim();
+
+      if (!email || !password) {
+        showAdminError('Please enter both email and password');
+        return;
+      }
+
+      const btn = document.getElementById('adminLoginBtn');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Logging in...';
+
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      const adminEmail = (config.admin_email || defaultConfig.admin_email).toLowerCase();
+      const adminPassword = config.admin_password || defaultConfig.admin_password;
+
+      if (email === adminEmail && password === adminPassword) {
+        isAdmin = true;
+        localStorage.setItem('bd_admin_session', 'true');
+        
+        document.getElementById('adminBtn').classList.add('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        document.getElementById('adminTabs').classList.remove('hidden');
+        
+        closeAdminLogin();
+        showTab('orders');
+        renderOrders();
+      } else {
+        showAdminError('❌ Invalid email or password');
+      }
+
+      btn.disabled = false;
+      btn.innerHTML = '🔓 Login';
+    }
+
+    function showAdminError(message) {
+      const errorEl = document.getElementById('adminLoginError');
+      errorEl.textContent = message;
+      errorEl.classList.remove('hidden');
+      setTimeout(() => errorEl.classList.add('hidden'), 3000);
+    }
+
+    function logoutAdmin() {
+      isAdmin = false;
+      localStorage.removeItem('bd_admin_session');
+      document.getElementById('adminBtn').classList.remove('hidden');
+      document.getElementById('logoutBtn').classList.add('hidden');
+      document.getElementById('adminTabs').classList.add('hidden');
+      showTab('services');
+    }
+
+    function showTab(tab) {
+      document.querySelectorAll('[data-tab]').forEach(btn => btn.classList.remove('active'));
+      
+      if (tab === 'services') {
+        document.getElementById('servicesSection').classList.remove('hidden');
+        document.getElementById('ordersSection').classList.add('hidden');
+      } else if (tab === 'orders') {
+        document.getElementById('servicesSection').classList.add('hidden');
+        document.getElementById('ordersSection').classList.remove('hidden');
+        const btn = document.querySelector('[data-tab="orders"]');
+        if (btn) btn.classList.add('active');
+        renderOrders();
+      }
+    }
+
+    function selectService(id, name, price, unit) {
+      selectedService = { id, ...services[id] };
+      
+      document.getElementById('selectedServiceName').textContent = name;
+      document.getElementById('selectedServicePrice').textContent = `৳${price} per ${unit} units`;
+      document.getElementById('orderForm').classList.remove('hidden');
+      
+      const slider = document.getElementById('quantitySlider');
+      const input = document.getElementById('quantityInput');
+      
+      if (id === 'review') {
+        slider.min = input.min = 1;
+        slider.max = input.max = 500;
+        slider.value = input.value = 10;
+        document.getElementById('minQty').textContent = '1';
+        document.getElementById('maxQty').textContent = '500';
+      } else if (id === 'comments') {
+        slider.min = input.min = 20;
+        slider.max = input.max = 5000;
+        slider.value = input.value = 100;
+        document.getElementById('minQty').textContent = '20';
+        document.getElementById('maxQty').textContent = '5,000';
+      } else {
+        slider.min = input.min = 20;
+        slider.max = input.max = 10000;
+        slider.value = input.value = 100;
+        document.getElementById('minQty').textContent = '20';
+        document.getElementById('maxQty').textContent = '10,000';
+      }
+      
+      updatePrice();
+      document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateFromInput() {
+      const input = document.getElementById('quantityInput');
+      const slider = document.getElementById('quantitySlider');
+      let value = parseInt(input.value) || parseInt(input.min);
+      
+      const min = parseInt(input.min);
+      const max = parseInt(input.max);
+      
+      if (value < min) value = min;
+      if (value > max) value = max;
+      
+      input.value = value;
+      slider.value = value;
+      updatePrice();
+    }
+
+    function updateFromSlider() {
+      const slider = document.getElementById('quantitySlider');
+      const input = document.getElementById('quantityInput');
+      input.value = slider.value;
+      updatePrice();
+    }
+
+    function updatePrice() {
+      const quantity = parseInt(document.getElementById('quantitySlider').value);
+      document.getElementById('quantityDisplay').textContent = quantity.toLocaleString();
+      
+      if (selectedService) {
+        const total = Math.ceil((quantity / selectedService.unit) * selectedService.price);
+        document.getElementById('priceDisplay').textContent = '৳' + total.toLocaleString();
+      }
+    }
+
+    async function submitOrder() {
+      const name = document.getElementById('orderName').value.trim();
+      const email = document.getElementById('orderEmail').value.trim();
+      const phone = document.getElementById('orderPhone').value.trim();
+      const link = document.getElementById('orderLink').value.trim();
+      const quantity = document.getElementById('quantitySlider').value;
+      const price = document.getElementById('priceDisplay').textContent;
+      const paymentMethod = document.getElementById('paymentMethod').value;
+      const transactionId = document.getElementById('transactionId').value.trim();
+      const paymentScreenshot = document.getElementById('paymentScreenshot').value.trim();
+
+      if (!name || !email || !phone || !link) {
+        showToast('❌ Please fill all required fields', 'error');
+        return;
+      }
+
+      if (!email.includes('@')) {
+        showToast('❌ Please enter a valid email', 'error');
+        return;
+      }
+
+      if (!paymentMethod) {
+        showToast('❌ Please select payment method', 'error');
+        return;
+      }
+
+      if (!transactionId) {
+        showToast('❌ Please enter transaction ID', 'error');
+        return;
+      }
+
+      if (allOrders.length >= 999) {
+        showToast('⚠️ Order limit reached', 'error');
+        return;
+      }
+
+      const btn = document.getElementById('orderSubmitBtn');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Placing order...';
+
+      const orderId = generateOrderId();
+      const orderData = {
+        type: 'order',
+        order_id: orderId,
+        name: name,
+        email: email.toLowerCase(),
+        phone: phone,
+        service: selectedService.name,
+        quantity: quantity,
+        price: price,
+        link: link,
+        payment_method: paymentMethod,
+        transaction_id: transactionId,
+        payment_screenshot: paymentScreenshot,
+        status: 'processing',
+        createdAt: new Date().toISOString()
+      };
+
+      const result = await window.dataSdk.create(orderData);
+      
+      btn.disabled = false;
+      btn.innerHTML = '✅ Place Order Now';
+
+      if (result.isOk) {
+        lastOrderData = orderData;
+        document.getElementById('modalOrderId').textContent = orderId;
+        document.getElementById('modalPrice').textContent = price;
+        document.getElementById('orderDetailsText').textContent = getOrderMessage();
+        document.getElementById('successModal').classList.remove('hidden');
+        
+        document.getElementById('orderName').value = '';
+        document.getElementById('orderEmail').value = '';
+        document.getElementById('orderPhone').value = '';
+        document.getElementById('orderLink').value = '';
+        document.getElementById('paymentMethod').value = '';
+        document.getElementById('transactionId').value = '';
+        document.getElementById('paymentScreenshot').value = '';
+        document.getElementById('orderForm').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        showToast('❌ Order failed. Please try again.', 'error');
+      }
+    }
+
+    function getOrderMessage() {
+      if (!lastOrderData) return '';
+      
+      return `🛒 *NEW ORDER*\n\n` +
+        `━━━━━━━━━━━━━━━━━\n` +
+        `📋 Order ID: ${lastOrderData.order_id}\n` +
+        `📌 Service: ${lastOrderData.service}\n` +
+        `📊 Quantity: ${lastOrderData.quantity}\n` +
+        `💰 Price: ${lastOrderData.price}\n` +
+        `━━━━━━━━━━━━━━━━━\n\n` +
+        `👤 Name: ${lastOrderData.name}\n` +
+        `📧 Email: ${lastOrderData.email}\n` +
+        `📞 Phone: ${lastOrderData.phone || 'N/A'}\n` +
+        `🔗 Link: ${lastOrderData.link}\n\n` +
+        `💳 *PAYMENT INFO*\n` +
+        `━━━━━━━━━━━━━━━━━\n` +
+        `💸 Method: ${lastOrderData.payment_method}\n` +
+        `🆔 TrxID: ${lastOrderData.transaction_id}\n` +
+        `📸 Screenshot: ${lastOrderData.payment_screenshot || 'Not provided'}\n\n` +
+        `⏰ ${new Date().toLocaleString()}\n` +
+        `🇧🇩 BD Promote Service`;
+    }
+
+    function copyNumber(number, type) {
+      const textarea = document.createElement('textarea');
+      textarea.value = number;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        const btnId = 'copy' + type.charAt(0).toUpperCase() + type.slice(1);
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          const originalText = btn.innerHTML;
+          btn.innerHTML = '✅ Copied!';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+          }, 2000);
+        }
+        showToast(`✅ ${number} copied!`, 'success');
+      } catch (err) {
+        showToast('❌ Copy failed', 'error');
+      }
+      
+      document.body.removeChild(textarea);
+    }
+
+    function copyOrderDetails() {
+      const message = getOrderMessage();
+      if (!message) return;
+
+      const textarea = document.createElement('textarea');
+      textarea.value = message;
+      textarea.style.position = 'fixed';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      
+      try {
+        document.execCommand('copy');
+        const btn = document.getElementById('copyBtn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✅ Copied!';
+        btn.classList.remove('from-blue-500', 'to-blue-600');
+        btn.classList.add('from-green-500', 'to-green-600');
+        
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('from-green-500', 'to-green-600');
+          btn.classList.add('from-blue-500', 'to-blue-600');
+        }, 2000);
+        
+        showToast('✅ Order details copied! Now click WhatsApp button', 'success');
+      } catch (err) {
+        showToast('❌ Copy failed', 'error');
+      }
+      
+      document.body.removeChild(textarea);
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.add('hidden');
+      lastOrderData = null;
+    }
+
+    function renderOrders() {
+      const orders = allOrders.filter(o => o.type === 'order');
+      
+      document.getElementById('countAll').textContent = orders.length;
+      document.getElementById('countProcessing').textContent = orders.filter(o => o.status === 'processing').length;
+      document.getElementById('countCompleted').textContent = orders.filter(o => o.status === 'completed').length;
+      
+      let filtered = orders;
+      
+      if (currentFilter !== 'all') {
+        filtered = orders.filter(o => o.status === currentFilter);
+      }
+      
+      if (searchTerm) {
+        const term = searchTerm.toLowerCase();
+        filtered = filtered.filter(o => 
+          o.order_id.toLowerCase().includes(term) ||
+          o.name.toLowerCase().includes(term) ||
+          o.email.toLowerCase().includes(term) ||
+          o.service.toLowerCase().includes(term)
+        );
+      }
+      
+      const container = document.getElementById('ordersList');
+      
+      if (filtered.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-400 py-12">No orders found</p>';
+        return;
+      }
+
+      const existingItems = new Map(
+        [...container.querySelectorAll('[data-id]')].map(el => [el.dataset.id, el])
+      );
+
+      filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).forEach(order => {
+        if (existingItems.has(order.__backendId)) {
+          updateOrderCard(existingItems.get(order.__backendId), order);
+          existingItems.delete(order.__backendId);
+        } else {
+          container.appendChild(createOrderCard(order));
+        }
+      });
+
+      existingItems.forEach(el => el.remove());
+    }
+
+    function createOrderCard(order) {
+      const div = document.createElement('div');
+      div.className = 'glass-card rounded-2xl p-6 animate-slide-up';
+      div.dataset.id = order.__backendId;
+      updateOrderCard(div, order);
+      return div;
+    }
+
+    function updateOrderCard(el, order) {
+      const statusClass = order.status === 'completed' ? 'status-completed' : 'status-processing';
+      const statusIcon = order.status === 'completed' ? '���' : '🔄';
+      const date = new Date(order.createdAt).toLocaleString('en-US', { 
+        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
+      });
+      
+      el.innerHTML = `
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <span class="font-mono text-sm bg-blue-500/30 text-blue-400 px-3 py-1 rounded-lg">${order.order_id}</span>
+            <h3 class="text-xl font-bold text-white mt-2">${order.service}</h3>
+          </div>
+          <span class="status-badge ${statusClass}">${statusIcon} ${order.status}</span>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="bg-white/5 rounded-xl p-3">
+            <p class="text-gray-400 text-xs mb-1">Quantity</p>
+            <p class="text-white font-bold text-lg">${order.quantity}</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-3">
+            <p class="text-gray-400 text-xs mb-1">Price</p>
+            <p class="text-green-400 font-bold text-lg">${order.price}</p>
+          </div>
+        </div>
+        
+        <div class="space-y-2 text-sm mb-4">
+          <p class="text-gray-300"><strong class="text-white">Customer:</strong> ${order.name}</p>
+          <p class="text-gray-300"><strong class="text-white">Email:</strong> ${order.email}</p>
+          ${order.phone ? `<p class="text-gray-300"><strong class="text-white">Phone:</strong> ${order.phone}</p>` : ''}
+          <p class="text-gray-300"><strong class="text-white">Link:</strong> <span class="text-blue-400 break-all">${order.link}</span></p>
+        </div>
+
+        <div class="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-3 mb-4">
+          <p class="text-yellow-400 font-bold text-xs mb-2">💳 PAYMENT DETAILS</p>
+          <div class="space-y-1 text-sm">
+            <p class="text-gray-300"><strong class="text-white">Method:</strong> ${order.payment_method || 'N/A'}</p>
+            <p class="text-gray-300"><strong class="text-white">TrxID:</strong> <span class="font-mono text-green-400">${order.transaction_id || 'N/A'}</span></p>
+            ${order.payment_screenshot ? `<p class="text-gray-300"><strong class="text-white">Screenshot:</strong> <a href="${order.payment_screenshot}" target="_blank" rel="noopener noreferrer" class="text-blue-400 underline">View</a></p>` : ''}
+          </div>
+        </div>
+        
+        <div class="flex justify-between items-center pt-4 border-t border-white/10">
+          <p class="text-xs text-gray-500">${date}</p>
+          ${isAdmin && order.status === 'processing' ? `
+            <button onclick="markCompleted('${order.__backendId}')" 
+                    class="px-4 py-2 bg-green-500/30 text-green-400 rounded-lg text-sm font-semibold hover:bg-green-500/50 transition-all">
+              ✅ Mark Complete
+            </button>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    async function markCompleted(backendId) {
+      const order = allOrders.find(o => o.__backendId === backendId);
+      if (!order) return;
+
+      const btn = event.target;
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Updating...';
+
+      const updated = { ...order, status: 'completed' };
+      const result = await window.dataSdk.update(updated);
+
+      if (!result.isOk) {
+        showToast('❌ Update failed', 'error');
+        btn.disabled = false;
+        btn.innerHTML = '✅ Mark Complete';
+      }
+    }
+
+    function filterByStatus(status) {
+      currentFilter = status;
+      document.querySelectorAll('[data-status]').forEach(btn => btn.classList.remove('active'));
+      const btn = document.querySelector(`[data-status="${status}"]`);
+      if (btn) btn.classList.add('active');
+      renderOrders();
+    }
+
+    function filterOrders() {
+      searchTerm = document.getElementById('orderSearchInput').value.trim();
+      renderOrders();
+    }
+
+    function showToast(message, type) {
+      const toast = document.createElement('div');
+      toast.className = `fixed bottom-28 left-1/2 transform -translate-x-1/2 px-6 py-4 rounded-xl font-bold text-white shadow-2xl z-50 animate-slide-up ${
+        type === 'error' ? 'bg-red-500' : 'bg-green-500'
+      }`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    const dataHandler = {
+      onDataChanged(data) {
+        allOrders = data;
+        if (isAdmin && !document.getElementById('ordersSection').classList.contains('hidden')) {
+          renderOrders();
+        }
+      }
+    };
+
+    async function onConfigChange(cfg) {
+      const titleEl = document.getElementById('siteTitle');
+      if (titleEl) titleEl.textContent = cfg.site_title || defaultConfig.site_title;
+    }
+
+    async function init() {
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange,
+          mapToCapabilities: () => ({
+            recolorables: [],
+            borderables: [],
+            fontEditable: undefined,
+            fontSizeable: undefined
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ['site_title', cfg.site_title || defaultConfig.site_title],
+            ['whatsapp_number', cfg.whatsapp_number || defaultConfig.whatsapp_number],
+            ['admin_email', cfg.admin_email || defaultConfig.admin_email],
+            ['admin_password', cfg.admin_password || defaultConfig.admin_password]
+          ])
+        });
+        config = window.elementSdk.config || defaultConfig;
+        await onConfigChange(config);
+      }
+
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Data SDK init failed');
+        }
+      }
+
+      const adminSession = localStorage.getItem('bd_admin_session');
+      if (adminSession === 'true') {
+        isAdmin = true;
+        document.getElementById('adminBtn').classList.add('hidden');
+        document.getElementById('logoutBtn').classList.remove('hidden');
+        document.getElementById('adminTabs').classList.remove('hidden');
+      }
+    }
+
+    init();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c85a10616f9ba5b',t:'MTc3MDE2MDUxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
