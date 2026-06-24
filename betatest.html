@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sayad md Bayezid Hosan | Full-stack Web Developer & Tech Provider</title>
+  <meta name="description" content="Sayad md Bayezid Hosan is a professional Full-stack Web Developer, Digital Marketer, and Web Designer. Leading Tech Provider and Founder of Connect with Bayezid and GenZ Frontier." />
+  <meta name="keywords" content="Sayad md Bayezid Hosan, Bayezid, Full-stack Web Developer, Digital Marketer, Web Designer, Tech Provider, Bangladesh, AI Integration" />
+  <meta name="author" content="Sayad md Bayezid Hosan" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#00D9FF" />
+  <meta property="og:title" content="Sayad md Bayezid Hosan | Full-stack Web Developer & Tech Provider" />
+  <meta property="og:description" content="Professional Full-stack Web Developer, Digital Marketer, and Web Designer. Founder of Connect with Bayezid and GenZ Frontier." />
+  <meta property="og:type" content="profile" />
+  <meta property="og:url" content="https://sayadbayezid.com" />
+  <meta property="og:image" content="https://sayadbayezid.com/assets/images/optimized/hero.webp" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://sayadbayezid.com" />
+  <meta name="geo.placename" content="Tangail, Bangladesh" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+
+  <style>
+    /* ===== TOKENS ===== */
+    :root {
+      --cyan:    #00D9FF;
+      --orange:  #FF6B35;
+      --ink:     #07090D;
+      --ink2:    #0F1419;
+      --card:    #111722;
+      --border:  rgba(0,217,255,0.12);
+      --muted:   #6B7280;
+      --white:   #F0F4FF;
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'Space Grotesk', sans-serif;
+    }
+
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--ink);
+      color: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ===== NOISE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* ===== CURSOR GLOW ===== */
+    #cursor-glow {
+      position: fixed; width: 400px; height: 400px;
+      border-radius: 50%; pointer-events: none; z-index: 0;
+      background: radial-gradient(circle, rgba(0,217,255,0.07) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      transition: opacity 0.3s;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--ink2); }
+    ::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 2px; }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 0;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(7,9,13,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em;
+      color: var(--white);
+    }
+    .logo span { color: var(--cyan); }
+    .nav-links {
+      display: flex; gap: 2.5rem; list-style: none; align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.85rem; font-weight: 500; color: var(--muted);
+      transition: color 0.25s; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta {
+      padding: 0.55rem 1.4rem;
+      background: var(--cyan); color: var(--ink) !important;
+      border-radius: 100px; font-weight: 700 !important;
+      font-size: 0.82rem !important; letter-spacing: 0.02em !important;
+      text-transform: none !important;
+      transition: background 0.25s, transform 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--orange) !important; transform: translateY(-1px) !important; }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 6px;
+    }
+    .hamburger span { width: 24px; height: 2px; background: var(--cyan); border-radius: 2px; transition: 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* mobile nav */
+    .mobile-nav {
+      display: none; flex-direction: column; gap: 1.5rem;
+      position: fixed; inset: 0; z-index: 99;
+      background: rgba(7,9,13,0.97); padding: 7rem 2rem 3rem;
+      backdrop-filter: blur(20px);
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a { font-size: 1.5rem; font-weight: 700; color: var(--white); }
+    .mobile-nav a:hover { color: var(--cyan); }
+
+    /* ===== SECTIONS ===== */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    section { position: relative; z-index: 1; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 8rem 0 5rem;
+      overflow: hidden;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.78rem; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--cyan);
+      border: 1px solid var(--border);
+      padding: 0.45rem 1rem; border-radius: 100px;
+      margin-bottom: 1.5rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--cyan);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(0.6); }
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 .line { display: block; overflow: hidden; }
+    .hero h1 .accent { color: var(--cyan); }
+    .hero-sub {
+      font-size: 1.05rem; color: var(--muted);
+      line-height: 1.75; margin-bottom: 2.5rem; max-width: 500px;
+    }
+    .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem; border-radius: 100px;
+      background: var(--cyan); color: var(--ink);
+      font-weight: 700; font-size: 0.95rem;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+    .btn-primary:hover {
+      background: var(--orange); transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(255,107,53,0.3);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem; border-radius: 100px;
+      border: 1.5px solid var(--border); color: var(--white);
+      font-weight: 600; font-size: 0.95rem;
+      transition: border-color 0.25s, background 0.25s, transform 0.2s;
+    }
+    .btn-outline:hover {
+      border-color: var(--cyan); background: rgba(0,217,255,0.07);
+      transform: translateY(-2px);
+    }
+    .hero-stats {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 0; margin-top: 3.5rem;
+      border: 1px solid var(--border); border-radius: 1rem; overflow: hidden;
+    }
+    .hero-stat {
+      padding: 1.5rem 1.2rem; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .hero-stat:last-child { border-right: none; }
+    .stat-n {
+      font-family: var(--font-display);
+      font-size: 2.2rem; font-weight: 800;
+      color: var(--cyan); line-height: 1;
+    }
+    .stat-l { font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* Hero Image */
+    .hero-visual { position: relative; }
+    .hero-img-wrap {
+      position: relative; z-index: 2;
+      border-radius: 1.5rem; overflow: hidden;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 0 80px rgba(0,217,255,0.15);
+    }
+    .hero-img-wrap img { width: 100%; aspect-ratio: 4/5; object-fit: cover; }
+    .hero-float-badge {
+      position: absolute; background: var(--card);
+      border: 1px solid var(--border); border-radius: 0.75rem;
+      padding: 0.8rem 1.2rem; z-index: 3;
+      animation: float-badge 5s ease-in-out infinite;
+    }
+    @keyframes float-badge {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    .badge-top { top: 1.5rem; right: -1.5rem; }
+    .badge-bot { bottom: 2rem; left: -1.5rem; }
+    .badge-label { font-size: 0.7rem; color: var(--muted); margin-bottom: 0.2rem; }
+    .badge-val { font-weight: 700; font-size: 0.95rem; color: var(--white); }
+    .badge-val span { color: var(--cyan); }
+
+    /* grid lines bg */
+    .hero-bg-grid {
+      position: absolute; inset: 0; pointer-events: none; z-index: 0;
+      background-image:
+        linear-gradient(rgba(0,217,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,217,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-glow {
+      position: absolute; width: 600px; height: 600px; pointer-events: none;
+      background: radial-gradient(circle, rgba(0,217,255,0.12) 0%, transparent 65%);
+      border-radius: 50%; top: -200px; right: -200px; z-index: 0;
+    }
+
+    /* ===== SECTION LABEL ===== */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.14em; color: var(--cyan); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: ''; width: 24px; height: 1.5px; background: var(--cyan);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800; letter-spacing: -0.02em;
+      line-height: 1.1; margin-bottom: 1rem;
+    }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 540px; }
+
+    /* ===== ABOUT ===== */
+    .about-section { padding: 7rem 0; }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      gap: 5rem; align-items: center; margin-top: 4rem;
+    }
+    .about-img-col { position: relative; }
+    .about-img-frame {
+      border-radius: 1.5rem; overflow: hidden;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 0 60px rgba(0,217,255,0.1);
+    }
+    .about-img-frame img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+    .about-pill {
+      position: absolute; bottom: -1.5rem; right: -1.5rem;
+      background: var(--cyan); color: var(--ink);
+      padding: 1rem 1.5rem; border-radius: 1rem;
+      font-family: var(--font-display); font-weight: 800; font-size: 1.1rem;
+      box-shadow: 0 8px 30px rgba(0,217,255,0.35);
+    }
+    .about-pill small { display: block; font-size: 0.7rem; font-weight: 500; }
+    .about-text p { color: var(--muted); line-height: 1.85; margin-bottom: 1.2rem; }
+    .about-text strong { color: var(--white); }
+    .about-skills {
+      display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem;
+    }
+    .skill-tag {
+      padding: 0.4rem 1rem; border-radius: 100px;
+      border: 1px solid var(--border);
+      font-size: 0.82rem; font-weight: 500; color: var(--muted);
+      transition: border-color 0.25s, color 0.25s, background 0.25s;
+    }
+    .skill-tag:hover {
+      border-color: var(--cyan); color: var(--cyan);
+      background: rgba(0,217,255,0.06);
+    }
+
+    /* ===== SERVICES ===== */
+    .services-section { padding: 7rem 0; }
+    .services-header { display: flex; justify-content: space-between; align-items: flex-end; gap: 2rem; margin-bottom: 4rem; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 1.25rem; padding: 2rem;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default; position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0,217,255,0.05) 0%, transparent 60%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover {
+      border-color: rgba(0,217,255,0.35);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0,217,255,0.1);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon-wrap {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(0,217,255,0.1); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1.4rem;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-icon-wrap { background: rgba(0,217,255,0.18); }
+    .service-card h3 {
+      font-family: var(--font-display); font-size: 1.2rem;
+      font-weight: 700; margin-bottom: 0.7rem; color: var(--white);
+    }
+    .service-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .service-num {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-family: var(--font-display); font-size: 2.5rem;
+      font-weight: 800; color: rgba(0,217,255,0.06); line-height: 1;
+    }
+
+    /* ===== ACHIEVEMENTS ===== */
+    .achievements-section { padding: 7rem 0; }
+    .ach-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem; margin-top: 4rem;
+    }
+    .ach-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 1.25rem; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .ach-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,217,255,0.12);
+      border-color: rgba(0,217,255,0.3);
+    }
+    .ach-img {
+      width: 100%; height: 200px; object-fit: cover;
+      filter: brightness(0.9);
+      transition: filter 0.3s, transform 0.4s;
+    }
+    .ach-card:hover .ach-img { filter: brightness(1); transform: scale(1.03); }
+    .ach-body { padding: 1.5rem; }
+    .ach-body h3 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .ach-body p { color: var(--muted); font-size: 0.88rem; line-height: 1.65; margin-bottom: 1rem; }
+    .ach-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+    .ach-tag {
+      padding: 0.3rem 0.75rem; border-radius: 100px;
+      background: rgba(0,217,255,0.1); border: 1px solid rgba(0,217,255,0.2);
+      color: var(--cyan); font-size: 0.72rem; font-weight: 600;
+    }
+
+    /* ===== PROJECTS ===== */
+    .projects-section { padding: 7rem 0; }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem; margin-top: 4rem;
+    }
+    .project-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 1.25rem; overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .project-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(255,107,53,0.1);
+      border-color: rgba(255,107,53,0.25);
+    }
+    .project-img-wrap { position: relative; overflow: hidden; height: 220px; }
+    .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .project-card:hover .project-img-wrap img { transform: scale(1.06); }
+    .project-body { padding: 1.5rem; }
+    .project-body h3 { font-family: var(--font-display); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .project-body p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; margin-bottom: 1.2rem; }
+    .p-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .p-tag {
+      padding: 0.28rem 0.7rem; border-radius: 100px;
+      background: rgba(0,217,255,0.08); border: 1px solid rgba(0,217,255,0.15);
+      color: var(--cyan); font-size: 0.72rem; font-weight: 600;
+    }
+    .p-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--orange); font-weight: 600; font-size: 0.9rem;
+      transition: gap 0.2s;
+    }
+    .p-link:hover { gap: 0.7rem; }
+
+    /* ===== SOCIAL ===== */
+    .social-section { padding: 5rem 0 7rem; }
+    .social-section .section-title { margin-bottom: 3rem; }
+    .social-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(130px,1fr));
+      gap: 1rem;
+    }
+    .social-card {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.75rem; padding: 1.5rem 1rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 1rem; text-decoration: none; color: var(--muted);
+      font-size: 0.82rem; font-weight: 600; text-align: center;
+      transition: border-color 0.25s, color 0.25s, background 0.25s, transform 0.25s;
+    }
+    .social-card:hover {
+      border-color: var(--cyan); color: var(--white);
+      background: rgba(0,217,255,0.06); transform: translateY(-4px);
+    }
+    .social-card svg { width: 28px; height: 28px; }
+
+    /* ===== CONTACT ===== */
+    .contact-section { padding: 7rem 0; }
+    .contact-inner {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 2rem; padding: 4rem;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; margin-top: 4rem;
+    }
+    .contact-left h3 {
+      font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+    .contact-left p { color: var(--muted); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-items { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.2rem; border-radius: 0.75rem;
+      border: 1px solid var(--border); background: rgba(255,255,255,0.02);
+    }
+    .contact-item-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: rgba(0,217,255,0.1); display: flex; align-items: center;
+      justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item-text { font-size: 0.85rem; }
+    .contact-item-text strong { display: block; color: var(--white); margin-bottom: 0.2rem; }
+    .contact-item-text a, .contact-item-text span { color: var(--muted); font-size: 0.82rem; }
+    .contact-item-text a:hover { color: var(--cyan); }
+    .contact-right { display: flex; flex-direction: column; justify-content: center; gap: 1.5rem; }
+    .contact-highlight {
+      text-align: center; padding: 2.5rem 2rem;
+      border: 1.5px solid var(--border); border-radius: 1.25rem;
+      background: rgba(0,217,255,0.03);
+    }
+    .contact-highlight .big { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--cyan); }
+    .contact-highlight p { color: var(--muted); margin-top: 0.5rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid var(--border); padding: 2.5rem 0;
+      color: var(--muted); font-size: 0.85rem;
+    }
+    .footer-inner {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    footer a { color: var(--cyan); }
+    footer a:hover { color: var(--orange); }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      height: 1px; background: var(--border); margin: 0;
+    }
+
+    /* ===== PAGE SELECTOR ===== */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(40px); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .hero { padding: 6rem 0 4rem; }
+      .hero h1 { font-size: 2.4rem; }
+      .hero-stats { grid-template-columns: 1fr; }
+      .hero-stat { border-right: none; border-bottom: 1px solid var(--border); }
+      .hero-stat:last-child { border-bottom: none; }
+      .social-grid { grid-template-columns: repeat(3,1fr); }
+    }
+
+    /* ===== MUSIC PLAYER ===== */
+    .music-wrap {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      margin-top: 2rem; padding: 0.7rem 1.2rem;
+      background: rgba(0,217,255,0.07); border: 1px solid var(--border);
+      border-radius: 100px; cursor: pointer; transition: background 0.25s;
+    }
+    .music-wrap:hover { background: rgba(0,217,255,0.12); }
+    .music-play-btn {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--cyan); color: var(--ink);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; border: none; cursor: pointer; flex-shrink: 0;
+    }
+    .music-label { font-size: 0.82rem; font-weight: 500; color: var(--white); }
+    .music-bars { display: flex; align-items: flex-end; gap: 2px; height: 12px; }
+    .mbar { width: 3px; border-radius: 2px; background: var(--cyan); }
+    .mbar:nth-child(1) { height: 4px; animation: mb 0.9s ease-in-out infinite alternate; }
+    .mbar:nth-child(2) { height: 8px; animation: mb 0.9s 0.2s ease-in-out infinite alternate; }
+    .mbar:nth-child(3) { height: 6px; animation: mb 0.9s 0.4s ease-in-out infinite alternate; }
+    .mbar:nth-child(4) { height: 10px; animation: mb 0.9s 0.1s ease-in-out infinite alternate; }
+    @keyframes mb { 0% { height: 3px; } 100% { height: 12px; } }
+    .mbar.paused { animation-play-state: paused; height: 3px !important; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "https://sayadbayezid.com#person",
+    "name": "Sayad md Bayezid Hosan",
+    "url": "https://sayadbayezid.com",
+    "jobTitle": ["Full-stack Web Developer","Digital Marketer","Web Designer","Tech Provider","Technology Entrepreneur","AI Integration Specialist"],
+    "email": "Sayadmdbayezidhosan@gmail.com",
+    "telephone": "+8801519601517",
+    "birthDate": "2003-06-26",
+    "gender": "Male",
+    "nationality": "BD",
+    "alumniOf": { "@type": "EducationalOrganization", "name": "Northern University Bangladesh", "url": "https://nub.edu.bd" },
+    "affiliation": [
+      { "@type": "Organization", "name": "Connect with Bayezid", "url": "https://connectbayezid-8dcdz46v.manus.space" },
+      { "@type": "Organization", "name": "GenZ Frontier", "url": "https://www.genzfrontir.com" }
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/sayadbayezid",
+      "https://github.com/bayzed123",
+      "https://www.facebook.com/sayadbayezid",
+      "https://www.facebook.com/bayezidhosan",
+      "https://www.facebook.com/bayzeddme",
+      "https://www.instagram.com/freelancer_bayezid0",
+      "https://youtube.com/@cwbayezid",
+      "https://www.crunchbase.com/person/sayad-md-bayezid-hosan",
+      "https://www.behance.net/syedbayxed",
+      "https://beacons.ai/connectwithbayezid",
+      "https://www.genzfrontir.com"
+    ],
+    "address": { "@type": "PostalAddress", "addressLocality": "Tangail", "addressCountry": "BD" }
+  }
+  </script>
+</head>
+
+<body>
+  <div id="cursor-glow"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo" onclick="showPage('home')">Sayad Md <span>Bayezid</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#" onclick="showPage('services'); return false;">Services</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE NAV -->
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#about" onclick="closeMenu()">About</a>
+    <a href="#" onclick="showPage('services'); closeMenu(); return false;">Services</a>
+    <a href="#achievements" onclick="closeMenu()">Achievements</a>
+    <a href="#projects" onclick="closeMenu()">Projects</a>
+    <a href="blog.html">Blog</a>
+    <a href="#contact" onclick="closeMenu()">Contact</a>
+  </div>
+
+  <!-- ===== MAIN PAGE ===== -->
+  <div id="page-home" class="page active">
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-bg-grid"></div>
+      <div class="hero-glow"></div>
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-text">
+            <div class="hero-eyebrow">Based in Bangladesh · Available Worldwide</div>
+            <h1>
+              <span class="line">Full-stack</span>
+              <span class="line"><span class="accent">Developer</span> &</span>
+              <span class="line">Tech Provider</span>
+            </h1>
+            <p class="hero-sub">
+              I'm <strong>Sayad md Bayezid Hosan</strong> — Full-stack Web Developer, Digital Marketer & Founder of
+              <a href="https://connectbayezid-8dcdz46v.manus.space" target="_blank" style="color:var(--cyan)">Connect with Bayezid</a> and
+              <a href="https://www.genzfrontir.com" target="_blank" style="color:var(--cyan)">GenZ Frontier</a>.
+              Specializing in AI integration and innovative digital ecosystem solutions.
+            </p>
+            <div class="hero-actions">
+              <a href="#projects" class="btn-primary">Explore My Work →</a>
+              <a href="#contact" class="btn-outline">Get in Touch</a>
+            </div>
+
+            <!-- MUSIC -->
+            <div class="music-wrap" id="music-toggle" title="Toggle background music">
+              <button class="music-play-btn" id="music-btn" aria-label="Play/Pause music">▶</button>
+              <span class="music-label" id="music-status">Background Music</span>
+              <div class="music-bars">
+                <div class="mbar paused"></div>
+                <div class="mbar paused"></div>
+                <div class="mbar paused"></div>
+                <div class="mbar paused"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-img-wrap">
+              <img src="assets/images/optimized/hero.webp" alt="Sayad md Bayezid Hosan" width="400" height="500" />
+            </div>
+            <div class="hero-float-badge badge-top">
+              <div class="badge-label">Client Retention</div>
+              <div class="badge-val"><span>98%</span> Rate</div>
+            </div>
+            <div class="hero-float-badge badge-bot">
+              <div class="badge-label">Happy Clients</div>
+              <div class="badge-val"><span>2,200+</span> Worldwide</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-stats reveal">
+          <div class="hero-stat">
+            <div class="stat-n" data-count="2200">0</div>
+            <div class="stat-l">Happy Clients Worldwide</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-n" data-count="98">0</div>
+            <div class="stat-l">Client Retention Rate (%)</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-n" data-count="5">0</div>
+            <div class="stat-l">Years of Experience</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ABOUT -->
+    <section class="about-section" id="about">
+      <div class="container">
+        <div class="section-label">Who I Am</div>
+        <h2 class="section-title">About Me</h2>
+        <div class="about-grid">
+          <div class="about-img-col reveal">
+            <div class="about-img-frame">
+              <img src="assets/images/optimized/portrait.webp" alt="Sayad md Bayezid Hosan Portrait" width="400" height="500" loading="lazy" />
+            </div>
+            <div class="about-pill">5+ Years<small>of Digital Expertise</small></div>
+          </div>
+          <div class="about-text reveal">
+            <p>As a <strong>Full-stack Web Developer, Digital Marketer, and Web Designer</strong>, I have built a reputation for delivering innovative digital solutions with 5+ years of experience. My expertise spans the entire digital ecosystem — from web development and AI integration to strategic digital marketing and tech entrepreneurship.</p>
+            <p>As a leading <strong>Tech Provider</strong>, I specialize in permission-based technical solutions and managing digital business assets. I am dedicated to helping my audience navigate digital platforms safely and efficiently by combining academic knowledge with practical technical innovation.</p>
+            <p>Currently pursuing a <strong>Bachelor of Arts in English</strong> at Northern University Bangladesh, I merge academic knowledge with hands-on expertise to deliver solutions that are both thoughtful and effective.</p>
+            <div class="about-skills">
+              <span class="skill-tag">React.js</span>
+              <span class="skill-tag">Node.js</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">AI Integration</span>
+              <span class="skill-tag">SEO</span>
+              <span class="skill-tag">Meta Ads</span>
+              <span class="skill-tag">UI/UX Design</span>
+              <span class="skill-tag">Canva</span>
+              <span class="skill-tag">Video Editing</span>
+              <span class="skill-tag">QR Systems</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SERVICES PREVIEW (full page via nav) -->
+    <section class="services-section" id="services">
+      <div class="container">
+        <div class="services-header">
+          <div>
+            <div class="section-label">What I Do</div>
+            <h2 class="section-title">Services</h2>
+          </div>
+          <a href="#" onclick="showPage('services'); return false;" class="btn-outline">View All Services →</a>
+        </div>
+        <div class="services-grid" id="services-grid-home">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ACHIEVEMENTS -->
+    <section class="achievements-section" id="achievements">
+      <div class="container">
+        <div class="section-label">Milestones</div>
+        <h2 class="section-title">Achievements & Certifications</h2>
+        <div class="ach-grid">
+          <div class="ach-card reveal">
+            <img src="assets/images/optimized/cert-marketing.webp" alt="Digital Marketing Certificate" class="ach-img" loading="lazy" />
+            <div class="ach-body">
+              <h3>Digital Marketing Mastery</h3>
+              <p>Professional certification in advanced digital marketing strategies, including SEO, content marketing, and conversion optimization.</p>
+              <div class="ach-tags"><span class="ach-tag">Certified</span><span class="ach-tag">Marketing</span></div>
+            </div>
+          </div>
+          <div class="ach-card reveal">
+            <img src="assets/images/optimized/cert-video.webp" alt="Video Editing Certificate" class="ach-img" loading="lazy" />
+            <div class="ach-body">
+              <h3>Professional Video Editing</h3>
+              <p>Expert-level certification in video production and editing. Master of visual storytelling with cutting-edge tools and creative techniques.</p>
+              <div class="ach-tags"><span class="ach-tag">Certified</span><span class="ach-tag">Video</span></div>
+            </div>
+          </div>
+          <div class="ach-card reveal">
+            <img src="assets/images/optimized/cert-canva-students.webp" alt="Canva Engaged Students" class="ach-img" loading="lazy" />
+            <div class="ach-body">
+              <h3>Canva Engaged Students</h3>
+              <p>Recognized for creating engaging and impactful visual content using Canva's design platform.</p>
+              <div class="ach-tags"><span class="ach-tag">Achievement</span><span class="ach-tag">Design</span></div>
+            </div>
+          </div>
+          <div class="ach-card reveal">
+            <img src="assets/images/optimized/cert-canva-ai.webp" alt="Canva AI Certificate" class="ach-img" loading="lazy" />
+            <div class="ach-body">
+              <h3>AI-Powered Design Innovation</h3>
+              <p>Certified in leveraging artificial intelligence within Canva to create smarter, faster, and more innovative designs.</p>
+              <div class="ach-tags"><span class="ach-tag">Certified</span><span class="ach-tag">AI</span></div>
+            </div>
+          </div>
+          <div class="ach-card reveal">
+            <img src="assets/images/optimized/cert-meta.webp" alt="Meta Advertiser Certification" class="ach-img" loading="lazy" />
+            <div class="ach-body">
+              <h3>Meta Certified Advertiser</h3>
+              <p>Professional certification from Meta demonstrating expertise in Facebook and Instagram advertising, audience targeting, and campaign optimization.</p>
+              <div class="ach-tags"><span class="ach-tag">Certified</span><span class="ach-tag">Advertising</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- PROJECTS -->
+    <section class="projects-section" id="projects">
+      <div class="container">
+        <div class="section-label">My Work</div>
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid" id="projects-grid">
+          <!-- loaded from JSON -->
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- SOCIAL -->
+    <section class="social-section" id="social">
+      <div class="container">
+        <div class="section-label">Find Me Online</div>
+        <h2 class="section-title reveal">Connect With Me</h2>
+        <div class="social-grid">
+
+          <a href="https://www.linkedin.com/in/sayadbayezid" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#0A66C2"/>
+              <path d="M6.94 5a2 2 0 1 1-4-.002A2 2 0 0 1 6.94 5zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-4 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.72-2.91l.04-1.68z" fill="#fff"/>
+            </svg>
+            LinkedIn
+          </a>
+
+          <a href="https://github.com/bayzed123" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#24292F"/>
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" fill="#fff"/>
+            </svg>
+            GitHub
+          </a>
+
+          <a href="https://www.facebook.com/sayadbayezid" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#1877F2"/>
+              <path d="M17 2h-3a5 5 0 0 0-5 5v3H6v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="#fff"/>
+            </svg>
+            Facebook
+          </a>
+
+          <a href="https://www.facebook.com/bayzeddme" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#1877F2"/>
+              <path d="M17 2h-3a5 5 0 0 0-5 5v3H6v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" fill="#fff"/>
+            </svg>
+            Business FB
+          </a>
+
+          <a href="https://www.instagram.com/freelancer_bayezid0" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="ig-grad" x1="0" y1="24" x2="24" y2="0">
+                  <stop stop-color="#F58529"/>
+                  <stop offset="0.5" stop-color="#DD2A7B"/>
+                  <stop offset="1" stop-color="#8134AF"/>
+                </linearGradient>
+              </defs>
+              <rect width="24" height="24" rx="6" fill="url(#ig-grad)"/>
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z" fill="#fff"/>
+            </svg>
+            Instagram
+          </a>
+
+          <a href="https://youtube.com/@cwbayezid" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#FF0000"/>
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" fill="#fff"/>
+            </svg>
+            YouTube
+          </a>
+
+          <a href="https://www.behance.net/syedbayxed" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#1769FF"/>
+              <path d="M6.938 4.503c.702 0 1.34.06 1.92.188.577.13 1.07.33 1.477.603.406.274.718.633.937 1.078.22.445.328.985.328 1.622 0 .693-.156 1.274-.47 1.74-.313.467-.768.838-1.363 1.116.82.233 1.43.645 1.83 1.235.398.59.597 1.3.597 2.128 0 .698-.13 1.302-.39 1.808a3.52 3.52 0 0 1-1.063 1.26 4.7 4.7 0 0 1-1.563.748A6.6 6.6 0 0 1 7.297 20H2V4.503h4.938zm-.28 5.588c.526 0 .955-.13 1.286-.39.33-.26.496-.666.496-1.218 0-.3-.055-.55-.164-.745a1.27 1.27 0 0 0-.44-.477 1.79 1.79 0 0 0-.637-.254 3.52 3.52 0 0 0-.762-.078H4.86v3.162h1.797zm.094 5.81c.296 0 .573-.03.83-.09a1.99 1.99 0 0 0 .678-.288c.193-.13.346-.31.458-.537.112-.226.168-.51.168-.852 0-.672-.187-1.16-.56-1.46-.374-.3-.868-.45-1.482-.45H4.86V15.9h1.892zm10.765-1.22c.325.317.793.476 1.404.476.438 0 .815-.11 1.13-.33.317-.22.51-.45.578-.694h1.875c-.3.93-.762 1.594-1.387 1.99-.624.397-1.38.596-2.266.596a5 5 0 0 1-1.766-.303 3.77 3.77 0 0 1-1.344-.87 3.9 3.9 0 0 1-.855-1.36A5 5 0 0 1 15.6 13a4.8 4.8 0 0 1 .31-1.75 4.03 4.03 0 0 1 .878-1.376 3.96 3.96 0 0 1 1.35-.896 4.54 4.54 0 0 1 1.742-.322c.712 0 1.337.138 1.875.412.537.275.98.647 1.328 1.115.347.47.6 1.005.754 1.606.154.6.208 1.24.16 1.916h-5.594c.032.704.27 1.232.595 1.55zM20.5 9.992h-3.712a.74.74 0 0 1 .02-.097H20.5v.097zM17.93 10.8c-.265.278-.42.666-.46 1.166h3.534c-.065-.51-.237-.9-.516-1.17a1.47 1.47 0 0 0-1.093-.406c-.61 0-1.2.133-1.465.41zM15.234 5.27h4.51v1.2h-4.51V5.27z" fill="#fff"/>
+            </svg>
+            Behance
+          </a>
+
+          <a href="https://www.crunchbase.com/person/sayad-md-bayezid-hosan" class="social-card reveal" target="_blank" rel="me noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#0288D1"/>
+              <text x="4" y="17" font-size="11" font-weight="bold" fill="#fff" font-family="sans-serif">CB</text>
+            </svg>
+            Crunchbase
+          </a>
+
+          <a href="https://www.genzfrontir.com" class="social-card reveal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#FF6B35"/>
+              <text x="3" y="17" font-size="10" font-weight="bold" fill="#fff" font-family="sans-serif">GenZ</text>
+            </svg>
+            GenZ Frontier
+          </a>
+
+          <a href="https://connectbayezid-8dcdz46v.manus.space" class="social-card reveal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#00D9FF"/>
+              <text x="4.5" y="16" font-size="9" font-weight="bold" fill="#07090D" font-family="sans-serif">CWB</text>
+            </svg>
+            Connect CWB
+          </a>
+
+          <a href="https://beacons.ai/connectwithbayezid" class="social-card reveal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#7B2FBE"/>
+              <path d="M12 4l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 19l-6.2 4.3 2.4-7.4L2 11.4h7.6L12 4z" fill="#fff"/>
+            </svg>
+            Beacons
+          </a>
+
+          <a href="https://qr.genzfrontir.com" class="social-card reveal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="24" height="24" rx="4" fill="#111722"/>
+              <rect x="3" y="3" width="8" height="8" rx="1" stroke="#00D9FF" stroke-width="1.5" fill="none"/>
+              <rect x="13" y="3" width="8" height="8" rx="1" stroke="#00D9FF" stroke-width="1.5" fill="none"/>
+              <rect x="3" y="13" width="8" height="8" rx="1" stroke="#00D9FF" stroke-width="1.5" fill="none"/>
+              <rect x="5" y="5" width="4" height="4" rx="0.5" fill="#00D9FF"/>
+              <rect x="15" y="5" width="4" height="4" rx="0.5" fill="#00D9FF"/>
+              <rect x="5" y="15" width="4" height="4" rx="0.5" fill="#00D9FF"/>
+              <rect x="14" y="14" width="2" height="2" fill="#00D9FF"/>
+              <rect x="17" y="14" width="2" height="2" fill="#00D9FF"/>
+              <rect x="14" y="17" width="2" height="2" fill="#00D9FF"/>
+              <rect x="17" y="17" width="2" height="2" fill="#00D9FF"/>
+            </svg>
+            QR System
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- CONTACT -->
+    <section class="contact-section" id="contact">
+      <div class="container">
+        <div class="section-label">Let's Work Together</div>
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-inner reveal">
+          <div class="contact-left">
+            <h3>Ready to build something great?</h3>
+            <p>Whether you need a full-stack web application, a digital marketing strategy, or AI integration, I'm here to help you succeed. Let's discuss your project.</p>
+            <div class="contact-items">
+              <div class="contact-item">
+                <div class="contact-item-icon">📧</div>
+                <div class="contact-item-text">
+                  <strong>Email</strong>
+                  <a href="mailto:Sayadmdbayezidhosan@gmail.com">Sayadmdbayezidhosan@gmail.com</a>
+                  <a href="mailto:cwb.agency@outlook.com" style="display:block;margin-top:2px;">cwb.agency@outlook.com</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">📱</div>
+                <div class="contact-item-text">
+                  <strong>Phone / WhatsApp</strong>
+                  <a href="tel:+8801519601517">+880 1519-601517</a>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <div class="contact-item-text">
+                  <strong>Location</strong>
+                  <span>Tangail, Bangladesh · Serving Clients Worldwide</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="contact-right">
+            <div class="contact-highlight">
+              <div class="big">2,200+</div>
+              <p>Happy clients trust me with their digital needs across the globe.</p>
+            </div>
+            <a href="https://www.linkedin.com/in/sayadbayezid" target="_blank" class="btn-primary" style="justify-content:center;">
+              Connect on LinkedIn →
+            </a>
+            <a href="https://beacons.ai/connectwithbayezid" target="_blank" class="btn-outline" style="justify-content:center;">
+              View All Links
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div><!-- end page-home -->
+
+  <!-- ===== SERVICES PAGE ===== -->
+  <div id="page-services" class="page">
+    <section style="padding: 8rem 0 7rem;">
+      <div class="container">
+        <div style="margin-bottom:1rem;">
+          <button onclick="showPage('home')" style="background:none;border:1px solid var(--border);color:var(--muted);padding:0.5rem 1.2rem;border-radius:100px;cursor:pointer;font-size:0.85rem;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)';" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)';">← Back to Home</button>
+        </div>
+        <div class="section-label">What I Offer</div>
+        <h2 class="section-title" style="margin-bottom:0.75rem;">All Services</h2>
+        <p class="section-sub" style="margin-bottom:4rem;">Full-spectrum digital expertise from concept to deployment, covering every layer of your digital presence.</p>
+        <div class="services-grid" id="services-grid-page">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div>
+          <span style="color:var(--white);font-weight:600;">Sayad Md Bayezid Hosan</span> ·
+          &copy; 2026. All rights reserved.
+        </div>
+        <div style="display:flex;gap:1.5rem;">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank">Open Source</a>
+          <a href="https://www.sayadbayezid.com">sayadbayezid.com</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- hidden YouTube player -->
+  <div id="youtube-player" style="display:none;position:absolute;left:-9999px;top:0;"></div>
+
+  <script>
+  /* ===== PAGE SWITCHER ===== */
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'services') renderServicesPage();
+  }
+
+  /* ===== SERVICES DATA ===== */
+  const SERVICES = [
+    { icon: '🌐', num: '01', title: 'Full-stack Web Development', desc: 'Custom websites and web applications built with React, Node.js, and modern frameworks. From landing pages to complex platforms with AI integration.' },
+    { icon: '📣', num: '02', title: 'Digital Marketing', desc: 'Strategic digital marketing solutions including SEO, content marketing, social media management, and conversion rate optimization to grow your business.' },
+    { icon: '🤖', num: '03', title: 'AI Integration', desc: 'Cutting-edge AI solutions for business automation — chatbots, intelligent workflows, AI-powered design, and machine learning integrations.' },
+    { icon: '💡', num: '04', title: 'Tech Consulting', desc: 'Expert guidance on digital transformation, technology strategy, and permission-based technical solutions for businesses of all sizes.' },
+    { icon: '🎨', num: '05', title: 'UI/UX & Brand Design', desc: 'User-centric design using Canva, Figma, and modern design tools. Creating memorable brand identities and intuitive digital experiences.' },
+    { icon: '📹', num: '06', title: 'Video Production', desc: 'Professional video editing and visual storytelling — from short-form social content to full production edits that engage your audience.' },
+    { icon: '📊', num: '07', title: 'Meta Advertising', desc: 'Facebook and Instagram ad campaigns with precise audience targeting, creative ad copy, and conversion-focused campaign optimization.' },
+    { icon: '🔗', num: '08', title: 'QR & Digital Infrastructure', desc: 'Custom QR code systems and digital infrastructure solutions — like qr.genzfrontir.com — for seamless offline-to-online audience journeys.' },
+  ];
+
+  function serviceCardHTML(s) {
+    return `<div class="service-card reveal">
+      <div class="service-num">${s.num}</div>
+      <div class="service-icon-wrap">${s.icon}</div>
+      <h3>${s.title}</h3>
+      <p>${s.desc}</p>
+    </div>`;
+  }
+
+  function renderServicesHome() {
+    const g = document.getElementById('services-grid-home');
+    if (g) g.innerHTML = SERVICES.slice(0, 4).map(serviceCardHTML).join('');
+  }
+
+  function renderServicesPage() {
+    const g = document.getElementById('services-grid-page');
+    if (g) g.innerHTML = SERVICES.map(serviceCardHTML).join('');
+    initGSAP();
+  }
+
+  /* ===== PROJECTS ===== */
+  async function loadProjects() {
+    try {
+      const r = await fetch('projects/projects.json');
+      if (!r.ok) throw new Error('no json');
+      const data = await r.json();
+      const projects = data.projects || [];
+      const grid = document.getElementById('projects-grid');
+      if (!grid) return;
+      const featured = projects.slice(0, 6);
+      grid.innerHTML = featured.map(p => {
+        const img = p.images && p.images.length ? p.images[0] : '';
+        return `<div class="project-card reveal">
+          ${img ? `<div class="project-img-wrap"><img src="${img}" alt="${p.title}" loading="lazy"></div>` : ''}
+          <div class="project-body">
+            <h3>${p.title}</h3>
+            <p>${p.description}</p>
+            <div class="p-tags">${(p.tags || []).map(t => `<span class="p-tag">${t}</span>`).join('')}</div>
+            ${p.link ? `<a href="${p.link}" class="p-link" target="_blank" rel="noopener">View Project <span>→</span></a>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      initGSAP();
+    } catch(e) {
+      // graceful fail — grid stays empty if no JSON
+    }
+  }
+
+  /* ===== NAV SCROLL ===== */
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* ===== HAMBURGER ===== */
+  const ham = document.getElementById('hamburger');
+  const mNav = document.getElementById('mobileNav');
+  ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    mNav.classList.toggle('open');
+  });
+  function closeMenu() {
+    ham.classList.remove('open');
+    mNav.classList.remove('open');
+  }
+  mNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  /* ===== CURSOR GLOW ===== */
+  const glow = document.getElementById('cursor-glow');
+  document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top  = e.clientY + 'px';
+  });
+
+  /* ===== GSAP ===== */
+  function initGSAP() {
+    if (typeof gsap === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
+    // Reveal all .reveal elements
+    document.querySelectorAll('.reveal').forEach(el => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+
+    // Hero text lines
+    gsap.fromTo('.hero h1 .line',
+      { y: '110%', opacity: 0 },
+      { y: '0%', opacity: 1, stagger: 0.12, duration: 0.9, ease: 'power4.out', delay: 0.2 }
+    );
+    gsap.fromTo('.hero-eyebrow', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.05 });
+    gsap.fromTo('.hero-sub', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, delay: 0.6 });
+    gsap.fromTo('.hero-actions', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.85 });
+    gsap.fromTo('.music-wrap', { opacity: 0 }, { opacity: 1, duration: 0.6, delay: 1.1 });
+    gsap.fromTo('.hero-visual', { opacity: 0, scale: 0.95, x: 40 }, { opacity: 1, scale: 1, x: 0, duration: 1, ease: 'power3.out', delay: 0.3 });
+    gsap.fromTo('.badge-top', { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.7, delay: 1 });
+    gsap.fromTo('.badge-bot', { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.7, delay: 1.1 });
+
+    // Count-up numbers
+    document.querySelectorAll('.stat-n[data-count]').forEach(el => {
+      const target = parseInt(el.dataset.count);
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+          gsap.fromTo({ val: 0 }, { val: target, duration: 2, ease: 'power2.out',
+            onUpdate: function() {
+              el.textContent = Math.round(this.targets()[0].val).toLocaleString() + (target >= 100 ? '' : '+');
+            },
+            onComplete: () => { el.textContent = target.toLocaleString() + (target > 5 ? '+' : '+'); }
+          });
+        }
+      });
+    });
+
+    // Section titles
+    gsap.utils.toArray('.section-title').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 30 }, {
+        opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%' }
+      });
+    });
+  }
+
+  /* ===== MUSIC PLAYER ===== */
+  let player, isPlaying = false;
+  const musicToggle = document.getElementById('music-toggle');
+  const musicIcon   = document.getElementById('music-btn');
+  const musicStatus = document.getElementById('music-status');
+  const mbars       = document.querySelectorAll('.mbar');
+
+  // Load YT API
+  const ytTag = document.createElement('script');
+  ytTag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(ytTag);
+
+  window.onYouTubeIframeAPIReady = function() {
+    player = new YT.Player('youtube-player', {
+      height: '1', width: '1',
+      videoId: 'eFDZOoVB2Ek',
+      playerVars: { autoplay: 0, loop: 1, playlist: 'eFDZOoVB2Ek', controls: 0 },
+      events: {
+        onReady: e => e.target.setVolume(45),
+        onStateChange: e => {
+          isPlaying = e.data === YT.PlayerState.PLAYING;
+          updateMusicUI();
+        }
+      }
+    });
+  };
+
+  function updateMusicUI() {
+    musicIcon.textContent = isPlaying ? '⏸' : '▶';
+    musicStatus.textContent = isPlaying ? 'Now Playing' : 'Background Music';
+    mbars.forEach(b => b.classList.toggle('paused', !isPlaying));
+  }
+
+  if (musicToggle) {
+    musicToggle.addEventListener('click', e => {
+      e.stopPropagation();
+      if (!player) return;
+      isPlaying ? player.pauseVideo() : player.playVideo();
+    });
+  }
+
+  /* ===== INIT ===== */
+  document.addEventListener('DOMContentLoaded', () => {
+    renderServicesHome();
+    loadProjects();
+    setTimeout(initGSAP, 100);
+  });
+  </script>
+</body>
+</html>
