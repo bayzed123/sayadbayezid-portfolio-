@@ -1,0 +1,29 @@
+[
+  {
+    "slug": "how-to-start-digital-marketing",
+    "title": "How to Start Digital Marketing in 2026",
+    "description": "A complete beginner's guide to understanding SEO, Meta ads, and digital growth strategies.",
+    "content": "Full markdown content goes here...",
+    "date": "2026-07-18",
+    "tags": [
+      "Digital Marketing",
+      "Tech Tips"
+    ],
+    "image": "https://www.sayadbayezid.com/assets/images/blog-default.jpg",
+    "author": "Sayad Md Bayezid Hosan",
+    "category": "Marketing"
+  },
+  {
+    "slug": "building-a-full-stack-web-app",
+    "title": "Building a Full-Stack Web App: Best Practices",
+    "description": "Learn the best practices for architecture, API integration, and deployment for full-stack web applications.",
+    "content": "Full markdown content goes here...",
+    "date": "2026-07-10",
+    "tags": [
+      "Web Development"
+    ],
+    "image": "https://www.sayadbayezid.com/assets/images/blog-default.jpg",
+    "author": "Sayad Md Bayezid Hosan",
+    "category": "Development"
+  }
+]
