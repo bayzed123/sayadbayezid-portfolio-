@@ -1,0 +1,14 @@
+{
+  "name": "sayadbayezid-portfolio",
+  "version": "1.0.0",
+  "description": "Automated blog builder for Sayad Md Bayezid Hosan portfolio",
+  "main": "scripts/build.js",
+  "scripts": {
+    "build": "node scripts/build.js"
+  },
+  "dependencies": {
+    "front-matter": "^4.0.2",
+    "marked": "^18.0.5",
+    "slugify": "^1.6.9"
+  }
+}
