@@ -33,7 +33,7 @@ jobs:
         run: npm install
         
       - name: Build Blog HTML & JSON
-        run: node scripts/build.js # Ensure your build script path is correct
+        run: node scripts/build-blog.js # Ensure your build script path is correct
         
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
