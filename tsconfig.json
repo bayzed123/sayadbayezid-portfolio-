@@ -1,0 +1,68 @@
+## tsconfig.json (Optional)
+
+> **Note**
+>
+> SmartGen Showcase **does not strictly require TypeScript** out of the box. This configuration file is **optional** and is provided as a reference for developers.
+>
+> However, because showcase sites often rely on interactive visual elements, this file is highly recommended if you plan to add custom client-side features, such as:
+>
+> - Interactive gallery filtering (e.g., sorting UI kits vs. templates)
+> - Dynamic lightbox and modal popups for images
+> - Custom theme switchers (Dark/Light mode)
+> - Advanced CSS grid masonry layouts via JavaScript
+> - Custom animations for design assets
+>
+> If your showcase project only uses **Python, HTML, CSS, Jinja2, and Markdown**, you can safely ignore or remove this file.
+
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+
+    "strict": true,
+
+    "allowJs": false,
+
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    "sourceMap": true,
+
+    "removeComments": false,
+
+    "declaration": false,
+
+    "skipLibCheck": true,
+
+    "forceConsistentCasingInFileNames": true,
+
+    "isolatedModules": true,
+
+    "noEmitOnError": true,
+
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2022"
+    ],
+
+    "outDir": "./dist",
+
+    "rootDir": "./src",
+
+    "types": [
+      "node"
+    ]
+  },
+
+  "include": [
+    "src/**/*.ts"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "dist",
+    "site"
+  ]
+}
