@@ -1,0 +1,162 @@
+# Copyright (c) 2026 Sayad Md Bayezid Hosan (Smartgen Platform)
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+[build-system]
+requires = [
+    "setuptools>=69.0",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "smartgen-showcase"
+version = "0.1.0"
+
+description = "SmartGen Showcase is a modern, open-source static site framework tailored for building fast, SEO-friendly design portfolios, UI kit galleries, theme showcases, and digital asset hubs by Connect with Bayezid."
+
+readme = "README.md"
+requires-python = ">=3.9"
+
+license = { text = "MIT" }
+
+authors = [
+    { name = "Sayad Md Bayezid Hosan", email = "contact@smartgentools.com" }
+]
+
+maintainers = [
+    { name = "Sayad Md Bayezid Hosan", email = "contact@smartgentools.com" }
+]
+
+keywords = [
+    "smartgen",
+    "smartgen showcase",
+    "portfolio",
+    "showcase generator",
+    "design gallery",
+    "ui kits",
+    "templates",
+    "themes",
+    "markdown",
+    "static site generator",
+    "static website",
+    "seo",
+    "search",
+    "design tools"
+]
+
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Internet :: WWW/HTTP :: Site Management",
+    "Topic :: Software Development",
+    "Topic :: Text Processing :: Markup",
+    "Topic :: Text Processing :: Markup :: HTML",
+    "Typing :: Typed"
+]
+
+dependencies = [
+    "click>=8.1",
+    "Jinja2>=3.1",
+    "markdown2>=2.5",
+    "PyYAML>=6.0",
+    "watchdog>=6.0",
+    "Pygments>=2.18"
+]
+
+[project.optional-dependencies]
+
+search = [
+    "whoosh>=2.7"
+]
+
+images = [
+    "Pillow>=11.0",
+    "urllib3>=2.0"
+]
+
+minify = [
+    "htmlmin>=0.1",
+    "csscompressor>=0.9",
+    "jsmin>=3.0"
+]
+
+dev = [
+    "pytest>=8.0",
+    "black>=25.0",
+    "ruff>=0.12",
+    "build>=1.2",
+    "twine>=6.0"
+]
+
+full = [
+    "smartgen-showcase[search,images,minify,dev]"
+]
+
+[project.urls]
+Homepage = "https://showcase.smartgentools.com"
+Documentation = "https://showcase.smartgentools.com"
+Repository = "https://github.com/bayeziddev/smartGenShowcase"
+Issues = "https://github.com/bayeziddev/smartGenShowcase/issues"
+Discussions = "https://github.com/bayeziddev/smartGenShowcase/discussions"
+Releases = "https://github.com/bayeziddev/smartGenShowcase/releases"
+Developer = "https://g.dev/SayadBayezid"
+GitHub = "https://github.com/sayadbayezid"
+LinkedIn = "https://www.linkedin.com/in/sayadbayezid"
+Website = "https://www.smartgentools.com"
+
+[project.scripts]
+smartgen-showcase = "smartgen_showcase.cli:main"
+
+[project.entry-points."smartgen.builders"]
+
+[project.entry-points."smartgen.plugins"]
+
+[project.entry-points."smartgen.themes"]
+
+[project.entry-points."smartgen.markdown"]
+
+[project.entry-points."smartgen.search"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = [
+    "smartgen_showcase*"
+]
+
+[tool.setuptools.package-data]
+smartgen_showcase = [
+    "themes/**/*",
+    "templates/**/*",
+    "assets/**/*",
+    "static/**/*",
+    "icons/**/*",
+    "schemas/**/*"
+]
+
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
