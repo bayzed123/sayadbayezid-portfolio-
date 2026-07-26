@@ -1,0 +1,112 @@
+#Copyright (c) 2026 Sayad Md Bayezid Hosan (Smartgen Platform)
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# Project information
+site_name: SmartGen Showcase & Design
+site_url: https://showcase.smartgentools.com/
+site_author: Sayad Md Bayezid Hosan
+site_description: Discover the SmartGen Platform design showcase. Explore premium website designs, UI kits, templates, and digital assets crafted by Connect with Bayezid.
+
+# Repository
+repo_name: bayeziddev/smartGenShowcase
+repo_url: https://github.com/bayeziddev/smartGenShowcase
+
+# Copyright
+copyright: Copyright &copy; 2026 Sayad Md Bayezid Hosan | Connect with Bayezid
+
+# Configuration
+theme:
+  name: material # Standardized for grid/card support (change to 'premium' if custom)
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - content.action.view
+    - content.code.copy
+  palette:
+    primary: "#4A3AE3"
+    accent: "#C2660D"
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: assets/favicon.png
+  logo: assets/logo.png
+
+# Plugins (Crucial for a visual showcase)
+plugins:
+  - search
+  - glightbox # Highly recommended: allows clicking images to open a full-screen gallery
+
+# Markdown Extensions (Enables grids, cards, and custom HTML for design assets)
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.magiclink
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - admonition
+  - def_list
+
+# Additional configuration
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/sayadbayezid
+      name: GitHub Profile
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/sayadbayezid
+      name: LinkedIn
+    - icon: fontawesome/brands/facebook
+      link: https://www.facebook.com/bayezidhosan
+      name: Facebook
+    - icon: fontawesome/solid/globe
+      link: https://www.smartgentools.com
+      name: SmartGen Tools
+
+# Navigation structure tailored for Design & Showcase
+nav:
+  - Home: index.md
+
+  - Our Showcase:
+      - Gallery Overview: showcase/index.md
+      - E-Commerce Sites: showcase/ecommerce.md
+      - Corporate Websites: showcase/corporate.md
+      - Portfolio Designs: showcase/portfolios.md
+      - Landing Pages: showcase/landing-pages.md
+      - Web Applications: showcase/web-apps.md
+
+  - Design Materials:
+      - Materials Hub: materials/index.md
+      - UI/UX Kits: materials/ui-kits.md
+      - Website Templates: materials/templates.md
+      - Vector Graphics: materials/vectors.md
+      - Icon Packs: materials/icons.md
+      - Typography & Fonts: materials/typography.md
+
+  - SmartGen Themes:
+      - Available Themes: themes/index.md
+      - Premium Frameworks: themes/premium.md
+      - Installation Guides: themes/installation.md
+      - Customization: themes/customization.md
+
+  - Case Studies:
+      - Overview: case-studies/index.md
+      - Agency Transformations: case-studies/agency.md
+      - High-Conversion Designs: case-studies/conversion.md
+      - Performance Optimization: case-studies/performance.md
+
+  - Connect with Bayezid:
+      - Agency Services: agency/services.md
+      - Client Testimonials: agency/testimonials.md
+      - Hire Us: agency/hire-us.md
+      - Contact: agency/contact.md
