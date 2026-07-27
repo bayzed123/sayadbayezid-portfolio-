@@ -1,11 +1,12 @@
 ---
-Title: "SmartFlow AI — Case Study and Project Journal"
+Title: "smartflow-ai-case-study-and-project-journal"
 Description: "Written to be read cold, months from now, by you or whoever you hand
 this to If you forget everything else, read Quick Status and The
 Account Map those two sections will get you oriented fastest"
 image: "https://sayadbayezid.com/blog-posts/images/marketing-banner.png"
 date: "July 27, 2026"
 author: "Sayad Md Bayezid Hosan"
+
 ---
 <!-- Slim Minimalist Author Profile Box -->
 <div class="author-box" style="display: flex; align-items: center; margin: 2rem 0; padding: 0.75rem 0; gap: 0.75rem;">
@@ -80,7 +81,7 @@ document is the map that ties them together, not a replacement for
 them.
 
 ---
-
+!Image[WhatsApp Cloud API Setup Guide and Integration Costs](https://sayadbayezid.com/blog-posts/images/workflow-diagram.png)
 ## Key Decisions Made, and Why (so you don't re-litigate these)
 
 1. **Official WhatsApp Cloud API and Messenger Platform, not the
