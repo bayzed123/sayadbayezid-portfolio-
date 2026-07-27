@@ -13,14 +13,10 @@ author: "Sayad Md Bayezid Hosan"
     <!-- Profile Picture -->
     <img src="https://raw.githubusercontent.com/bayzed123/SmartGenQR.oi/main/assets/smartgentools-blog-bayezid-profile.jpg" 
          alt="Sayad Md Bayezid Hosan" 
-         style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;">
+         style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;"> 
+ --- 
+    [Sayad Md Bayezid Hosan](https://sayadbayezid.com/verified-profiles/)
     
-    <!-- Info -->
-    <div class="author-info" style="flex: 1;">
-        <h4 style="margin: 0; color: #1e293b; font-size: 0.95rem; font-weight: 600;">Sayad Md Bayezid Hosan</h4>
-        <p style="margin: 2px 0 0 0; color: #64748b; font-size: 0.8rem;">Tech Entrepreneur & Full-stack Developer</p>
-    </div>
-</div>
 
 ## Quick Status (as of this writing)
 
