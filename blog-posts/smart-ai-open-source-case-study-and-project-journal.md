@@ -8,16 +8,6 @@ date: "July 27, 2026"
 author: "Sayad Md Bayezid Hosan"
 
 ---
-<!-- Slim Minimalist Author Profile Box -->
-<div class="author-box" style="display: flex; align-items: center; margin: 2rem 0; padding: 0.75rem 0; gap: 0.75rem;">
-    <!-- Profile Picture -->
-    <img src="https://raw.githubusercontent.com/bayzed123/SmartGenQR.oi/main/assets/smartgentools-blog-bayezid-profile.jpg" 
-         alt="Sayad Md Bayezid Hosan" 
-         style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover; flex-shrink: 0;"> 
- --- 
-    [Sayad Md Bayezid Hosan](https://sayadbayezid.com/verified-profiles/)
-    
-
 ## Quick Status (as of this writing)
 
 **Working and verified:**
