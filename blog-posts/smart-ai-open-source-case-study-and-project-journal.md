@@ -3,7 +3,7 @@ Title: "SmartFlow AI — Case Study and Project Journal"
 Description: "Written to be read cold, months from now, by you or whoever you hand
 this to If you forget everything else, read Quick Status and The
 Account Map those two sections will get you oriented fastest"
-image: "https://sayadbayezid.com/blog-posts/images/marketing-banner.png
+image: "https://sayadbayezid.com/blog-posts/images/marketing-banner.png"
 date: "July 27, 2026"
 author: "Sayad Md Bayezid Hosan"
 ---
