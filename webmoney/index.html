@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMoney - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --wm-blue: #2a84ff;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --success: #30d158;
+            --pending: #ffd60a;
+            --border-color: #333333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); }
+
+        /* --- Login Screen --- */
+        #login-screen {
+            display: flex; height: 100vh; justify-content: center; align-items: center; background: var(--bg-dark);
+            flex-direction: column;
+        }
+        .login-logo { font-size: 32px; font-weight: bold; color: var(--wm-blue); margin-bottom: 40px; display: flex; align-items: center; gap: 10px;}
+        .login-box {
+            background: var(--bg-card); width: 90%; max-width: 400px; padding: 30px; border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center;
+        }
+        .input-group { margin-bottom: 20px; text-align: left; }
+        .input-group input { 
+            width: 100%; padding: 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px;
+            background: var(--bg-dark); color: var(--text-main); outline: none;
+        }
+        .input-group input:focus { border-color: var(--wm-blue); }
+        .login-btn {
+            width: 100%; padding: 15px; background: var(--wm-blue); color: #fff; border: none; 
+            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        #errorMsg { color: #ff453a; font-size: 14px; margin-top: 15px; display: none; }
+
+        /* --- Main App Layout --- */
+        #app-dashboard { display: none; min-height: 100vh; flex-direction: column; }
+        
+        /* Top Navigation */
+        .top-nav {
+            display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;
+            background: var(--bg-card); border-bottom: 1px solid var(--border-color);
+        }
+        .user-info { display: flex; align-items: center; gap: 12px; }
+        .avatar { width: 40px; height: 40px; background: var(--wm-blue); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+        .user-details h4 { font-size: 14px; margin-bottom: 2px; }
+        .user-details p { font-size: 12px; color: var(--text-muted); }
+
+        /* Main Content Area */
+        .main-content { flex: 1; padding: 20px; max-width: 1000px; margin: 0 auto; width: 100%; }
+        
+        /* Views */
+        .view-section { display: none; }
+        .view-section.active { display: block; }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 25px; border-radius: 16px; margin-bottom: 20px; position: relative; overflow: hidden;
+        }
+        .balance-card h3 { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: normal; }
+        .balance-amount { font-size: 36px; font-weight: bold; margin: 10px 0; }
+        .balance-amount span { font-size: 20px; font-weight: normal; opacity: 0.8; }
+        
+        /* Progress Bar for Withdrawal */
+        .withdraw-section { margin-top: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; }
+        .w-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
+        .progress-bg { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--success); transition: width 0.5s; }
+        .withdraw-btn { 
+            width: 100%; margin-top: 15px; padding: 12px; border: none; border-radius: 8px;
+            background: rgba(255,255,255,0.1); color: #fff; font-weight: bold; cursor: not-allowed;
+        }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .stat-box { background: var(--bg-card); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .stat-box i { font-size: 20px; margin-bottom: 10px; color: var(--wm-blue); }
+        .stat-val { font-size: 20px; font-weight: bold; }
+        .stat-label { font-size: 12px; color: var(--text-muted); }
+
+        /* Transactions List */
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .transaction-list { display: flex; flex-direction: column; gap: 10px; }
+        .t-item { 
+            background: var(--bg-card); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between;
+            align-items: center; border: 1px solid var(--border-color);
+        }
+        .t-info h4 { font-size: 15px; margin-bottom: 4px; }
+        .t-info p { font-size: 12px; color: var(--text-muted); }
+        .t-amount { text-align: right; }
+        .t-amount h4 { font-size: 16px; margin-bottom: 4px; }
+        .t-amount p { font-size: 11px; padding: 2px 8px; border-radius: 10px; display: inline-block;}
+        .status-completed { background: rgba(48, 209, 88, 0.1); color: var(--success); }
+        .status-pending { background: rgba(255, 214, 10, 0.1); color: var(--pending); }
+
+        /* Bottom Nav */
+        .bottom-nav {
+            display: flex; justify-content: space-around; background: var(--bg-card); padding: 15px 0;
+            position: fixed; bottom: 0; width: 100%; border-top: 1px solid var(--border-color);
+        }
+        .nav-item { color: var(--text-muted); text-align: center; cursor: pointer; font-size: 20px; transition: 0.2s;}
+        .nav-item p { font-size: 10px; margin-top: 4px; }
+        .nav-item.active { color: var(--wm-blue); }
+
+        /* Chart Placeholder for Analytics */
+        .chart-mockup {
+            height: 200px; background: repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border-color) 40px);
+            display: flex; align-items: flex-end; gap: 10px; padding: 10px; margin-top: 20px;
+        }
+        .bar { background: var(--wm-blue); flex: 1; border-radius: 4px 4px 0 0; }
+    </style>
+</head>
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-screen">
+        <div class="login-logo"><i class="fas fa-wallet"></i> WebMoney</div>
+        <div class="login-box">
+            <div class="input-group">
+                <input type="text" value="bayezid@cwb-agency.com" readonly>
+            </div>
+            <div class="input-group">
+                <input type="password" id="passInput" placeholder="Password (smbsmb64)">
+            </div>
+            <button class="login-btn" onclick="checkPassword()">Log In</button>
+            <p id="errorMsg">Incorrect password.</p>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="app-dashboard">
+        <!-- Top Nav -->
+        <div class="top-nav">
+            <div class="user-info">
+                <div class="avatar">SB</div>
+                <div class="user-details">
+                    <h4>Sayad Md Bayezid Hosan</h4>
+                    <p>WMID: 839405612399</p>
+                </div>
+            </div>
+            <i class="fas fa-bell" style="font-size: 20px; color: var(--text-muted);"></i>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            
+            <!-- VIEW 1: DASHBOARD -->
+            <div id="view-dashboard" class="view-section active">
+                <div class="balance-card">
+                    <h3>Available Balance (WMZ)</h3>
+                    <div class="balance-amount" id="totalBalance">0.00 <span>USD</span></div>
+                    
+                    <div class="withdraw-section">
+                        <div class="w-header">
+                            <span>Withdrawal Limit</span>
+                            <span id="withdrawProgressText">0 / 1000 USD</span>
+                        </div>
+                        <div class="progress-bg">
+                            <div class="progress-fill" id="withdrawProgressBar" style="width: 0%;"></div>
+                        </div>
+                        <button class="withdraw-btn" id="withdrawBtn"><i class="fas fa-lock"></i> Minimum 1000 USD Required</button>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <i class="fas fa-arrow-trend-up"></i>
+                        <div class="stat-val" id="todayEarn">+$0.00</div>
+                        <div class="stat-label">Today's Revenue</div>
+                    </div>
+                    <div class="stat-box">
+                        <i class="fas fa-clock"></i>
+                        <div class="stat-val" id="pendingEarn">$0.00</div>
+                        <div class="stat-label">Pending Clearance</div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h3>Recent Revenue</h3>
+                    <span style="color: var(--wm-blue); font-size: 14px; cursor: pointer;" onclick="switchView('transactions')">See All</span>
+                </div>
+                <div class="transaction-list" id="miniHistory">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- VIEW 2: TRANSACTIONS -->
+            <div id="view-transactions" class="view-section">
+                <h2 style="margin-bottom: 20px;">Revenue Analysis</h2>
+                <div class="transaction-list" id="fullHistory">
+                    <!-- JS Injected -->
+                </div>
+            </div>
+
+            <!-- VIEW 3: ANALYTICS -->
+            <div id="view-analytics" class="view-section">
+                <h2 style="margin-bottom: 10px;">Performance Analytics</h2>
+                <p style="color: var(--text-muted); font-size: 14px;">Last 7 Days Revenue Overview</p>
+                <div class="chart-mockup">
+                    <div class="bar" style="height: 30%"></div>
+                    <div class="bar" style="height: 50%"></div>
+                    <div class="bar" style="height: 40%"></div>
+                    <div class="bar" style="height: 70%"></div>
+                    <div class="bar" style="height: 60%"></div>
+                    <div class="bar" style="height: 90%"></div>
+                    <div class="bar" style="height: 80%"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px; color: var(--text-muted); font-size: 12px;">
+                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <div class="nav-item active" onclick="switchView('dashboard', this)">
+                <i class="fas fa-wallet"></i><p>Home</p>
+            </div>
+            <div class="nav-item" onclick="switchView('transactions', this)">
+                <i class="fas fa-list"></i><p>History</p>
+            </div>
+            <div class="nav-item" onclick="switchView('analytics', this)">
+                <i class="fas fa-chart-pie"></i><p>Analytics</p>
+            </div>
+            <div class="nav-item" onclick="location.reload()">
+                <i class="fas fa-sign-out-alt"></i><p>Exit</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const SECRET_PASS = "smbsmb64";
+        const STORAGE_KEY = "wm_smart_revenue_v2";
+        const BASE_BALANCE = 233.00; // Base balance added per your request
+        
+        // Custom revenue sources including your specified ones
+        const platforms = [
+            "Smartgen Revenue", 
+            "GenZ Frontier - Ad Revenue", 
+            "Connect with Bayezid - Agency Client", 
+            "QR Code Generator - API Usage",
+            "Fiverr - Order Completed", 
+            "SEO Optimization Service",
+            "Direct Web Development Project"
+        ];
+
+        function checkPassword() {
+            const val = document.getElementById('passInput').value;
+            if(val === SECRET_PASS) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('app-dashboard').style.display = 'flex';
+                initDashboard();
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+
+        // View Switcher Logic
+        function switchView(viewName, element) {
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            // Show selected view
+            document.getElementById('view-' + viewName).classList.add('active');
+            
+            // Update Nav UI
+            if(element) {
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                element.classList.add('active');
+            } else {
+                // Manual override if clicked from "See All"
+                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            }
+            window.scrollTo(0,0);
+        }
+
+        function getRandomEarning() { return parseFloat((Math.random() * 2 + 1).toFixed(2)); }
+        function getRandomPlatform() { return platforms[Math.floor(Math.random() * platforms.length)]; }
+        function formatDate(dateObj) { return dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }); }
+
+        function initDashboard() {
+            let data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            let today = new Date();
+            today.setHours(0,0,0,0);
+
+            if (!data) {
+                data = { schedule: [] };
+                let startDate = new Date();
+                startDate.setHours(0,0,0,0);
+                startDate.setDate(today.getDate() - 27); // 27 days past
+
+                for (let i = 0; i < (27 + 365); i++) {
+                    let targetDate = new Date(startDate);
+                    targetDate.setDate(startDate.getDate() + i);
+                    
+                    data.schedule.push({
+                        id: 'TRX-' + Math.floor(Math.random() * 900000 + 100000),
+                        timestamp: targetDate.getTime(),
+                        dateStr: formatDate(targetDate),
+                        platform: getRandomPlatform(),
+                        amount: getRandomEarning(),
+                        isCompleted: false
+                    });
+                }
+            }
+
+            let dynamicCompletedAmount = 0;
+            let totalPendingAmount = 0;
+            let todaysEarning = 0;
+
+            data.schedule.forEach(item => {
+                if (item.timestamp <= today.getTime()) {
+                    item.isCompleted = true;
+                    dynamicCompletedAmount += item.amount;
+                    if(item.timestamp === today.getTime()) todaysEarning += item.amount;
+                } else {
+                    item.isCompleted = false;
+                    totalPendingAmount += item.amount;
+                }
+            });
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+
+            // Calculate final balance (Base + Accumulated)
+            let finalBalance = BASE_BALANCE + dynamicCompletedAmount;
+            
+            // Update UI Elements
+            document.getElementById('totalBalance').innerHTML = finalBalance.toFixed(2) + ' <span>USD</span>';
+            document.getElementById('todayEarn').innerText = '+$' + todaysEarning.toFixed(2);
+            document.getElementById('pendingEarn').innerText = '$' + totalPendingAmount.toFixed(2);
+            
+            // Withdraw Progress Logic
+            let progressPercent = (finalBalance / 1000) * 100;
+            if(progressPercent > 100) progressPercent = 100;
+            document.getElementById('withdrawProgressBar').style.width = progressPercent + '%';
+            document.getElementById('withdrawProgressText').innerText = finalBalance.toFixed(2) + ' / 1000 USD';
+
+            if(finalBalance >= 1000) {
+                let btn = document.getElementById('withdrawBtn');
+                btn.style.background = 'var(--wm-blue)';
+                btn.style.cursor = 'pointer';
+                btn.innerHTML = 'Withdraw Funds Now';
+            }
+
+            renderTables(data.schedule);
+        }
+
+        function renderTables(scheduleArray) {
+            const mini = document.getElementById('miniHistory');
+            const full = document.getElementById('fullHistory');
+            mini.innerHTML = ''; full.innerHTML = '';
+            
+            // Sort newest first
+            scheduleArray.sort((a, b) => b.timestamp - a.timestamp);
+
+            let renderCount = 0;
+            scheduleArray.forEach(t => {
+                const statusClass = t.isCompleted ? 'status-completed' : 'status-pending';
+                const statusText = t.isCompleted ? 'Completed' : 'Processing';
+                const sign = t.isCompleted ? '+' : '';
+                
+                const html = `
+                    <div class="t-item">
+                        <div class="t-info">
+                            <h4>${t.platform}</h4>
+                            <p>${t.dateStr} • ID: ${t.id}</p>
+                        </div>
+                        <div class="t-amount">
+                            <h4 style="color: ${t.isCompleted ? 'var(--success)' : 'var(--text-main)'}">${sign}$${t.amount.toFixed(2)}</h4>
+                            <p class="${statusClass}">${statusText}</p>
+                        </div>
+                    </div>
+                `;
+                
+                full.innerHTML += html; // Add all to full history
+                if(t.isCompleted && renderCount < 5) { // Only show 5 completed in mini view
+                    mini.innerHTML += html;
+                    renderCount++;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
