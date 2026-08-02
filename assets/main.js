@@ -10,20 +10,19 @@ document.getElementById('footerYear').textContent = new Date().getFullYear();
 // firing e-commerce events (AddToCart, Purchase, etc.) anywhere — this is a
 // services site with no cart/checkout, so those would just be inaccurate.
 //
-// "Lead" fires on every "Start a project" CTA click. Meta's strict
-// definition of Lead is a completed form submission — until /contact.html's
-// form exists, the CTA click is the closest real signal of intent, and
-// many service businesses track it this way in practice. Once the contact
-// form ships, move this Lead call to the form's successful-submit handler
-// instead, and this CTA click can drop to a lighter custom event if you
-// want the distinction back.
+// "Lead" fires ONLY on a real, successful contact-form submission (see the
+// contact-form handler further down) — that's Meta's own strict definition,
+// and it's what Meta will actually optimize ad delivery toward. "Start a
+// project" CTA clicks fire a lighter CUSTOM event (ContactIntent) instead —
+// useful for seeing click-through interest without inflating the real Lead
+// count with people who clicked but never actually reached out.
 //
 // "ViewContent" fires on the featured-work rows, naming which piece of
 // work was opened (data-pixel-content) — useful for seeing which product
 // people care about most.
 //
-// Each click fires TWICE on purpose: once in-browser via fbq() (blockable
-// by ad-blockers/Safari ITP), and once server-side via the Conversions API
+// Each fires TWICE on purpose: once in-browser via fbq() (blockable by
+// ad-blockers/Safari ITP), and once server-side via the Conversions API
 // worker (not blockable, since it never touches the visitor's browser).
 // Both carry the SAME event_id so Meta de-duplicates them into one event
 // rather than double-counting — this is Meta's own recommended setup, not
@@ -31,28 +30,38 @@ document.getElementById('footerYear').textContent = new Date().getFullYear();
 // ---------------------------------------------------------------------------
 const CAPI_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/track';
 
+function firePixelEvent(eventName, { custom = false, contentName, sendToServer = true } = {}) {
+  const eventId = crypto.randomUUID();
+  const customData = contentName ? { content_name: contentName } : {};
+
+  if (typeof fbq === 'function') {
+    if (custom) fbq('trackCustom', eventName, customData);
+    else fbq('track', eventName, customData, { eventID: eventId });
+  }
+
+  if (!sendToServer) return; // custom, exploratory events don't need CAPI's extra delivery robustness
+
+  fetch(CAPI_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      event_source_url: window.location.href,
+      custom_data: customData,
+    }),
+    keepalive: true, // lets this finish even if a click also navigates away
+  }).catch(() => {}); // best-effort — a failed server echo shouldn't break the page
+}
+
 document.querySelectorAll('[data-pixel-event]').forEach((el) => {
   el.addEventListener('click', () => {
-    const eventName = el.dataset.pixelEvent;
-    const contentName = el.dataset.pixelContent;
-    const eventId = crypto.randomUUID();
-    const customData = contentName ? { content_name: contentName } : {};
-
-    if (typeof fbq === 'function') {
-      fbq('track', eventName, customData, { eventID: eventId });
-    }
-
-    fetch(CAPI_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        event_name: eventName,
-        event_id: eventId,
-        event_source_url: window.location.href,
-        custom_data: customData,
-      }),
-      keepalive: true, // lets this finish even if the click also navigates away
-    }).catch(() => {}); // best-effort — a failed server echo shouldn't break navigation
+    const isCustom = el.dataset.pixelCustom === 'true';
+    firePixelEvent(el.dataset.pixelEvent, {
+      custom: isCustom,
+      contentName: el.dataset.pixelContent,
+      sendToServer: !isCustom,
+    });
   });
 });
 
@@ -135,24 +144,137 @@ if (avatarImg && avatarPlaceholder) {
 }
 
 // ---------------------------------------------------------------------------
-// Reviews marquee — placeholder copy until real reviews exist; swap this
-// array for real testimonials as they come in (same shape).
+// Reviews — fetched from the agency Worker (real, admin-approved submissions).
+// Falls back to a couple of placeholder cards only if none are approved yet,
+// so the section never looks empty before the first real review lands.
 // ---------------------------------------------------------------------------
-const REVIEWS = [
-  { quote: "Handed him a messy WordPress site and got back something that actually ranks.", who: "Local service business owner", stars: 5 },
-  { quote: "Fast, direct, and he explains the technical stuff without the jargon.", who: "E-commerce client", stars: 5 },
-  { quote: "Built exactly the tool we described, nothing over-engineered.", who: "Agency partner", stars: 5 },
-  { quote: "SEO results showed up in weeks, not the usual vague 'give it 6 months.'", who: "SaaS founder", stars: 5 },
+const REVIEWS_API = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/reviews';
+const FALLBACK_REVIEWS = [
+  { name: 'A recent client', rating: 5, comment: 'Be the first to leave a review below — real ones replace this automatically.' },
 ];
-const track = document.getElementById('marqueeTrack');
-if (track) {
-  const cardsHtml = REVIEWS.map((r) => `
+
+function escapeHtmlAgency(str) {
+  return String(str ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function reviewCardHtml(r) {
+  const avatar = r.avatar_url
+    ? `<img src="${escapeHtmlAgency(r.avatar_url)}" alt="" class="review-avatar" onerror="this.style.display='none'" />`
+    : '';
+  return `
     <div class="review-card">
-      <div class="review-stars">${'★'.repeat(r.stars)}</div>
-      <p class="review-quote">"${r.quote}"</p>
-      <span class="review-who">${r.who}</span>
+      ${avatar}
+      <div class="review-stars">${'★'.repeat(r.rating)}</div>
+      <p class="review-quote">"${escapeHtmlAgency(r.comment)}"</p>
+      <span class="review-who">${escapeHtmlAgency(r.name)}</span>
     </div>
-  `).join('');
-  // duplicated once so the marquee can loop seamlessly at -50%
-  track.innerHTML = cardsHtml + cardsHtml;
+  `;
+}
+
+(async function loadReviews() {
+  const track = document.getElementById('marqueeTrack');
+  if (!track) return;
+  let reviews = FALLBACK_REVIEWS;
+  try {
+    const resp = await fetch(REVIEWS_API);
+    const data = await resp.json();
+    if (data.reviews?.length) reviews = data.reviews;
+  } catch { /* keep the fallback card — a failed fetch shouldn't blank the section */ }
+  const cardsHtml = reviews.map(reviewCardHtml).join('');
+  track.innerHTML = cardsHtml + cardsHtml; // duplicated once for a seamless loop
+})();
+
+// ---------------------------------------------------------------------------
+// Review submission form
+// ---------------------------------------------------------------------------
+let selectedReviewRating = 0;
+document.querySelectorAll('#reviewStarRow button').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    selectedReviewRating = Number(btn.dataset.star);
+    document.querySelectorAll('#reviewStarRow button').forEach((b) => {
+      b.classList.toggle('selected', Number(b.dataset.star) <= selectedReviewRating);
+    });
+  });
+});
+
+const submitReviewBtn = document.getElementById('submitReviewBtn');
+if (submitReviewBtn) {
+  submitReviewBtn.addEventListener('click', async () => {
+    const name = document.getElementById('reviewName').value.trim();
+    const avatarUrl = document.getElementById('reviewAvatar').value.trim();
+    const comment = document.getElementById('reviewComment').value.trim();
+    const banner = document.getElementById('reviewBanner');
+
+    if (!name || !comment) {
+      banner.innerHTML = `<div class="slg-banner slg-banner-warn">Add your name and a short comment.</div>`;
+      return;
+    }
+    if (!selectedReviewRating) {
+      banner.innerHTML = `<div class="slg-banner slg-banner-warn">Pick a star rating first.</div>`;
+      return;
+    }
+
+    try {
+      const resp = await fetch('https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, avatarUrl, rating: selectedReviewRating, comment }),
+      });
+      const data = await resp.json();
+      banner.innerHTML = resp.ok
+        ? `<div class="slg-banner slg-banner-ok">${escapeHtmlAgency(data.note || 'Thanks for the review!')}</div>`
+        : `<div class="slg-banner slg-banner-warn">${escapeHtmlAgency(data.error || 'Something went wrong.')}</div>`;
+      if (resp.ok) {
+        document.getElementById('reviewName').value = '';
+        document.getElementById('reviewAvatar').value = '';
+        document.getElementById('reviewComment').value = '';
+        selectedReviewRating = 0;
+        document.querySelectorAll('#reviewStarRow button').forEach((b) => b.classList.remove('selected'));
+      }
+    } catch {
+      banner.innerHTML = `<div class="slg-banner slg-banner-warn">Couldn't reach the server — try again shortly.</div>`;
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Contact form (contact.html only — no-ops elsewhere since the elements
+// won't exist). This is the real "Lead" moment: a completed submission.
+// ---------------------------------------------------------------------------
+const contactSubmitBtn = document.getElementById('contactSubmitBtn');
+if (contactSubmitBtn) {
+  contactSubmitBtn.addEventListener('click', async () => {
+    const name = document.getElementById('contactName').value.trim();
+    const email = document.getElementById('contactEmail').value.trim();
+    const message = document.getElementById('contactMessage').value.trim();
+    const banner = document.getElementById('contactBanner');
+
+    if (!name || !email || !message) {
+      banner.innerHTML = `<div class="slg-banner slg-banner-warn">Fill in your name, email, and a message.</div>`;
+      return;
+    }
+
+    contactSubmitBtn.disabled = true;
+    try {
+      const resp = await fetch('https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, message }),
+      });
+      if (resp.ok) {
+        firePixelEvent('Lead'); // the one true Lead moment on this whole site
+        banner.innerHTML = `<div class="slg-banner slg-banner-ok">Sent — I'll get back to you soon.</div>`;
+        document.getElementById('contactName').value = '';
+        document.getElementById('contactEmail').value = '';
+        document.getElementById('contactMessage').value = '';
+      } else {
+        const data = await resp.json().catch(() => ({}));
+        banner.innerHTML = `<div class="slg-banner slg-banner-warn">${data.error || 'Something went wrong — try again.'}</div>`;
+      }
+    } catch {
+      banner.innerHTML = `<div class="slg-banner slg-banner-warn">Couldn't reach the server — try again shortly.</div>`;
+    } finally {
+      contactSubmitBtn.disabled = false;
+    }
+  });
 }
