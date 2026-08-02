@@ -9,6 +9,25 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css" />
+<!-- Meta Pixel Code — base + PageView. Repeat this exact block in the
+     <head> of every future page (services.html, products.html, etc.) so
+     PageView fires site-wide, not just here. -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1612338809888151');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -25,7 +44,7 @@
         <a href="/products.html">Products</a>
         <a href="/work.html">Work</a>
         <a href="/about.html">About</a>
-        <a href="/contact.html" class="nav-cta">Start a project</a>
+        <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
       </nav>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -54,7 +73,7 @@
           a growing list of client work. Every claim on this site is checkable.
         </p>
         <div class="hero-ctas reveal" data-reveal>
-          <a href="/contact.html" class="btn btn-primary">Start a project<span class="btn-arrow">→</span></a>
+          <a href="/contact.html" class="btn btn-primary" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
           <a href="/work.html" class="btn btn-ghost">See the work</a>
         </div>
       </div>
@@ -133,7 +152,7 @@
         <h2>Built, shipped, and still running.</h2>
       </div>
       <div class="work-list">
-        <a href="https://www.smartgentools.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal>
+        <a href="https://www.smartgentools.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="SmartGen">
           <div class="work-media"><div class="work-media-glow"></div></div>
           <div class="work-copy">
             <span class="work-tag">Product · SEO tools</span>
@@ -142,7 +161,7 @@
           </div>
           <span class="work-link">smartgentools.com <span class="btn-arrow">→</span></span>
         </a>
-        <a href="/work.html#smartleadgen" class="work-row reveal" data-reveal>
+        <a href="/work.html#smartleadgen" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="SmartLeadGen">
           <div class="work-media"><div class="work-media-glow"></div></div>
           <div class="work-copy">
             <span class="work-tag">Product · Lead generation</span>
@@ -151,7 +170,7 @@
           </div>
           <span class="work-link">Case study <span class="btn-arrow">→</span></span>
         </a>
-        <a href="https://www.genzfrontir.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal>
+        <a href="https://www.genzfrontir.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="GenZ Frontier">
           <div class="work-media"><div class="work-media-glow"></div></div>
           <div class="work-copy">
             <span class="work-tag">Venture</span>
@@ -171,7 +190,26 @@
       </div>
       <div class="marquee-wrap">
         <div class="marquee-track" id="marqueeTrack">
-          <!-- duplicated in JS for seamless loop -->
+          <!-- populated from the API; duplicated once in JS for a seamless loop -->
+        </div>
+      </div>
+
+      <div class="review-form-wrap reveal" data-reveal>
+        <h3>Worked together? Leave a review.</h3>
+        <p class="home-section-sub" style="margin-bottom:20px">Shown once approved — add a link to your photo if you'd like it to appear alongside your name.</p>
+        <div class="review-form">
+          <input type="text" id="reviewName" placeholder="Your name" />
+          <input type="url" id="reviewAvatar" placeholder="Link to your photo (optional)" />
+          <div class="star-row" id="reviewStarRow">
+            <button type="button" data-star="1">★</button>
+            <button type="button" data-star="2">★</button>
+            <button type="button" data-star="3">★</button>
+            <button type="button" data-star="4">★</button>
+            <button type="button" data-star="5">★</button>
+          </div>
+          <textarea id="reviewComment" placeholder="What was it like working together?"></textarea>
+          <button class="btn btn-primary" id="submitReviewBtn">Submit review</button>
+          <div id="reviewBanner" style="margin-top:10px"></div>
         </div>
       </div>
     </section>
@@ -205,7 +243,7 @@
       <div class="cta-inner reveal" data-reveal>
         <h2>Have a project worth building properly?</h2>
         <p>Tell me what you're trying to fix or launch — I'll tell you honestly if I'm the right fit.</p>
-        <a href="/contact.html" class="btn btn-primary btn-lg">Start a project<span class="btn-arrow">→</span></a>
+        <a href="/contact.html" class="btn btn-primary btn-lg" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
       </div>
     </section>
 
