@@ -6,6 +6,57 @@
 document.getElementById('footerYear').textContent = new Date().getFullYear();
 
 // ---------------------------------------------------------------------------
+// Meta Pixel — standard events on real interactions only. Deliberately NOT
+// firing e-commerce events (AddToCart, Purchase, etc.) anywhere — this is a
+// services site with no cart/checkout, so those would just be inaccurate.
+//
+// "Lead" fires on every "Start a project" CTA click. Meta's strict
+// definition of Lead is a completed form submission — until /contact.html's
+// form exists, the CTA click is the closest real signal of intent, and
+// many service businesses track it this way in practice. Once the contact
+// form ships, move this Lead call to the form's successful-submit handler
+// instead, and this CTA click can drop to a lighter custom event if you
+// want the distinction back.
+//
+// "ViewContent" fires on the featured-work rows, naming which piece of
+// work was opened (data-pixel-content) — useful for seeing which product
+// people care about most.
+//
+// Each click fires TWICE on purpose: once in-browser via fbq() (blockable
+// by ad-blockers/Safari ITP), and once server-side via the Conversions API
+// worker (not blockable, since it never touches the visitor's browser).
+// Both carry the SAME event_id so Meta de-duplicates them into one event
+// rather than double-counting — this is Meta's own recommended setup, not
+// a redundancy bug.
+// ---------------------------------------------------------------------------
+const CAPI_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/track';
+
+document.querySelectorAll('[data-pixel-event]').forEach((el) => {
+  el.addEventListener('click', () => {
+    const eventName = el.dataset.pixelEvent;
+    const contentName = el.dataset.pixelContent;
+    const eventId = crypto.randomUUID();
+    const customData = contentName ? { content_name: contentName } : {};
+
+    if (typeof fbq === 'function') {
+      fbq('track', eventName, customData, { eventID: eventId });
+    }
+
+    fetch(CAPI_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        custom_data: customData,
+      }),
+      keepalive: true, // lets this finish even if the click also navigates away
+    }).catch(() => {}); // best-effort — a failed server echo shouldn't break navigation
+  });
+});
+
+// ---------------------------------------------------------------------------
 // Mobile nav toggle
 // ---------------------------------------------------------------------------
 const navToggle = document.getElementById('navToggle');
