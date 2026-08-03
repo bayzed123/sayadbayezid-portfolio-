@@ -197,6 +197,8 @@ a { color: inherit; }
 .service-index { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: var(--text-dim); }
 .service-card h3 { font-size: 1.15rem; margin: 18px 0 10px; }
 .service-card p { font-size: 0.88rem; }
+.price-tag { font-family: 'Fraunces', serif; font-size: 1.7rem; font-weight: 600; color: var(--emerald); margin: 10px 0 12px; }
+.price-tag span { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-dim); font-weight: 400; display: block; margin-top: 2px; }
 
 /* ---------------------------------------------------------------- Work list */
 .work-list { display: flex; flex-direction: column; gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; }
