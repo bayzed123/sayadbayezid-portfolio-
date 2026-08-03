@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — Connect with Bayezid</title>
+<meta name="description" content="Privacy Policy for Connect with Bayezid, covering our website, applications, and all integrations with Meta Platforms including Facebook Login, Instagram Graph API, Marketing API, and the WhatsApp Business Platform.">
+<style>
+  :root{
+    --bg: #FBFBFA;
+    --panel: #FFFFFF;
+    --text: #191B1F;
+    --muted: #5C6370;
+    --faint: #8A909B;
+    --border: #E6E7EA;
+    --accent: #2C4699;
+    --accent-soft: #EDF0FB;
+    --accent-deep: #1B2E66;
+    --radius: 10px;
+    --maxw: 760px;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap{ max-width: var(--maxw); margin: 0 auto; padding: 0 20px 100px; }
+  header.hero{
+    background: linear-gradient(180deg, var(--accent-deep) 0%, var(--accent) 100%);
+    color: #fff;
+    padding: 56px 20px 40px;
+  }
+  header.hero .wrap{ padding-bottom: 0; }
+  .eyebrow{
+    text-transform: uppercase;
+    letter-spacing: .12em;
+    font-size: .72rem;
+    font-weight: 700;
+    color: rgba(255,255,255,.75);
+    margin: 0 0 14px;
+  }
+  h1{
+    font-size: clamp(1.65rem, 4vw, 2.35rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 12px;
+    font-weight: 800;
+  }
+  .dek{
+    color: rgba(255,255,255,.88);
+    font-size: 1.02rem;
+    max-width: 58ch;
+    margin: 0 0 22px;
+  }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap: 10px 22px;
+    font-size: .82rem;
+    color: rgba(255,255,255,.75);
+    border-top: 1px solid rgba(255,255,255,.2);
+    padding-top: 16px;
+  }
+  .meta-row strong{ color: #fff; font-weight: 600; }
+
+  main{ padding-top: 34px; }
+
+  .callout{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin: 0 0 30px;
+  }
+  .callout h2{ margin-top:0; }
+  .callout p:last-child{ margin-bottom:0; }
+
+  .scope-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+    gap: 10px;
+    margin: 18px 0 4px;
+  }
+  .scope-chip{
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: .86rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+  .scope-group-label{
+    font-size: .74rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--faint);
+    font-weight: 700;
+    margin: 22px 0 8px;
+  }
+
+  nav.toc{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 22px 20px;
+    margin: 0 0 36px;
+  }
+  nav.toc h2{ margin: 0 0 12px; font-size: 1.02rem; }
+  nav.toc ol{
+    columns: 2;
+    column-gap: 28px;
+    margin: 0; padding-left: 1.2em;
+    font-size: .92rem;
+  }
+  nav.toc li{ break-inside: avoid; margin-bottom: 7px; }
+  nav.toc a{ color: var(--text); text-decoration: none; }
+  nav.toc a:hover{ color: var(--accent); text-decoration: underline; }
+
+  section{ margin: 0 0 40px; scroll-margin-top: 18px; }
+  h2{
+    font-size: 1.32rem;
+    letter-spacing: -0.005em;
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  h2 .num{ color: var(--accent); margin-right: 8px; }
+  h3{ font-size: 1.05rem; margin: 24px 0 8px; color: var(--accent-deep); }
+  p{ margin: 0 0 14px; color: var(--text); }
+  ul, ol.plain{ margin: 0 0 14px; padding-left: 1.35em; }
+  li{ margin-bottom: 6px; }
+  .muted{ color: var(--muted); }
+  .small{ font-size: .88rem; }
+  a{ color: var(--accent); }
+  strong{ font-weight: 700; }
+
+  table.datatable{
+    width:100%; border-collapse: collapse; margin: 10px 0 18px; font-size: .92rem;
+  }
+  table.datatable th, table.datatable td{
+    text-align:left; padding: 9px 12px; border: 1px solid var(--border); vertical-align: top;
+  }
+  table.datatable th{ background: var(--accent-soft); color: var(--accent-deep); font-weight:700; }
+
+  .subcard{
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 0 0 14px;
+  }
+  .subcard h4{ margin: 0 0 6px; font-size: .95rem; }
+  .subcard p{ margin: 0; font-size: .92rem; color: var(--muted); }
+
+  .steps{ counter-reset: step; list-style:none; padding-left: 0; }
+  .steps li{
+    counter-increment: step;
+    position:relative;
+    padding-left: 38px;
+    margin-bottom: 12px;
+  }
+  .steps li::before{
+    content: counter(step);
+    position:absolute; left:0; top:0;
+    width: 26px; height:26px; border-radius:50%;
+    background: var(--accent); color:#fff;
+    font-size:.8rem; font-weight:700;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  .contact-card{
+    background: var(--accent-soft);
+    border-radius: var(--radius);
+    padding: 22px;
+  }
+  .contact-card h2{ border:none; padding-bottom:0; }
+
+  .backtotop{
+    position: fixed; right: 18px; bottom: 18px;
+    background: var(--accent); color:#fff;
+    border:none; border-radius: 999px;
+    width: 44px; height:44px;
+    font-size: 1rem; cursor:pointer;
+    box-shadow: 0 6px 18px rgba(44,70,153,.35);
+    display:none; align-items:center; justify-content:center;
+  }
+  .backtotop.show{ display:flex; }
+
+  footer.page-footer{
+    text-align:center; color: var(--faint); font-size: .82rem;
+    padding: 30px 20px 60px;
+  }
+
+  ::selection{ background: var(--accent-soft); color: var(--accent-deep); }
+
+  @media (max-width: 600px){
+    nav.toc ol{ columns: 1; }
+    header.hero{ padding: 40px 16px 32px; }
+  }
+
+  @media print{
+    header.hero{ background:none; color:#000; padding: 0 0 20px; }
+    .dek, .eyebrow, .meta-row{ color:#000 !important; }
+    .backtotop, nav.toc{ display:none !important; }
+    a{ color:#000; text-decoration: underline; }
+    section{ break-inside: avoid-page; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Connect with Bayezid</p>
+    <h1>Privacy Policy</h1>
+    <p class="dek">How we collect, use, and protect information across our website, applications, and every integration we operate with Meta Platforms — Facebook, Instagram, Messenger, Audience Network, and the WhatsApp Business Platform.</p>
+    <div class="meta-row">
+      <span><strong>Effective date:</strong> August 3, 2026</span>
+      <span><strong>Last updated:</strong> August 3, 2026</span>
+      <span><strong>Applies to:</strong> www.sayadbayezid.com and all Connect with Bayezid apps</span>
+      <span><strong>Governing law:</strong> Bangladesh</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="callout" id="in-short">
+    <h2 style="border:none;padding-bottom:0;">In short</h2>
+    <p>Connect with Bayezid ("we," "us," "our") builds and operates digital products and integrations on Meta's platforms — for our own website and, where we act as a digital agency, on behalf of client businesses. This Policy explains what data we collect through those integrations (Facebook, Instagram, Messenger, and WhatsApp Business Platform included), why we collect it, who we share it with, how long we keep it, and how you can access, correct, or delete it. One copy of this Policy, at one URL, covers every application we currently operate and every application we add in the future — so this same link can be entered as the Privacy Policy URL for any of our Meta Developer apps.</p>
+  </div>
+
+  <section aria-labelledby="scope-heading">
+    <h2 id="scope-heading"><span class="num">1.</span>Scope of This Policy</h2>
+    <p>This Policy governs data processed through <strong>www.sayadbayezid.com</strong> and through any website, application, bot, tool, or integration — current or future — that Connect with Bayezid registers, owns, or operates on Meta's developer platform. It is written to remain valid as we add new products, so a single link can be reused across every Meta app in our account without drafting a new policy each time.</p>
+    <p>As of the effective date above, this Policy specifically covers the following Meta Platform products and services:</p>
+
+    <p class="scope-group-label">Meta Platform &amp; Graph API products</p>
+    <div class="scope-grid">
+      <div class="scope-chip">Facebook Login</div>
+      <div class="scope-chip">Instagram Graph API</div>
+      <div class="scope-chip">Webhooks</div>
+      <div class="scope-chip">App Events</div>
+      <div class="scope-chip">Marketing API</div>
+      <div class="scope-chip">Audience Network</div>
+      <div class="scope-chip">Catalog API</div>
+      <div class="scope-chip">Web Payments</div>
+      <div class="scope-chip">Jobs</div>
+      <div class="scope-chip">Fundraisers</div>
+      <div class="scope-chip">App Center</div>
+      <div class="scope-chip">Messenger Platform</div>
+    </div>
+
+    <p class="scope-group-label">WhatsApp Business Platform</p>
+    <div class="scope-grid">
+      <div class="scope-chip">Cloud API</div>
+      <div class="scope-chip">Cloud API — Calling</div>
+      <div class="scope-chip">WhatsApp Business Account Management</div>
+      <div class="scope-chip">Embedded Signup</div>
+      <div class="scope-chip">WhatsApp Flows</div>
+      <div class="scope-chip">Marketing Messages API for WhatsApp</div>
+      <div class="scope-chip">Direct Send API</div>
+      <div class="scope-chip">Coexistence — Messaging</div>
+    </div>
+
+    <p class="small muted" style="margin-top:16px;">If you are visiting this page from a specific Connect with Bayezid product, that product may only use some of the items above — the sections below describe how information is handled <em>if and when</em> a given feature is active.</p>
+  </section>
+
+  <nav class="toc" aria-label="Table of contents">
+    <h2>On this page</h2>
+    <ol>
+      <li><a href="#scope-heading">Scope of this policy</a></li>
+      <li><a href="#info-we-collect">Information we collect</a></li>
+      <li><a href="#meta-data">Information from Meta Platforms</a></li>
+      <li><a href="#whatsapp">WhatsApp Business Platform practices</a></li>
+      <li><a href="#how-we-use">How we use information</a></li>
+      <li><a href="#legal-basis">Legal bases for processing</a></li>
+      <li><a href="#sharing">How we share information</a></li>
+      <li><a href="#cookies">Cookies &amp; tracking</a></li>
+      <li><a href="#retention">Data retention</a></li>
+      <li><a href="#security">Data security</a></li>
+      <li><a href="#transfers">International data transfers</a></li>
+      <li><a href="#children">Children's privacy</a></li>
+      <li><a href="#rights">Your privacy rights</a></li>
+      <li><a href="#deletion">Data deletion instructions</a></li>
+      <li><a href="#third-party">Third-party links</a></li>
+      <li><a href="#changes">Changes to this policy</a></li>
+      <li><a href="#contact">Contact us</a></li>
+      <li><a href="#related-policies">More from Connect with Bayezid</a></li>
+    </ol>
+  </nav>
+
+  <section id="info-we-collect" aria-labelledby="collect-heading">
+    <h2 id="collect-heading"><span class="num">2.</span>Information We Collect</h2>
+
+    <h3>2.1 Information you provide directly</h3>
+    <p>Depending on which product you use, this may include your name, email address, phone number, business name, job listings or applications, catalog/product information, payment or order details (processed by Meta or a licensed payment processor, not stored by us in raw form), messages you send us, and any information you submit through a contact form, signup flow, or WhatsApp conversation.</p>
+
+    <h3>2.2 Information collected automatically</h3>
+    <p>When you visit our website or use our tools, we and our service providers may automatically collect device and log information: IP address, browser type, operating system, referring URLs, pages viewed, timestamps, and approximate location derived from your IP address. See <a href="#cookies">Section 8</a> for how cookies and similar technologies are used.</p>
+
+    <h3 id="meta-data">2.3 Information we receive through Meta Platforms</h3>
+    <p>The table below summarizes what each integration can provide us. We only receive data for the specific permissions each product/user has actually granted — we do not request more than a feature needs.</p>
+
+    <table class="datatable">
+      <tr><th>Product</th><th>What we may receive</th></tr>
+      <tr><td>Facebook Login</td><td>Public profile, name, email address, and any additional profile fields you explicitly approve during login (e.g., profile photo).</td></tr>
+      <tr><td>Instagram Graph API</td><td>Connected Instagram professional account details, media you authorize us to publish or read, comments/mentions, and content performance insights.</td></tr>
+      <tr><td>Messenger Platform</td><td>Message content and attachments sent to a Connect with Bayezid or client Page, sender's Page-scoped ID, and conversation metadata (timestamps, read status).</td></tr>
+      <tr><td>Webhooks</td><td>Real-time event payloads for the specific subscriptions we configure (for example, a new message, a page mention, or a catalog update) — only the fields included in that event type.</td></tr>
+      <tr><td>App Events</td><td>Aggregated or hashed interaction events (installs, purchases, custom events) used for analytics and, where enabled, advertising measurement.</td></tr>
+      <tr><td>Marketing API &amp; Audience Network</td><td>Ad account, campaign, and ad set performance data; and, where a Custom Audience is built from a customer list, SHA-256 hashed identifiers (such as hashed email or phone number) that we upload for matching. We never upload identifiers in plain text.</td></tr>
+      <tr><td>Catalog API</td><td>Product or service listings (titles, prices, availability, images) that a business submits for display across Meta's commerce surfaces.</td></tr>
+      <tr><td>Web Payments</td><td>Order and transaction metadata (amount, status, order ID). Card and full payment details are handled directly by Meta's or the payment processor's systems and are not stored on our servers.</td></tr>
+      <tr><td>Jobs</td><td>Job postings and, where applicable, applicant information submitted through Facebook's Jobs feature.</td></tr>
+      <tr><td>Fundraisers</td><td>Fundraiser details and donor engagement metadata (donation processing itself is handled by Meta or its payment partners, not by us).</td></tr>
+      <tr><td>App Center</td><td>Basic app listing and usage information for discoverability purposes.</td></tr>
+    </table>
+  </section>
+
+  <section id="whatsapp" aria-labelledby="whatsapp-heading">
+    <h2 id="whatsapp-heading"><span class="num">3.</span>WhatsApp Business Platform — How We Handle Your Data</h2>
+    <p>Because messaging carries especially sensitive information, we're giving WhatsApp its own detailed section covering every WhatsApp Business Platform product we use.</p>
+
+    <div class="subcard">
+      <h4>Cloud API &amp; Cloud API — Calling</h4>
+      <p>We send and receive WhatsApp messages (text, media, template messages, and interactive replies) and, where enabled, voice/video calls through Meta's Cloud API. Messages travel end-to-end encrypted between you and Meta's servers; Meta decrypts them to route to our systems, where we can read the content to respond to you. Call metadata (initiation, duration, and status) is handled the same way when Calling is active.</p>
+    </div>
+    <div class="subcard">
+      <h4>WhatsApp Business Account Management</h4>
+      <p>We manage business profile details tied to a WhatsApp Business Account — display name, category, profile photo, business description, and the verified phone number(s) connected to that account.</p>
+    </div>
+    <div class="subcard">
+      <h4>Embedded Signup</h4>
+      <p>When a business connects its WhatsApp number to our systems through Meta's hosted Embedded Signup flow, we receive the business's WhatsApp Business Account ID, phone number ID, and the permissions granted during that flow — not your Facebook password or unrelated account data.</p>
+    </div>
+    <div class="subcard">
+      <h4>WhatsApp Flows</h4>
+      <p>Where we use WhatsApp Flows (structured in-chat forms — for example, booking an appointment or completing a short survey), we receive the responses you submit inside that form.</p>
+    </div>
+    <div class="subcard">
+      <h4>Marketing Messages API &amp; Direct Send API</h4>
+      <p>We use pre-approved message templates to send opt-in marketing, reminder, or notification messages, and we track delivery, read, and opt-out status so we can honor your preferences.</p>
+    </div>
+    <div class="subcard">
+      <h4>Coexistence — Messaging</h4>
+      <p>Where a business uses the WhatsApp Business app and the Cloud API on the same number at the same time, conversations may be visible and synced across both interfaces for that business's own team.</p>
+    </div>
+
+    <h3>Opt-in, opt-out, and how we use WhatsApp messaging</h3>
+    <ul>
+      <li>We only message you on WhatsApp after you've shared your number and clearly opted in to hear from the specific business (Connect with Bayezid or the client business we're messaging on behalf of).</li>
+      <li>We use WhatsApp messaging strictly for the purpose disclosed at opt-in — for example, customer support, order updates, appointment reminders, or the marketing communications you agreed to receive. We do not repurpose WhatsApp conversation data for unrelated advertising.</li>
+      <li>Where we use automation or bots inside WhatsApp, they perform clearly defined, predictable business tasks (like routing a support request or confirming a booking) rather than open-ended, general-purpose AI chat, consistent with Meta's WhatsApp Business Messaging Policy.</li>
+      <li>You can opt out at any time by replying "STOP" (or the equivalent local keyword), blocking the business number, or contacting us directly — see <a href="#contact">Section 17</a>.</li>
+      <li>We do not ask for or store full payment card numbers, financial account numbers, government ID numbers, or health information through WhatsApp.</li>
+      <li>On Meta's Cloud API infrastructure, message content and per-message user identifiers are retained by Meta for a maximum of 30 days to support core delivery features (like retransmission); our own retention of conversation history on our side is described in <a href="#retention">Section 9</a>.</li>
+    </ul>
+  </section>
+
+  <section id="how-we-use" aria-labelledby="use-heading">
+    <h2 id="use-heading"><span class="num">4.</span>How We Use Information</h2>
+    <ul>
+      <li>Provide, operate, and maintain our website, apps, and client integrations</li>
+      <li>Authenticate you and personalize your experience (e.g., Facebook Login)</li>
+      <li>Send transactional messages, support replies, and — where you've opted in — marketing communications</li>
+      <li>Process orders, catalog listings, job posts, or fundraiser pages you submit</li>
+      <li>Measure and improve ad performance through Marketing API, Audience Network, and App Events</li>
+      <li>Detect, prevent, and investigate fraud, abuse, or security incidents</li>
+      <li>Comply with legal obligations and enforce our own terms</li>
+      <li>Build and improve our products, including through aggregated or de-identified analytics</li>
+    </ul>
+  </section>
+
+  <section id="legal-basis" aria-labelledby="legal-heading">
+    <h2 id="legal-heading"><span class="num">5.</span>Legal Bases for Processing</h2>
+    <p>Where the GDPR, UK GDPR, or Bangladesh's Personal Data Protection Act, 2026 applies, we rely on one or more of the following legal bases: your <strong>consent</strong> (for example, WhatsApp opt-in or marketing emails, which you can withdraw at any time), performance of a <strong>contract</strong> with you, our <strong>legitimate interests</strong> in operating and securing our services (balanced against your rights), and compliance with a <strong>legal obligation</strong>. Hashing personal data before sending it to Meta for advertising (see Section 2.3) does not by itself provide a legal basis — where we build Custom Audiences from customer data, we first confirm we have valid consent or another lawful basis for that use.</p>
+  </section>
+
+  <section id="sharing" aria-labelledby="sharing-heading">
+    <h2 id="sharing-heading"><span class="num">6.</span>How We Share Information</h2>
+    <ul>
+      <li><strong>With Meta:</strong> by the nature of these integrations, relevant data flows to and from Meta Platforms, Inc., which processes it under its own Platform Terms and Privacy Policy.</li>
+      <li><strong>With client businesses:</strong> where Connect with Bayezid builds or manages a Meta integration (Facebook Page, Instagram account, WhatsApp number, or ad account) on behalf of a client, information you send to that integration is shared with that client business, which is responsible for its own use of your data.</li>
+      <li><strong>Service providers:</strong> hosting, analytics, email, and payment providers who process data on our behalf, under confidentiality and data-protection obligations.</li>
+      <li><strong>Legal &amp; safety:</strong> where required by law, legal process, or to protect the rights, property, or safety of Connect with Bayezid, our users, or the public.</li>
+      <li><strong>Business transfers:</strong> in connection with a merger, acquisition, or sale of assets, subject to this Policy's protections continuing to apply.</li>
+    </ul>
+    <p>We do not sell personal data.</p>
+  </section>
+
+  <section id="cookies" aria-labelledby="cookies-heading">
+    <h2 id="cookies-heading"><span class="num">7.</span>Cookies &amp; Tracking Technologies</h2>
+    <p>Our website and tools may use cookies, pixels, and local storage to keep you signed in, remember preferences, measure traffic, and, where enabled, support Meta's App Events / Conversions API for ad measurement. You can control cookies through your browser settings; blocking them may limit some features.</p>
+  </section>
+
+  <section id="retention" aria-labelledby="retention-heading">
+    <h2 id="retention-heading"><span class="num">8.</span>Data Retention</h2>
+    <p>We keep personal data only as long as needed for the purpose it was collected, to comply with legal, tax, or accounting obligations, or to resolve disputes. When a client relationship or app connection ends, or Meta's own Platform Data rules require it, we delete or de-identify the associated Platform Data unless we're legally required to keep it. WhatsApp conversation history is retained only as long as needed to support the customer-service purpose it was collected for, and no longer than our contractual arrangement with the relevant business.</p>
+  </section>
+
+  <section id="security" aria-labelledby="security-heading">
+    <h2 id="security-heading"><span class="num">9.</span>Data Security</h2>
+    <p>We use administrative, technical, and physical safeguards designed to protect information from unauthorized access, alteration, disclosure, or destruction — including encrypted transport (HTTPS/TLS), access controls, and hashing of identifiers before they're shared with advertising platforms. No method of transmission or storage is 100% secure, and we cannot guarantee absolute security.</p>
+  </section>
+
+  <section id="transfers" aria-labelledby="transfers-heading">
+    <h2 id="transfers-heading"><span class="num">10.</span>International Data Transfers</h2>
+    <p>We are based in Bangladesh, and Meta's global infrastructure may process and store data outside your own country. Where required, we and Meta rely on appropriate safeguards (such as standard contractual clauses or an equivalent transfer mechanism) for these cross-border transfers.</p>
+  </section>
+
+  <section id="children" aria-labelledby="children-heading">
+    <h2 id="children-heading"><span class="num">11.</span>Children's Privacy</h2>
+    <p>Our products are not directed at children, and we do not knowingly collect personal data from children under the age required by applicable law (generally 13, or higher where local law sets a higher age) without appropriate consent. If you believe a child has provided us data, contact us and we will delete it.</p>
+  </section>
+
+  <section id="rights" aria-labelledby="rights-heading">
+    <h2 id="rights-heading"><span class="num">12.</span>Your Privacy Rights</h2>
+    <h3>If the GDPR/UK GDPR applies to you</h3>
+    <p>You have the right to access, correct, or erase your data; restrict or object to processing; request data portability; and withdraw consent at any time without affecting past processing.</p>
+    <h3>If you are a California resident (CCPA/CPRA)</h3>
+    <p>You have the right to know what personal information we collect, request deletion, correct inaccurate information, and opt out of the sale or sharing of personal information (we do not sell personal data). We will not discriminate against you for exercising these rights.</p>
+    <h3>Under Bangladesh's Personal Data Protection Act, 2026</h3>
+    <p>As a data fiduciary/controller under this Act, we recognize your rights to access, correct, and erase your personal data, and to object to automated decision-making, consistent with the Act's consent-centric framework.</p>
+    <p>To exercise any of these rights, use the contact details in <a href="#contact">Section 17</a> or the deletion steps below.</p>
+  </section>
+
+  <section id="deletion" aria-labelledby="deletion-heading">
+    <h2 id="deletion-heading"><span class="num">13.</span>Data Deletion Instructions</h2>
+    <p>This section doubles as our Data Deletion Instructions for Meta Platform apps — the same URL you're on now can be used as both the Privacy Policy URL and the Data Deletion Instructions URL in any Connect with Bayezid app's dashboard.</p>
+    <ol class="steps">
+      <li>To remove an app's access to your Facebook or Instagram account: open Facebook, go to <strong>Settings &amp; Privacy → Settings → Apps and Websites</strong>, find the relevant Connect with Bayezid (or client) app, and select <strong>Remove</strong>.</li>
+      <li>To stop WhatsApp messages: reply <strong>STOP</strong> to any conversation, or block the business number directly in WhatsApp.</li>
+      <li>To request full deletion of any data we hold about you: email us at the address in <a href="#contact">Section 17</a> with the subject line "Data Deletion Request," including the product/app name and the email, phone number, or account you used.</li>
+      <li>We will confirm your request and complete deletion — except data we're legally required to retain — within 30 days.</li>
+    </ol>
+  </section>
+
+  <section id="third-party" aria-labelledby="thirdparty-heading">
+    <h2 id="thirdparty-heading"><span class="num">14.</span>Third-Party Links</h2>
+    <p>Our products may link to third-party sites and services, including Meta's own platforms. We aren't responsible for the privacy practices of those third parties — please review their policies separately.</p>
+  </section>
+
+  <section id="changes" aria-labelledby="changes-heading">
+    <h2 id="changes-heading"><span class="num">15.</span>Changes to This Policy</h2>
+    <p>We may update this Policy as our products, or applicable law, change. We'll revise the "Last updated" date above, and for material changes we'll provide reasonably prominent notice on our website or within the relevant app.</p>
+  </section>
+
+  <section id="contact" class="contact-card" aria-labelledby="contact-heading">
+    <h2 id="contact-heading"><span class="num">16.</span>Contact Us</h2>
+    <p>Questions about this Policy, or a request to access, correct, or delete your data:</p>
+    <p>
+      <strong>Connect with Bayezid</strong><br>
+      Aulibad, Kalihati, Tangail — 1970<br>
+      Parkhi Union, Kalihati Upazila, Tangail District, Bangladesh<br><br>
+      Privacy &amp; support: <a href="mailto:info@sayadbayezid.com">info@sayadbayezid.com</a><br>
+      Business &amp; partnerships: <a href="mailto:cwb.agency@outlook.com">cwb.agency@outlook.com</a><br>
+      Phone: <a href="tel:+8801519601517">+880 1519-601517</a> · <a href="tel:+8801518740295">+880 1518-740295</a><br>
+      Website: <a href="https://www.sayadbayezid.com">www.sayadbayezid.com</a><br>
+      Trade License No. 959 — Parkhi Union Parishad, Kalihati Upazila, Tangail
+    </p>
+  </section>
+
+  <section id="related-policies" aria-labelledby="related-heading">
+    <h2 id="related-heading" style="border:none;padding-bottom:0;">More From Connect with Bayezid</h2>
+    <p>This policy covers our Meta Platform integrations in detail. For other Connect with Bayezid properties:</p>
+    <ul>
+      <li><a href="https://www.sayadbayezid.com/privacy-policy.html">General Privacy Policy</a> — how www.sayadbayezid.com itself handles data as a website.</li>
+      <li><a href="https://www.sayadbayezid.com/terms-of-service.html">Terms of Service</a> — the rules for using our website, apps, and integrations.</li>
+      <li><a href="https://smartgentools.com/smartgen-legal-info/">SmartGen Legal &amp; Trust Center</a> — privacy, terms, and cookie policy for our SmartGen tools platform.</li>
+    </ul>
+  </section>
+
+</main>
+
+<footer class="page-footer">
+  © 2026 Connect with Bayezid. All rights reserved.
+</footer>
+
+<button class="backtotop" id="backtotop" aria-label="Back to top" title="Back to top">↑</button>
+
+<script>
+  var btn = document.getElementById('backtotop');
+  window.addEventListener('scroll', function () {
+    btn.classList.toggle('show', window.scrollY > 600);
+  });
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+</body>
+</html>
