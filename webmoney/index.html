@@ -15,6 +15,9 @@
             --success: #30d158;
             --pending: #ffd60a;
             --border-color: #333333;
+            --bkash: #e2136e;
+            --nagad: #ed1c24;
+            --rocket: #8c1596;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
@@ -43,7 +46,7 @@
         #errorMsg { color: #ff453a; font-size: 14px; margin-top: 15px; display: none; }
 
         /* --- Main App Layout --- */
-        #app-dashboard { display: none; min-height: 100vh; flex-direction: column; }
+        #app-dashboard { display: none; min-height: 100vh; flex-direction: column; padding-bottom: 80px;}
         
         /* Top Navigation */
         .top-nav {
@@ -76,9 +79,9 @@
         .w-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
         .progress-bg { height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; overflow: hidden; }
         .progress-fill { height: 100%; background: var(--success); transition: width 0.5s; }
-        .withdraw-btn { 
+        .withdraw-dash-btn { 
             width: 100%; margin-top: 15px; padding: 12px; border: none; border-radius: 8px;
-            background: rgba(255,255,255,0.1); color: #fff; font-weight: bold; cursor: not-allowed;
+            background: var(--wm-blue); color: #fff; font-weight: bold; cursor: pointer;
         }
 
         /* Stats Grid */
@@ -103,21 +106,30 @@
         .status-completed { background: rgba(48, 209, 88, 0.1); color: var(--success); }
         .status-pending { background: rgba(255, 214, 10, 0.1); color: var(--pending); }
 
+        /* --- Withdraw Page Specifics --- */
+        .pay-methods { display: flex; gap: 10px; margin-bottom: 25px; }
+        .pay-card {
+            flex: 1; padding: 15px 5px; background: var(--bg-dark); border: 2px solid var(--border-color);
+            border-radius: 12px; text-align: center; cursor: pointer; transition: 0.2s;
+        }
+        .pay-card.active { border-color: var(--wm-blue); background: rgba(42, 132, 255, 0.1); }
+        .pay-card i { font-size: 28px; margin-bottom: 10px; }
+        .pay-card p { font-size: 13px; font-weight: bold; }
+        
+        #serverErrorAlert { 
+            display: none; background: rgba(255, 69, 58, 0.1); border: 1px solid #ff453a; 
+            color: #ff453a; padding: 15px; border-radius: 8px; margin-top: 20px; 
+            text-align: center; font-size: 14px; font-weight: bold;
+        }
+
         /* Bottom Nav */
         .bottom-nav {
             display: flex; justify-content: space-around; background: var(--bg-card); padding: 15px 0;
-            position: fixed; bottom: 0; width: 100%; border-top: 1px solid var(--border-color);
+            position: fixed; bottom: 0; width: 100%; border-top: 1px solid var(--border-color); z-index: 100;
         }
-        .nav-item { color: var(--text-muted); text-align: center; cursor: pointer; font-size: 20px; transition: 0.2s;}
+        .nav-item { color: var(--text-muted); text-align: center; cursor: pointer; font-size: 20px; transition: 0.2s; width: 25%;}
         .nav-item p { font-size: 10px; margin-top: 4px; }
         .nav-item.active { color: var(--wm-blue); }
-
-        /* Chart Placeholder for Analytics */
-        .chart-mockup {
-            height: 200px; background: repeating-linear-gradient(0deg, transparent, transparent 39px, var(--border-color) 40px);
-            display: flex; align-items: flex-end; gap: 10px; padding: 10px; margin-top: 20px;
-        }
-        .bar { background: var(--wm-blue); flex: 1; border-radius: 4px 4px 0 0; }
     </style>
 </head>
 <body>
@@ -168,7 +180,9 @@
                         <div class="progress-bg">
                             <div class="progress-fill" id="withdrawProgressBar" style="width: 0%;"></div>
                         </div>
-                        <button class="withdraw-btn" id="withdrawBtn"><i class="fas fa-lock"></i> Minimum 1000 USD Required</button>
+                        <button class="withdraw-dash-btn" onclick="switchView('withdraw', document.querySelectorAll('.nav-item')[2])">
+                            Request Withdrawal
+                        </button>
                     </div>
                 </div>
 
@@ -187,7 +201,7 @@
 
                 <div class="section-header">
                     <h3>Recent Revenue</h3>
-                    <span style="color: var(--wm-blue); font-size: 14px; cursor: pointer;" onclick="switchView('transactions')">See All</span>
+                    <span style="color: var(--wm-blue); font-size: 14px; cursor: pointer;" onclick="switchView('transactions', document.querySelectorAll('.nav-item')[1])">See All</span>
                 </div>
                 <div class="transaction-list" id="miniHistory">
                     <!-- JS Injected -->
@@ -202,21 +216,47 @@
                 </div>
             </div>
 
-            <!-- VIEW 3: ANALYTICS -->
-            <div id="view-analytics" class="view-section">
-                <h2 style="margin-bottom: 10px;">Performance Analytics</h2>
-                <p style="color: var(--text-muted); font-size: 14px;">Last 7 Days Revenue Overview</p>
-                <div class="chart-mockup">
-                    <div class="bar" style="height: 30%"></div>
-                    <div class="bar" style="height: 50%"></div>
-                    <div class="bar" style="height: 40%"></div>
-                    <div class="bar" style="height: 70%"></div>
-                    <div class="bar" style="height: 60%"></div>
-                    <div class="bar" style="height: 90%"></div>
-                    <div class="bar" style="height: 80%"></div>
+            <!-- VIEW 3: WITHDRAW (NEW SYSTEM) -->
+            <div id="view-withdraw" class="view-section">
+                <h2 style="margin-bottom: 20px;">Withdraw Funds</h2>
+                
+                <div class="stat-box" style="margin-bottom: 25px; text-align: center; border-color: var(--wm-blue);">
+                    <div class="stat-label">Available to Withdraw</div>
+                    <div class="stat-val" id="withdrawAvailableAmount" style="color: var(--wm-blue); font-size: 28px;">$0.00</div>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 10px; color: var(--text-muted); font-size: 12px;">
-                    <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+
+                <h4 style="margin-bottom: 15px; color: var(--text-muted); font-size: 14px;">Select Local Payment Method</h4>
+                <div class="pay-methods">
+                    <div class="pay-card active" onclick="selectPayMethod(this)">
+                        <i class="fas fa-mobile-alt" style="color: var(--bkash);"></i>
+                        <p>bKash</p>
+                    </div>
+                    <div class="pay-card" onclick="selectPayMethod(this)">
+                        <i class="fas fa-mobile-alt" style="color: var(--nagad);"></i>
+                        <p>Nagad</p>
+                    </div>
+                    <div class="pay-card" onclick="selectPayMethod(this)">
+                        <i class="fas fa-space-shuttle" style="color: var(--rocket);"></i>
+                        <p>Rocket</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: block;">Withdrawal Amount (USD)</label>
+                    <input type="number" id="withdrawInputAmount" placeholder="Enter amount (Min $10.00)">
+                </div>
+
+                <div class="input-group">
+                    <label style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px; display: block;">Account Number</label>
+                    <input type="text" placeholder="e.g. 017XXXXXXXX">
+                </div>
+
+                <button class="login-btn" id="confirmWithdrawBtn" onclick="processWithdrawal()">Confirm Withdrawal</button>
+                
+                <!-- Server Busy Error Message -->
+                <div id="serverErrorAlert">
+                    <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> 
+                    Transaction Failed: Try again now server busy.
                 </div>
             </div>
 
@@ -230,8 +270,8 @@
             <div class="nav-item" onclick="switchView('transactions', this)">
                 <i class="fas fa-list"></i><p>History</p>
             </div>
-            <div class="nav-item" onclick="switchView('analytics', this)">
-                <i class="fas fa-chart-pie"></i><p>Analytics</p>
+            <div class="nav-item" onclick="switchView('withdraw', this)">
+                <i class="fas fa-money-bill-transfer"></i><p>Withdraw</p>
             </div>
             <div class="nav-item" onclick="location.reload()">
                 <i class="fas fa-sign-out-alt"></i><p>Exit</p>
@@ -242,9 +282,9 @@
     <script>
         const SECRET_PASS = "smbsmb64";
         const STORAGE_KEY = "wm_smart_revenue_v2";
-        const BASE_BALANCE = 233.00; // Base balance added per your request
+        const BASE_BALANCE = 233.00; 
+        let globalFinalBalance = 0;
         
-        // Custom revenue sources including your specified ones
         const platforms = [
             "Smartgen Revenue", 
             "GenZ Frontier - Ad Revenue", 
@@ -266,24 +306,47 @@
             }
         }
 
-        // View Switcher Logic
         function switchView(viewName, element) {
-            // Hide all views
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            // Show selected view
             document.getElementById('view-' + viewName).classList.add('active');
             
-            // Update Nav UI
             if(element) {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 element.classList.add('active');
-            } else {
-                // Manual override if clicked from "See All"
-                document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-                document.querySelectorAll('.nav-item')[1].classList.add('active');
             }
+            // Reset error message when switching tabs
+            document.getElementById('serverErrorAlert').style.display = 'none';
+            document.getElementById('confirmWithdrawBtn').innerHTML = 'Confirm Withdrawal';
             window.scrollTo(0,0);
         }
+
+        // --- New Withdrawal Functions ---
+        function selectPayMethod(element) {
+            document.querySelectorAll('.pay-card').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        function processWithdrawal() {
+            const btn = document.getElementById('confirmWithdrawBtn');
+            const alertBox = document.getElementById('serverErrorAlert');
+            
+            // Hide previous alert if any
+            alertBox.style.display = 'none';
+            
+            // Fake loading state
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            btn.style.opacity = '0.7';
+            btn.disabled = true;
+
+            // Wait 2 seconds then show error
+            setTimeout(() => {
+                btn.innerHTML = 'Confirm Withdrawal';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+                alertBox.style.display = 'block';
+            }, 2000);
+        }
+        // --------------------------------
 
         function getRandomEarning() { return parseFloat((Math.random() * 2 + 1).toFixed(2)); }
         function getRandomPlatform() { return platforms[Math.floor(Math.random() * platforms.length)]; }
@@ -298,7 +361,7 @@
                 data = { schedule: [] };
                 let startDate = new Date();
                 startDate.setHours(0,0,0,0);
-                startDate.setDate(today.getDate() - 27); // 27 days past
+                startDate.setDate(today.getDate() - 27); 
 
                 for (let i = 0; i < (27 + 365); i++) {
                     let targetDate = new Date(startDate);
@@ -332,26 +395,21 @@
 
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
-            // Calculate final balance (Base + Accumulated)
-            let finalBalance = BASE_BALANCE + dynamicCompletedAmount;
+            globalFinalBalance = BASE_BALANCE + dynamicCompletedAmount;
             
-            // Update UI Elements
-            document.getElementById('totalBalance').innerHTML = finalBalance.toFixed(2) + ' <span>USD</span>';
+            // Update Dashboard UI
+            document.getElementById('totalBalance').innerHTML = globalFinalBalance.toFixed(2) + ' <span>USD</span>';
             document.getElementById('todayEarn').innerText = '+$' + todaysEarning.toFixed(2);
             document.getElementById('pendingEarn').innerText = '$' + totalPendingAmount.toFixed(2);
             
-            // Withdraw Progress Logic
-            let progressPercent = (finalBalance / 1000) * 100;
+            // Update Withdraw Page UI
+            document.getElementById('withdrawAvailableAmount').innerText = '$' + globalFinalBalance.toFixed(2);
+            document.getElementById('withdrawInputAmount').value = globalFinalBalance.toFixed(2); // Auto-fill max amount
+
+            let progressPercent = (globalFinalBalance / 1000) * 100;
             if(progressPercent > 100) progressPercent = 100;
             document.getElementById('withdrawProgressBar').style.width = progressPercent + '%';
-            document.getElementById('withdrawProgressText').innerText = finalBalance.toFixed(2) + ' / 1000 USD';
-
-            if(finalBalance >= 1000) {
-                let btn = document.getElementById('withdrawBtn');
-                btn.style.background = 'var(--wm-blue)';
-                btn.style.cursor = 'pointer';
-                btn.innerHTML = 'Withdraw Funds Now';
-            }
+            document.getElementById('withdrawProgressText').innerText = globalFinalBalance.toFixed(2) + ' / 1000 USD';
 
             renderTables(data.schedule);
         }
@@ -361,7 +419,6 @@
             const full = document.getElementById('fullHistory');
             mini.innerHTML = ''; full.innerHTML = '';
             
-            // Sort newest first
             scheduleArray.sort((a, b) => b.timestamp - a.timestamp);
 
             let renderCount = 0;
@@ -383,8 +440,8 @@
                     </div>
                 `;
                 
-                full.innerHTML += html; // Add all to full history
-                if(t.isCompleted && renderCount < 5) { // Only show 5 completed in mini view
+                full.innerHTML += html;
+                if(t.isCompleted && renderCount < 5) { 
                     mini.innerHTML += html;
                     renderCount++;
                 }
