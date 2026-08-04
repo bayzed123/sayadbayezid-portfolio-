@@ -1,4 +1,4 @@
-/* =====================================================================
+ =====================================================================
    Connect with Bayezid — design system
    Palette is deliberately not "acid green on flat black": the background
    itself carries a faint green undertone (--void) so the whole page reads
@@ -327,3 +327,34 @@ a { color: inherit; }
 .media-embed-audio { aspect-ratio: auto; height: 166px; background: none; }
 .content-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 24px 0; }
 .content-gallery img { width: 100%; border-radius: 12px; display: block; }
+
+/* ===================== Services page: pricing strip + detailed sections ===================== */
+.price-strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.price-chip {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px 10px; text-align: center; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.price-chip:hover { border-color: var(--emerald); transform: translateY(-2px); }
+.price-chip span { display: block; font-size: 0.74rem; color: var(--text-soft); margin-bottom: 6px; }
+.price-chip b { display: block; font-family: 'Fraunces', serif; font-size: 1.3rem; color: var(--emerald); }
+.price-chip-featured { border-color: var(--gold); }
+.price-chip-featured b { color: var(--gold); }
+.price-strip-note { text-align: center; font-size: 0.82rem; color: var(--text-dim); margin-top: 16px; }
+
+.service-detail { scroll-margin-top: 90px; }
+.service-detail-head { display: flex; align-items: flex-start; gap: 18px; margin-bottom: 40px; max-width: 780px; }
+.service-icon {
+  flex-shrink: 0; width: 52px; height: 52px; border-radius: 14px; background: var(--emerald-soft);
+  color: var(--emerald); display: flex; align-items: center; justify-content: center;
+}
+.service-detail-head h2 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin-top: 8px; line-height: 1.25; }
+.service-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 32px; max-width: 900px; }
+.service-detail-grid h3 { font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-dim); font-weight: 500; margin-bottom: 8px; }
+.service-detail-grid p { font-size: 0.95rem; line-height: 1.6; }
+.service-detail-grid a { color: var(--emerald); text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 760px) {
+  .price-strip { grid-template-columns: repeat(2, 1fr); }
+  .service-detail-grid { grid-template-columns: 1fr; }
+  .service-detail-head { flex-direction: column; gap: 12px; }
+}
