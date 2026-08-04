@@ -1,17 +1,16 @@
 {
-  "name": "bayezid-agency-api",
+  "name": "sayadbayezid-portfolio",
   "version": "1.0.0",
   "private": true,
+  "description": "Sayad Md Bayezid Hosan — portfolio site with blog, case studies, and news generators",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy"
+    "build:blog": "node scripts/build-blog.js",
+    "build:content": "node scripts/build-content.js",
+    "build": "npm run build:blog && npm run build:content"
   },
   "dependencies": {
-    "hono": "^4.6.0"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250101.0",
-    "typescript": "^5.6.0",
-    "wrangler": "^3.90.0"
+    "front-matter": "^4.0.2",
+    "marked": "^18.0.7",
+    "slugify": "^1.6.9"
   }
 }
