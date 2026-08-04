@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools - Sayad Md Bayezid Hosan</title>
+    <meta name="description" content="Discover the development of the SmartGen HTML Code Library. We deployed 79 specialized visual-to-code web tools to generate HTML and CSS without manual coding.">
+    <meta name="author" content="SmartGen Editorial Team">
+    <meta name="keywords" content="HTML Generators, Frontend Development, Web Tools, Release Notes">
+    
+    <meta property="og:title" content="Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools">
+    <meta property="og:description" content="Discover the development of the SmartGen HTML Code Library. We deployed 79 specialized visual-to-code web tools to generate HTML and CSS without manual coding.">
+    <meta property="og:image" content="https://i.ibb.co/qMqwVFWv/IMG-5260.jpg">
+    <meta property="og:url" content="https://www.sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-06-19">
+    <meta property="article:author" content="SmartGen Editorial Team">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools">
+    <meta name="twitter:description" content="Discover the development of the SmartGen HTML Code Library. We deployed 79 specialized visual-to-code web tools to generate HTML and CSS without manual coding.">
+    <meta name="twitter:image" content="https://i.ibb.co/qMqwVFWv/IMG-5260.jpg">
+    
+    <link rel="canonical" href="https://www.sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/">
+    
+    <script>
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            location.replace('https:' + location.href.substring(location.protocol.length));
+        }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools",
+        "description": "Discover the development of the SmartGen HTML Code Library. We deployed 79 specialized visual-to-code web tools to generate HTML and CSS without manual coding.",
+        "image": "https://i.ibb.co/qMqwVFWv/IMG-5260.jpg",
+        "datePublished": "2026-06-19",
+        "author": {
+            "@type": "Person",
+            "name": "SmartGen Editorial Team",
+            "url": "https://www.sayadbayezid.com/about/"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Sayad Md Bayezid Hosan",
+            "url": "https://www.sayadbayezid.com"
+        }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/blog.css">
+    <link rel="stylesheet" href="../../assets/css/ads.css">
+    
+    <style>
+        /* Print Styles */
+        @media print {
+            header, footer, .newsletter-section, .blog-related-posts, #print-button, #share-button, #main-header, #main-footer, .share-modal {
+                display: none !important;
+            }
+            body { background: white; color: black; }
+            .blog-post-container { max-width: 100%; padding: 0; }
+            .blog-post-article { box-shadow: none; border: none; }
+            .blog-post-title { page-break-after: avoid; }
+            .blog-post-content { color: black; }
+            .blog-post-content a { color: #0066cc; text-decoration: underline; }
+            img { max-width: 100%; height: auto; page-break-inside: avoid; }
+            h2, h3, h4 { page-break-after: avoid; page-break-inside: avoid; }
+            p { orphans: 3; widows: 3; }
+            pre { background: #f5f5f5 !important; border: 1px solid #ddd !important; page-break-inside: avoid; }
+        }
+
+        /* Share Modal Styles */
+        .share-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .share-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .share-modal-content {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            max-width: 350px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .share-modal.show .share-modal-content {
+            transform: translateY(0);
+        }
+        .share-close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .share-close:hover { color: #000; }
+        .share-modal h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: #1f2937;
+            font-size: 1.5rem;
+        }
+        .share-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .share-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .share-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .share-btn.fb { background: #1877F2; }
+        .share-btn.tw { background: #000000; }
+        .share-btn.li { background: #0A66C2; }
+        .share-btn.wa { background: #25D366; }
+        .share-btn.copy { background: #4b5563; }
+    </style>
+    
+    <script src="../../assets/js/blog.js" defer></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789336661158068" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header id="main-header"></header>
+
+    <main class="blog-post-container">
+        <article class="blog-post-article reveal-up">
+            <header class="blog-post-header">
+                <div class="blog-post-meta">
+                    <time datetime="2026-06-19">June 19, 2026</time>
+                    <span class="meta-separator">•</span>
+                    <span class="blog-post-category">Product Updates</span>
+                    <span class="meta-separator">•</span>
+                    <span class="blog-post-author">By SmartGen Editorial Team</span>
+                </div>
+                <h1 class="blog-post-title">Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</h1>
+                <p class="blog-post-excerpt">Discover the development of the SmartGen HTML Code Library. We deployed 79 specialized visual-to-code web tools to generate HTML and CSS without manual coding.</p>
+            </header>
+
+            
+
+            <img src="https://i.ibb.co/qMqwVFWv/IMG-5260.jpg" alt="Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools" class="blog-post-featured-image reveal-up delay-100">
+
+            <div class="blog-post-content reveal-up delay-200">
+                <h1>🚀 SmartGen HTML Code Library – Mega Developer Guide</h1>
+<p>Welcome to the <strong>SmartGen HTML Code Library</strong>, a comprehensive ecosystem of frontend development utilities. This platform is designed to help developers, students, and UI designers rapidly generate clean, semantic HTML and CSS, reducing repetitive manual coding and ensuring cross-browser compatibility.</p>
+<p>This guide categorizes our entire suite of tools. Use it to quickly find utilities for layout structuring, typography, advanced CSS generation, and dynamic UI animations.</p>
+<h3>📌 Why Use This Library?</h3>
+<ul>
+<li><strong>Accelerate Workflow:</strong> Replace tedious manual syntax writing with automated, error-free code generation.</li>
+<li><strong>Enforce Best Practices:</strong> Outputs semantic HTML5 and modern CSS that complies with accessibility and SEO standards.</li>
+<li><strong>Maintain Consistency:</strong> Standardize colors, typography, and spacing across your UI components.</li>
+<li><strong>Rapid Prototyping:</strong> Transition from wireframe to functional code faster using pre-built templates and editors.</li>
+</ul>
+<hr>
+<h2>📑 Table of Contents</h2>
+<ol>
+<li><a href="#-1-background-codes-library">Background Codes Library</a></li>
+<li><a href="#-2-character-codes-library">Character Codes Library</a></li>
+<li><a href="#-3-color-codes-library">Color Codes Library</a></li>
+<li><a href="#-4-editors-library">Editors Library</a></li>
+<li><a href="#%EF%B8%8F-5-generators-library">Generators Library</a></li>
+<li><a href="#%EF%B8%8F-6-image-codes-library">Image Codes Library</a></li>
+<li><a href="#-7-link-codes-library">Link Codes Library</a></li>
+<li><a href="#%EF%B8%8F-8-marquee-codes-library">Marquee Codes Library</a></li>
+<li><a href="#-9-scrollbox-tools">Scrollbox Tools</a></li>
+<li><a href="#-10-templates-library">Templates Library</a></li>
+<li><a href="#%EF%B8%8F-11-text--typography-library">Text &amp; Typography Library</a></li>
+<li><a href="#-12-textbox-tools-library">Textbox Tools Library</a></li>
+<li><a href="#-final-summary">Final Summary</a></li>
+</ol>
+<hr>
+<h2>🎨 1. Background Codes Library</h2>
+<p>Background tools dictate the foundational visual layers of your UI containers. These generators ensure your backgrounds scale properly across responsive devices.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/background-codes/background-color/">Background Color</a></strong>: Generates cross-browser compatible CSS for solid background colors. Essential for establishing base UI themes and fallback colors before heavy assets load.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/background-codes/background-image/">Background Image</a></strong>: Outputs the CSS required to embed images as container backgrounds. Perfect for hero sections and banners, ensuring proper scaling without breaking layout flow.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/background-codes/background-position/">Background Position</a></strong>: Provides precise coordinate control (<code>center</code>, <code>top left</code>, etc.) over background images. Critical for ensuring the focal point of an image isn&#39;t cropped out on mobile screens.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/background-codes/background-repeat/">Background Repeat</a></strong>: Controls CSS tiling behavior (<code>repeat-x</code>, <code>no-repeat</code>). Prevents small background patterns, gradients, or logos from rendering improperly across wide viewports.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/background-codes/fixed-background/">Fixed Background</a></strong>: Implements <code>background-attachment: fixed</code> to create smooth, modern parallax scrolling effects using pure CSS, avoiding the overhead of heavy JavaScript libraries.</li>
+</ul>
+<hr>
+<h2>🔣 2. Character Codes Library</h2>
+<p>HTML entities are required to safely render special characters without breaking HTML validation or URL parsing. This library provides safe encoding for all symbols.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/character-codes/greek-characters/">Greek Characters</a></strong>: A complete reference for HTML entities (e.g., <code>&amp;alpha;</code>) used in mathematical, scientific, and academic web content, preventing rendering errors across different server encodings.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/character-codes/html-ampersand-code/">Ampersand Code</a></strong>: Provides the exact HTML entity (<code>&amp;amp;</code>) needed to safely render ampersands in text, a common source of broken links and XML validation failures.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/character-codes/html-symbols/">Special Symbols</a></strong>: A searchable index of UI symbols (arrows, stars, checkmarks). Faster and lighter for web performance than loading an entire icon font library like FontAwesome for simple visual cues.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/character-codes/html-trademark-code/">Currency &amp; Trademark</a></strong>: Ensures legal and financial symbols (©, ™, €) render uniformly across all operating systems, avoiding the dreaded &quot;missing character box.&quot;</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/character-codes/html-space-code/">Space Code</a></strong> &amp; <strong><a href="https://www.smartgentools.com/html-code-library/character-codes/html-tab-code/">Tab Code</a></strong>: Delivers non-breaking space (<code>&amp;nbsp;</code>) and tab entities for precise inline text formatting when standard CSS padding or margins aren&#39;t practical.</li>
+</ul>
+<hr>
+<h2>🎨 3. Color Codes Library</h2>
+<p>Establishing a strict color system is the first step in frontend architecture. These tools help you build and maintain consistent branding.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/color-codes/color-code-chart/">Color Code Chart</a></strong>: A comprehensive visual reference for web-safe and modern HEX/RGB colors, allowing developers to quickly grab precise values for stylesheets.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/color-codes/color-schemes/">Color Schemes</a></strong>: Curated, accessible color palettes designed for UI/UX harmony. Ideal for developers who need to build aesthetically pleasing, high-contrast interfaces without a dedicated designer.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/color-codes/html-color-picker/">Color Picker Tool</a></strong>: An interactive tool to visually select custom colors and instantly extract their HEX, RGB, and HSL values for direct copy-pasting into your CSS variables.</li>
+<li><strong>Basic Colors</strong>: Quick-reference utilities for foundational layout colors, perfect for rapid wireframing or setting up base utility classes:<ul>
+<li><a href="https://www.smartgentools.com/html-code-library/color-codes/html-black-code/">Black Code</a> | <a href="https://www.smartgentools.com/html-code-library/color-codes/html-white-code/">White Code</a> | <a href="https://www.smartgentools.com/html-code-library/color-codes/html-red-code/">Red Code</a> | <a href="https://www.smartgentools.com/html-code-library/color-codes/html-green-code/">Green Code</a> | <a href="https://www.smartgentools.com/html-code-library/color-codes/html-blue-code/">Blue Code</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2>🧰 4. Editors Library</h2>
+<p>Visual editors bridge the gap between design and code, allowing you to generate robust HTML layouts through a graphical interface.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/editors/html-editor/">HTML Editor</a></strong>: A live-preview playground where you can write or paste HTML and instantly see the rendered output. Excellent for debugging layout structures before migrating them to your main codebase.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/editors/html-text-editor/">Text Editor</a></strong>: A WYSIWYG interface that automatically converts rich text (bold, italics, lists) into clean, semantic HTML tags, saving content creators from writing markup manually.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/editors/html-link-editor/">Link Editor</a></strong>: A dedicated GUI for building complex anchor tags. Ensures attributes like <code>target</code>, <code>rel</code>, and <code>title</code> are formatted perfectly for SEO and security compliance.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/editors/image-code-editor/">Image Code Editor</a></strong>: Generates properly structured <code>&lt;img&gt;</code> tags complete with <code>alt</code> text and sizing attributes to prevent Cumulative Layout Shift (CLS) in modern web design.</li>
+</ul>
+<hr>
+<h2>⚙️ 5. Generators Library</h2>
+<p>Generators are pure productivity boosters. They automate the creation of complex, nested HTML and vendor-prefixed CSS that is tedious and error-prone to write by hand.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/generators/gradient-generator/">Gradient Generator</a></strong>: A visual tool to design complex linear and radial CSS gradients. It auto-generates the vendor-prefixed CSS required to ensure the gradient works flawlessly across Safari, Chrome, and Firefox.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/generators/html-table-generator/">HTML Table Generator</a></strong>: Eliminates the frustrating process of manually writing <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, and <code>&lt;td&gt;</code> tags. Visually define your grid, and it outputs perfectly nested, accessible HTML.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/generators/html-link-generator/">Link Generator</a></strong>: Automates the creation of standard and dynamic links, reducing syntax errors when embedding tracking parameters or complex directory paths.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/generators/text-generator/">Text Generator</a></strong>: Produces dummy text (Lorem Ipsum) wrapped in proper structural tags (<code>&lt;p&gt;</code>, <code>&lt;h1&gt;</code>), ideal for populating wireframes and testing typography rules before final copy is ready.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/generators/image-code-generator/">Image Code Generator</a></strong>: Quickly outputs responsive image markup. Highly useful when you need to embed multiple images while maintaining consistent CSS class styling.</li>
+</ul>
+<hr>
+<h2>🖼️ 6. Image Codes Library</h2>
+<p>Handling image assets correctly is vital for performance and branding. These tools optimize how images integrate with your layout.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/image-codes/background-image-code/">Background Image Code</a></strong>: A specialized utility for combining background image URLs with CSS properties like <code>background-size: cover</code> into a single, optimized shorthand rule.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/image-codes/html-favicon-code/">Favicon Code</a></strong>: Generates the necessary <code>&lt;link rel=&quot;icon&quot;&gt;</code> tags for standard favicons and Apple Touch Icons, ensuring your site looks professional in browser tabs and mobile home screens.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/image-codes/html-image-borders/">Image Borders</a></strong>: Provides instant CSS for framing images, including solid borders, modern rounded corners (<code>border-radius</code>), and subtle box shadows to create depth.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/image-codes/repeat-image/">Repeat Image</a></strong>: A pattern generator tool focused entirely on creating seamless, repeating background textures using small, lightweight image tiles.</li>
+</ul>
+<hr>
+<h2>🔗 7. Link Codes Library</h2>
+<p>Links are the primary mode of user navigation. These tools ensure your links are interactive, secure, and visually clear.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/link-codes/css-hover/">CSS Hover Effects</a></strong>: A collection of modern, lightweight CSS transitions applied to the <code>:hover</code> pseudo-class to provide immediate, satisfying feedback when users mouse over links.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/link-codes/email-link/">Email Links</a></strong>: Generates advanced <code>mailto:</code> tags pre-filled with specific subject lines, CCs, and body text, acting as a lightweight alternative to complex PHP contact forms.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/link-codes/open-in-new-window/">Open in New Window</a></strong>: Quickly generates links with <code>target=&quot;_blank&quot;</code> and the crucial security attribute <code>rel=&quot;noopener noreferrer&quot;</code>, protecting your users from tabnabbing vulnerabilities.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/link-codes/remove-underline/">Remove Underline</a></strong>: Provides the <code>text-decoration: none</code> CSS snippet to strip default browser styling from links—a mandatory step when designing custom navigation menus and buttons.</li>
+</ul>
+<hr>
+<h2>🎞️ 8. Marquee Codes Library</h2>
+<p>While the original HTML <code>&lt;marquee&gt;</code> tag is deprecated, these tools generate modern, CSS-based animation equivalents to draw user attention dynamically.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/marquee-codes/scrolling-text/">Scrolling Text</a></strong>: Generates the CSS keyframe animations required for continuous scrolling ticker-tape effects, perfect for breaking news alerts or stock tickers.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/marquee-codes/bouncing-text/">Bouncing Text</a></strong>: Creates a back-and-forth animation loop. Highly effective for drawing immediate visual attention to temporary notices, warnings, or sales banners.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/marquee-codes/slide-in-text/">Slide-In Effects</a></strong>: Produces smooth entry animations for text elements as they appear in the viewport, adding a modern, polished feel to landing page headers.</li>
+</ul>
+<hr>
+<h2>📦 9. Scrollbox Tools</h2>
+<p>Scrollboxes allow you to contain massive amounts of text or data within a small, defined area of your UI, preserving your overall page layout.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/scrollbox-codes/html-scrollbox/">HTML Scrollbox</a></strong>: Creates a container utilizing <code>overflow-y: auto</code>, allowing you to embed lengthy terms of service, massive code blocks, or chat logs without stretching the page.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/scrollbox-codes/scrollbox-border/">Scrollbox Border</a></strong>: Adds customizable CSS borders to scrollable areas, ensuring the user can visually distinguish the scrollable container&#39;s boundaries from the main page background.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/scrollbox-codes/scrollbox-color/">Scrollbox Color</a></strong>: Allows you to easily configure the background and text color of your scrollable containers to ensure legibility and match your site&#39;s dark or light theme.</li>
+</ul>
+<hr>
+<h2>🧩 10. Templates Library</h2>
+<p>Stop starting from scratch. Templates provide the architectural scaffolding needed to begin building immediately.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/templates/css-templates/">CSS Templates</a></strong>: Pre-written stylesheets covering modern layout systems like Flexbox and Grid. Excellent for bootstrapping a project without relying on heavy frameworks like Tailwind or Bootstrap.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/templates/html5-frames/">HTML5 Frames</a></strong>: Semantic HTML5 boilerplate structures (incorporating <code>&lt;header&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;nav&gt;</code>, and <code>&lt;footer&gt;</code>) to ensure your project begins with strict SEO and accessibility best practices.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/templates/website-templates/">Website Templates</a></strong>: Complete, responsive layout structures for standard pages (landing pages, blogs, portfolios), saving developers hours of initial scaffolding time.</li>
+</ul>
+<hr>
+<h2>✍️ 11. Text &amp; Typography Library</h2>
+<p>Typography dictates the readability and hierarchy of your content. These tools help you control text rendering with precision.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/text-codes/font-code/">Font Code</a></strong>: Generates the CSS rules needed to apply custom web fonts, adjust line heights, and set font weights, directly improving user reading comprehension.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/text-codes/text-color/">Text Color</a></strong>: Provides quick inline styles or CSS classes for altering text colors—essential for indicating UI statuses (e.g., red for validation errors, green for success states).</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/text-codes/html-bold/">Bold Text</a></strong> &amp; <strong><a href="https://www.smartgentools.com/html-code-library/text-codes/html-underline-code/">Underline Text</a></strong>: Generates semantic <code>&lt;strong&gt;</code> and <code>&lt;u&gt;</code> tags to establish clear visual hierarchy, emphasis, and screen-reader prioritization in your content.</li>
+</ul>
+<hr>
+<h2>🧱 12. Textbox Tools Library</h2>
+<p>Textboxes are the foundation of user input. Customizing these fields is critical for creating intuitive forms and search bars.</p>
+<ul>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/textbox-codes/html-textbox/">HTML Textbox</a></strong>: Generates standard <code>&lt;input type=&quot;text&quot;&gt;</code> and multi-line <code>&lt;textarea&gt;</code> fields. The baseline requirement for building data collection forms, contact pages, and search interfaces.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/textbox-codes/textbox-border/">Textbox Border</a></strong>: Provides CSS to style input borders, including <code>:focus</code> states (e.g., highlighting the border blue when clicked), which is a mandatory requirement for UI accessibility.</li>
+<li><strong><a href="https://www.smartgentools.com/html-code-library/textbox-codes/textbox-color/">Textbox Color</a></strong>: Allows deep customization of the input field&#39;s background, placeholder text, and active text colors, enabling seamless integration into dark mode or custom-themed interfaces.</li>
+</ul>
+<hr>
+<h2>🧠 Final Summary</h2>
+<p>The <strong>SmartGen HTML Code Library</strong> is an all-in-one frontend utility ecosystem. Instead of memorizing syntax or searching for isolated code snippets, developers have centralized access to:</p>
+<ul>
+<li>🎨 <strong>Visual Architecture Tools</strong> (Colors, UI backgrounds, image handling)</li>
+<li>⚙️ <strong>Automated Generators</strong> (Tables, complex CSS gradients, routing links)</li>
+<li>🧰 <strong>Live Environments</strong> (Visual editors and sandboxes)</li>
+<li>🧩 <strong>Structural Scaffolding</strong> (Semantic HTML5 templates)</li>
+<li>🎞️ <strong>Dynamic UI Elements</strong> (CSS-based animations and transitions)</li>
+</ul>
+<h3>🚀 The Developer Advantage:</h3>
+<p>By abstracting the repetitive aspects of frontend markup, this toolkit shifts your focus from <em>typing syntax</em> to <em>solving actual engineering problems</em>. Whether you are building an Android web-view wrapper for the Amader Tangail app, setting up SEO for a Next.js project, or just doing rapid prototyping for clients, SmartGen reduces development friction and enforces structural consistency.</p>
+
+            </div>
+
+            <footer class="blog-post-footer reveal-up delay-300">
+                <div class="blog-post-tags">
+                    <span class="blog-tag">HTML Generators</span><span class="blog-tag">Frontend Development</span><span class="blog-tag">Web Tools</span><span class="blog-tag">Release Notes</span>
+                </div>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button id="print-button" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #2563eb; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Print or download this article as PDF">
+                        <span>🖨️</span>
+                        <span>Print / Download</span>
+                    </button>
+                    <button id="share-button" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #6b7280; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Share this article">
+                        <span>📤</span>
+                        <span>Share</span>
+                    </button>
+                </div>
+            </footer>
+        </article>
+
+        
+
+        <section class="newsletter-section reveal-up" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); padding: 5rem 2rem; border-radius: 30px; margin: 4rem auto; max-width: 900px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
+            <h2 style="font-size: 2.2rem; color: #2c3e50; margin-bottom: 1rem; font-weight: 800;">Connect with Bayezid</h2>
+            <p style="color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.6;">Get my latest insights on digital marketing, full-stack web development, and tech updates delivered straight to your inbox.</p>
+            <form action="#" style="display: flex; gap: 10px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
+                <input type="email" placeholder="Enter your email address" required style="flex: 1; min-width: 250px; padding: 15px 25px; border-radius: 50px; border: 1px solid #ddd; font-size: 1rem; outline: none; transition: border-color 0.3s ease;">
+                <button type="submit" style="background: #2563eb; color: white; padding: 15px 35px; border-radius: 50px; border: none; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(37,99,235,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Subscribe</button>
+            </form>
+        </section>
+
+        <section class="blog-related-posts reveal-up" data-post-slug="building-the-smartgen-html-code-library-79-visual-to-code-tools" data-post-tags="HTML Generators,Frontend Development,Web Tools,Release Notes">
+            <h2 class="related-posts-title">📚 Related Posts</h2>
+            <div id="related-posts-grid" class="blog-grid">
+                </div>
+        </section>
+    </main>
+
+    <footer id="main-footer"></footer>
+
+    <div id="shareModal" class="share-modal">
+        <div class="share-modal-content">
+            <span class="share-close">&times;</span>
+            <h3>Share this article</h3>
+            <div class="share-buttons">
+                <button onclick="shareTo('facebook')" class="share-btn fb">📘 Facebook</button>
+                <button onclick="shareTo('twitter')" class="share-btn tw">𝕏 Twitter</button>
+                <button onclick="shareTo('linkedin')" class="share-btn li">💼 LinkedIn</button>
+                <button onclick="shareTo('whatsapp')" class="share-btn wa">💬 WhatsApp</button>
+                <button onclick="shareTo('copy')" class="share-btn copy">🔗 Copy Link</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const printBtn = document.getElementById('print-button');
+            if (printBtn) {
+                printBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.print();
+                });
+            }
+            
+            const shareBtn = document.getElementById('share-button');
+            const modal = document.getElementById('shareModal');
+            const closeBtn = document.querySelector('.share-close');
+            
+            if (shareBtn && modal) {
+                shareBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.classList.add('show');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    modal.classList.remove('show');
+                });
+                
+                window.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            }
+        });
+
+        function shareTo(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+                    break;
+                case 'twitter':
+                    shareUrl = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title;
+                    break;
+                case 'linkedin':
+                    shareUrl = 'https://www.linkedin.com/shareArticle?mini=true&url=' + url + '&title=' + title;
+                    break;
+                case 'whatsapp':
+                    shareUrl = 'https://api.whatsapp.com/send?text=' + title + ' ' + url;
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        alert('✅ Link copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                    return; 
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=no,resizable=no');
+            }
+        }
+    </script>
+</body>
+</html>
