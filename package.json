@@ -12,5 +12,9 @@
     "front-matter": "^4.0.2",
     "marked": "^18.0.7",
     "slugify": "^1.6.9"
+  }{
+  "devDependencies": {
+    "typescript": "^5.0.0"
   }
+}
 }
