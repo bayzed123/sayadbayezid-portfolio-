@@ -93,6 +93,8 @@ a { color: inherit; }
 .main-nav a { text-decoration: none; color: var(--text-soft); font-size: 0.9rem; font-weight: 500; transition: color 0.2s ease; }
 .main-nav a:hover { color: var(--paper); }
 .nav-cta { background: var(--surface-raised); border: 1px solid var(--line); padding: 9px 18px; border-radius: 100px; color: var(--paper) !important; }
+.nav-login-link { font-size: 0.86rem; color: var(--text-soft) !important; text-decoration: underline; text-underline-offset: 3px; }
+.nav-login-link:hover { color: var(--emerald) !important; }
 .nav-cta:hover { border-color: var(--emerald); color: var(--emerald) !important; }
 
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
@@ -266,6 +268,15 @@ a { color: inherit; }
 }
 .verify-chip:hover { border-color: var(--emerald); color: var(--emerald); }
 
+.case-study-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.case-study-card { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.case-study-label {
+  display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--emerald);
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--line); width: 100%;
+}
+.case-study-card p { font-size: 0.92rem; }
+@media (max-width: 700px) { .case-study-grid { grid-template-columns: 1fr; } }
+
 /* ---------------------------------------------------------------- CTA band */
 .cta-band { text-align: center; }
 .cta-inner { max-width: 620px; margin: 0 auto; }
@@ -305,3 +316,14 @@ a { color: inherit; }
   .trust-inner { grid-template-columns: 1fr 1fr; }
   .header-inner { padding: 16px 20px; }
 }
+
+/* ===================== Content pages (case studies / news / blog) ===================== */
+.content-page { max-width: 720px; margin: 0 auto; padding: 140px 28px 80px; }
+.content-page h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 12px 0 24px; }
+.content-page p { color: #C9D0CB; line-height: 1.7; font-size: 1rem; margin-bottom: 16px; }
+
+.media-embed { position: relative; width: 100%; aspect-ratio: 16/9; margin: 24px 0; border-radius: var(--radius); overflow: hidden; background: #000; }
+.media-embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.media-embed-audio { aspect-ratio: auto; height: 166px; background: none; }
+.content-gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 24px 0; }
+.content-gallery img { width: 100%; border-radius: 12px; display: block; }
