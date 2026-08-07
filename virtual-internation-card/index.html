@@ -1,0 +1,1068 @@
+<!doctype html>
+<html lang="bn" class="h-full">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RedotPay একাউন্ট খোলার সম্পূর্ণ গাইড (A-Z) | Connect with Bayezid</title>
+<meta name="description" content="ধাপে ধাপে RedotPay ভার্চুয়াল/ফিজিক্যাল কার্ড একাউন্ট খুলুন, NID ভেরিফিকেশন থেকে কার্ড অ্যাক্টিভ পর্যন্ত সম্পূর্ণ গাইড। রেফারেল কোড ব্যবহার করে পান $৫ বোনাস।">
+<meta property="og:title" content="RedotPay একাউন্ট খোলার সম্পূর্ণ গাইড | Connect with Bayezid">
+<meta property="og:description" content="A থেকে Z — অ্যাপ ইন্সটল থেকে কার্ড ভেরিফিকেশন পর্যন্ত ধাপে ধাপে গাইড। $৫ সাইন-আপ বোনাসসহ।">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1612338809888151');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+<!--
+  Conversions API (server-side) ইচ্ছাকৃতভাবে এখানে যোগ করা হয়নি।
+  Access token কখনো HTML/JS-এ বসানো যাবে না — এটা bayezid-agency-api
+  Worker-এর /api/track এন্ডপয়েন্টে সার্ভার-সাইডে থাকবে (Cloudflare secret হিসেবে)।
+  নিচের <script> ব্লকে trackEvent() ফাংশন সেই এন্ডপয়েন্টে নিরাপদে কল করে।
+-->
+
+<style>
+  :root{
+    --void:#0A0405;
+    --deep:#1D0A0F;
+    --card: rgba(255,255,255,.045);
+    --card-hi: rgba(255,255,255,.075);
+    --border: rgba(255,255,255,.09);
+    --red-1:#FF1F4D;
+    --red-2:#FF5470;
+    --red-deep:#9C0F2E;
+    --gold:#E3C081;
+    --gold-soft: rgba(227,192,129,.14);
+    --ivory:#F7EEE9;
+    --muted:#B9A6A3;
+    --muted-2:#8A7674;
+  }
+  *{ font-family:'Hind Siliguri','Inter',sans-serif; }
+  .font-en{ font-family:'Inter',sans-serif; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:
+      radial-gradient(60% 40% at 50% 0%, rgba(255,31,77,.22) 0%, rgba(255,31,77,0) 60%),
+      radial-gradient(50% 35% at 85% 15%, rgba(227,192,129,.10) 0%, rgba(227,192,129,0) 60%),
+      linear-gradient(180deg, var(--void) 0%, var(--deep) 55%, var(--void) 100%);
+    color: var(--ivory);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{ animation-duration:.001ms!important; animation-iteration-count:1!important; transition-duration:.001ms!important; scroll-behavior:auto!important; }
+  }
+
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(22px);} to{opacity:1; transform:translateY(0);} }
+  .animate-fade-in{ animation: fadeIn .8s cubic-bezier(.16,1,.3,1) forwards; }
+
+  @keyframes float{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);} }
+  .animate-float{ animation: float 3.4s ease-in-out infinite; }
+
+  @keyframes cardFloat{
+    0%,100%{ transform: rotateY(0deg) translateY(0); }
+    25%{ transform: rotateY(6deg) translateY(-8px); }
+    50%{ transform: rotateY(0deg) translateY(0); }
+    75%{ transform: rotateY(-6deg) translateY(-8px); }
+  }
+  @keyframes sheen{ 0%{ transform: translateX(-120%) rotate(8deg);} 60%,100%{ transform: translateX(220%) rotate(8deg);} }
+  @keyframes pulseGlow{ 0%,100%{ box-shadow:0 0 0 0 rgba(255,31,77,.35);} 50%{ box-shadow:0 0 0 10px rgba(255,31,77,0);} }
+  @keyframes emberDrift{ 0%,100%{ opacity:.55; transform:scale(1);} 50%{ opacity:.9; transform:scale(1.06);} }
+
+  .glass{
+    background: linear-gradient(180deg, var(--card-hi) 0%, var(--card) 100%);
+    border:1px solid var(--border);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .glass-strong{
+    background: linear-gradient(160deg, rgba(255,255,255,.07) 0%, rgba(255,255,255,.02) 100%);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .brand-mark{
+    background: linear-gradient(150deg, var(--red-1) 0%, var(--red-deep) 100%);
+    box-shadow: 0 8px 24px rgba(255,31,77,.35), inset 0 1px 0 rgba(255,255,255,.25);
+  }
+
+  .btn-primary{
+    background: linear-gradient(135deg, var(--red-1) 0%, var(--red-deep) 100%);
+    box-shadow: 0 10px 30px rgba(255,31,77,.32);
+    transition: transform .25s cubic-bezier(.16,1,.3,1), box-shadow .25s ease;
+    position:relative; overflow:hidden;
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 16px 40px rgba(255,31,77,.48); }
+  .btn-primary::after{
+    content:''; position:absolute; top:0; left:-30%; width:22%; height:100%;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+    animation: sheen 3.2s ease-in-out infinite;
+  }
+
+  .chip{
+    background: rgba(255,31,77,.09); border:1px solid rgba(255,31,77,.32);
+    transition: all .2s ease;
+  }
+  .chip:hover{ background: rgba(255,31,77,.18); border-color: var(--red-1); }
+  .chip:active{ transform: scale(.96); }
+
+  .icon-badge{
+    width:42px; height:42px; min-width:42px; border-radius:12px;
+    background: linear-gradient(150deg, rgba(255,31,77,.22) 0%, rgba(255,31,77,.06) 100%);
+    border:1px solid rgba(255,31,77,.35);
+    display:flex; align-items:center; justify-content:center;
+    color: var(--red-2);
+  }
+  .sub-badge{
+    width:28px; height:28px; min-width:28px; border-radius:9px;
+    background: var(--gold-soft); border:1px solid rgba(227,192,129,.45); color: var(--gold);
+    display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px;
+  }
+
+  .eyebrow{ letter-spacing:.14em; font-size:11px; font-weight:700; color: var(--gold); text-transform:uppercase; }
+
+  .step-card{
+    background: linear-gradient(180deg, rgba(255,255,255,.035) 0%, rgba(255,255,255,.01) 100%);
+    border:1px solid var(--border);
+    border-left:2px solid rgba(255,31,77,.28);
+    transition: border-color .35s ease, background .35s ease;
+  }
+  .step-card.in-view{ border-left-color: var(--red-1); background: linear-gradient(180deg, rgba(255,31,77,.045) 0%, rgba(255,255,255,.01) 100%); }
+
+  .ember{
+    position:absolute; width:340px; height:340px; border-radius:50%; filter:blur(90px);
+    background: radial-gradient(circle, rgba(255,31,77,.35), transparent 70%);
+    animation: emberDrift 6s ease-in-out infinite;
+    pointer-events:none; z-index:0;
+  }
+
+  .whatsapp-float{ position:fixed; bottom:28px; right:24px; z-index:1000; animation: float 3s ease-in-out infinite; }
+  .whatsapp-float:hover{ animation:none; transform:scale(1.12); }
+
+  .virtual-card-3d{ width:100%; max-width:400px; height:238px; perspective:1200px; margin:0 auto; position:relative; z-index:1; }
+  .card-inner{ position:relative; width:100%; height:100%; transform-style:preserve-3d; animation: cardFloat 5s ease-in-out infinite; }
+  .card-face{ position:absolute; width:100%; height:100%; border-radius:22px; padding:24px; box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06) inset; overflow:hidden; }
+  .card-front{
+    background:
+      radial-gradient(120% 90% at 100% 0%, rgba(255,255,255,.12), transparent 55%),
+      linear-gradient(150deg, #3A0410 0%, #7A0C24 45%, #FF1F4D 100%);
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .card-sheen{ position:absolute; top:0; left:-40%; width:35%; height:100%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); animation: sheen 4s ease-in-out infinite; }
+  .card-chip{ width:44px; height:34px; border-radius:7px; background: linear-gradient(135deg,#F3D896,#C9A24C); position:relative; overflow:hidden; box-shadow:0 2px 6px rgba(0,0,0,.3); }
+  .chip-line{ position:absolute; width:100%; height:1.5px; background:rgba(0,0,0,.25); }
+  .card-number{ font-family:'Inter',monospace; font-size:18px; font-weight:700; letter-spacing:3px; color:#fff; text-shadow:0 2px 6px rgba(0,0,0,.35); }
+  .card-brand{ font-family:'Inter',sans-serif; font-weight:800; font-size:15px; color:#fff; letter-spacing:.2px; display:flex; align-items:center; gap:6px; }
+  .card-holder{ font-size:12px; font-weight:700; color:#fff; text-transform:uppercase; letter-spacing:1.2px; opacity:.95; }
+  .card-expiry{ font-family:'Inter',monospace; font-size:12px; color:rgba(255,255,255,.9); }
+
+  .progress-track{ background: rgba(255,255,255,.07); }
+  .progress-fill{ background: linear-gradient(90deg, var(--red-1), var(--gold)); box-shadow:0 0 14px rgba(255,31,77,.5); }
+
+  .faq-chevron{ transition: transform .3s cubic-bezier(.16,1,.3,1); }
+  .faq-chevron.open{ transform: rotate(180deg); }
+
+  .stat-pill{ background: rgba(255,255,255,.03); border:1px solid var(--border); }
+
+  .divider-fade{ height:1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.14), transparent); }
+
+  ::selection{ background: rgba(255,31,77,.35); }
+
+  /* Tab switcher */
+  .tab-btn{ background: rgba(255,255,255,.03); border:1px solid var(--border); color: var(--muted); transition: all .2s ease; }
+  .tab-btn.active{ background: linear-gradient(135deg, rgba(255,31,77,.22), rgba(227,192,129,.12)); border-color: var(--red-1); color:#fff; }
+
+  /* Dollar Sales controls */
+  .d-input{ width:100%; background: rgba(255,255,255,.04); border:1px solid var(--border); color:var(--ivory); border-radius:12px; padding:13px 16px; font-size:14px; }
+  .d-input::placeholder{ color:var(--muted-2); }
+  .d-input:focus{ outline:none; border-color: var(--red-1); box-shadow:0 0 0 3px rgba(255,31,77,.15); }
+
+  .amount-chip{ background: rgba(255,255,255,.03); border:1px solid var(--border); color:var(--ivory); transition: all .2s ease; }
+  .amount-chip:hover{ border-color: rgba(255,31,77,.4); }
+  .amount-chip.active{ background: linear-gradient(135deg, rgba(255,31,77,.22), rgba(227,192,129,.12)); border-color: var(--red-1); box-shadow:0 0 16px rgba(255,31,77,.25); }
+
+  .payment-card{ background: rgba(255,255,255,.03); border:1px solid var(--border); cursor:pointer; transition: all .2s ease; }
+  .payment-card:hover{ border-color: rgba(255,31,77,.35); }
+  .payment-card.selected{ border-color: var(--red-1); background: rgba(255,31,77,.08); box-shadow:0 0 18px rgba(255,31,77,.18); }
+</style>
+</head>
+<body class="min-h-screen w-full">
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/8801519601517" target="_blank" rel="noopener noreferrer" class="whatsapp-float" onclick="trackEvent('Contact',{content_name:'WhatsApp Float Button'})">
+  <div class="relative">
+    <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-2xl" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+    </div>
+    <div class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center" style="animation: pulseGlow 2s infinite;"><span class="text-[10px] font-bold text-white font-en">24/7</span></div>
+  </div>
+</a>
+
+<!-- Sticky brand + tabs + progress -->
+<div class="sticky top-0 z-40" style="background: rgba(10,4,5,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom:1px solid var(--border);">
+  <div class="max-w-3xl mx-auto px-4 py-3">
+    <div class="flex items-center gap-3 mb-3">
+      <div class="brand-mark w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0">
+        <span class="font-en font-black text-sm text-white">CB</span>
+      </div>
+      <span class="text-[11px] text-gray-500 font-en tracking-wide">CONNECT WITH BAYEZID</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-2 mb-3">
+      <button type="button" onclick="showSection('redotpay')" id="tab-redotpay" class="tab-btn active py-2.5 rounded-xl font-bold text-xs sm:text-sm">RedotPay গাইড</button>
+      <button type="button" onclick="showSection('dollar')" id="tab-dollar" class="tab-btn py-2.5 rounded-xl font-bold text-xs sm:text-sm">💵 Dollar Sales</button>
+    </div>
+
+    <div id="progress-wrap">
+      <div class="flex items-center justify-between mb-1.5">
+        <span id="progress-label" class="text-xs sm:text-sm font-bold" style="color:var(--red-2);">ধাপ ১/৭ থেকে শুরু করুন</span>
+        <span class="text-[11px] text-gray-500 font-en tracking-wide">REDOTPAY GUIDE</span>
+      </div>
+      <div class="w-full h-1 rounded-full overflow-hidden progress-track">
+        <div id="progress-fill" class="h-full rounded-full progress-fill" style="width:4%; transition: width .3s ease;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-3xl mx-auto px-4 relative">
+<div id="redotpay-section">
+
+  <!-- HERO -->
+  <section class="pt-12 pb-10 animate-fade-in relative">
+    <div class="ember" style="top:-60px; left:50%; transform:translateX(-50%);"></div>
+
+    <div class="relative z-10">
+      <div class="flex justify-center mb-6">
+        <div class="glass px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z"/></svg>
+          <span>নতুন ইউজারদের জন্য <span class="font-en" style="color:var(--gold);">$5</span> সাইন-আপ বোনাস</span>
+        </div>
+      </div>
+
+      <h1 class="text-4xl sm:text-5xl font-black text-center leading-[1.1] mb-5 tracking-tight">
+        পাসপোর্ট ছাড়াই<br>
+        <span class="font-en" style="background:linear-gradient(120deg,#fff 0%, var(--red-2) 55%, var(--gold) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">গ্লোবাল কার্ড</span>
+      </h1>
+      <p class="text-center max-w-lg mx-auto mb-2" style="color:var(--muted);">শুধু NID দিয়ে ৫-১০ মিনিটে ভেরিফাই করে নিন নিজের স্টেবলকয়েন-ভিত্তিক ভার্চুয়াল/ফিজিক্যাল <span class="font-en text-white">Mastercard/Visa</span> — Facebook Ads, Fiverr, Upwork, Amazon, Netflix সহ যেকোনো ইন্টারন্যাশনাল পেমেন্টে ব্যবহারযোগ্য।</p>
+      <p class="text-center text-sm mb-8 font-semibold" style="color:var(--gold);">এই গাইডে A থেকে Z — অ্যাপ ইন্সটল থেকে কার্ড অ্যাক্টিভ পর্যন্ত সব দেখানো হয়েছে।</p>
+
+      <!-- Card mockup -->
+      <div class="mb-9">
+        <div class="virtual-card-3d">
+          <div class="card-inner">
+            <div class="card-face card-front">
+              <div class="card-sheen"></div>
+              <div class="flex justify-between items-start">
+                <div class="card-chip"><div class="chip-line" style="top:9px;"></div><div class="chip-line" style="top:17px;"></div><div class="chip-line" style="top:25px;"></div></div>
+                <div class="card-brand font-en">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M9 12h6M12 9v6"/></svg>
+                  RedotPay
+                </div>
+              </div>
+              <div class="card-number font-en">•••• •••• •••• 5847</div>
+              <div class="flex justify-between items-end">
+                <div><div class="text-[9px] text-white/60 mb-1 uppercase font-en tracking-wider">Card Holder</div><div class="card-holder font-en">YOUR NAME HERE</div></div>
+                <div class="text-right"><div class="text-[9px] text-white/60 mb-1 uppercase font-en tracking-wider">Valid Thru</div><div class="card-expiry font-en">••/••</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="text-center text-[11px] mt-3" style="color:var(--muted-2);">*প্রিভিউ গ্রাফিক — ভেরিফাই করার পর আসল কার্ড ডিজাইন কার্ড টাইপ অনুযায়ী ভিন্ন হতে পারে</p>
+      </div>
+
+      <!-- CTA -->
+      <a href="https://url.hk/i/en/8d5gn" target="_blank" rel="noopener noreferrer" class="btn-primary w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-bold text-lg text-white mb-4" onclick="trackEvent('Lead',{content_name:'RedotPay Install CTA - Hero'})">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/><path d="M4 18v1a2 2 0 002 2h12a2 2 0 002-2v-1"/></svg>
+        <span>এখনই Play Store থেকে ইন্সটল করুন</span>
+      </a>
+
+      <div class="glass rounded-2xl p-4 flex items-center justify-between gap-3">
+        <div>
+          <p class="text-[11px] mb-1" style="color:var(--muted);">রেফারেল কোড (সাইন-আপের সময় বসাবেন)</p>
+          <code id="ref-code" class="text-2xl font-black font-en tracking-wide" style="color:var(--gold);">8d5gn</code>
+        </div>
+        <button type="button" onclick="copyText('8d5gn', this)" class="chip px-4 py-2.5 rounded-xl text-sm font-bold font-en" style="color:var(--red-2);">Copy</button>
+      </div>
+
+      <div class="grid grid-cols-3 gap-3 mt-7">
+        <div class="stat-pill rounded-xl p-3.5 text-center"><div class="text-xl font-black font-en" style="color:var(--red-2);">5M+</div><div class="text-[11px]" style="color:var(--muted);">ব্যবহারকারী</div></div>
+        <div class="stat-pill rounded-xl p-3.5 text-center"><div class="text-xl font-black font-en" style="color:var(--red-2);">100+</div><div class="text-[11px]" style="color:var(--muted);">দেশে চলে</div></div>
+        <div class="stat-pill rounded-xl p-3.5 text-center"><div class="text-xl font-black font-en" style="color:var(--red-2);">5-10</div><div class="text-[11px]" style="color:var(--muted);">মিনিটে ভেরিফাই</div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider-fade mb-10"></div>
+
+  <!-- PREREQUISITES -->
+  <section class="mb-10 animate-fade-in">
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="icon-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></div>
+        <h2 class="text-lg font-bold">শুরু করার আগে যা যা রেডি রাখবেন</h2>
+      </div>
+      <ul class="space-y-3 text-sm" style="color:var(--muted);">
+        <li class="flex items-start gap-2.5"><span style="color:var(--gold);" class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:var(--gold);"></span><span>আপনার <strong class="text-white">অরিজিনাল NID কার্ড</strong> হাতের কাছে রাখুন (ছবি তোলার জন্য)</span></li>
+        <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:var(--gold);"></span><span><strong class="text-white">আলো-যুক্ত জায়গায়</strong> থাকুন — ফেস ভেরিফিকেশন ও NID ছবি স্পষ্ট আসতে হবে</span></li>
+        <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:var(--gold);"></span><span>একটি সচল <strong class="text-white">ইমেইল অ্যাড্রেস</strong> (ভেরিফিকেশন কোড এখানে আসবে)</span></li>
+        <li class="flex items-start gap-2.5"><span class="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0" style="background:var(--gold);"></span><span>স্থিতিশীল <strong class="text-white">ইন্টারনেট কানেকশন</strong></span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="mb-10">
+    <div class="text-center mb-8">
+      <p class="eyebrow mb-2">STEP BY STEP</p>
+      <h2 class="text-2xl sm:text-3xl font-black">সম্পূর্ণ গাইড</h2>
+    </div>
+
+    <div class="space-y-4">
+
+      <!-- STEP 1 -->
+      <div data-step-section id="step-1" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/><path d="M4 18v1a2 2 0 002 2h12a2 2 0 002-2v-1"/></svg></div>
+          <div><p class="eyebrow">STEP 01</p><h3 class="font-bold text-lg">অ্যাপ ইন্সটল করুন</h3></div>
+        </div>
+        <p class="text-sm mb-3" style="color:var(--muted);">নিচের বাটনে ক্লিক করে সরাসরি Play Store থেকে RedotPay অ্যাপ ইন্সটল করুন। এই লিংক দিয়ে ঢুকলে রেফারেল সাধারণত অটো যুক্ত হয়ে যায়।</p>
+        <a href="https://url.hk/i/en/8d5gn" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm font-bold px-4 py-2 rounded-xl chip" style="color:var(--red-2);" onclick="trackEvent('Lead',{content_name:'RedotPay Install CTA - Step1'})">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v13m0 0l-4.5-4.5M12 16l4.5-4.5"/></svg>
+          Install RedotPay App
+        </a>
+      </div>
+
+      <!-- STEP 2 -->
+      <div data-step-section id="step-2" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z"/></svg></div>
+          <div><p class="eyebrow">STEP 02</p><h3 class="font-bold text-lg">রেফারেল কোড চেক / এন্ট্রি করুন</h3></div>
+        </div>
+        <p class="text-sm mb-3" style="color:var(--muted);">ডাউনলোডের পর অ্যাপ ওপেন করলে সাইন-আপ স্ক্রিনে <strong class="text-white">"Referral code (Optional)"</strong> নামে একটি ঘর দেখবেন। অটো বসে গেছে কিনা চেক করুন, না থাকলে ম্যানুয়ালি নিচের কোডটি বসিয়ে দিন —</p>
+        <div class="flex items-center gap-2 mb-3">
+          <code class="font-en font-black text-lg" style="color:var(--gold);">8d5gn</code>
+          <button type="button" onclick="copyText('8d5gn', this)" class="chip px-3 py-1 rounded-lg text-xs font-semibold font-en" style="color:var(--red-2);">Copy</button>
+        </div>
+        <div class="flex items-start gap-2 text-xs p-3 rounded-xl" style="background:var(--gold-soft); border:1px solid rgba(227,192,129,.3); color:var(--gold);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          <span>রেফারেল কোড শুধু রেজিস্ট্রেশনের সময়ই বসানো যায় — একাউন্ট খোলার পর আর যোগ করা যায় না।</span>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div data-step-section id="step-3" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+          <div><p class="eyebrow">STEP 03</p><h3 class="font-bold text-lg">ইমেইল দিয়ে সাইন-আপ শুরু করুন</h3></div>
+        </div>
+        <p class="text-sm" style="color:var(--muted);">আপনার সচল ইমেইল অ্যাড্রেসটি বসিয়ে <span class="font-en font-semibold text-white">[Next]</span>-এ ট্যাপ করুন। Terms of Service ও Privacy Policy-র বক্সটি টিক দিতে ভুলবেন না। চাইলে Google বা Apple আইডি দিয়েও সরাসরি সাইন-আপ করা যায়।</p>
+      </div>
+
+      <!-- STEP 4 -->
+      <div data-step-section id="step-4" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="9" width="16" height="10" rx="2"/><path d="M8 9V6a4 4 0 018 0v3"/><path d="M12 13v3"/></svg></div>
+          <div><p class="eyebrow">STEP 04</p><h3 class="font-bold text-lg">ইমেইল ভেরিফিকেশন কোড বসান</h3></div>
+        </div>
+        <p class="text-sm" style="color:var(--muted);">RedotPay আপনার ইমেইলে ৬ ডিজিটের ভেরিফিকেশন কোড পাঠাবে। ইমেইল চেক করে (স্প্যাম/জাংক ফোল্ডারও দেখুন) কোডটি অ্যাপে বসিয়ে <span class="font-en font-semibold text-white">[Next]</span> চাপুন। কোড না পেলে "Resend" চেপে আবার চাইতে পারবেন।</p>
+      </div>
+
+      <!-- STEP 5 -->
+      <div data-step-section id="step-5" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></div>
+          <div><p class="eyebrow">STEP 05</p><h3 class="font-bold text-lg">শক্তিশালী পাসওয়ার্ড সেট করুন</h3></div>
+        </div>
+        <p class="text-sm mb-2" style="color:var(--muted);">এমন একটি পাসওয়ার্ড দিন যেখানে থাকে —</p>
+        <ul class="text-sm grid grid-cols-1 sm:grid-cols-2 gap-y-1.5 mb-3" style="color:var(--muted);">
+          <li class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3"><path d="M5 12l4 4 10-10"/></svg>৮ থেকে ৩২ অক্ষর</li>
+          <li class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3"><path d="M5 12l4 4 10-10"/></svg>কমপক্ষে ১টি বড় হাতের অক্ষর</li>
+          <li class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3"><path d="M5 12l4 4 10-10"/></svg>কমপক্ষে ১টি ছোট হাতের অক্ষর</li>
+          <li class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3"><path d="M5 12l4 4 10-10"/></svg>কমপক্ষে ১টি সংখ্যা</li>
+          <li class="flex items-center gap-1.5"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3"><path d="M5 12l4 4 10-10"/></svg>কমপক্ষে ১টি স্পেশাল ক্যারেক্টার</li>
+        </ul>
+        <p class="text-xs" style="color:var(--muted-2);">তারপর <span class="font-en font-semibold" style="color:var(--ivory);">[Sign up]</span> চাপলেই বেসিক একাউন্ট রেডি! এই পাসওয়ার্ড কারো সাথে শেয়ার করবেন না।</p>
+      </div>
+
+      <!-- STEP 6 (KYC) -->
+      <div data-step-section id="step-6" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6.5 16c.5-1.5 2-2 2.5-2s2 .5 2.5 2"/><path d="M14 9h4M14 13h4"/></svg></div>
+          <div><p class="eyebrow">STEP 06</p><h3 class="font-bold text-lg">NID দিয়ে আইডেন্টিটি ভেরিফিকেশন (KYC)</h3></div>
+        </div>
+        <p class="text-sm mb-4" style="color:var(--muted);">কার্ড পেতে হলে এই ধাপ বাধ্যতামূলক। প্রোফাইল আইকনে ট্যাপ করে <span class="font-en text-white">Identity Verification</span>-এ যান, এরপর তিনটি অংশ পূরণ করবেন —</p>
+
+        <div class="space-y-3 mb-4">
+          <div class="flex gap-3">
+            <div class="sub-badge rounded-full flex-shrink-0">ক</div>
+            <p class="text-sm" style="color:var(--muted);"><strong class="text-white">মৌলিক তথ্য:</strong> দেশ/অঞ্চল, NID অনুযায়ী নাম, জন্ম তারিখ দিন</p>
+          </div>
+          <div class="flex gap-3">
+            <div class="sub-badge rounded-full flex-shrink-0">খ</div>
+            <p class="text-sm" style="color:var(--muted);"><strong class="text-white">NID + ফেস স্ক্যান:</strong> ইস্যুকারী দেশ ও ডকুমেন্ট টাইপ সিলেক্ট করে NID-র ছবি আপলোড করুন, এরপর লাইভ ফেস ভেরিফিকেশন সম্পন্ন করুন</p>
+          </div>
+          <div class="flex gap-3">
+            <div class="sub-badge rounded-full flex-shrink-0">গ</div>
+            <p class="text-sm" style="color:var(--muted);"><strong class="text-white">ঠিকানা + প্রশ্নমালা:</strong> বর্তমান ঠিকানা দিন (পোস্টাল কোড না থাকলে 000000), পেশা/আয়ের উৎস সংক্রান্ত ৪-৫টি প্রশ্নের উত্তর দিয়ে Submit করুন</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-2 text-xs p-3 rounded-xl" style="background:var(--gold-soft); border:1px solid rgba(227,192,129,.3); color:var(--gold);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+          <span><strong>সতর্কতা:</strong> ফেস স্ক্যানের পর সিস্টেম অটো NID থেকে তথ্য রিড করে — নাম/জন্মতারিখ হুবহু মিলছে কিনা খেয়াল রাখুন, ভুল হলে আবার আপডেট করতে ১৮০ দিন লাগে। রিভিউ সাধারণত কয়েক মিনিটে শেষ হয়, মাঝেমধ্যে ১-৩ কর্মদিবস লাগতে পারে।</span>
+        </div>
+      </div>
+
+      <!-- STEP 7 (Deposit) -->
+      <div data-step-section id="step-7" class="step-card rounded-2xl p-5">
+        <div class="flex items-center gap-3 mb-3">
+          <div class="icon-badge"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 012-2h12a2 2 0 012 2v3h-4a2 2 0 000 4h4v3a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/><circle cx="16" cy="12" r="1"/></svg></div>
+          <div><p class="eyebrow">STEP 07</p><h3 class="font-bold text-lg">ব্যালেন্স লোড করে কার্ড নিন</h3></div>
+        </div>
+        <p class="text-sm mb-2" style="color:var(--muted);">ভেরিফিকেশন কমপ্লিট হলে অ্যাপে <span class="font-en text-white">[Deposit]</span>-এ গিয়ে USDT/ক্রিপ্টো সিলেক্ট করে ডিপোজিট অ্যাড্রেস কপি করুন, এরপর Binance-এর মতো এক্সচেঞ্জ থেকে সেই অ্যাড্রেসে পাঠালেই ব্যালেন্স জমা হবে। এরপর <span class="font-en text-white">[Card]</span>-এ গিয়ে ভার্চুয়াল অথবা ফিজিক্যাল কার্ড বেছে নিন — ভার্চুয়াল কার্ড সাথে সাথেই ব্যবহারযোগ্য হয়ে যায়।</p>
+        <p class="text-xs" style="color:var(--muted-2);">ডলার/USDT লোড করতে সাহায্য লাগলে নিচের WhatsApp বাটনে নক দিন, দেখিয়ে দেব।</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- $5 BONUS DETAIL -->
+  <section class="mb-10 animate-fade-in">
+    <div class="glass rounded-2xl p-6">
+      <div class="flex items-center gap-3 mb-4">
+        <div class="icon-badge"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l1.8 6.2L20 10l-6.2 1.8L12 18l-1.8-6.2L4 10l6.2-1.8L12 2z"/></svg></div>
+        <h3 class="font-bold text-lg"><span class="font-en">$5</span> সাইন-আপ বোনাস নিয়ম</h3>
+      </div>
+      <ul class="space-y-2.5 text-sm" style="color:var(--muted);">
+        <li class="flex items-start gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" class="mt-1 flex-shrink-0"><path d="M5 12l4 4 10-10"/></svg><span>রেফারেল কোড দিয়ে সাইন-আপ ও ভেরিফিকেশন সম্পন্ন করলে <span class="font-en text-white">$5</span> বোনাস একাউন্টে যোগ হয়</span></li>
+        <li class="flex items-start gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" class="mt-1 flex-shrink-0"><path d="M5 12l4 4 10-10"/></svg><span>এই বোনাস দিয়ে কার্ড অ্যাপ্লিকেশন ফি দেওয়া যায় <strong class="text-white">না</strong> — কার্ড অ্যাক্টিভ হওয়ার পর যেকোনো পেমেন্টে খরচ করা যাবে</span></li>
+        <li class="flex items-start gap-2"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" class="mt-1 flex-shrink-0"><path d="M5 12l4 4 10-10"/></svg><span>বোনাসের ডিটেইলস অ্যাপের ভেতরে <span class="font-en text-white">Profile → USD balance</span> থেকে দেখা যাবে</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="mb-10">
+    <div class="text-center mb-7">
+      <p class="eyebrow mb-2">FAQ</p>
+      <h2 class="text-2xl sm:text-3xl font-black">সাধারণ প্রশ্ন ও উত্তর</h2>
+    </div>
+    <div class="space-y-3" id="faq-list">
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(1)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">এই কার্ডে কি সাথে সাথে ডলার/ব্যালেন্স থাকবে?</span>
+          <svg id="faq-icon-1" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-1" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">না। একাউন্ট ও কার্ড খোলা সম্পূর্ণ ফ্রি, তবে ভেতরে আগে থেকে কোনো ব্যালেন্স থাকে না। ভেরিফিকেশন শেষে আপনি নিজে USDT/ক্রিপ্টো লোড করে ব্যালেন্স আনবেন।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(2)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">NID ছাড়া কি একাউন্ট খোলা যাবে?</span>
+          <svg id="faq-icon-2" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-2" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">না। RedotPay একটি লাইসেন্সপ্রাপ্ত গ্লোবাল ফিনটেক সার্ভিস, তাই বৈধ NID/পাসপোর্ট/ড্রাইভিং লাইসেন্স দিয়ে আইডেন্টিটি ভেরিফিকেশন বাধ্যতামূলক। সবসময় নিজের সঠিক তথ্য দেবেন।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(3)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">রেফারেল কোড না দিলে কী হবে?</span>
+          <svg id="faq-icon-3" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-3" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">রেফারেল কোড শুধু রেজিস্ট্রেশনের সময়ই যোগ করা যায়, পরে আর বসানো যায় না। তাই সাইন-আপ স্ক্রিনের "Referral Code" ঘরে অবশ্যই <span class="font-en font-semibold" style="color:var(--gold);">8d5gn</span> বসিয়ে নেবেন, নাহলে বোনাস মিস হয়ে যেতে পারে।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(4)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">ভেরিফিকেশনে কতক্ষণ সময় লাগে?</span>
+          <svg id="faq-icon-4" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-4" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">সাধারণত কয়েক মিনিটেই আইডি ও ফেস ভেরিফিকেশনের রিভিউ শেষ হয়ে যায়। মাঝেমধ্যে অতিরিক্ত ডকুমেন্ট চাইলে ১-৩ কর্মদিবস লাগতে পারে — চাওয়া ডকুমেন্ট সাধারণত ১৪ দিনের মধ্যে জমা দিতে হয়।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(5)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">এই কার্ড দিয়ে কী কী কাজ করা যাবে?</span>
+          <svg id="faq-icon-5" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-5" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">Facebook/Google Ads বুস্টিং, Fiverr ও Upwork-এর পেমেন্ট রিসিভ/উইথড্র, Amazon-এ কেনাকাটা, Netflix/YouTube Premium সাবস্ক্রিপশন, এবং বিশ্বের যেকোনো জায়গায় Mastercard/Visa গ্রহণযোগ্য অনলাইন-অফলাইন পেমেন্ট।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(6)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">ভুল তথ্য দিয়ে ফেললে কী করব?</span>
+          <svg id="faq-icon-6" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-6" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">ফেস স্ক্যানের পর তথ্য অটো রিড হয়ে যায়, ভুল থাকলে সেই সাবমিশন Continue করে পরে Profile → Identity Verification → Personal details থেকে আবার আবেদন করতে হয় — এই আপডেট ১৮০ দিনে একবারই করা যায়। তাই শুরুতেই আলো-যুক্ত জায়গায় বসে সাবধানে সঠিক তথ্য দিন।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(7)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">নিজেও রেফার করে ইনকাম করা যাবে?</span>
+          <svg id="faq-icon-7" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-7" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">হ্যাঁ। একাউন্ট ভেরিফাই হয়ে গেলে নিজের রেফারেল কোড দিয়ে বন্ধুদের ইনভাইট করে RedotPay-র নিজস্ব রেফারেল প্রোগ্রামে কমিশন আয় করতে পারবেন — বিস্তারিত অ্যাপের "Invite Friends" অপশনে পাবেন।</div>
+      </div>
+
+      <div class="glass rounded-xl overflow-hidden">
+        <button type="button" onclick="toggleFaq(8)" class="w-full text-left p-4 flex items-center justify-between gap-3">
+          <span class="font-semibold text-sm sm:text-base">কোনো ধাপে আটকে গেলে কী করব?</span>
+          <svg id="faq-icon-8" class="faq-chevron flex-shrink-0" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div id="faq-8" class="hidden px-4 pb-4 text-sm" style="color:var(--muted);">নিচের WhatsApp বাটনে ক্লিক করে Connect with Bayezid টিমকে নক দিন — ২৪/৭ ফ্রি সাপোর্ট পাবেন, ডলার/USDT লোড করার ধাপেও সাহায্য করে দেওয়া হবে।</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="mb-10 animate-fade-in relative">
+    <div class="ember" style="bottom:-80px; right:-60px; opacity:.5;"></div>
+    <div class="glass-strong rounded-2xl p-7 sm:p-9 text-center relative z-10">
+      <div class="icon-badge mx-auto mb-4" style="width:52px; height:52px; border-radius:16px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <h3 class="text-xl sm:text-2xl font-bold mb-2">গাইড অনুসরণ করে আটকে গেছেন?</h3>
+      <p class="text-sm mb-6" style="color:var(--muted);">Connect with Bayezid টিম আপনাকে A থেকে Z সরাসরি হোয়াটসঅ্যাপে গাইড করবে — সম্পূর্ণ ফ্রি, ২৪/৭।</p>
+      <a href="https://wa.me/8801519601517?text=RedotPay%20account%20open%20korte%20shahajjo%20lagbe" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-xl font-bold text-white" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); box-shadow:0 10px 28px rgba(37,211,102,.3);" onclick="trackEvent('Contact',{content_name:'WhatsApp Support CTA'})">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        <span>WhatsApp-এ সাহায্য নিন</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="pb-10 text-center pt-6 divider-fade" style="border-top:none;">
+    <div class="divider-fade mb-6"></div>
+    <div class="brand-mark w-9 h-9 rounded-xl flex items-center justify-center mx-auto mb-3">
+      <span class="font-en font-black text-white">CB</span>
+    </div>
+    <p class="font-bold text-base mb-1">Connect with Bayezid</p>
+    <p class="text-xs mb-3" style="color:var(--muted-2);">Tech Agency — International Payment Solutions</p>
+    <a href="https://sayadbayezid.com" target="_blank" rel="noopener noreferrer" class="text-sm font-en font-semibold" style="color:var(--red-2);">sayadbayezid.com</a>
+    <p class="text-[11px] mt-4" style="color:var(--muted-2);">এই পেজটি RedotPay-র রেফারেল প্রোগ্রামের অংশ হিসেবে তৈরি একটি স্বাধীন গাইড। RedotPay একটি পৃথক কোম্পানির প্রোডাক্ট।</p>
+  </footer>
+
+</div><!-- /redotpay-section -->
+
+<!-- ============================= DOLLAR SALES SECTION ============================= -->
+<div id="dollar-section" class="hidden">
+
+  <section class="pt-10 pb-8 animate-fade-in relative">
+    <div class="ember" style="top:-40px; left:15%;"></div>
+    <div class="relative z-10">
+      <div class="flex justify-center mb-5">
+        <div class="glass px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+          <span>৫ মিনিটে ডেলিভারি — Bkash / Nagad / Rocket / Binance / Bank</span>
+        </div>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-center leading-tight mb-4">
+        সেরা রেটে <span class="font-en" style="background:linear-gradient(120deg,#fff 0%, var(--red-2) 55%, var(--gold) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Dollar</span> কিনুন
+      </h1>
+      <p class="text-center max-w-lg mx-auto mb-8" style="color:var(--muted);">PayPal, Skrill, Wise বা যেকোনো প্ল্যাটফর্মে ডলার দরকার? বিশ্বস্তভাবে, দ্রুততম সময়ে ডলার পেয়ে যান।</p>
+
+      <div class="grid grid-cols-2 gap-4 mb-2">
+        <div class="glass rounded-2xl p-5 text-center">
+          <p class="text-xs mb-1" style="color:var(--muted);">$3 - $9 রেট</p>
+          <p class="text-3xl font-black font-en" style="color:var(--red-2);">৳137</p>
+          <p class="text-[11px]" style="color:var(--muted-2);">প্রতি ডলার</p>
+        </div>
+        <div class="glass rounded-2xl p-5 text-center">
+          <p class="text-xs mb-1" style="color:var(--muted);">$10+ রেট</p>
+          <p class="text-3xl font-black font-en" style="color:var(--gold);">৳135</p>
+          <p class="text-[11px]" style="color:var(--muted-2);">প্রতি ডলার</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Amount + price -->
+  <section class="mb-8">
+    <div class="glass rounded-2xl p-6">
+      <p class="eyebrow mb-3">AMOUNT</p>
+      <div class="grid grid-cols-3 gap-2.5 mb-5">
+        <button type="button" onclick="selectAmount(10, this)" class="amount-chip py-3 rounded-xl font-bold font-en">$10</button>
+        <button type="button" onclick="selectAmount(15, this)" class="amount-chip py-3 rounded-xl font-bold font-en">$15</button>
+        <button type="button" onclick="selectAmount(20, this)" class="amount-chip py-3 rounded-xl font-bold font-en">$20</button>
+        <button type="button" onclick="selectAmount(25, this)" class="amount-chip py-3 rounded-xl font-bold font-en">$25</button>
+        <button type="button" onclick="selectAmount(50, this)" class="amount-chip py-3 rounded-xl font-bold font-en">$50</button>
+        <button type="button" onclick="selectAmount(100, this)" class="amount-chip py-3 rounded-xl font-bold font-en">$100</button>
+      </div>
+      <label for="custom-amount" class="text-xs mb-2 block" style="color:var(--muted);">অথবা নিজে লিখুন (সর্বনিম্ন $3, দশমিক $0.01 পর্যন্ত)</label>
+      <div class="relative mb-5">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-xl font-bold font-en" style="color:var(--red-2);">$</span>
+        <input type="number" id="custom-amount" min="3" step="0.01" placeholder="3.00" oninput="calculatePrice()" class="d-input font-en font-bold text-lg" style="padding-left:2.2rem;">
+      </div>
+
+      <div id="price-display" class="glass-strong rounded-xl p-5 text-center">
+        <p class="text-xs mb-1" style="color:var(--muted);">Total Price</p>
+        <div class="flex items-center justify-center gap-2 flex-wrap">
+          <span id="dollar-amount" class="text-xl font-bold font-en">$0.00</span>
+          <span style="color:var(--muted-2);">=</span>
+          <span id="taka-amount" class="text-3xl font-black font-en" style="color:var(--red-2);">0 BDT</span>
+        </div>
+        <p id="rate-info" class="text-xs mt-2" style="color:var(--muted-2);">Rate: 0 BDT/Dollar</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Your info -->
+  <section class="mb-8">
+    <div class="glass rounded-2xl p-6">
+      <h3 class="font-bold text-lg mb-4">আপনার তথ্য দিন</h3>
+      <div class="space-y-3">
+        <input type="text" id="d-name" placeholder="আপনার পূর্ণ নাম *" class="d-input">
+        <input type="email" id="d-email" placeholder="ইমেইল অ্যাড্রেস *" class="d-input">
+        <input type="tel" id="d-whatsapp" placeholder="WhatsApp নম্বর (01XXXXXXXXX) *" class="d-input">
+        <div>
+          <input type="text" id="d-sender" placeholder="যে নাম্বার/অ্যাকাউন্ট থেকে পাঠাচ্ছেন *" class="d-input">
+          <p class="text-[11px] mt-1.5" style="color:var(--muted-2);">যে Bkash/Nagad/Rocket নম্বর বা ব্যাংক অ্যাকাউন্ট থেকে টাকা পাঠাচ্ছেন</p>
+        </div>
+        <textarea id="d-details" rows="2" placeholder="ডলার রিসিভ করার PayPal/Skrill/Wise ইমেইল বা আইডি *" class="d-input resize-none"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- Payment methods -->
+  <section class="mb-8">
+    <div class="glass rounded-2xl p-6">
+      <h3 class="font-bold text-lg mb-3">পেমেন্ট মেথড বেছে নিন</h3>
+      <div class="flex items-start gap-2 text-xs p-3 rounded-xl mb-4" style="background:var(--gold-soft); border:1px solid rgba(227,192,129,.3); color:var(--gold);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0 mt-0.5"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+        <span><strong>জরুরি:</strong> Bkash/Nagad/Rocket-এ টাকা পাঠানোর সময় অবশ্যই <strong>চার্জসহ Send Money</strong> করবেন (১৬ টাকা প্রতি ১০০০ টাকায়)।</span>
+      </div>
+
+      <div class="space-y-2.5">
+        <div onclick="selectPaymentMethod('bkash', this)" class="payment-card p-4 rounded-xl" data-method="bkash">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <div class="icon-badge" style="width:38px;height:38px;border-radius:10px;">📱</div>
+              <div><p class="font-bold text-sm">Bkash (Send Money)</p><p class="text-[11px]" style="color:var(--gold);">চার্জসহ পাঠাবেন</p></div>
+            </div>
+            <svg id="bkash-check" class="hidden flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <code class="font-en font-bold" style="color:var(--ivory);">01791527854</code>
+            <button type="button" onclick="event.stopPropagation(); copyText('01791527854', this)" class="chip px-3 py-1 rounded-lg text-xs font-semibold font-en" style="color:var(--red-2);">Copy</button>
+          </div>
+        </div>
+
+        <div onclick="selectPaymentMethod('nagad', this)" class="payment-card p-4 rounded-xl" data-method="nagad">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <div class="icon-badge" style="width:38px;height:38px;border-radius:10px;">💰</div>
+              <div><p class="font-bold text-sm">Nagad (Send Money)</p><p class="text-[11px]" style="color:var(--gold);">চার্জসহ পাঠাবেন</p></div>
+            </div>
+            <svg id="nagad-check" class="hidden flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <code class="font-en font-bold" style="color:var(--ivory);">01519601517</code>
+            <button type="button" onclick="event.stopPropagation(); copyText('01519601517', this)" class="chip px-3 py-1 rounded-lg text-xs font-semibold font-en" style="color:var(--red-2);">Copy</button>
+          </div>
+        </div>
+
+        <div onclick="selectPaymentMethod('rocket', this)" class="payment-card p-4 rounded-xl" data-method="rocket">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <div class="icon-badge" style="width:38px;height:38px;border-radius:10px;">🚀</div>
+              <div><p class="font-bold text-sm">Rocket (Send Money)</p><p class="text-[11px]" style="color:var(--gold);">চার্জসহ পাঠাবেন</p></div>
+            </div>
+            <svg id="rocket-check" class="hidden flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <code class="font-en font-bold" style="color:var(--ivory);">01519601517</code>
+            <button type="button" onclick="event.stopPropagation(); copyText('01519601517', this)" class="chip px-3 py-1 rounded-lg text-xs font-semibold font-en" style="color:var(--red-2);">Copy</button>
+          </div>
+        </div>
+
+        <div onclick="selectPaymentMethod('binance', this)" class="payment-card p-4 rounded-xl" data-method="binance">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <div class="icon-badge" style="width:38px;height:38px;border-radius:10px;">₿</div>
+              <div><p class="font-bold text-sm">Binance</p><p class="text-[11px]" style="color:var(--muted-2);">কোনো চার্জ নেই</p></div>
+            </div>
+            <svg id="binance-check" class="hidden flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <code class="font-en font-bold" style="color:var(--ivory);">1157359156</code>
+            <button type="button" onclick="event.stopPropagation(); copyText('1157359156', this)" class="chip px-3 py-1 rounded-lg text-xs font-semibold font-en" style="color:var(--red-2);">Copy</button>
+          </div>
+          <p class="text-[11px] mt-1.5" style="color:var(--muted-2);">Binance UID দিয়ে Pay Friend করবেন</p>
+        </div>
+
+        <div onclick="selectPaymentMethod('bank', this)" class="payment-card p-4 rounded-xl" data-method="bank">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <div class="icon-badge" style="width:38px;height:38px;border-radius:10px;">🏦</div>
+              <div><p class="font-bold text-sm">Bank Transfer</p><p class="text-[11px]" style="color:var(--muted-2);">কোনো চার্জ নেই</p></div>
+            </div>
+            <svg id="bank-check" class="hidden flex-shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2.5"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+          </div>
+          <div class="text-xs space-y-0.5" style="color:var(--muted);">
+            <p><strong class="text-white">Bank:</strong> Eastern Bank PLC</p>
+            <p><strong class="text-white">Name:</strong> Sayad Md Bayezid Hosan</p>
+            <p><strong class="text-white">Branch:</strong> Tangail Branch</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="charge-calculator" class="hidden mt-4 glass-strong rounded-xl p-4">
+        <p class="text-xs font-bold mb-3" style="color:var(--gold);">💰 চার্জ ক্যালকুলেটর (১৬/১০০০)</p>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span style="color:var(--muted);">বেস অ্যামাউন্ট</span><span id="base-amount" class="font-bold font-en">0 BDT</span></div>
+          <div class="flex justify-between"><span style="color:var(--gold);">+ চার্জ</span><span id="charge-amount" class="font-bold font-en" style="color:var(--gold);">0 BDT</span></div>
+          <div class="flex justify-between pt-2 border-t" style="border-color:var(--border);"><span class="font-bold" style="color:var(--red-2);">মোট পাঠাতে হবে</span><span id="total-with-charge" class="font-black font-en text-lg" style="color:var(--red-2);">0 BDT</span></div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <input type="text" id="d-txn" placeholder="Transaction ID / Reference Number *" class="d-input font-en">
+      </div>
+
+      <div class="mt-4">
+        <input type="file" id="d-screenshot" accept="image/png, image/jpeg" class="hidden" onchange="handleDollarScreenshotUpload(event)">
+        <label for="d-screenshot" class="d-input flex items-center justify-center gap-2 cursor-pointer text-sm font-semibold" style="color:var(--muted);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          <span id="d-upload-text">পেমেন্ট স্ক্রিনশট আপলোড করুন * (PNG/JPG, max 5MB)</span>
+        </label>
+      </div>
+
+      <div id="dollar-form-msg" class="hidden mt-3 text-xs p-3 rounded-xl" style="background:rgba(255,31,77,.1); border:1px solid rgba(255,31,77,.3); color:var(--red-2);"></div>
+    </div>
+  </section>
+
+  <button type="button" onclick="handleDollarOrder()" class="btn-primary w-full py-4 rounded-2xl font-bold text-lg text-white mb-10">অর্ডার কনফার্ম করুন</button>
+
+  <!-- Success -->
+  <section id="dollar-success" class="hidden mb-10">
+    <div class="glass-strong rounded-2xl p-6">
+      <div class="flex items-center gap-2 mb-4">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--red-2)" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+        <h3 class="font-bold text-lg">অর্ডার ডিটেইলস রেডি!</h3>
+      </div>
+      <div id="d-order-summary" class="text-sm whitespace-pre-line rounded-xl p-4 mb-4" style="background: rgba(0,0,0,.25); border:1px solid var(--border); color:var(--muted);"></div>
+      <button type="button" onclick="copyDollarOrder()" id="copy-dollar-btn" class="w-full py-3 rounded-xl font-bold text-white mb-3" style="background: linear-gradient(135deg, var(--red-1), var(--red-deep));">📋 সব তথ্য কপি করুন</button>
+      <a id="dollar-whatsapp-link" href="https://wa.me/8801519601517" target="_blank" rel="noopener noreferrer" onclick="trackEvent('Contact',{content_name:'Dollar Order WhatsApp Send'})" class="block w-full py-3 rounded-xl font-bold text-white text-center" style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">💬 WhatsApp-এ পাঠান</a>
+      <p class="text-[11px] text-center mt-4" style="color:var(--muted-2);">✅ প্রথমে "কপি করুন" চাপুন, তারপর WhatsApp-এ পেস্ট করে স্ক্রিনশটসহ পাঠান</p>
+    </div>
+  </section>
+
+  <div class="glass rounded-2xl p-6 mb-10">
+    <h3 class="font-bold text-base mb-3">জেনে রাখুন</h3>
+    <ul class="space-y-2 text-sm" style="color:var(--muted);">
+      <li class="flex gap-2"><span style="color:var(--red-2);">✓</span>সর্বনিম্ন অর্ডার $3</li>
+      <li class="flex gap-2"><span style="color:var(--red-2);">✓</span>ডলার ডেলিভারি ৫ মিনিটে (টেকনিক্যাল সমস্যা হলে ১০ মিনিট)</li>
+      <li class="flex gap-2"><span style="color:var(--gold);">⚠️</span>Bkash/Nagad/Rocket-এ অবশ্যই চার্জসহ পাঠাবেন</li>
+      <li class="flex gap-2"><span style="color:var(--red-2);">✓</span>পেমেন্টের পর Transaction ID ও স্ক্রিনশট দিন</li>
+    </ul>
+  </div>
+
+</div><!-- /dollar-section -->
+
+</div><!-- /max-w-3xl wrapper -->
+
+<script>
+  // ==========================================================================
+  // এখানে আপনার bayezid-agency-api Worker-এর লাইভ URL বসাবেন (উদাহরণ: 'https://api.sayadbayezid.com')
+  // Access token বা Pixel token এখানে বসানো লাগবে না — সেগুলো Worker-এর Cloudflare
+  // secret-এ থাকবে, শুধু এই একটা URL কনফার্ম করলেই ট্র্যাকিং লাইভ হয়ে যাবে।
+  // ==========================================================================
+  const TRACK_ENDPOINT = 'https://REPLACE-WITH-YOUR-WORKER-URL/api/track';
+
+  function getCookie(name) {
+    const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    return m ? m[2] : undefined;
+  }
+
+  function trackEvent(eventName, customData) {
+    customData = customData || {};
+    const eventId = 'evt_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
+
+    // 1) Browser Pixel — same eventID so Meta can de-dupe against the server-side copy
+    if (typeof fbq === 'function') {
+      fbq('trackCustom', eventName, customData, { eventID: eventId });
+    }
+
+    // 2) Server-side Conversions API relay — token never touches this page.
+    //    bayezid-agency-api Worker-এর /api/track নিরাপদে কল করে, সেখান থেকে token দিয়ে
+    //    Meta-কে পাঠানো হয়। এই fetch এ কোনো secret নেই।
+    if (TRACK_ENDPOINT.indexOf('REPLACE-WITH-YOUR-WORKER-URL') === -1) {
+      const userData = {};
+      const fbp = getCookie('_fbp');
+      const fbc = getCookie('_fbc');
+      if (fbp) userData.fbp = fbp;
+      if (fbc) userData.fbc = fbc;
+
+      fetch(TRACK_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: eventName,
+          event_id: eventId,
+          event_source_url: window.location.href,
+          user_data: userData,
+          custom_data: customData
+        })
+      }).catch(function () { /* tracking failure should never block the user */ });
+    }
+  }
+
+  function copyText(text, btn) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      const original = btn.textContent;
+      btn.textContent = '✓ Copied!';
+      setTimeout(() => { btn.textContent = original; }, 1800);
+    } catch (err) {
+      console.error('Copy failed:', err);
+    } finally {
+      document.body.removeChild(ta);
+    }
+  }
+
+  function toggleFaq(id) {
+    document.getElementById('faq-' + id).classList.toggle('hidden');
+    document.getElementById('faq-icon-' + id).classList.toggle('open');
+  }
+
+  const stepSections = Array.from(document.querySelectorAll('[data-step-section]'));
+  const totalSteps = stepSections.length;
+  const progressFill = document.getElementById('progress-fill');
+  const progressLabel = document.getElementById('progress-label');
+
+  function updateProgress() {
+    let current = 0;
+    stepSections.forEach((el, i) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.55) {
+        current = i + 1;
+        el.classList.add('in-view');
+      } else {
+        el.classList.remove('in-view');
+      }
+    });
+    if (current === 0) current = 1;
+    const pct = Math.max(4, (current / totalSteps) * 100);
+    progressFill.style.width = pct + '%';
+    progressLabel.textContent = current >= totalSteps
+      ? `সব ${totalSteps} ধাপ দেখা শেষ ✓`
+      : `ধাপ ${current}/${totalSteps} চলছে`;
+  }
+
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress);
+  updateProgress();
+
+  // ========================= TAB SWITCHER =========================
+  function showSection(section) {
+    const redotpay = document.getElementById('redotpay-section');
+    const dollar = document.getElementById('dollar-section');
+    const tabRedotpay = document.getElementById('tab-redotpay');
+    const tabDollar = document.getElementById('tab-dollar');
+    const progressWrap = document.getElementById('progress-wrap');
+
+    if (section === 'dollar') {
+      redotpay.classList.add('hidden');
+      dollar.classList.remove('hidden');
+      tabDollar.classList.add('active');
+      tabRedotpay.classList.remove('active');
+      progressWrap.classList.add('hidden');
+    } else {
+      dollar.classList.add('hidden');
+      redotpay.classList.remove('hidden');
+      tabRedotpay.classList.add('active');
+      tabDollar.classList.remove('active');
+      progressWrap.classList.remove('hidden');
+      updateProgress();
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    trackEvent('ViewContent', { content_name: section === 'dollar' ? 'Dollar Sales Tab' : 'RedotPay Guide Tab' });
+  }
+
+  // ========================= DOLLAR SALES =========================
+  let dollarSelectedAmount = 0;
+  let dollarSelectedMethod = null;
+  let dollarScreenshot = null;
+  let dollarOrderData = {};
+
+  function dollarRate(amount) { return (amount >= 3 && amount <= 9) ? 137 : 135; }
+
+  function updateDollarPriceDisplay(amount) {
+    const d = document.getElementById('dollar-amount');
+    const t = document.getElementById('taka-amount');
+    const r = document.getElementById('rate-info');
+    if (amount < 3) {
+      d.textContent = '$' + amount.toFixed(2);
+      t.textContent = '0 BDT';
+      r.textContent = 'সর্বনিম্ন $3 দিতে হবে';
+      r.style.color = '#FF6B81';
+      return;
+    }
+    const rate = dollarRate(amount);
+    d.textContent = '$' + amount.toFixed(2);
+    t.textContent = Math.round(amount * rate) + ' BDT';
+    r.textContent = 'Rate: ' + rate + ' BDT/Dollar';
+    r.style.color = amount <= 9 ? '#FF6B81' : '#E3C081';
+  }
+
+  function calculatePrice() {
+    const amount = parseFloat(document.getElementById('custom-amount').value) || 0;
+    document.querySelectorAll('.amount-chip').forEach(b => b.classList.remove('active'));
+    updateDollarPriceDisplay(amount);
+    dollarSelectedAmount = amount;
+    if (['bkash', 'nagad', 'rocket'].includes(dollarSelectedMethod) && amount >= 3) {
+      updateChargeCalculator(Math.round(amount * dollarRate(amount)));
+    }
+  }
+
+  function selectAmount(amount, btn) {
+    document.getElementById('custom-amount').value = amount;
+    document.querySelectorAll('.amount-chip').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateDollarPriceDisplay(amount);
+    dollarSelectedAmount = amount;
+    if (['bkash', 'nagad', 'rocket'].includes(dollarSelectedMethod)) {
+      updateChargeCalculator(Math.round(amount * dollarRate(amount)));
+    }
+  }
+
+  function selectPaymentMethod(method, el) {
+    dollarSelectedMethod = method;
+    document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.querySelectorAll('[id$="-check"]').forEach(c => c.classList.add('hidden'));
+    const check = document.getElementById(method + '-check');
+    if (check) check.classList.remove('hidden');
+
+    const calc = document.getElementById('charge-calculator');
+    if (['bkash', 'nagad', 'rocket'].includes(method)) {
+      calc.classList.remove('hidden');
+      if (dollarSelectedAmount >= 3) {
+        updateChargeCalculator(Math.round(dollarSelectedAmount * dollarRate(dollarSelectedAmount)));
+      }
+    } else {
+      calc.classList.add('hidden');
+    }
+  }
+
+  function updateChargeCalculator(baseAmount) {
+    const charge = Math.round(baseAmount * 16 / 1000);
+    document.getElementById('base-amount').textContent = baseAmount + ' BDT';
+    document.getElementById('charge-amount').textContent = charge + ' BDT';
+    document.getElementById('total-with-charge').textContent = (baseAmount + charge) + ' BDT';
+  }
+
+  function handleDollarScreenshotUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) {
+      showDollarMsg('ফাইল সাইজ 5MB এর বেশি হতে পারবে না');
+      event.target.value = '';
+      return;
+    }
+    dollarScreenshot = file;
+    document.getElementById('d-upload-text').textContent = '✓ আপলোড হয়েছে: ' + file.name;
+  }
+
+  function showDollarMsg(text) {
+    const box = document.getElementById('dollar-form-msg');
+    box.textContent = '⚠️ ' + text;
+    box.classList.remove('hidden');
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => box.classList.add('hidden'), 4000);
+  }
+
+  function handleDollarOrder() {
+    const amount = dollarSelectedAmount;
+    const name = document.getElementById('d-name').value.trim();
+    const email = document.getElementById('d-email').value.trim();
+    const whatsapp = document.getElementById('d-whatsapp').value.trim();
+    const sender = document.getElementById('d-sender').value.trim();
+    const details = document.getElementById('d-details').value.trim();
+    const txnId = document.getElementById('d-txn').value.trim();
+
+    if (!name || !email || !whatsapp || !sender || !details) { showDollarMsg('সব ঘর পূরণ করুন'); return; }
+    if (amount < 3) { showDollarMsg('সর্বনিম্ন $3 অর্ডার করতে হবে'); return; }
+    if (!dollarSelectedMethod) { showDollarMsg('পেমেন্ট মেথড সিলেক্ট করুন'); return; }
+    if (!txnId) { showDollarMsg('Transaction ID দিন'); return; }
+    if (!dollarScreenshot) { showDollarMsg('পেমেন্ট স্ক্রিনশট আপলোড করুন'); return; }
+
+    const rate = dollarRate(amount);
+    const total = Math.round(amount * rate);
+    const methodNames = {
+      bkash: 'Bkash - 01791527854',
+      nagad: 'Nagad - 01519601517',
+      rocket: 'Rocket - 01519601517',
+      binance: 'Binance - UID: 1157359156',
+      bank: 'Bank Transfer - Eastern Bank PLC'
+    };
+
+    let chargeInfo = '';
+    if (['bkash', 'nagad', 'rocket'].includes(dollarSelectedMethod)) {
+      const charge = Math.round(total * 16 / 1000);
+      chargeInfo = (total + charge) + ' BDT (' + total + ' + ' + charge + ' চার্জ)';
+    }
+
+    dollarOrderData = { name, email, whatsapp, sender, details, amount: '$' + amount.toFixed(2), rate: rate + ' BDT/Dollar', total: total + ' BDT', method: methodNames[dollarSelectedMethod], txnId, chargeInfo, screenshot: dollarScreenshot.name };
+
+    let summary = '👤 নাম: ' + name + '\n📧 ইমেইল: ' + email + '\n📱 WhatsApp: ' + whatsapp + '\n💳 প্রেরক: ' + sender;
+    summary += '\n\n💵 পরিমাণ: $' + amount.toFixed(2) + '\n📊 রেট: ' + rate + ' BDT/Dollar\n💰 মোট: ' + total + ' BDT';
+    summary += '\n\n💳 পেমেন্ট: ' + methodNames[dollarSelectedMethod] + '\n🔖 Transaction ID: ' + txnId;
+    if (chargeInfo) summary += '\n⚠️ চার্জসহ পাঠানো হয়েছে: ' + chargeInfo;
+    summary += '\n\n📝 ডলার রিসিভ করার ঠিকানা: ' + details;
+    summary += '\n📸 স্ক্রিনশট: ' + dollarScreenshot.name;
+
+    document.getElementById('d-order-summary').textContent = summary;
+    document.getElementById('dollar-success').classList.remove('hidden');
+    document.getElementById('dollar-success').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    trackEvent('Lead', { content_name: 'Dollar Sale Order', value: total, currency: 'BDT' });
+  }
+
+  function copyDollarOrder() {
+    let text = '🛒 নতুন Dollar অর্ডার!\n\n' + document.getElementById('d-order-summary').textContent;
+    text += '\n\n⏰ সময়: ' + new Date().toLocaleString('en-US');
+
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+
+    document.getElementById('dollar-whatsapp-link').href = 'https://wa.me/8801519601517?text=' + encodeURIComponent(text);
+
+    const btn = document.getElementById('copy-dollar-btn');
+    const original = btn.textContent;
+    btn.textContent = '✓ কপি হয়েছে!';
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  }
+</script>
+
+</body>
+</html>
