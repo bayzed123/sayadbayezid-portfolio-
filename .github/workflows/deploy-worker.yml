@@ -1,8 +1,10 @@
-name: Deploy agency Conversions API worker
+# The production agency API is maintained in bayzed123/bayezid-agency-worker.
+# This legacy duplicate workflow is intentionally manual-only so a portfolio
+# push cannot overwrite the correct Cloudflare Worker service.
+name: Legacy agency Worker deploy (manual only)
 
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -12,9 +14,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm ci
-      - run: npx tsc --noEmit
-      - run: npx wrangler deploy
+      - run: cd worker && npm ci
+      - run: cd worker && npx tsc --noEmit
+      - run: cd worker && npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
