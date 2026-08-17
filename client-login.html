@@ -52,6 +52,12 @@
   .profile img{ width:48px; height:48px; border-radius:50%; }
   .profile .name{ font-weight:700; font-size:.96rem; }
   .profile .email{ color: var(--muted); font-size:.84rem; }
+  .profile-actions{ display:none; margin-top:16px; gap:10px; flex-wrap:wrap; }
+  .profile-actions.show{ display:flex; }
+  .logout-btn{ flex:1; border:1px solid var(--border); border-radius:8px; background:#fff; color:var(--accent-deep); padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
+  .logout-btn:hover{ background:var(--accent-soft); }
+  .disconnect-link{ width:100%; color:var(--muted); font-size:.78rem; text-decoration:none; }
+  .disconnect-link:hover{ color:var(--accent); text-decoration:underline; }
   .fineprint{ margin-top: 24px; font-size:.78rem; color: var(--faint); line-height:1.6; }
   .fineprint a{ color: var(--accent); text-decoration:none; }
   .fineprint a:hover{ text-decoration:underline; }
@@ -106,12 +112,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="email" id="profileEmail"></div>
       </div>
     </div>
+    <div class="profile-actions" id="profileActions">
+      <button class="logout-btn" type="button" onclick="logoutFromFacebook()">Log out</button>
+      <a class="disconnect-link" href="https://www.facebook.com/settings?tab=applications" target="_blank" rel="noopener">Remove app access in Facebook settings</a>
+    </div>
 
     <p class="fineprint">
       By continuing, you agree to our
       <a href="https://sayadbayezid.com/terms-of-service.html">Terms of Service</a> and
       <a href="https://sayadbayezid.com/privacy-policy.html">Privacy Policy</a>.
       We only request the permissions needed to connect your business account.
+      <br><a href="https://developers.facebook.com/documentation/facebook-login/security#appsecret" target="_blank" rel="noopener">Read Meta Login Security guidance</a>.
     </p>
   </div>
 
@@ -123,7 +134,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       appId: '1781926689123888',
       cookie: true,
       xfbml: false,
-      version: 'v25.0'   // check developers.facebook.com for the current version before this one sunsets
+      version: 'v26.0'   // current Graph API version used by Meta's Login documentation
     });
 
     // Ties into the App Events product already added to this app
@@ -160,8 +171,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (response.status === 'connected') {
       fetchAndShowProfile(response.authResponse);
     } else if (response.status === 'not_authorized') {
+      resetSignedInState();
       showStatus("You're logged into Facebook — tap below to connect your account.", false);
+    } else {
+      resetSignedInState();
     }
+  }
+
+  function resetSignedInState() {
+    document.getElementById('profile').className = 'profile';
+    document.getElementById('profileActions').className = 'profile-actions';
+    document.getElementById('profileName').textContent = '';
+    document.getElementById('profileEmail').textContent = '';
+    document.getElementById('profilePic').removeAttribute('src');
+    var btn = document.getElementById('fbLoginBtn');
+    btn.style.display = '';
+    btn.disabled = false;
+  }
+
+  function logoutFromFacebook() {
+    if (!window.FB) {
+      resetSignedInState();
+      showStatus('You have been logged out of this page.', false);
+      return;
+    }
+    var confirmed = window.confirm('Log out of Facebook Login on this page? To remove the app permission completely, use the Facebook settings link below.');
+    if (!confirmed) return;
+    showStatus('Logging out…', false);
+    FB.logout(function () {
+      resetSignedInState();
+      showStatus('You have been logged out of this page.', false);
+    });
   }
 
   function loginWithFacebook() {
@@ -193,6 +233,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.getElementById('profilePic').src = user.picture.data.url;
       }
       profile.className = 'profile show';
+      document.getElementById('profileActions').className = 'profile-actions show';
       document.getElementById('fbLoginBtn').style.display = 'none';
 
       // authResponse.accessToken here is a short-lived client-side token
