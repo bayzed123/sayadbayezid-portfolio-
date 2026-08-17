@@ -816,44 +816,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // Access token বা Pixel token এখানে বসানো লাগবে না — সেগুলো Worker-এর Cloudflare
   // secret-এ থাকবে, শুধু এই একটা URL কনফার্ম করলেই ট্র্যাকিং লাইভ হয়ে যাবে।
   // ==========================================================================
-  const TRACK_ENDPOINT = 'https://REPLACE-WITH-YOUR-WORKER-URL/api/track';
+  const TRACK_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/track';
 
   function getCookie(name) {
     const m = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
     return m ? m[2] : undefined;
   }
 
-  function trackEvent(eventName, customData) {
+  function trackEvent(eventName, customData, options) {
     customData = customData || {};
+    options = options || {};
     const eventId = 'evt_' + Date.now() + '_' + Math.random().toString(36).slice(2, 9);
 
-    // 1) Browser Pixel — same eventID so Meta can de-dupe against the server-side copy
+    // The browser and server copies use the same event name and event ID.
+    // Standard Purchase events use fbq('track'), not trackCustom.
     if (typeof fbq === 'function') {
-      fbq('trackCustom', eventName, customData, { eventID: eventId });
+      if (options.standard) fbq('track', eventName, customData, { eventID: eventId });
+      else fbq('trackCustom', eventName, customData, { eventID: eventId });
     }
 
-    // 2) Server-side Conversions API relay — token never touches this page.
-    //    bayezid-agency-api Worker-এর /api/track নিরাপদে কল করে, সেখান থেকে token দিয়ে
-    //    Meta-কে পাঠানো হয়। এই fetch এ কোনো secret নেই।
-    if (TRACK_ENDPOINT.indexOf('REPLACE-WITH-YOUR-WORKER-URL') === -1) {
-      const userData = {};
-      const fbp = getCookie('_fbp');
-      const fbc = getCookie('_fbc');
-      if (fbp) userData.fbp = fbp;
-      if (fbc) userData.fbc = fbc;
+    const userData = options.userData || {};
+    const fbp = getCookie('_fbp');
+    const fbc = getCookie('_fbc');
+    if (fbp) userData.fbp = fbp;
+    if (fbc) userData.fbc = fbc;
 
-      fetch(TRACK_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          event_name: eventName,
-          event_id: eventId,
-          event_source_url: window.location.href,
-          user_data: userData,
-          custom_data: customData
-        })
-      }).catch(function () { /* tracking failure should never block the user */ });
-    }
+    // The Worker owns the Meta token and hashes em/ph before forwarding them.
+    fetch(TRACK_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        event_name: eventName,
+        event_id: eventId,
+        event_source_url: window.location.href,
+        user_data: userData,
+        custom_data: customData,
+        ...(options.attributionData ? { attribution_data: options.attributionData } : {}),
+        ...(options.originalEventData ? { original_event_data: options.originalEventData } : {})
+      }),
+      keepalive: true
+    }).catch(function () { /* tracking failure should never block the user */ });
   }
 
   function copyText(text, btn) {
@@ -1071,7 +1073,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.getElementById('dollar-success').classList.remove('hidden');
     document.getElementById('dollar-success').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
-    trackEvent('Lead', { content_name: 'Dollar Sale Order', value: total, currency: 'BDT' });
+    // This page treats a submitted transaction ID plus payment screenshot as
+    // the completed purchase confirmation for this manually verified product.
+    // If payment is later moved to a server-confirmed checkout, fire Purchase
+    // from that confirmation instead to avoid counting unverified orders.
+    const charge = ['bkash', 'nagad', 'rocket'].includes(dollarSelectedMethod)
+      ? Math.round(total * 16 / 1000)
+      : 0;
+    const paidValue = total + charge;
+    trackEvent('Purchase', {
+      content_name: 'Dollar Sale Order',
+      content_type: 'product',
+      content_ids: ['dollar-sale'],
+      contents: [{ id: 'dollar-sale', quantity: 1, item_price: amount }],
+      value: paidValue,
+      currency: 'BDT',
+      order_id: txnId
+    }, {
+      standard: true,
+      userData: { em: email, ph: whatsapp },
+      originalEventData: {
+        event_name: 'Purchase',
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: txnId,
+        order_id: txnId
+      }
+    });
   }
 
   function copyDollarOrder() {
