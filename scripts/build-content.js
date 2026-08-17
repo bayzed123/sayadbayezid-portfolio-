@@ -44,6 +44,26 @@ const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
+const GTM_HEAD = `<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HY9255GJYE');
+</script>
+<!-- End Google tag (gtag.js) -->`;
+const GTM_NOSCRIPT = `<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->`;
 const CONTENT_TYPES = [
   { dir: "case-studies", label: "Case study", indexTitle: "Case Studies", indexPage: "case-studies.html" },
   { dir: "news", label: "News", indexTitle: "News", indexPage: "news.html" },
@@ -62,6 +82,7 @@ function readHead(title, description) {
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
+${GTM_HEAD}
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>${escapeHtml(title)}</title>
@@ -87,6 +108,7 @@ src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
 /></noscript>
 </head>
 <body>
+  ${GTM_NOSCRIPT}
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
