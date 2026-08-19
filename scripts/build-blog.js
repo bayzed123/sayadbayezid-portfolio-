@@ -19,7 +19,7 @@ const BLOG_OUTPUT_DIR = path.join(__dirname, '../blog');
 const TEMPLATES_DIR = path.join(__dirname, '../templates');
 const INCLUDES_DIR = path.join(__dirname, '../_includes');
 const AUTHOR_NAME = 'Sayad Md Bayezid Hosan';
-const SITE_URL = 'https://www.sayadbayezid.com';
+const SITE_URL = 'https://sayadbayezid.com';
 const GTM_HEAD = `<!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -373,7 +373,7 @@ function generatePostHTML(post) {
         </section>
     </main>
 
-    <footer id="main-footer"></footer>
+    <footer id="main-footer"><div class="footer-showcase-link"><a href="/proofline-atlas.html">Proofline Atlas — Successful Deliveries</a></div></footer>
 
     <div id="shareModal" class="share-modal">
         <div class="share-modal-content">
@@ -547,7 +547,7 @@ function generateArchiveHTML() {
 
     </main>
 
-    <footer id="main-footer"></footer>
+    <footer id="main-footer"><div class="footer-showcase-link"><a href="/proofline-atlas.html">Proofline Atlas — Successful Deliveries</a></div></footer>
 </body>
 </html>`;
 

@@ -84,7 +84,8 @@ function escapeHtml(str) {
   return String(str ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
 
-function readHead(title, description) {
+function readHead(title, description, canonicalPath) {
+  const canonicalUrl = `https://sayadbayezid.com${canonicalPath || "/"}`;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,6 +94,16 @@ ${GTM_HEAD}
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="${escapeHtml(canonicalUrl)}" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Connect with Bayezid" />
+<meta property="og:title" content="${escapeHtml(title)}" />
+<meta property="og:description" content="${escapeHtml(description)}" />
+<meta property="og:url" content="${escapeHtml(canonicalUrl)}" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtml(title)}" />
+<meta name="twitter:description" content="${escapeHtml(description)}" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -170,6 +181,7 @@ function readFooter() {
         </div>
       </div>
     </div>
+    <div class="footer-showcase-link"><a href="/proofline-atlas.html">Proofline Atlas — Successful Deliveries</a></div>
     <div class="footer-legal">
       <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
     </div>
@@ -218,7 +230,7 @@ function renderMarkdown(markdownFile, slugDir) {
   return html;
 }
 
-function renderEntryPage(meta, type, slugDir) {
+function renderEntryPage(meta, type, slugDir, slug) {
   const bodyHtml = (meta.body || [])
     .map((para) => `      <p>${escapeHtml(para)}</p>`)
     .join("\\n");
@@ -227,7 +239,7 @@ function renderEntryPage(meta, type, slugDir) {
     : bodyHtml;
   const gallery = meta.markdown ? "" : imageGallery(meta);
 
-  return readHead(`${meta.title} — Connect with Bayezid`, meta.summary || meta.title) + `
+  return readHead(`${meta.title} — Connect with Bayezid`, meta.summary || meta.title, `/${type.dir}/${slug}.html`) + `
     <article class="content-page">
       <span class="section-eyebrow">${escapeHtml(type.label)}${meta.date ? " · " + escapeHtml(meta.date) : ""}</span>
       <h1>${escapeHtml(meta.title)}</h1>
@@ -254,7 +266,7 @@ function renderIndexPage(type, entries) {
     )
     .join("\n");
 
-  return readHead(`${type.indexTitle} — Connect with Bayezid`, `${type.indexTitle} from Connect with Bayezid.`) + `
+  return readHead(`${type.indexTitle} — Connect with Bayezid`, `${type.indexTitle} from Connect with Bayezid.`, `/${type.indexPage}`) + `
     <section class="page-hero">
       <span class="section-eyebrow reveal" data-reveal>${escapeHtml(type.indexTitle)}</span>
       <h1 class="reveal" data-reveal>${escapeHtml(type.indexTitle)}</h1>
@@ -305,7 +317,7 @@ function buildContentType(type) {
       }
     }
 
-    fs.writeFileSync(path.join(outDir, `${slug}.html`), renderEntryPage(meta, type, slugDir));
+    fs.writeFileSync(path.join(outDir, `${slug}.html`), renderEntryPage(meta, type, slugDir, slug));
     entries.push({ slug, meta });
     console.log(`  ✓ ${type.dir}/${slug}.html`);
   }
