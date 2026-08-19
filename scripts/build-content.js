@@ -137,7 +137,7 @@ src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
         <a href="/work.html">Work</a>
-        <a href="/case-studies.html">Case Studies</a>
+        <a href="/case-studies/">Case Studies</a>
         <a href="/about.html">About</a>
         <a href="/client-login.html" class="nav-login-link">Client Login</a>
         <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
@@ -165,7 +165,7 @@ function readFooter() {
           <span class="footer-heading">Work</span>
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
-          <a href="/case-studies.html">Case studies</a>
+          <a href="/case-studies/">Case studies</a>
         </div>
         <div>
           <span class="footer-heading">Studio</span>
@@ -223,12 +223,30 @@ function renderMarkdown(markdownFile, slugDir) {
   }
 
   let html = marked.parse(fs.readFileSync(markdownPath, "utf8"));
+  html = html.replace(/src=["'](?:\.\/)?images-fullpage\//g, 'src="/case-studies/images-fullpage/');
   html = html.replace(/src=["'](?:\.\/)?images\//g, 'src="/case-studies/images/');
   html = html.replace(/<img\s+([^>]*?)>/g, (full, attrs) => {
-    if (!/\bloading=/.test(attrs)) attrs += ' loading="lazy"';
+    if (!/\bloading=/.test(attrs)) {
+      const loading = /images-fullpage\//.test(attrs) ? 'eager' : 'lazy';
+      attrs += ` loading="${loading}"`;
+    }
     return `<img ${attrs}>`;
   });
   return html;
+}
+
+function renderProjectProof(meta) {
+  const facts = [
+    meta.liveUrl ? `<div><span>Live demo</span><a href="${escapeHtml(meta.liveUrl)}" target="_blank" rel="noopener">${escapeHtml(meta.liveUrl.replace(/^https?:\/\//, ""))}</a></div>` : "",
+    meta.role ? `<div><span>Role</span><strong>${escapeHtml(meta.role)}</strong></div>` : "",
+    meta.stack ? `<div><span>Stack</span><strong>${escapeHtml(meta.stack)}</strong></div>` : ""
+  ].filter(Boolean).join("\\n");
+  const highlights = (meta.highlights || []).map((point) => `<li>${escapeHtml(point)}</li>`).join("\\n");
+  if (!facts && !highlights) return "";
+  return `<aside class="case-study-proof" aria-label="Project delivery summary">
+    ${facts ? `<div class="case-study-proof-facts">${facts}</div>` : ""}
+    ${highlights ? `<div class="case-study-proof-highlights"><span class="case-study-proof-label">What was delivered</span><ul>${highlights}</ul></div>` : ""}
+  </aside>`;
 }
 
 function renderEntryPage(meta, type, slugDir, slug) {
@@ -244,6 +262,7 @@ function renderEntryPage(meta, type, slugDir, slug) {
     <article class="content-page">
       <span class="section-eyebrow">${escapeHtml(type.label)}${meta.date ? " · " + escapeHtml(meta.date) : ""}</span>
       <h1>${escapeHtml(meta.title)}</h1>
+      ${renderProjectProof(meta)}
 ${richBody}
       ${embedBlock(meta)}
       ${gallery}
@@ -251,29 +270,40 @@ ${richBody}
 ` + readFooter();
 }
 
-function renderIndexPage(type, entries) {
+function renderIndexPage(type, entries, canonicalPath = `/${type.dir}/`) {
   const cards = entries
-    .map(
-      (e) => `
-        <a href="/${type.dir}/${e.slug}.html" class="work-row reveal" data-reveal>
-          <div class="work-media">${e.meta.cover ? `<img src="/${type.dir}/${escapeHtml(e.meta.cover)}" alt="" loading="lazy" />` : ""}<div class="work-media-glow"></div></div>
-          <div class="work-copy">
-            <span class="work-tag">${escapeHtml(type.label)}${e.meta.date ? " · " + escapeHtml(e.meta.date) : ""}</span>
-            <h3>${escapeHtml(e.meta.title)}</h3>
+    .map((e) => {
+      const href = `/${type.dir}/${e.slug}.html`;
+      const highlights = (e.meta.highlights || []).slice(0, 3).map((point) => `<li>${escapeHtml(point)}</li>`).join("");
+      const liveLink = e.meta.liveUrl ? `<a href="${escapeHtml(e.meta.liveUrl)}" target="_blank" rel="noopener" class="case-study-card-live">Live demo ↗</a>` : "";
+      return `
+        <article class="case-study-index-card reveal" data-reveal>
+          <a href="${href}" class="case-study-card-media" aria-label="Read ${escapeHtml(e.meta.title)}">
+            ${e.meta.cover ? `<img src="/${type.dir}/${escapeHtml(e.meta.cover)}" alt="${escapeHtml(e.meta.title)} cover" loading="eager" />` : `<span class="case-study-card-placeholder">${escapeHtml(type.label)}</span>`}
+          </a>
+          <div class="case-study-card-body">
+            <span class="case-study-card-label">${escapeHtml(e.meta.category || type.label)}${e.meta.date ? " · " + escapeHtml(e.meta.date) : ""}</span>
+            <h2><a href="${href}">${escapeHtml(e.meta.title)}</a></h2>
             <p>${escapeHtml(e.meta.summary || "")}</p>
+            ${highlights ? `<ul class="case-study-card-highlights">${highlights}</ul>` : ""}
+            <div class="case-study-card-actions"><a href="${href}" class="case-study-card-read">Read case study <span class="btn-arrow">→</span></a>${liveLink}</div>
           </div>
-          <span class="work-link">Read <span class="btn-arrow">→</span></span>
-        </a>`
-    )
+        </article>`;
+    })
     .join("\n");
 
-  return readHead(`${type.indexTitle} — Connect with Bayezid`, `${type.indexTitle} from Connect with Bayezid.`, `/${type.indexPage}`) + `
-    <section class="page-hero">
-      <span class="section-eyebrow reveal" data-reveal>${escapeHtml(type.indexTitle)}</span>
+  const pageDescription = type.dir === "case-studies"
+    ? "Explore every published case study from Connect with Bayezid, with live demos, delivery points, and the systems behind each project."
+    : `${type.indexTitle} from Connect with Bayezid.`;
+
+  return readHead(`${type.indexTitle} — Connect with Bayezid`, pageDescription, canonicalPath) + `
+    <section class="page-hero case-study-index-hero">
+      <span class="section-eyebrow reveal" data-reveal>${escapeHtml(type.indexTitle)} · published work</span>
       <h1 class="reveal" data-reveal>${escapeHtml(type.indexTitle)}</h1>
+      <p class="page-hero-lede">${type.dir === "case-studies" ? "A dynamic record of shipped systems, visible outcomes, and the decisions that made each delivery ready for real people." : "Published updates from Connect with Bayezid."}</p>
     </section>
-    <section class="section work">
-      <div class="work-list">
+    <section class="section case-study-index-section">
+      <div class="case-study-index-grid">
 ${cards || '        <p style="text-align:center;color:var(--text-soft)">Nothing published here yet.</p>'}
       </div>
     </section>
@@ -318,14 +348,17 @@ function buildContentType(type) {
       }
     }
 
-    fs.writeFileSync(path.join(outDir, `${slug}.html`), renderEntryPage(meta, type, slugDir, slug));
+    fs.writeFileSync(path.join(outDir, `${slug}.html`), renderEntryPage(meta, type, slugDir, slug).replace(/^[ \t]+$/gm, ""));
     entries.push({ slug, meta });
     console.log(`  ✓ ${type.dir}/${slug}.html`);
   }
 
   entries.sort((a, b) => (b.meta.date || "").localeCompare(a.meta.date || ""));
-  fs.writeFileSync(path.join(ROOT, type.indexPage), renderIndexPage(type, entries));
-  console.log(`  ✓ ${type.indexPage} (${entries.length} entries)`);
+    const indexHtml = renderIndexPage(type, entries, `/${type.dir}/`).replace(/^[ \t]+$/gm, "");
+    fs.writeFileSync(path.join(ROOT, type.indexPage), indexHtml);
+    fs.mkdirSync(path.join(ROOT, type.dir), { recursive: true });
+    fs.writeFileSync(path.join(ROOT, type.dir, "index.html"), indexHtml);
+    console.log(`  ✓ ${type.indexPage} and ${type.dir}/index.html (${entries.length} entries)`);
 }
 
 console.log("Building content...");

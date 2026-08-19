@@ -4,6 +4,16 @@
   "summary": "How a gadget retailer in Savar moved from phone calls, Facebook messages and a stock notebook to a complete mobile-first shop with payments, courier booking, inventory, profit and Bangla documentation.",
   "markdown": "CASE-STUDY.md",
   "cover": "images/02-home-welcome-banner.png",
+  "liveUrl": "https://arifgadget.store",
+  "role": "Sole developer — architecture, backend, frontend, design, DevOps and documentation",
+  "stack": "React 18 · TypeScript · Vite · Hono · Cloudflare Workers, D1, R2, KV, Pages",
+  "category": "Commerce platform",
+  "highlights": [
+    "Mobile-first storefront with real catalog, product gallery, cart and checkout",
+    "Payments, courier booking, order tracking, customer accounts and printable invoices",
+    "Dashboard analytics, margin arithmetic, stock ledger, inventory alerts and customer operations",
+    "Bangla staff handbook, editable content, live preview and Cloudflare edge deployment"
+  ],
   "images": [
     "images/00-architecture.svg",
     "images/01-offer-popup-on-arrival.png",
@@ -58,6 +68,28 @@
     "images/50-admin-content-manager.png",
     "images/51-admin-settings.png",
     "images/52-admin-bangla-guide.png",
-    "images/53-admin-bangla-guide-photos.png"
+    "images/53-admin-bangla-guide-photos.png",
+    "images-fullpage/L01-home-full-page.png",
+    "images-fullpage/L02-catalogue-full-page.png",
+    "images-fullpage/L03-product-full-page.png",
+    "images-fullpage/L04-track-order-full-page.png",
+    "images-fullpage/L05-blog-full-page.png",
+    "images-fullpage/L06-press-full-page.png",
+    "images-fullpage/L07-policy-full-page.png",
+    "images-fullpage/L08-about-full-page.png",
+    "images-fullpage/L09-cart-full-page.png",
+    "images-fullpage/L10-checkout-full-page.png",
+    "images-fullpage/L11-home-dark-full-page.png",
+    "images-fullpage/L12-mobile-home-full-page.png",
+    "images-fullpage/L13-mobile-catalogue-full-page.png",
+    "images-fullpage/L14-mobile-product-full-page.png",
+    "images-fullpage/L15-admin-dashboard-full-page.png",
+    "images-fullpage/L16-admin-orders-full-page.png",
+    "images-fullpage/L17-admin-products-full-page.png",
+    "images-fullpage/L18-admin-inventory-full-page.png",
+    "images-fullpage/L19-admin-customers-full-page.png",
+    "images-fullpage/L20-admin-settings-full-page.png",
+    "images-fullpage/L21-admin-bangla-guide-full-page.png",
+    "images-fullpage/L22-admin-product-editor-full-page.png"
   ]
 }

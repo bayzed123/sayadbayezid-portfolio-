@@ -1,3 +1,5 @@
+# Arif Gadgets — a complete e-commerce platform, built on Cloudflare
+
 **A gadget retailer in Savar, Dhaka needed a real shop. Not a marketplace stall, not a Facebook page with a comment thread for orders — a shop that takes money, books couriers, tracks stock and profit, and can be run by staff who have never used an admin panel before.**
 
 This is what was built, how it works, and why each decision was made.
@@ -213,8 +215,6 @@ The whole application — storefront and dashboard together — is **131 kB gzip
 
 This is where most of the thinking went, because this is what the client actually uses.
 
-![Staff sign-in](images/33-admin-sign-in.png)
-
 ![Dashboard KPIs](images/34-admin-dashboard-kpis.png)
 
 Revenue, gross profit, orders, average order value — each against the previous period. Stock on hand at cost, unrealised profit if everything sells at list, what needs restocking.
@@ -224,8 +224,6 @@ Revenue, gross profit, orders, average order value — each against the previous
 Every figure is derived from the order and stock ledgers at the moment the page loads. Nothing is a stored total that can drift from the rows it summarises.
 
 **Orders.** The list shows order number, invoice number, customer, units, total, profit, margin, status and courier state. Opening one shows what was actually needed to fulfil it:
-
-![Orders list](images/38-admin-orders-list.png)
 
 ![Order with delivery details](images/39-admin-order-delivery-details.png)
 
@@ -284,8 +282,6 @@ Deliveries go through **Steadfast Courier**. The integration is deliberately nar
 **Except when it does not.** Steadfast reports some outcomes as *awaiting approval* — their accounts team has not signed off yet. Those are shown but move nothing, because recognising revenue or restocking inventory on a decision that can still be reversed is how books stop balancing. Partial deliveries do not move either: someone has to decide what was actually sold.
 
 ![Courier panel](images/36-admin-courier-panel.png)
-
-![Top products and alerts](images/37-admin-top-products-and-alerts.png)
 
 **Money crosses one boundary, explicitly.** This codebase counts in poisha; Steadfast counts in taka. That conversion happens in exactly one function, with a comment explaining that sending 145000 where 1450 was meant would ask the courier to collect a hundred times the order value from the customer. Orders already paid by bKash book at zero, so nobody is charged twice.
 
@@ -404,3 +400,60 @@ Every feature was verified by driving a real browser against the real applicatio
 **Client:** Arif Gadgets, Savar, Dhaka — [arifgadget.store](https://arifgadget.store)
 
 *Every screenshot in this case study was captured with Playwright driving a real Chromium browser against the running application. Nothing was mocked, staged in a design tool, or retouched.*
+
+
+---
+
+## 19. Full-page route views
+
+The following long views show the delivered experience from top to bottom instead of only isolated frames. They make the scope easy to inspect: storefront routes, customer flows, content pages, mobile views, and the staff dashboard are all part of the same shipped system.
+
+### Storefront and customer routes
+
+![Full-page home](images-fullpage/L01-home-full-page.png)
+
+![Full-page catalogue](images-fullpage/L02-catalogue-full-page.png)
+
+![Full-page product](images-fullpage/L03-product-full-page.png)
+
+![Full-page track order](images-fullpage/L04-track-order-full-page.png)
+
+![Full-page blog](images-fullpage/L05-blog-full-page.png)
+
+![Full-page press](images-fullpage/L06-press-full-page.png)
+
+![Full-page policy](images-fullpage/L07-policy-full-page.png)
+
+![Full-page about](images-fullpage/L08-about-full-page.png)
+
+![Full-page cart](images-fullpage/L09-cart-full-page.png)
+
+![Full-page checkout](images-fullpage/L10-checkout-full-page.png)
+
+### Themes and mobile delivery
+
+![Full-page dark home](images-fullpage/L11-home-dark-full-page.png)
+
+![Full-page mobile home](images-fullpage/L12-mobile-home-full-page.png)
+
+![Full-page mobile catalogue](images-fullpage/L13-mobile-catalogue-full-page.png)
+
+![Full-page mobile product](images-fullpage/L14-mobile-product-full-page.png)
+
+### Staff dashboard and operations
+
+![Full-page admin dashboard](images-fullpage/L15-admin-dashboard-full-page.png)
+
+![Full-page admin orders](images-fullpage/L16-admin-orders-full-page.png)
+
+![Full-page admin products](images-fullpage/L17-admin-products-full-page.png)
+
+![Full-page admin inventory](images-fullpage/L18-admin-inventory-full-page.png)
+
+![Full-page admin customers](images-fullpage/L19-admin-customers-full-page.png)
+
+![Full-page admin settings](images-fullpage/L20-admin-settings-full-page.png)
+
+![Full-page Bangla guide](images-fullpage/L21-admin-bangla-guide-full-page.png)
+
+![Full-page product editor](images-fullpage/L22-admin-product-editor-full-page.png)

@@ -574,7 +574,7 @@ function updateSitemap(posts) {
   let sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
   const today = new Date().toISOString().split('T')[0];
 
-  const urlRegex = /<url>[\s\S]*?<loc>https:\/\/www\.sayadbayezid\.com\/blog\/[\s\S]*?<\/url>/g;
+  const urlRegex = /\s*<url>\s*<loc>https:\/\/sayadbayezid\.com\/blog\/[^<]*<\/loc>[\s\S]*?<\/url>/g;
   sitemapContent = sitemapContent.replace(urlRegex, '');
 
   sitemapContent = sitemapContent.replace(/\n\s*\n/g, '\n');

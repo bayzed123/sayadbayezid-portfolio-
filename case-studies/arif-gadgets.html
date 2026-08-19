@@ -67,7 +67,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
         <a href="/work.html">Work</a>
-        <a href="/case-studies.html">Case Studies</a>
+        <a href="/case-studies/">Case Studies</a>
         <a href="/about.html">About</a>
         <a href="/client-login.html" class="nav-login-link">Client Login</a>
         <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
@@ -82,7 +82,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <article class="content-page">
       <span class="section-eyebrow">Case study · 2026-08-20</span>
       <h1>Arif Gadgets — a real shop for Savar, built to run itself</h1>
-<div class="content-rich"><p><strong>A gadget retailer in Savar, Dhaka needed a real shop. Not a marketplace stall, not a Facebook page with a comment thread for orders — a shop that takes money, books couriers, tracks stock and profit, and can be run by staff who have never used an admin panel before.</strong></p>
+      <aside class="case-study-proof" aria-label="Project delivery summary">
+    <div class="case-study-proof-facts"><div><span>Live demo</span><a href="https://arifgadget.store" target="_blank" rel="noopener">arifgadget.store</a></div>\n<div><span>Role</span><strong>Sole developer — architecture, backend, frontend, design, DevOps and documentation</strong></div>\n<div><span>Stack</span><strong>React 18 · TypeScript · Vite · Hono · Cloudflare Workers, D1, R2, KV, Pages</strong></div></div>
+    <div class="case-study-proof-highlights"><span class="case-study-proof-label">What was delivered</span><ul><li>Mobile-first storefront with real catalog, product gallery, cart and checkout</li>\n<li>Payments, courier booking, order tracking, customer accounts and printable invoices</li>\n<li>Dashboard analytics, margin arithmetic, stock ledger, inventory alerts and customer operations</li>\n<li>Bangla staff handbook, editable content, live preview and Cloudflare edge deployment</li></ul></div>
+  </aside>
+<div class="content-rich"><h1>Arif Gadgets — a complete e-commerce platform, built on Cloudflare</h1>
+<p><strong>A gadget retailer in Savar, Dhaka needed a real shop. Not a marketplace stall, not a Facebook page with a comment thread for orders — a shop that takes money, books couriers, tracks stock and profit, and can be run by staff who have never used an admin panel before.</strong></p>
 <p>This is what was built, how it works, and why each decision was made.</p>
 <table>
 <thead>
@@ -245,13 +250,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <hr>
 <h2>9. The dashboard</h2>
 <p>This is where most of the thinking went, because this is what the client actually uses.</p>
-<p><img src="/case-studies/images/33-admin-sign-in.png" alt="Staff sign-in" loading="lazy"></p>
 <p><img src="/case-studies/images/34-admin-dashboard-kpis.png" alt="Dashboard KPIs" loading="lazy"></p>
 <p>Revenue, gross profit, orders, average order value — each against the previous period. Stock on hand at cost, unrealised profit if everything sells at list, what needs restocking.</p>
 <p><img src="/case-studies/images/35-admin-revenue-and-pipeline.png" alt="Revenue and pipeline" loading="lazy"></p>
 <p>Every figure is derived from the order and stock ledgers at the moment the page loads. Nothing is a stored total that can drift from the rows it summarises.</p>
 <p><strong>Orders.</strong> The list shows order number, invoice number, customer, units, total, profit, margin, status and courier state. Opening one shows what was actually needed to fulfil it:</p>
-<p><img src="/case-studies/images/38-admin-orders-list.png" alt="Orders list" loading="lazy"></p>
 <p><img src="/case-studies/images/39-admin-order-delivery-details.png" alt="Order with delivery details" loading="lazy"></p>
 <p>Name; the phone as a tap-to-call link, because staff open this standing next to the parcel; the full street address; which delivery zone was charged; the customer&#39;s own note highlighted, because &quot;please call before delivery&quot; is useless if nobody sees it; how it was paid and exactly what the courier should collect. A <strong>Copy</strong> button hands the whole block over ready to paste into a courier form.</p>
 <p>An order with no address says so in red and says to phone the customer — that order cannot be booked with the courier at all, and the sooner someone knows the better.</p>
@@ -281,7 +284,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p><strong>The courier is the authority on what happened.</strong> A status refresh asks Steadfast and moves the order to the matching checkpoint. Delivered means delivered; returned restocks every unit automatically and reverses the revenue.</p>
 <p><strong>Except when it does not.</strong> Steadfast reports some outcomes as <em>awaiting approval</em> — their accounts team has not signed off yet. Those are shown but move nothing, because recognising revenue or restocking inventory on a decision that can still be reversed is how books stop balancing. Partial deliveries do not move either: someone has to decide what was actually sold.</p>
 <p><img src="/case-studies/images/36-admin-courier-panel.png" alt="Courier panel" loading="lazy"></p>
-<p><img src="/case-studies/images/37-admin-top-products-and-alerts.png" alt="Top products and alerts" loading="lazy"></p>
 <p><strong>Money crosses one boundary, explicitly.</strong> This codebase counts in poisha; Steadfast counts in taka. That conversion happens in exactly one function, with a comment explaining that sending 145000 where 1450 was meant would ask the courier to collect a hundred times the order value from the customer. Orders already paid by bKash book at zero, so nobody is charged twice.</p>
 <p><strong>When it fails, it says why.</strong> Four different problems — keys never set, keys rejected, courier erroring, courier unreachable — need four different fixes and used to look identical. The dashboard now reports which one it is, what Steadfast itself replied, what to do about it, and whether each key is present with its length. Never a character of its value.</p>
 <hr>
@@ -352,9 +354,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <strong>Development partner:</strong> <a href="https://smartgentools.com">SmartGen</a>
 <strong>Client:</strong> Arif Gadgets, Savar, Dhaka — <a href="https://arifgadget.store">arifgadget.store</a></p>
 <p><em>Every screenshot in this case study was captured with Playwright driving a real Chromium browser against the running application. Nothing was mocked, staged in a design tool, or retouched.</em></p>
+<hr>
+<h2>19. Full-page route views</h2>
+<p>The following long views show the delivered experience from top to bottom instead of only isolated frames. They make the scope easy to inspect: storefront routes, customer flows, content pages, mobile views, and the staff dashboard are all part of the same shipped system.</p>
+<h3>Storefront and customer routes</h3>
+<p><img src="/case-studies/images-fullpage/L01-home-full-page.png" alt="Full-page home" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L02-catalogue-full-page.png" alt="Full-page catalogue" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L03-product-full-page.png" alt="Full-page product" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L04-track-order-full-page.png" alt="Full-page track order" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L05-blog-full-page.png" alt="Full-page blog" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L06-press-full-page.png" alt="Full-page press" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L07-policy-full-page.png" alt="Full-page policy" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L08-about-full-page.png" alt="Full-page about" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L09-cart-full-page.png" alt="Full-page cart" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L10-checkout-full-page.png" alt="Full-page checkout" loading="eager"></p>
+<h3>Themes and mobile delivery</h3>
+<p><img src="/case-studies/images-fullpage/L11-home-dark-full-page.png" alt="Full-page dark home" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L12-mobile-home-full-page.png" alt="Full-page mobile home" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L13-mobile-catalogue-full-page.png" alt="Full-page mobile catalogue" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L14-mobile-product-full-page.png" alt="Full-page mobile product" loading="eager"></p>
+<h3>Staff dashboard and operations</h3>
+<p><img src="/case-studies/images-fullpage/L15-admin-dashboard-full-page.png" alt="Full-page admin dashboard" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L16-admin-orders-full-page.png" alt="Full-page admin orders" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L17-admin-products-full-page.png" alt="Full-page admin products" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L18-admin-inventory-full-page.png" alt="Full-page admin inventory" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L19-admin-customers-full-page.png" alt="Full-page admin customers" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L20-admin-settings-full-page.png" alt="Full-page admin settings" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L21-admin-bangla-guide-full-page.png" alt="Full-page Bangla guide" loading="eager"></p>
+<p><img src="/case-studies/images-fullpage/L22-admin-product-editor-full-page.png" alt="Full-page product editor" loading="eager"></p>
 </div>
-      
-      
+
+
     </article>
 
   </main>
@@ -369,7 +399,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="footer-heading">Work</span>
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
-          <a href="/case-studies.html">Case studies</a>
+          <a href="/case-studies/">Case studies</a>
         </div>
         <div>
           <span class="footer-heading">Studio</span>
