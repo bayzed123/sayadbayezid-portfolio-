@@ -240,8 +240,8 @@ function renderProjectProof(meta) {
     meta.liveUrl ? `<div><span>Live demo</span><a href="${escapeHtml(meta.liveUrl)}" target="_blank" rel="noopener">${escapeHtml(meta.liveUrl.replace(/^https?:\/\//, ""))}</a></div>` : "",
     meta.role ? `<div><span>Role</span><strong>${escapeHtml(meta.role)}</strong></div>` : "",
     meta.stack ? `<div><span>Stack</span><strong>${escapeHtml(meta.stack)}</strong></div>` : ""
-  ].filter(Boolean).join("\\n");
-  const highlights = (meta.highlights || []).map((point) => `<li>${escapeHtml(point)}</li>`).join("\\n");
+  ].filter(Boolean).join("\n");
+  const highlights = (meta.highlights || []).map((point) => `<li>${escapeHtml(point)}</li>`).join("\n");
   if (!facts && !highlights) return "";
   return `<aside class="case-study-proof" aria-label="Project delivery summary">
     ${facts ? `<div class="case-study-proof-facts">${facts}</div>` : ""}
@@ -252,7 +252,7 @@ function renderProjectProof(meta) {
 function renderEntryPage(meta, type, slugDir, slug) {
   const bodyHtml = (meta.body || [])
     .map((para) => `      <p>${escapeHtml(para)}</p>`)
-    .join("\\n");
+    .join("\n");
   const richBody = meta.markdown
     ? `<div class="content-rich">${renderMarkdown(meta.markdown, slugDir)}</div>`
     : bodyHtml;
@@ -277,7 +277,7 @@ function renderIndexPage(type, entries, canonicalPath = `/${type.dir}/`) {
       const highlights = (e.meta.highlights || []).slice(0, 3).map((point) => `<li>${escapeHtml(point)}</li>`).join("");
       const liveLink = e.meta.liveUrl ? `<a href="${escapeHtml(e.meta.liveUrl)}" target="_blank" rel="noopener" class="case-study-card-live">Live demo ↗</a>` : "";
       return `
-        <article class="case-study-index-card reveal" data-reveal>
+        <article class="case-study-index-card">
           <a href="${href}" class="case-study-card-media" aria-label="Read ${escapeHtml(e.meta.title)}">
             ${e.meta.cover ? `<img src="/${type.dir}/${escapeHtml(e.meta.cover)}" alt="${escapeHtml(e.meta.title)} cover" loading="eager" />` : `<span class="case-study-card-placeholder">${escapeHtml(type.label)}</span>`}
           </a>

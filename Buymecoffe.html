@@ -1121,14 +1121,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
     
     function copyMastercardDetails() {
-      let orderText = `নতুন ভার্চুয়াল মাস্টারকার্ড অর্ডার\n\n`;
-      orderText += `নাম: ${currentMastercardData.name}\n`;
-      orderText += `ইমেইল: ${currentMastercardData.email}\n`;
-      orderText += `হোয়াটসঅ্যাপ: ${currentMastercardData.whatsapp}\n`;
-      orderText += `জন্ম তারিখ: ${currentMastercardData.dob}\n`;
-      orderText += `Transaction ID: ${currentMastercardData.txnId}\n`;
-      orderText += `পেমেন্ট: ১৯৯ টাকা\n`;
-      orderText += `সময়: ${new Date().toLocaleString('bn-BD')}\n\n`;
+      let orderText = `নতুন ভার্চুয়াল মাস্টারকার্ড অর্ডার
+
+`;
+      orderText += `নাম: ${currentMastercardData.name}
+`;
+      orderText += `ইমেইল: ${currentMastercardData.email}
+`;
+      orderText += `হোয়াটসঅ্যাপ: ${currentMastercardData.whatsapp}
+`;
+      orderText += `জন্ম তারিখ: ${currentMastercardData.dob}
+`;
+      orderText += `Transaction ID: ${currentMastercardData.txnId}
+`;
+      orderText += `পেমেন্ট: ১৯৯ টাকা
+`;
+      orderText += `সময়: ${new Date().toLocaleString('bn-BD')}
+
+`;
       orderText += `দ্রুত কার্ড ডেলিভারি করুন!`;
       
       const textarea = document.createElement('textarea');
@@ -1476,22 +1486,43 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }
     
     function copyOrderDetails() {
-      let orderText = `🛒 NEW DOLLAR ORDER!\n\n`;
-      orderText += `👤 Name: ${currentOrderData.name}\n`;
-      orderText += `📧 Email: ${currentOrderData.email}\n`;
-      orderText += `📱 WhatsApp: ${currentOrderData.whatsapp}\n`;
-      orderText += `💳 Sender Number/Account: ${currentOrderData.senderNumber}\n\n`;
-      orderText += `💵 Dollar Amount: ${currentOrderData.dollarAmount}\n`;
-      orderText += `📊 Rate: ${currentOrderData.rate}\n`;
-      orderText += `💰 Total Price: ${currentOrderData.totalPrice}\n\n`;
-      orderText += `💳 Payment Method: ${currentOrderData.paymentMethod}\n`;
-      orderText += `🔖 Transaction ID: ${currentOrderData.txnId}\n`;
+      let orderText = `🛒 NEW DOLLAR ORDER!
+
+`;
+      orderText += `👤 Name: ${currentOrderData.name}
+`;
+      orderText += `📧 Email: ${currentOrderData.email}
+`;
+      orderText += `📱 WhatsApp: ${currentOrderData.whatsapp}
+`;
+      orderText += `💳 Sender Number/Account: ${currentOrderData.senderNumber}
+
+`;
+      orderText += `💵 Dollar Amount: ${currentOrderData.dollarAmount}
+`;
+      orderText += `📊 Rate: ${currentOrderData.rate}
+`;
+      orderText += `💰 Total Price: ${currentOrderData.totalPrice}
+
+`;
+      orderText += `💳 Payment Method: ${currentOrderData.paymentMethod}
+`;
+      orderText += `🔖 Transaction ID: ${currentOrderData.txnId}
+`;
       if (currentOrderData.chargeInfo) {
-        orderText += `⚠️ Paid with Charge: ${currentOrderData.chargeInfo}\n`;
+        orderText += `⚠️ Paid with Charge: ${currentOrderData.chargeInfo}
+`;
       }
-      orderText += `\n📝 Dollar Receiving Account:\n${currentOrderData.details}\n\n`;
-      orderText += `📸 Screenshot: ${currentOrderData.screenshot}\n`;
-      orderText += `⏰ Time: ${new Date().toLocaleString('en-US')}\n\n`;
+      orderText += `
+📝 Dollar Receiving Account:
+${currentOrderData.details}
+
+`;
+      orderText += `📸 Screenshot: ${currentOrderData.screenshot}
+`;
+      orderText += `⏰ Time: ${new Date().toLocaleString('en-US')}
+
+`;
       orderText += `⚡ Fast Delivery: 5-10 Minutes`;
       
       const textarea = document.createElement('textarea');

@@ -1071,12 +1071,26 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     dollarOrderData = { name, email, whatsapp, sender, details, amount: '$' + amount.toFixed(2), rate: rate + ' BDT/Dollar', total: total + ' BDT', method: methodNames[dollarSelectedMethod], txnId, chargeInfo, screenshot: dollarScreenshot.name };
 
-    let summary = '👤 নাম: ' + name + '\n📧 ইমেইল: ' + email + '\n📱 WhatsApp: ' + whatsapp + '\n💳 প্রেরক: ' + sender;
-    summary += '\n\n💵 পরিমাণ: $' + amount.toFixed(2) + '\n📊 রেট: ' + rate + ' BDT/Dollar\n💰 মোট: ' + total + ' BDT';
-    summary += '\n\n💳 পেমেন্ট: ' + methodNames[dollarSelectedMethod] + '\n🔖 Transaction ID: ' + txnId;
-    if (chargeInfo) summary += '\n⚠️ চার্জসহ পাঠানো হয়েছে: ' + chargeInfo;
-    summary += '\n\n📝 ডলার রিসিভ করার ঠিকানা: ' + details;
-    summary += '\n📸 স্ক্রিনশট: ' + dollarScreenshot.name;
+    let summary = '👤 নাম: ' + name + '
+📧 ইমেইল: ' + email + '
+📱 WhatsApp: ' + whatsapp + '
+💳 প্রেরক: ' + sender;
+    summary += '
+
+💵 পরিমাণ: $' + amount.toFixed(2) + '
+📊 রেট: ' + rate + ' BDT/Dollar
+💰 মোট: ' + total + ' BDT';
+    summary += '
+
+💳 পেমেন্ট: ' + methodNames[dollarSelectedMethod] + '
+🔖 Transaction ID: ' + txnId;
+    if (chargeInfo) summary += '
+⚠️ চার্জসহ পাঠানো হয়েছে: ' + chargeInfo;
+    summary += '
+
+📝 ডলার রিসিভ করার ঠিকানা: ' + details;
+    summary += '
+📸 স্ক্রিনশট: ' + dollarScreenshot.name;
 
     document.getElementById('d-order-summary').textContent = summary;
     document.getElementById('dollar-success').classList.remove('hidden');
@@ -1111,8 +1125,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   function copyDollarOrder() {
-    let text = '🛒 নতুন Dollar অর্ডার!\n\n' + document.getElementById('d-order-summary').textContent;
-    text += '\n\n⏰ সময়: ' + new Date().toLocaleString('en-US');
+    let text = '🛒 নতুন Dollar অর্ডার!
+
+' + document.getElementById('d-order-summary').textContent;
+    text += '
+
+⏰ সময়: ' + new Date().toLocaleString('en-US');
 
     const ta = document.createElement('textarea');
     ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';

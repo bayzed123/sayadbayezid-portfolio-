@@ -810,23 +810,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function getOrderMessage() {
       if (!lastOrderData) return '';
       
-      return `🛒 *NEW ORDER*\n\n` +
-        `━━━━━━━━━━━━━━━━━\n` +
-        `📋 Order ID: ${lastOrderData.order_id}\n` +
-        `📌 Service: ${lastOrderData.service}\n` +
-        `📊 Quantity: ${lastOrderData.quantity}\n` +
-        `💰 Price: ${lastOrderData.price}\n` +
-        `━━━━━━━━━━━━━━━━━\n\n` +
-        `👤 Name: ${lastOrderData.name}\n` +
-        `📧 Email: ${lastOrderData.email}\n` +
-        `📞 Phone: ${lastOrderData.phone || 'N/A'}\n` +
-        `🔗 Link: ${lastOrderData.link}\n\n` +
-        `💳 *PAYMENT INFO*\n` +
-        `━━━━━━━━━━━━━━━━━\n` +
-        `💸 Method: ${lastOrderData.payment_method}\n` +
-        `🆔 TrxID: ${lastOrderData.transaction_id}\n` +
-        `📸 Screenshot: ${lastOrderData.payment_screenshot || 'Not provided'}\n\n` +
-        `⏰ ${new Date().toLocaleString()}\n` +
+      return `🛒 *NEW ORDER*
+
+` +
+        `━━━━━━━━━━━━━━━━━
+` +
+        `📋 Order ID: ${lastOrderData.order_id}
+` +
+        `📌 Service: ${lastOrderData.service}
+` +
+        `📊 Quantity: ${lastOrderData.quantity}
+` +
+        `💰 Price: ${lastOrderData.price}
+` +
+        `━━━━━━━━━━━━━━━━━
+
+` +
+        `👤 Name: ${lastOrderData.name}
+` +
+        `📧 Email: ${lastOrderData.email}
+` +
+        `📞 Phone: ${lastOrderData.phone || 'N/A'}
+` +
+        `🔗 Link: ${lastOrderData.link}
+
+` +
+        `💳 *PAYMENT INFO*
+` +
+        `━━━━━━━━━━━━━━━━━
+` +
+        `💸 Method: ${lastOrderData.payment_method}
+` +
+        `🆔 TrxID: ${lastOrderData.transaction_id}
+` +
+        `📸 Screenshot: ${lastOrderData.payment_screenshot || 'Not provided'}
+
+` +
+        `⏰ ${new Date().toLocaleString()}
+` +
         `🇧🇩 BD Promote Service`;
     }
 
