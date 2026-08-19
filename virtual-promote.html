@@ -13,56 +13,56 @@
       box-sizing: border-box;
       font-family: 'Poppins', sans-serif;
     }
-    
+
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-15px); }
     }
-    
+
     @keyframes pulse-glow {
       0%, 100% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.5); }
       50% { box-shadow: 0 0 40px rgba(34, 197, 94, 0.9); }
     }
-    
+
     @keyframes slide-up {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     @keyframes gradient-move {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-    
+
     .animate-float { animation: float 3s ease-in-out infinite; }
     .animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
     .animate-slide-up { animation: slide-up 0.6s ease-out forwards; }
-    
+
     .gradient-bg {
       background: linear-gradient(-45deg, #1e293b, #312e81, #1e1b4b, #0f172a);
       background-size: 400% 400%;
       animation: gradient-move 15s ease infinite;
     }
-    
+
     .glass-card {
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       transition: all 0.3s ease;
     }
-    
+
     .glass-card:hover {
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(34, 197, 94, 0.4);
       transform: translateY(-5px);
     }
-    
+
     .service-card {
       position: relative;
       overflow: hidden;
     }
-    
+
     .service-card::before {
       content: '';
       position: absolute;
@@ -73,11 +73,11 @@
       background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
       transition: left 0.5s;
     }
-    
+
     .service-card:hover::before {
       left: 100%;
     }
-    
+
     .whatsapp-float {
       position: fixed;
       bottom: 25px;
@@ -96,11 +96,11 @@
       animation: pulse-glow 2s infinite;
       text-decoration: none;
     }
-    
+
     .whatsapp-float:hover {
       transform: scale(1.15);
     }
-    
+
     input[type="range"] {
       -webkit-appearance: none;
       appearance: none;
@@ -109,7 +109,7 @@
       background: linear-gradient(90deg, #22c55e, #3b82f6);
       outline: none;
     }
-    
+
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
@@ -121,11 +121,11 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.4);
       transition: all 0.3s ease;
     }
-    
+
     input[type="range"]::-webkit-slider-thumb:hover {
       transform: scale(1.2);
     }
-    
+
     .status-badge {
       padding: 6px 14px;
       border-radius: 20px;
@@ -133,30 +133,30 @@
       font-weight: 600;
       text-transform: uppercase;
     }
-    
+
     .status-processing {
       background: rgba(59, 130, 246, 0.2);
       color: #60a5fa;
       border: 1px solid rgba(59, 130, 246, 0.3);
     }
-    
+
     .status-completed {
       background: rgba(34, 197, 94, 0.2);
       color: #4ade80;
       border: 1px solid rgba(34, 197, 94, 0.3);
     }
-    
+
     .filter-btn {
       transition: all 0.3s ease;
       font-weight: 600;
     }
-    
+
     .filter-btn.active {
       background: linear-gradient(135deg, #22c55e, #16a34a);
       color: white;
       transform: scale(1.05);
     }
-    
+
     @media (max-width: 768px) {
       .whatsapp-float {
         width: 55px;
@@ -533,7 +533,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       admin_email: 'cwb.agency@outlook.com',
       admin_password: 'SmbSmb64'
     };
-    
+
     let config = { ...defaultConfig };
     let allOrders = [];
     let isAdmin = false;
@@ -558,7 +558,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const now = new Date();
       const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
       const dateStr = now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-      
+
       const timeEl = document.getElementById('currentTime');
       const dateEl = document.getElementById('currentDate');
       if (timeEl) timeEl.textContent = timeStr;
@@ -609,11 +609,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (email === adminEmail && password === adminPassword) {
         isAdmin = true;
         localStorage.setItem('bd_admin_session', 'true');
-        
+
         document.getElementById('adminBtn').classList.add('hidden');
         document.getElementById('logoutBtn').classList.remove('hidden');
         document.getElementById('adminTabs').classList.remove('hidden');
-        
+
         closeAdminLogin();
         showTab('orders');
         renderOrders();
@@ -643,7 +643,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     function showTab(tab) {
       document.querySelectorAll('[data-tab]').forEach(btn => btn.classList.remove('active'));
-      
+
       if (tab === 'services') {
         document.getElementById('servicesSection').classList.remove('hidden');
         document.getElementById('ordersSection').classList.add('hidden');
@@ -658,14 +658,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     function selectService(id, name, price, unit) {
       selectedService = { id, ...services[id] };
-      
+
       document.getElementById('selectedServiceName').textContent = name;
       document.getElementById('selectedServicePrice').textContent = `৳${price} per ${unit} units`;
       document.getElementById('orderForm').classList.remove('hidden');
-      
+
       const slider = document.getElementById('quantitySlider');
       const input = document.getElementById('quantityInput');
-      
+
       if (id === 'review') {
         slider.min = input.min = 1;
         slider.max = input.max = 500;
@@ -685,7 +685,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.getElementById('minQty').textContent = '20';
         document.getElementById('maxQty').textContent = '10,000';
       }
-      
+
       updatePrice();
       document.getElementById('orderForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -694,13 +694,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const input = document.getElementById('quantityInput');
       const slider = document.getElementById('quantitySlider');
       let value = parseInt(input.value) || parseInt(input.min);
-      
+
       const min = parseInt(input.min);
       const max = parseInt(input.max);
-      
+
       if (value < min) value = min;
       if (value > max) value = max;
-      
+
       input.value = value;
       slider.value = value;
       updatePrice();
@@ -716,7 +716,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function updatePrice() {
       const quantity = parseInt(document.getElementById('quantitySlider').value);
       document.getElementById('quantityDisplay').textContent = quantity.toLocaleString();
-      
+
       if (selectedService) {
         const total = Math.ceil((quantity / selectedService.unit) * selectedService.price);
         document.getElementById('priceDisplay').textContent = '৳' + total.toLocaleString();
@@ -782,7 +782,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       };
 
       const result = await window.dataSdk.create(orderData);
-      
+
       btn.disabled = false;
       btn.innerHTML = '✅ Place Order Now';
 
@@ -792,7 +792,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.getElementById('modalPrice').textContent = price;
         document.getElementById('orderDetailsText').textContent = getOrderMessage();
         document.getElementById('successModal').classList.remove('hidden');
-        
+
         document.getElementById('orderName').value = '';
         document.getElementById('orderEmail').value = '';
         document.getElementById('orderPhone').value = '';
@@ -809,7 +809,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     function getOrderMessage() {
       if (!lastOrderData) return '';
-      
+
       return `🛒 *NEW ORDER*
 
 ` +
@@ -858,7 +858,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         const btnId = 'copy' + type.charAt(0).toUpperCase() + type.slice(1);
@@ -874,7 +874,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       } catch (err) {
         showToast('❌ Copy failed', 'error');
       }
-      
+
       document.body.removeChild(textarea);
     }
 
@@ -888,7 +888,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       textarea.style.left = '-9999px';
       document.body.appendChild(textarea);
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         const btn = document.getElementById('copyBtn');
@@ -896,18 +896,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         btn.innerHTML = '✅ Copied!';
         btn.classList.remove('from-blue-500', 'to-blue-600');
         btn.classList.add('from-green-500', 'to-green-600');
-        
+
         setTimeout(() => {
           btn.innerHTML = originalText;
           btn.classList.remove('from-green-500', 'to-green-600');
           btn.classList.add('from-blue-500', 'to-blue-600');
         }, 2000);
-        
+
         showToast('✅ Order details copied! Now click WhatsApp button', 'success');
       } catch (err) {
         showToast('❌ Copy failed', 'error');
       }
-      
+
       document.body.removeChild(textarea);
     }
 
@@ -918,17 +918,17 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     function renderOrders() {
       const orders = allOrders.filter(o => o.type === 'order');
-      
+
       document.getElementById('countAll').textContent = orders.length;
       document.getElementById('countProcessing').textContent = orders.filter(o => o.status === 'processing').length;
       document.getElementById('countCompleted').textContent = orders.filter(o => o.status === 'completed').length;
-      
+
       let filtered = orders;
-      
+
       if (currentFilter !== 'all') {
         filtered = orders.filter(o => o.status === currentFilter);
       }
-      
+
       if (searchTerm) {
         const term = searchTerm.toLowerCase();
         filtered = filtered.filter(o => 
@@ -938,9 +938,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           o.service.toLowerCase().includes(term)
         );
       }
-      
+
       const container = document.getElementById('ordersList');
-      
+
       if (filtered.length === 0) {
         container.innerHTML = '<p class="text-center text-gray-400 py-12">No orders found</p>';
         return;
@@ -976,7 +976,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const date = new Date(order.createdAt).toLocaleString('en-US', { 
         month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' 
       });
-      
+
       el.innerHTML = `
         <div class="flex justify-between items-start mb-4">
           <div>
@@ -985,7 +985,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <span class="status-badge ${statusClass}">${statusIcon} ${order.status}</span>
         </div>
-        
+
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div class="bg-white/5 rounded-xl p-3">
             <p class="text-gray-400 text-xs mb-1">Quantity</p>
@@ -996,7 +996,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <p class="text-green-400 font-bold text-lg">${order.price}</p>
           </div>
         </div>
-        
+
         <div class="space-y-2 text-sm mb-4">
           <p class="text-gray-300"><strong class="text-white">Customer:</strong> ${order.name}</p>
           <p class="text-gray-300"><strong class="text-white">Email:</strong> ${order.email}</p>
@@ -1012,7 +1012,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             ${order.payment_screenshot ? `<p class="text-gray-300"><strong class="text-white">Screenshot:</strong> <a href="${order.payment_screenshot}" target="_blank" rel="noopener noreferrer" class="text-blue-400 underline">View</a></p>` : ''}
           </div>
         </div>
-        
+
         <div class="flex justify-between items-center pt-4 border-t border-white/10">
           <p class="text-xs text-gray-500">${date}</p>
           ${isAdmin && order.status === 'processing' ? `
@@ -1120,7 +1120,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     init();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c85a10616f9ba5b',t:'MTc3MDE2MDUxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-showcase-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas — Successful Deliveries</a></div><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c85a10616f9ba5b',t:'MTc3MDE2MDUxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
 </footer>
 </body>
 </html>

@@ -12,156 +12,156 @@
     body {
       box-sizing: border-box;
     }
-    
+
     * {
       font-family: 'Inter', sans-serif;
     }
-    
+
     .bangla-font {
       font-family: 'Hind Siliguri', sans-serif;
     }
-    
+
     html {
       scroll-behavior: smooth;
     }
-    
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    
+
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
     }
-    
+
     @keyframes glow {
       0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
       50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
     }
-    
+
     @keyframes pulse {
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.05); }
     }
-    
+
     .animate-fade-in {
       animation: fadeIn 0.8s ease-out forwards;
     }
-    
+
     .animate-float {
       animation: float 3s ease-in-out infinite;
     }
-    
+
     .card-icon {
       animation: pulse 2s ease-in-out infinite;
     }
-    
+
     .gradient-bg {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
     }
-    
+
     .gradient-card {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
       border: 1px solid rgba(16, 185, 129, 0.2);
     }
-    
+
     .hero-title {
       background: linear-gradient(135deg, #10b981 0%, #3b82f6 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    
+
     .btn-primary {
       position: relative;
       overflow: hidden;
       transition: all 0.3s ease;
     }
-    
+
     .btn-primary:hover {
       transform: translateY(-3px);
       box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
     }
-    
+
     .amount-btn {
       border: 2px solid rgba(16, 185, 129, 0.3);
       background: rgba(16, 185, 129, 0.05);
       transition: all 0.3s ease;
     }
-    
+
     .amount-btn:hover {
       border-color: #10b981;
       background: rgba(16, 185, 129, 0.15);
       transform: scale(1.05);
     }
-    
+
     .amount-btn.active {
       border-color: #10b981;
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
     }
-    
+
     .custom-input {
       background: rgba(255, 255, 255, 0.05);
       border: 2px solid rgba(16, 185, 129, 0.3);
       transition: all 0.3s ease;
     }
-    
+
     .custom-input:focus {
       outline: none;
       border-color: #10b981;
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
     }
-    
+
     .price-display {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
       border: 2px solid rgba(16, 185, 129, 0.3);
       animation: glow 2s ease-in-out infinite;
     }
-    
+
     .payment-option {
       border: 2px solid rgba(16, 185, 129, 0.2);
       background: rgba(16, 185, 129, 0.05);
       transition: all 0.3s ease;
       cursor: pointer;
     }
-    
+
     .payment-option:hover {
       border-color: #10b981;
       background: rgba(16, 185, 129, 0.15);
       transform: translateY(-2px);
     }
-    
+
     .payment-option.selected {
       border-color: #10b981;
       background: rgba(16, 185, 129, 0.2);
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
     }
-    
+
     .copy-btn {
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.3);
       transition: all 0.3s ease;
       cursor: pointer;
     }
-    
+
     .copy-btn:hover {
       background: rgba(16, 185, 129, 0.2);
       border-color: #10b981;
     }
-    
+
     .copy-btn:active {
       transform: scale(0.95);
     }
-    
+
     .screenshot-preview-img {
       max-width: 100%;
       max-height: 200px;
       object-fit: contain;
       border-radius: 8px;
     }
-    
+
     .whatsapp-float {
       position: fixed;
       bottom: 30px;
@@ -169,12 +169,12 @@
       z-index: 1000;
       animation: float 3s ease-in-out infinite;
     }
-    
+
     .whatsapp-float:hover {
       animation: none;
       transform: scale(1.15);
     }
-    
+
     .order-details-box {
       background: rgba(15, 23, 42, 0.8);
       border: 2px solid rgba(16, 185, 129, 0.4);
@@ -182,56 +182,56 @@
       padding: 24px;
       margin-bottom: 16px;
     }
-    
+
     .detail-row {
       display: flex;
       align-items: flex-start;
       padding: 12px 0;
       border-bottom: 1px solid rgba(16, 185, 129, 0.1);
     }
-    
+
     .detail-row:last-child {
       border-bottom: none;
     }
-    
+
     .detail-label {
       min-width: 140px;
       font-weight: 700;
       color: #10b981;
       flex-shrink: 0;
     }
-    
+
     .detail-value {
       color: #ffffff;
       word-break: break-word;
       flex: 1;
     }
-    
+
     .nav-tab {
       border: 2px solid rgba(16, 185, 129, 0.2);
       background: rgba(16, 185, 129, 0.05);
     }
-    
+
     .nav-tab.active {
       border-color: #10b981;
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(59, 130, 246, 0.2) 100%);
       box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
     }
-    
+
     .nav-tab:hover:not(.active) {
       border-color: #10b981;
       background: rgba(16, 185, 129, 0.1);
     }
-    
+
     .mastercard-bg {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
-    
+
     .mastercard-card {
       background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
       border: 2px solid rgba(102, 126, 234, 0.3);
     }
-    
+
     .virtual-card-3d {
       width: 100%;
       max-width: 420px;
@@ -239,7 +239,7 @@
       perspective: 1000px;
       margin: 0 auto;
     }
-    
+
     .card-inner {
       position: relative;
       width: 100%;
@@ -248,14 +248,14 @@
       transform-style: preserve-3d;
       animation: cardFloat 4s ease-in-out infinite;
     }
-    
+
     @keyframes cardFloat {
       0%, 100% { transform: rotateY(0deg) translateY(0px); }
       25% { transform: rotateY(5deg) translateY(-10px); }
       50% { transform: rotateY(0deg) translateY(0px); }
       75% { transform: rotateY(-5deg) translateY(-10px); }
     }
-    
+
     .card-face {
       position: absolute;
       width: 100%;
@@ -265,14 +265,14 @@
       padding: 24px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
     }
-    
+
     .card-front {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
-    
+
     .card-chip {
       width: 50px;
       height: 40px;
@@ -281,14 +281,14 @@
       position: relative;
       overflow: hidden;
     }
-    
+
     .chip-line {
       position: absolute;
       width: 100%;
       height: 2px;
       background: rgba(0, 0, 0, 0.2);
     }
-    
+
     .card-number {
       font-family: 'Courier New', monospace;
       font-size: 22px;
@@ -297,7 +297,7 @@
       color: white;
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
-    
+
     .card-holder-name {
       font-size: 16px;
       font-weight: bold;
@@ -305,18 +305,18 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    
+
     .card-expiry {
       font-family: 'Courier New', monospace;
       font-size: 14px;
       color: rgba(255, 255, 255, 0.9);
     }
-    
+
     .mastercard-logo {
       display: flex;
       gap: -10px;
     }
-    
+
     .circle-red {
       width: 40px;
       height: 40px;
@@ -324,7 +324,7 @@
       border-radius: 50%;
       opacity: 0.9;
     }
-    
+
     .circle-orange {
       width: 40px;
       height: 40px;
@@ -333,7 +333,7 @@
       margin-left: -15px;
       opacity: 0.9;
     }
-    
+
     .card-shine {
       position: absolute;
       top: 0;
@@ -343,19 +343,19 @@
       background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       animation: shine 3s infinite;
     }
-    
+
     @keyframes shine {
       0% { left: -100%; }
       50%, 100% { left: 200%; }
     }
-    
+
     .clock-date-widget {
       background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
       border: 2px solid rgba(102, 126, 234, 0.4);
       border-radius: 16px;
       padding: 20px;
     }
-    
+
     .digital-clock {
       font-family: 'Courier New', monospace;
       font-size: 42px;
@@ -364,13 +364,13 @@
       text-shadow: 0 0 20px rgba(167, 139, 250, 0.5);
       letter-spacing: 2px;
     }
-    
+
     .date-display {
       font-size: 18px;
       color: #c4b5fd;
       font-weight: 600;
     }
-    
+
     .user-counter {
       background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
       border: 2px solid rgba(16, 185, 129, 0.5);
@@ -378,12 +378,12 @@
       padding: 20px;
       animation: counterPulse 2s ease-in-out infinite;
     }
-    
+
     @keyframes counterPulse {
       0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
       50% { transform: scale(1.02); box-shadow: 0 0 30px rgba(16, 185, 129, 0.5); }
     }
-    
+
     .user-count {
       font-size: 48px;
       font-weight: black;
@@ -391,7 +391,7 @@
       text-shadow: 0 0 20px rgba(16, 185, 129, 0.6);
       font-family: 'Courier New', monospace;
     }
-    
+
     .count-label {
       font-size: 16px;
       color: #6ee7b7;
@@ -974,46 +974,46 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     let selectedPaymentMethod = null;
     let uploadedScreenshot = null;
     let currentOrderData = {};
-    
+
     let currentMastercardData = {};
-    
+
     // Base date for user count calculation (January 1, 2024)
     const BASE_DATE = new Date('2024-01-01T00:00:00');
     const BASE_USER_COUNT = 17000;
     const USERS_PER_MINUTE = 1;
-    
+
     // Calculate current active users based on real-time (increases every minute, never stops)
     function calculateActiveUsers() {
       const now = new Date();
       const timeDiff = now - BASE_DATE;
       const minutesPassed = Math.floor(timeDiff / (1000 * 60));
-      
+
       const totalUsers = BASE_USER_COUNT + (minutesPassed * USERS_PER_MINUTE);
-      
+
       return totalUsers;
     }
-    
+
     // Update card expiry date (3 years from today)
     function updateCardExpiryDate() {
       const today = new Date();
       const expiryDate = new Date(today);
       expiryDate.setFullYear(expiryDate.getFullYear() + 3);
-      
+
       const month = String(expiryDate.getMonth() + 1).padStart(2, '0');
       const year = String(expiryDate.getFullYear()).slice(-2);
-      
+
       document.getElementById('card-expiry-date').textContent = `${month}/${year}`;
     }
-    
+
     // Update digital clock
     function updateClock() {
       const now = new Date();
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
-      
+
       document.getElementById('digital-clock').textContent = `${hours}:${minutes}:${seconds}`;
-      
+
       // Update date in Bangla
       const options = { 
         weekday: 'long', 
@@ -1024,44 +1024,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const banglaDate = now.toLocaleDateString('bn-BD', options);
       document.getElementById('current-date-display').textContent = banglaDate;
     }
-    
+
     // Update active user count
     function updateUserCount() {
       const currentCount = calculateActiveUsers();
       document.getElementById('active-user-count').textContent = currentCount.toLocaleString('en-US');
     }
-    
+
     // Initialize all real-time features
     function initializeRealTimeFeatures() {
       updateCardExpiryDate();
       updateClock();
       updateUserCount();
-      
+
       // Update clock every second
       setInterval(updateClock, 1000);
-      
+
       // Update user count every minute (60000 ms)
       setInterval(updateUserCount, 60000);
     }
-    
+
     // Initialize when page loads
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initializeRealTimeFeatures);
     } else {
       initializeRealTimeFeatures();
     }
-    
+
     function showSection(section) {
       const dollarSection = document.getElementById('dollar-section');
       const mastercardSection = document.getElementById('mastercard-section');
       const dollarTab = document.getElementById('dollar-tab');
       const mastercardTab = document.getElementById('mastercard-tab');
-      
+
       dollarSection.classList.add('hidden');
       mastercardSection.classList.add('hidden');
       dollarTab.classList.remove('active');
       mastercardTab.classList.remove('active');
-      
+
       if (section === 'dollar') {
         dollarSection.classList.remove('hidden');
         dollarTab.classList.add('active');
@@ -1069,30 +1069,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         mastercardSection.classList.remove('hidden');
         mastercardTab.classList.add('active');
       }
-      
+
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     function handleMastercardOrder(event) {
       event.preventDefault();
-      
+
       const formData = new FormData(event.target);
       const name = formData.get('name');
       const email = formData.get('email');
       const whatsapp = formData.get('whatsapp');
       const dob = formData.get('dob');
       const txnId = formData.get('txn_id');
-      
+
       const submitBtn = document.getElementById('mc-submit-btn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'প্রসেস করা হচ্ছে...';
-      
+
       const dobFormatted = new Date(dob).toLocaleDateString('bn-BD', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
       });
-      
+
       currentMastercardData = {
         name: name,
         email: email,
@@ -1101,25 +1101,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         dobRaw: dob,
         txnId: txnId
       };
-      
+
       document.getElementById('mc-display-name').textContent = name;
       document.getElementById('mc-display-email').textContent = email;
       document.getElementById('mc-display-whatsapp').textContent = whatsapp;
       document.getElementById('mc-display-dob').textContent = dobFormatted;
       document.getElementById('mc-display-txn').textContent = txnId;
-      
+
       setTimeout(() => {
         const successMsg = document.getElementById('mc-success-message');
         successMsg.classList.remove('hidden');
         successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        
+
         event.target.reset();
-        
+
         submitBtn.disabled = false;
         submitBtn.textContent = 'অর্ডার কনফার্ম করুন';
       }, 800);
     }
-    
+
     function copyMastercardDetails() {
       let orderText = `নতুন ভার্চুয়াল মাস্টারকার্ড অর্ডার
 
@@ -1140,21 +1140,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 `;
       orderText += `দ্রুত কার্ড ডেলিভারি করুন!`;
-      
+
       const textarea = document.createElement('textarea');
       textarea.value = orderText;
       textarea.style.position = 'fixed';
       textarea.style.opacity = '0';
       document.body.appendChild(textarea);
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         const btn = document.getElementById('copy-mc-btn');
         const originalText = btn.textContent;
         btn.textContent = '✓ কপি হয়েছে!';
         btn.style.background = '#10b981';
-        
+
         setTimeout(() => {
           btn.textContent = originalText;
           btn.style.background = '';
@@ -1164,29 +1164,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       } finally {
         document.body.removeChild(textarea);
       }
-      
+
       // Update WhatsApp link with pre-filled message
       const whatsappMsg = encodeURIComponent(orderText);
       document.getElementById('mc-whatsapp-link').href = `https://wa.me/8801519601517?text=${whatsappMsg}`;
     }
-    
+
     function copyNumber(number, event) {
       event.stopPropagation();
-      
+
       const textarea = document.createElement('textarea');
       textarea.value = number;
       textarea.style.position = 'fixed';
       textarea.style.opacity = '0';
       document.body.appendChild(textarea);
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         const btn = event.currentTarget;
         const originalText = btn.textContent;
         btn.textContent = '✓ Copied!';
         btn.style.background = 'rgba(16, 185, 129, 0.3)';
-        
+
         setTimeout(() => {
           btn.textContent = originalText;
           btn.style.background = '';
@@ -1202,44 +1202,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         document.body.removeChild(textarea);
       }
     }
-    
+
     function handleScreenshotUpload(event) {
       const file = event.target.files[0];
-      
+
       if (!file) return;
-      
+
       if (file.size > 5 * 1024 * 1024) {
         const errorMsg = document.createElement('div');
         errorMsg.className = 'mt-2 p-2 rounded text-sm text-red-400';
         errorMsg.style.background = 'rgba(239, 68, 68, 0.1)';
         errorMsg.style.border = '1px solid rgba(239, 68, 68, 0.3)';
         errorMsg.textContent = '⚠️ File size cannot exceed 5MB';
-        
+
         const uploadLabel = document.getElementById('upload-label');
         uploadLabel.parentElement.insertBefore(errorMsg, uploadLabel.nextSibling);
-        
+
         setTimeout(() => errorMsg.remove(), 3000);
         event.target.value = '';
         return;
       }
-      
+
       if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.type)) {
         const errorMsg = document.createElement('div');
         errorMsg.className = 'mt-2 p-2 rounded text-sm text-red-400';
         errorMsg.style.background = 'rgba(239, 68, 68, 0.1)';
         errorMsg.style.border = '1px solid rgba(239, 68, 68, 0.3)';
         errorMsg.textContent = '⚠️ Only PNG, JPG, JPEG files accepted';
-        
+
         const uploadLabel = document.getElementById('upload-label');
         uploadLabel.parentElement.insertBefore(errorMsg, uploadLabel.nextSibling);
-        
+
         setTimeout(() => errorMsg.remove(), 3000);
         event.target.value = '';
         return;
       }
-      
+
       uploadedScreenshot = file;
-      
+
       const reader = new FileReader();
       reader.onload = function(e) {
         document.getElementById('screenshot-img').src = e.target.result;
@@ -1250,56 +1250,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       };
       reader.readAsDataURL(file);
     }
-    
+
     function removeScreenshot() {
       uploadedScreenshot = null;
       document.getElementById('payment-screenshot').value = '';
       document.getElementById('screenshot-preview').classList.add('hidden');
       document.getElementById('upload-text').textContent = '📸 Click to Select Screenshot';
     }
-    
+
     function calculatePrice() {
       const input = document.getElementById('custom-amount');
       const amount = parseFloat(input.value) || 0;
-      
+
       document.querySelectorAll('.amount-btn').forEach(btn => {
         btn.classList.remove('active');
       });
-      
+
       updatePriceDisplay(amount);
       selectedAmount = amount;
-      
+
       if (['bkash', 'nagad', 'rocket'].includes(selectedPaymentMethod) && amount >= 3) {
         const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
         const totalTaka = Math.round(amount * rate);
         updateChargeCalculator(totalTaka);
       }
     }
-    
+
     function selectAmount(amount) {
       const input = document.getElementById('custom-amount');
       input.value = amount;
-      
+
       document.querySelectorAll('.amount-btn').forEach(btn => {
         btn.classList.remove('active');
       });
       event.currentTarget.classList.add('active');
-      
+
       updatePriceDisplay(amount);
       selectedAmount = amount;
-      
+
       if (['bkash', 'nagad', 'rocket'].includes(selectedPaymentMethod)) {
         const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
         const totalTaka = Math.round(amount * rate);
         updateChargeCalculator(totalTaka);
       }
     }
-    
+
     function updatePriceDisplay(dollarAmount) {
       const dollarDisplay = document.getElementById('dollar-amount');
       const takaDisplay = document.getElementById('taka-amount');
       const rateInfo = document.getElementById('rate-info');
-      
+
       if (dollarAmount < 3) {
         dollarDisplay.textContent = `$${dollarAmount.toFixed(2)}`;
         takaDisplay.textContent = '0 BDT';
@@ -1307,10 +1307,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         rateInfo.style.color = '#ef4444';
         return;
       }
-      
+
       let rate;
       let totalTaka;
-      
+
       if (dollarAmount >= 3 && dollarAmount <= 9) {
         rate = 137;
         totalTaka = dollarAmount * rate;
@@ -1322,28 +1322,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         rateInfo.textContent = `Rate: 135 BDT/Dollar ($10+ range)`;
         rateInfo.style.color = '#3b82f6';
       }
-      
+
       dollarDisplay.textContent = `$${dollarAmount.toFixed(2)}`;
       takaDisplay.textContent = Math.round(totalTaka) + ' BDT';
     }
-    
+
     function selectPaymentMethod(method) {
       selectedPaymentMethod = method;
-      
+
       document.querySelectorAll('.payment-option').forEach(option => {
         option.classList.remove('selected');
       });
       document.querySelectorAll('[id$="-check"]').forEach(check => {
         check.classList.add('hidden');
       });
-      
+
       event.currentTarget.classList.add('selected');
       document.getElementById(`${method}-check`).classList.remove('hidden');
-      
+
       const calculator = document.getElementById('charge-calculator');
       if (['bkash', 'nagad', 'rocket'].includes(method)) {
         calculator.classList.remove('hidden');
-        
+
         const amount = parseFloat(document.getElementById('custom-amount').value) || 0;
         if (amount >= 3) {
           const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
@@ -1354,57 +1354,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         calculator.classList.add('hidden');
       }
     }
-    
+
     function updateChargeCalculator(baseAmount) {
       const chargeAmount = Math.round(baseAmount * 16 / 1000);
       const totalWithCharge = baseAmount + chargeAmount;
-      
+
       document.getElementById('base-amount').textContent = baseAmount + ' BDT';
       document.getElementById('charge-amount').textContent = chargeAmount + ' BDT';
       document.getElementById('total-with-charge').textContent = totalWithCharge + ' BDT';
       document.getElementById('total-display-note').textContent = totalWithCharge + ' BDT';
     }
-    
+
     function handleOrder(event) {
       event.preventDefault();
-      
+
       const amount = parseFloat(document.getElementById('custom-amount').value) || 0;
-      
+
       if (amount < 3) {
         showInlineMessage('Minimum $3 dollar order required', 'error');
         return;
       }
-      
+
       if (!selectedPaymentMethod) {
         showInlineMessage('Please select a payment method', 'error');
         return;
       }
-      
+
       const txnId = document.getElementById('transaction-id').value.trim();
       if (!txnId) {
         showInlineMessage('Please provide Transaction ID', 'error');
         return;
       }
-      
+
       if (!uploadedScreenshot) {
         showInlineMessage('Please upload payment screenshot', 'error');
         return;
       }
-      
+
       const formData = new FormData(event.target);
       const name = formData.get('name');
       const email = formData.get('email');
       const whatsapp = formData.get('whatsapp');
       const senderNumber = formData.get('sender_number');
       const details = formData.get('details');
-      
+
       const rate = (amount >= 3 && amount <= 9) ? 137 : 135;
       const totalPrice = Math.round(amount * rate);
-      
+
       const submitBtn = document.getElementById('submit-btn');
       submitBtn.disabled = true;
       submitBtn.textContent = 'Processing...';
-      
+
       const paymentMethodNames = {
         'bkash': 'Bkash - 01791527854',
         'nagad': 'Nagad - 01519601517',
@@ -1412,14 +1412,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         'binance': 'Binance - UID: 1157359156',
         'bank': 'Bank Transfer - Eastern Bank PLC'
       };
-      
+
       let chargeInfo = '';
       if (['bkash', 'nagad', 'rocket'].includes(selectedPaymentMethod)) {
         const chargeAmount = Math.round(totalPrice * 16 / 1000);
         const totalWithCharge = totalPrice + chargeAmount;
         chargeInfo = `${totalWithCharge} BDT (${totalPrice} + ${chargeAmount} charge)`;
       }
-      
+
       currentOrderData = {
         name: name,
         email: email,
@@ -1434,7 +1434,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         details: details,
         screenshot: `${uploadedScreenshot.name} (${(uploadedScreenshot.size / 1024).toFixed(2)} KB)`
       };
-      
+
       document.getElementById('display-name').textContent = name;
       document.getElementById('display-email').textContent = email;
       document.getElementById('display-whatsapp').textContent = whatsapp;
@@ -1446,45 +1446,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       document.getElementById('display-txn').textContent = txnId;
       document.getElementById('display-details').textContent = details;
       document.getElementById('display-screenshot').textContent = `${uploadedScreenshot.name} (${(uploadedScreenshot.size / 1024).toFixed(2)} KB)`;
-      
+
       if (chargeInfo) {
         document.getElementById('display-charge-section').classList.remove('hidden');
         document.getElementById('display-charge').textContent = chargeInfo;
       } else {
         document.getElementById('display-charge-section').classList.add('hidden');
       }
-      
+
       setTimeout(() => {
         const successMsg = document.getElementById('success-message');
         successMsg.classList.remove('hidden');
         successMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        
+
         event.target.reset();
         document.getElementById('custom-amount').value = '';
         selectedAmount = 0;
         selectedPaymentMethod = null;
         removeScreenshot();
         updatePriceDisplay(0);
-        
+
         document.querySelectorAll('.payment-option').forEach(option => {
           option.classList.remove('selected');
         });
         document.querySelectorAll('[id$="-check"]').forEach(check => {
           check.classList.add('hidden');
         });
-        
+
         document.getElementById('charge-calculator').classList.add('hidden');
         document.getElementById('transaction-id').value = '';
-        
+
         document.querySelectorAll('.amount-btn').forEach(btn => {
           btn.classList.remove('active');
         });
-        
+
         submitBtn.disabled = false;
         submitBtn.textContent = 'Confirm Order';
       }, 500);
     }
-    
+
     function copyOrderDetails() {
       let orderText = `🛒 NEW DOLLAR ORDER!
 
@@ -1524,21 +1524,21 @@ ${currentOrderData.details}
 
 `;
       orderText += `⚡ Fast Delivery: 5-10 Minutes`;
-      
+
       const textarea = document.createElement('textarea');
       textarea.value = orderText;
       textarea.style.position = 'fixed';
       textarea.style.opacity = '0';
       document.body.appendChild(textarea);
       textarea.select();
-      
+
       try {
         document.execCommand('copy');
         const btn = document.getElementById('copy-order-btn');
         const originalText = btn.textContent;
         btn.textContent = '✓ Copied Successfully!';
         btn.style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
-        
+
         setTimeout(() => {
           btn.textContent = originalText;
           btn.style.background = '';
@@ -1553,34 +1553,35 @@ ${currentOrderData.details}
       } finally {
         document.body.removeChild(textarea);
       }
-      
+
       // Update WhatsApp link with pre-filled message
       const whatsappMsg = encodeURIComponent(orderText);
       document.getElementById('dollar-whatsapp-link').href = `https://wa.me/8801519601517?text=${whatsappMsg}`;
     }
-    
+
     function showInlineMessage(message, type) {
       const existingMsg = document.querySelector('.inline-message');
       if (existingMsg) existingMsg.remove();
-      
+
       const msgDiv = document.createElement('div');
       msgDiv.className = 'inline-message mt-4 p-4 rounded-lg text-center';
-      
+
       if (type === 'error') {
         msgDiv.style.background = 'rgba(239, 68, 68, 0.1)';
         msgDiv.style.border = '2px solid rgba(239, 68, 68, 0.5)';
         msgDiv.innerHTML = `<p class="text-red-400 font-semibold">⚠️ ${message}</p>`;
       }
-      
+
       const submitBtn = document.getElementById('submit-btn');
       submitBtn.parentElement.insertBefore(msgDiv, submitBtn);
-      
+
       setTimeout(() => msgDiv.remove(), 4000);
     }
-    
+
     updatePriceDisplay(0);
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c767126637b5fe4',t:'MTc3MDAwMTI2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-showcase-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas — Successful Deliveries</a></div><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c767126637b5fe4',t:'MTc3MDAwMTI2Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
 </footer>
 </body>
 </html>

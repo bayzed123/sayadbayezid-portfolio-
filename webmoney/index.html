@@ -47,7 +47,7 @@
 
         /* --- Main App Layout --- */
         #app-dashboard { display: none; min-height: 100vh; flex-direction: column; padding-bottom: 80px;}
-        
+
         /* Top Navigation */
         .top-nav {
             display: flex; justify-content: space-between; align-items: center; padding: 15px 20px;
@@ -60,7 +60,7 @@
 
         /* Main Content Area */
         .main-content { flex: 1; padding: 20px; max-width: 1000px; margin: 0 auto; width: 100%; }
-        
+
         /* Views */
         .view-section { display: none; }
         .view-section.active { display: block; }
@@ -73,7 +73,7 @@
         .balance-card h3 { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: normal; }
         .balance-amount { font-size: 36px; font-weight: bold; margin: 10px 0; }
         .balance-amount span { font-size: 20px; font-weight: normal; opacity: 0.8; }
-        
+
         /* Progress Bar for Withdrawal */
         .withdraw-section { margin-top: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; }
         .w-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 8px; }
@@ -115,7 +115,7 @@
         .pay-card.active { border-color: var(--wm-blue); background: rgba(42, 132, 255, 0.1); }
         .pay-card i { font-size: 28px; margin-bottom: 10px; }
         .pay-card p { font-size: 13px; font-weight: bold; }
-        
+
         #serverErrorAlert { 
             display: none; background: rgba(255, 69, 58, 0.1); border: 1px solid #ff453a; 
             color: #ff453a; padding: 15px; border-radius: 8px; margin-top: 20px; 
@@ -205,13 +205,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <!-- Main Content -->
         <div class="main-content">
-            
+
             <!-- VIEW 1: DASHBOARD -->
             <div id="view-dashboard" class="view-section active">
                 <div class="balance-card">
                     <h3>Available Balance (WMZ)</h3>
                     <div class="balance-amount" id="totalBalance">0.00 <span>USD</span></div>
-                    
+
                     <div class="withdraw-section">
                         <div class="w-header">
                             <span>Withdrawal Limit</span>
@@ -259,7 +259,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- VIEW 3: WITHDRAW (NEW SYSTEM) -->
             <div id="view-withdraw" class="view-section">
                 <h2 style="margin-bottom: 20px;">Withdraw Funds</h2>
-                
+
                 <div class="stat-box" style="margin-bottom: 25px; text-align: center; border-color: var(--wm-blue);">
                     <div class="stat-label">Available to Withdraw</div>
                     <div class="stat-val" id="withdrawAvailableAmount" style="color: var(--wm-blue); font-size: 28px;">$0.00</div>
@@ -292,7 +292,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
 
                 <button class="login-btn" id="confirmWithdrawBtn" onclick="processWithdrawal()">Confirm Withdrawal</button>
-                
+
                 <!-- Server Busy Error Message -->
                 <div id="serverErrorAlert">
                     <i class="fas fa-exclamation-triangle" style="margin-right: 5px;"></i> 
@@ -324,7 +324,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         const STORAGE_KEY = "wm_smart_revenue_v2";
         const BASE_BALANCE = 233.00; 
         let globalFinalBalance = 0;
-        
+
         const platforms = [
             "Smartgen Revenue", 
             "GenZ Frontier - Ad Revenue", 
@@ -349,7 +349,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         function switchView(viewName, element) {
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('view-' + viewName).classList.add('active');
-            
+
             if(element) {
                 document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
                 element.classList.add('active');
@@ -369,10 +369,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         function processWithdrawal() {
             const btn = document.getElementById('confirmWithdrawBtn');
             const alertBox = document.getElementById('serverErrorAlert');
-            
+
             // Hide previous alert if any
             alertBox.style.display = 'none';
-            
+
             // Fake loading state
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
             btn.style.opacity = '0.7';
@@ -406,7 +406,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 for (let i = 0; i < (27 + 365); i++) {
                     let targetDate = new Date(startDate);
                     targetDate.setDate(startDate.getDate() + i);
-                    
+
                     data.schedule.push({
                         id: 'TRX-' + Math.floor(Math.random() * 900000 + 100000),
                         timestamp: targetDate.getTime(),
@@ -436,12 +436,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
             globalFinalBalance = BASE_BALANCE + dynamicCompletedAmount;
-            
+
             // Update Dashboard UI
             document.getElementById('totalBalance').innerHTML = globalFinalBalance.toFixed(2) + ' <span>USD</span>';
             document.getElementById('todayEarn').innerText = '+$' + todaysEarning.toFixed(2);
             document.getElementById('pendingEarn').innerText = '$' + totalPendingAmount.toFixed(2);
-            
+
             // Update Withdraw Page UI
             document.getElementById('withdrawAvailableAmount').innerText = '$' + globalFinalBalance.toFixed(2);
             document.getElementById('withdrawInputAmount').value = globalFinalBalance.toFixed(2); // Auto-fill max amount
@@ -458,7 +458,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             const mini = document.getElementById('miniHistory');
             const full = document.getElementById('fullHistory');
             mini.innerHTML = ''; full.innerHTML = '';
-            
+
             scheduleArray.sort((a, b) => b.timestamp - a.timestamp);
 
             let renderCount = 0;
@@ -466,7 +466,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 const statusClass = t.isCompleted ? 'status-completed' : 'status-pending';
                 const statusText = t.isCompleted ? 'Completed' : 'Processing';
                 const sign = t.isCompleted ? '+' : '';
-                
+
                 const html = `
                     <div class="t-item">
                         <div class="t-info">
@@ -479,7 +479,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         </div>
                     </div>
                 `;
-                
+
                 full.innerHTML += html;
                 if(t.isCompleted && renderCount < 5) { 
                     mini.innerHTML += html;
@@ -488,7 +488,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             });
         }
     </script>
-<footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-showcase-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas — Successful Deliveries</a></div><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+<footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
 </footer>
 </body>
 </html>

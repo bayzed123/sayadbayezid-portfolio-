@@ -166,6 +166,7 @@ function readFooter() {
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
           <a href="/case-studies/">Case studies</a>
+          <a href="/proofline-atlas.html">Proofline Atlas</a>
         </div>
         <div>
           <span class="footer-heading">Studio</span>
@@ -182,7 +183,6 @@ function readFooter() {
         </div>
       </div>
     </div>
-    <div class="footer-showcase-link"><a href="/proofline-atlas.html">Proofline Atlas — Successful Deliveries</a></div>
     <div class="footer-legal">
       <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
     </div>

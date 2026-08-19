@@ -8,32 +8,32 @@
     <meta name="keywords" content="blog, web development, digital marketing, tech, entrepreneurship, Sayad Bayezid" />
     <meta name="author" content="Sayad md Bayezid Hosan" />
     <meta name="robots" content="index, follow" />
-    
+
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" data-i18n="blog.title" content="Blog - Sayad md Bayezid Hosan" />
     <meta property="og:description" data-i18n="blog.description" content="Read insights on web development, digital marketing, and tech entrepreneurship" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://sayadbayezid.com/blog.html" />
-    
+
     <!-- Canonical URL -->
     <link rel="canonical" href="https://sayadbayezid.com/blog.html" />
-    
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    
+
     <!-- i18n Scripts -->
     <script src="i18n/i18n.js"></script>
     <script src="i18n/dynamic-translator.js"></script>
-    
+
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         :root {
         --primary: #00D9FF;
         --primary-dark: #0F1419;
@@ -45,35 +45,35 @@
         --border-color: #2a2f3e;
         --footer-bg: rgba(15, 20, 25, 0.8);
         }
-        
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-primary);
             line-height: 1.6;
         }
-        
+
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Poppins', sans-serif;
             font-weight: 700;
         }
-        
+
         a {
             color: var(--primary);
             text-decoration: none;
             transition: all 0.3s ease;
         }
-        
+
         a:hover {
             color: var(--accent);
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
-        
+
         /* Navigation */
         nav {
             position: sticky;
@@ -84,23 +84,23 @@
             border-bottom: 1px solid var(--border-color);
             padding: 1rem 0;
         }
-        
+
         nav .container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .logo {
             font-size: 1.5rem;
             font-weight: 700;
             font-family: 'Poppins', sans-serif;
         }
-        
+
         .logo span {
             color: var(--primary);
         }
-        
+
         nav ul {
             display: none;
             list-style: none;
@@ -114,11 +114,11 @@
             padding: 1rem 0;
             border-bottom: 1px solid var(--border-color);
         }
-        
+
         nav ul.active {
             display: flex;
         }
-        
+
         @media (min-width: 768px) {
             nav ul {
                 display: flex !important;
@@ -175,7 +175,7 @@
                 display: none;
             }
         }
-        
+
         nav a {
             font-size: 0.875rem;
             font-weight: 500;
@@ -214,7 +214,7 @@
             color: var(--bg-dark);
             border-color: var(--primary);
         }
-        
+
         /* Hero Section */
         .hero {
             min-height: 40vh;
@@ -225,7 +225,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .hero::before {
             content: '';
             position: absolute;
@@ -237,17 +237,17 @@
             left: -100px;
             animation: float 6s ease-in-out infinite;
         }
-        
+
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(30px); }
         }
-        
+
         .hero-content {
             position: relative;
             z-index: 1;
         }
-        
+
         .hero h1 {
             font-size: 3rem;
             line-height: 1.2;
@@ -257,7 +257,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .hero p {
             font-size: 1.1rem;
             color: var(--text-secondary);
@@ -265,20 +265,20 @@
             line-height: 1.8;
             max-width: 600px;
         }
-        
+
         /* Blog Section */
         .blog-section {
             padding: 6rem 0;
             background: var(--bg-dark);
         }
-        
+
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 2rem;
             margin-bottom: 4rem;
         }
-        
+
         .blog-card {
             background: var(--bg-card);
             border-radius: 0.75rem;
@@ -288,12 +288,12 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .blog-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 217, 255, 0.1);
         }
-        
+
         .blog-image {
             width: 100%;
             height: 200px;
@@ -301,14 +301,14 @@
             display: block;
             background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(255, 107, 53, 0.1) 100%);
         }
-        
+
         .blog-content {
             padding: 1.5rem;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
-        
+
         .blog-meta {
             display: flex;
             justify-content: space-between;
@@ -317,7 +317,7 @@
             font-size: 0.85rem;
             color: var(--text-secondary);
         }
-        
+
         .blog-category {
             display: inline-block;
             background: rgba(0, 217, 255, 0.1);
@@ -326,14 +326,14 @@
             border-radius: 0.3rem;
             font-weight: 600;
         }
-        
+
         .blog-card h3 {
             font-size: 1.5rem;
             margin-bottom: 0.75rem;
             color: var(--text-primary);
             line-height: 1.4;
         }
-        
+
         .blog-card p {
             color: var(--text-secondary);
             font-size: 0.95rem;
@@ -341,38 +341,38 @@
             line-height: 1.6;
             flex-grow: 1;
         }
-        
+
         .blog-link {
             display: inline-block;
             color: var(--accent);
             font-weight: 600;
             margin-top: auto;
         }
-        
+
         .blog-link:hover {
             color: var(--primary);
         }
-        
+
         /* Empty State */
         .empty-state {
             text-align: center;
             padding: 4rem 2rem;
             color: var(--text-secondary);
         }
-        
+
         .empty-state h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--text-primary);
         }
-        
+
         /* Loading State */
         .loading {
             text-align: center;
             padding: 4rem 2rem;
             color: var(--text-secondary);
         }
-        
+
         .spinner {
             display: inline-block;
             width: 40px;
@@ -383,12 +383,12 @@
             animation: spin 1s linear infinite;
             margin-bottom: 1rem;
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
+
         /* Footer */
         footer {
             border-top: 1px solid var(--border-color);
@@ -396,25 +396,25 @@
             text-align: center;
             color: var(--text-secondary);
         }
-        
+
         footer a {
             color: var(--primary);
         }
-        
+
         footer a:hover {
             color: var(--accent);
         }
-        
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
             }
-            
+
             .section-title {
                 font-size: 2rem;
             }
-            
+
             nav ul {
                 display: none;
             }
@@ -520,8 +520,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <a href="https://github.com/bayzed123/sayadbayezid-portfolio-" target="_blank" style="color: #00D9FF; text-decoration: none;" data-i18n="footer.openSource">Open Source</a>
             </p>
         </div>
-    <div class="footer-showcase-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas — Successful Deliveries</a></div>
+
 <div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
+<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
 </footer>
 
     <script>
@@ -532,21 +533,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 if (!response.ok) throw new Error('Failed to load blog index');
                 const data = await response.json();
                 window.blogData = data; // Store globally for translator
-                
+
                 const blogs = data.blogs || [];
                 const blogGrid = document.getElementById('blog-grid');
                 const loading = document.getElementById('loading');
                 const emptyState = document.getElementById('empty-state');
-                
+
                 if (blogs.length === 0) {
                     loading.style.display = 'none';
                     emptyState.style.display = 'block';
                     return;
                 }
-                
+
                 const lang = window.i18n ? window.i18n.getLanguage() : 'en';
                 renderBlogs(blogs, lang);
-                
+
                 loading.style.display = 'none';
                 blogGrid.style.display = 'grid';
             } catch (error) {
@@ -559,7 +560,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         function renderBlogs(blogs, lang) {
             const blogGrid = document.getElementById('blog-grid');
             const readMoreText = window.i18n ? window.i18n.t('blog.readMore', lang) : 'Read More →';
-            
+
             blogGrid.innerHTML = blogs.map(blog => `
                 <div class="blog-card">
                     <img src="${blog.image}" alt="${blog.title}" class="blog-image" />
@@ -575,7 +576,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 </div>
             `).join('');
         }
-        
+
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
