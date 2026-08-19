@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" width="1200" height="720" role="img" aria-label="Arif Gadgets system architecture">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF7A18"/><stop offset="1" stop-color="#F5B301"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .t   { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .ttl { font-size: 26px; font-weight: 800; fill: #0b1220; }
+      .sub { font-size: 14px; fill: #64748b; }
+      .box { fill: #ffffff; stroke: #e3e8ef; stroke-width: 2; }
+      .h   { font-size: 16px; font-weight: 700; fill: #0b1220; }
+      .b   { font-size: 12.5px; fill: #475569; }
+      .lbl { font-size: 11.5px; fill: #7c8ba1; }
+      .cap { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #94a3b8; }
+      .ln  { stroke: #cbd5e1; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+
+  <rect width="1200" height="720" fill="#f7f9fc"/>
+  <text class="t ttl" x="48" y="58">Arif Gadgets — system architecture</text>
+  <text class="t sub" x="48" y="84">One React build, one Cloudflare Worker, one SQLite database at the edge. No servers to patch.</text>
+
+  <!-- clients -->
+  <text class="t cap" x="48" y="132">WHO USES IT</text>
+  <rect class="box" x="48" y="146" width="250" height="94" rx="14"/>
+  <text class="t h" x="70" y="178">Shoppers</text>
+  <text class="t b" x="70" y="200">Phone first — 80%+ of traffic</text>
+  <text class="t b" x="70" y="220">Browse · buy · track · review</text>
+
+  <rect class="box" x="48" y="256" width="250" height="94" rx="14"/>
+  <text class="t h" x="70" y="288">Shop staff</text>
+  <text class="t b" x="70" y="310">Dashboard, in English</text>
+  <text class="t b" x="70" y="330">with a Bangla handbook</text>
+
+  <!-- edge -->
+  <text class="t cap" x="380" y="132">CLOUDFLARE EDGE</text>
+  <rect class="box" x="380" y="146" width="300" height="204" rx="14"/>
+  <rect x="380" y="146" width="300" height="6" rx="3" fill="url(#brand)"/>
+  <text class="t h" x="404" y="184">Pages — static React build</text>
+  <text class="t b" x="404" y="206">Vite · React 18 · React Router</text>
+  <text class="t b" x="404" y="226">Storefront and dashboard in</text>
+  <text class="t b" x="404" y="244">one bundle, ~66 kB gzipped</text>
+  <line x1="404" y1="262" x2="656" y2="262" stroke="#e3e8ef" stroke-width="2"/>
+  <text class="t h" x="404" y="290">Worker — the whole API</text>
+  <text class="t b" x="404" y="312">Hono router · TypeScript</text>
+  <text class="t b" x="404" y="332">Auth, pricing, orders, courier</text>
+
+  <!-- storage -->
+  <text class="t cap" x="762" y="132">STATE</text>
+  <rect class="box" x="762" y="146" width="390" height="62" rx="14"/>
+  <text class="t h" x="786" y="174">D1 — SQLite at the edge</text>
+  <text class="t b" x="786" y="194">17 tables · generated columns · triggers do the bookkeeping</text>
+
+  <rect class="box" x="762" y="220" width="390" height="62" rx="14"/>
+  <text class="t h" x="786" y="248">R2 — product photographs</text>
+  <text class="t b" x="786" y="268">Up to 12 per product · served immutable, cached a year</text>
+
+  <rect class="box" x="762" y="294" width="390" height="56" rx="14"/>
+  <text class="t h" x="786" y="322">KV — cache</text>
+  <text class="t b" x="786" y="340">Courier lookups, rate limits</text>
+
+  <!-- outside -->
+  <text class="t cap" x="380" y="404">OUTSIDE THE PLATFORM</text>
+  <rect class="box" x="380" y="418" width="300" height="86" rx="14"/>
+  <text class="t h" x="404" y="450">Steadfast Courier</text>
+  <text class="t b" x="404" y="472">Book a parcel, read its status,</text>
+  <text class="t b" x="404" y="490">reconcile cash on delivery</text>
+
+  <rect class="box" x="762" y="418" width="390" height="86" rx="14"/>
+  <text class="t h" x="786" y="450">bKash · Nagad · Rocket · Bank · COD</text>
+  <text class="t b" x="786" y="472">Instructions shown at checkout, transaction</text>
+  <text class="t b" x="786" y="490">reference captured and stored against the order</text>
+
+  <!-- pipeline -->
+  <text class="t cap" x="48" y="404">HOW IT SHIPS</text>
+  <rect class="box" x="48" y="418" width="250" height="86" rx="14"/>
+  <text class="t h" x="70" y="450">GitHub Actions</text>
+  <text class="t b" x="70" y="472">Push to main → typecheck,</text>
+  <text class="t b" x="70" y="490">migrate, deploy, smoke test</text>
+
+  <!-- arrows -->
+  <path class="t ln" d="M298 193 L374 210"/>
+  <path class="t ln" d="M298 303 L374 286"/>
+  <path class="t ln" d="M686 200 L756 177"/>
+  <path class="t ln" d="M686 250 L756 250"/>
+  <path class="t ln" d="M686 300 L756 320"/>
+  <path class="t ln" d="M530 356 L530 412"/>
+  <path class="t ln" d="M686 330 L756 440"/>
+  <path class="t ln" d="M180 412 L180 360"/>
+
+  <text class="t lbl" x="306" y="186">HTTPS</text>
+  <text class="t lbl" x="306" y="330">Bearer token</text>
+  <text class="t lbl" x="540" y="390">HTTPS + API keys</text>
+  <text class="t lbl" x="196" y="392">deploys</text>
+
+  <!-- footnote -->
+  <rect x="48" y="546" width="1104" height="126" rx="14" fill="#ffffff" stroke="#e3e8ef" stroke-width="2"/>
+  <text class="t h" x="72" y="578">Money is never a floating-point number</text>
+  <text class="t b" x="72" y="602">Every amount is stored as an integer count of poisha. ৳1,450.00 is the integer 145000. Nothing rounds, nothing drifts,</text>
+  <text class="t b" x="72" y="622">and a total is the same figure in the cart, on the invoice, in the courier booking and in the profit report.</text>
+  <text class="t b" x="72" y="648">The courier counts in taka, so that one boundary converts explicitly — sending 145000 where 1450 was meant would ask</text>
+  <text class="t b" x="72" y="666">the courier to collect a hundred times the order value from the customer.</text>
+</svg>

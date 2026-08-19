@@ -17,6 +17,7 @@
  * FOLDER SHAPE — one folder per entry:
  *   content/case-studies/<slug>/meta.json
  *   content/case-studies/<slug>/photo1.jpg   (optional — any images referenced in meta.json)
+ *   content/case-studies/<slug>/case-study.md (optional — long-form Markdown body)
  *
  * meta.json fields (title is the only required one):
  * {
@@ -24,6 +25,8 @@
  *   "date": "2026-08-01",
  *   "summary": "One sentence shown on the listing page.",
  *   "body": ["First paragraph.", "Second paragraph.", "..."],
+ *   "markdown": "case-study.md",                  // long-form Markdown body
+ *   "cover": "photo1.jpg",                         // image used on the listing card
  *   "youtube": "dQw4w9WgXcQ",                    // YouTube video ID only, not the full URL
  *   "googleDriveVideoId": "1AbCdEfGhIjKlMnOpQr",  // the file ID from the Drive share link
  *   "soundcloud": "https://soundcloud.com/artist/track",
@@ -42,6 +45,9 @@
 
 const fs = require("fs");
 const path = require("path");
+const { marked } = require("marked");
+
+marked.setOptions({ gfm: true, breaks: false });
 
 const ROOT = path.join(__dirname, "..");
 const GTM_HEAD = `<!-- Google Tag Manager -->
@@ -188,7 +194,7 @@ function embedBlock(meta) {
   return blocks.join("\n");
 }
 
-function imageGallery(meta, slugDir) {
+function imageGallery(meta) {
   if (!meta.images?.length) return "";
   const items = meta.images
     .map((img) => `<img src="${escapeHtml(img)}" alt="" loading="lazy" />`)
@@ -196,18 +202,38 @@ function imageGallery(meta, slugDir) {
   return `<div class="content-gallery">\n        ${items}\n      </div>`;
 }
 
-function renderEntryPage(meta, type) {
+function renderMarkdown(markdownFile, slugDir) {
+  const markdownPath = path.join(slugDir, markdownFile);
+  if (!fs.existsSync(markdownPath)) {
+    console.warn(`  ! Markdown body not found: ${markdownFile}`);
+    return "";
+  }
+
+  let html = marked.parse(fs.readFileSync(markdownPath, "utf8"));
+  html = html.replace(/src=["'](?:\.\/)?images\//g, 'src="/case-studies/images/');
+  html = html.replace(/<img\s+([^>]*?)>/g, (full, attrs) => {
+    if (!/\bloading=/.test(attrs)) attrs += ' loading="lazy"';
+    return `<img ${attrs}>`;
+  });
+  return html;
+}
+
+function renderEntryPage(meta, type, slugDir) {
   const bodyHtml = (meta.body || [])
     .map((para) => `      <p>${escapeHtml(para)}</p>`)
-    .join("\n");
+    .join("\\n");
+  const richBody = meta.markdown
+    ? `<div class="content-rich">${renderMarkdown(meta.markdown, slugDir)}</div>`
+    : bodyHtml;
+  const gallery = meta.markdown ? "" : imageGallery(meta);
 
   return readHead(`${meta.title} — Connect with Bayezid`, meta.summary || meta.title) + `
     <article class="content-page">
       <span class="section-eyebrow">${escapeHtml(type.label)}${meta.date ? " · " + escapeHtml(meta.date) : ""}</span>
       <h1>${escapeHtml(meta.title)}</h1>
-${bodyHtml}
+${richBody}
       ${embedBlock(meta)}
-      ${imageGallery(meta)}
+      ${gallery}
     </article>
 ` + readFooter();
 }
@@ -217,7 +243,7 @@ function renderIndexPage(type, entries) {
     .map(
       (e) => `
         <a href="/${type.dir}/${e.slug}.html" class="work-row reveal" data-reveal>
-          <div class="work-media"><div class="work-media-glow"></div></div>
+          <div class="work-media">${e.meta.cover ? `<img src="/${type.dir}/${escapeHtml(e.meta.cover)}" alt="" loading="lazy" />` : ""}<div class="work-media-glow"></div></div>
           <div class="work-copy">
             <span class="work-tag">${escapeHtml(type.label)}${e.meta.date ? " · " + escapeHtml(e.meta.date) : ""}</span>
             <h3>${escapeHtml(e.meta.title)}</h3>
@@ -271,13 +297,15 @@ function buildContentType(type) {
     for (const img of meta.images || []) {
       const src = path.join(slugDir, img);
       if (fs.existsSync(src)) {
-        fs.copyFileSync(src, path.join(outDir, img));
+        const destination = path.join(outDir, img);
+        fs.mkdirSync(path.dirname(destination), { recursive: true });
+        fs.copyFileSync(src, destination);
       } else {
         console.warn(`  ! ${slug}: image "${img}" listed in meta.json but not found in the folder`);
       }
     }
 
-    fs.writeFileSync(path.join(outDir, `${slug}.html`), renderEntryPage(meta, type));
+    fs.writeFileSync(path.join(outDir, `${slug}.html`), renderEntryPage(meta, type, slugDir));
     entries.push({ slug, meta });
     console.log(`  ✓ ${type.dir}/${slug}.html`);
   }

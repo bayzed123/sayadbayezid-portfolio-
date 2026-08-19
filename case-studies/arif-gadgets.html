@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HY9255GJYE');
+</script>
+<!-- End Google tag (gtag.js) -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Arif Gadgets — a real shop for Savar, built to run itself — Connect with Bayezid</title>
+<meta name="description" content="How a gadget retailer in Savar moved from phone calls, Facebook messages and a stock notebook to a complete mobile-first shop with payments, courier booking, inventory, profit and Bangla documentation." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/style.css" />
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1612338809888151');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
+/></noscript>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="/" class="brand-mark">
+        <span class="brand-pulse" aria-hidden="true"></span>
+        <span class="brand-word">Connect<em>with</em>Bayezid</span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="/services.html">Services</a>
+        <a href="/products.html">Products</a>
+        <a href="/work.html">Work</a>
+        <a href="/about.html">About</a>
+        <a href="/client-login.html" class="nav-login-link">Client Login</a>
+        <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+  <main id="main">
+
+    <article class="content-page">
+      <span class="section-eyebrow">Case study · 2026-08-20</span>
+      <h1>Arif Gadgets — a real shop for Savar, built to run itself</h1>
+<div class="content-rich"><p><strong>A gadget retailer in Savar, Dhaka needed a real shop. Not a marketplace stall, not a Facebook page with a comment thread for orders — a shop that takes money, books couriers, tracks stock and profit, and can be run by staff who have never used an admin panel before.</strong></p>
+<p>This is what was built, how it works, and why each decision was made.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Client</strong></td>
+<td>Arif Gadgets — Alhaj Abdul Mannan Degree College Gate, Zirani, BKSP, Ashulia, Savar, Dhaka</td>
+</tr>
+<tr>
+<td><strong>Owner</strong></td>
+<td>Ariful Islam Arif</td>
+</tr>
+<tr>
+<td><strong>Live at</strong></td>
+<td><a href="https://arifgadget.store">arifgadget.store</a></td>
+</tr>
+<tr>
+<td><strong>Role</strong></td>
+<td>Sole developer — architecture, backend, frontend, design, DevOps, documentation</td>
+</tr>
+<tr>
+<td><strong>Stack</strong></td>
+<td>React 18 · TypeScript · Vite · Hono · Cloudflare Workers, D1, R2, KV, Pages · GitHub Actions</td>
+</tr>
+<tr>
+<td><strong>Integrations</strong></td>
+<td>Steadfast Courier · bKash · Nagad · Rocket · bank transfer · cash on delivery</td>
+</tr>
+<tr>
+<td><strong>Monthly running cost</strong></td>
+<td>Effectively zero at this shop&#39;s volume</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>About the numbers in the screenshots.</strong> The revenue, margin, stock and order figures shown throughout were produced by placing real orders through the live pricing engine on a demonstration dataset, and letting the database triggers do their work. They are the system&#39;s own calculations, captured from a running browser. They are <strong>not</strong> the client&#39;s private trading figures.</p>
+</blockquote>
+<hr>
+<h2>Contents</h2>
+<ol>
+<li><a href="#1-the-brief">The brief</a></li>
+<li><a href="#2-why-this-architecture">Why this architecture</a></li>
+<li><a href="#3-the-storefront">The storefront</a></li>
+<li><a href="#4-product-photography-done-properly">Product photography, done properly</a></li>
+<li><a href="#5-two-ways-to-buy">Two ways to buy</a></li>
+<li><a href="#6-checkout-payment-and-the-invoice">Checkout, payment and the invoice</a></li>
+<li><a href="#7-order-tracking-and-customer-accounts">Order tracking and customer accounts</a></li>
+<li><a href="#8-built-for-the-phone-first">Built for the phone first</a></li>
+<li><a href="#9-the-dashboard">The dashboard</a></li>
+<li><a href="#10-editing-the-shop-from-inside-the-shop">Editing the shop from inside the shop</a></li>
+<li><a href="#11-courier-integration">Courier integration</a></li>
+<li><a href="#12-the-calculation-engine">The calculation engine</a></li>
+<li><a href="#13-content-the-owner-controls">Content the owner controls</a></li>
+<li><a href="#14-documentation-in-bangla">Documentation in Bangla</a></li>
+<li><a href="#15-security">Security</a></li>
+<li><a href="#16-deployment">Deployment</a></li>
+<li><a href="#17-testing-and-the-bugs-it-caught">Testing, and the bugs it caught</a></li>
+<li><a href="#18-what-was-delivered">What was delivered</a></li>
+</ol>
+<hr>
+<p><img src="/case-studies/images/00-architecture.svg" alt="System architecture" loading="lazy"></p>
+<hr>
+<h2>1. The brief</h2>
+<p>Arif Gadgets sells phones, smartwatches, earbuds, chargers and accessories — to walk-in customers one piece at a time, and to small retailers by the carton. Orders arrived by phone call and Facebook message. Stock was a notebook. Nobody knew the margin on anything.</p>
+<p>The requirements that shaped every decision:</p>
+<ul>
+<li><strong>It has to work on a phone.</strong> Over 80% of Bangladeshi e-commerce traffic is mobile, on connections that are not always fast.</li>
+<li><strong>Cash on delivery is the default.</strong> Most customers still pay the courier at the door, so the system has to track who owes what and reconcile it when the courier settles.</li>
+<li><strong>Staff are not technical.</strong> The people running this day to day have never used an admin panel. If a screen needs explaining twice, it is the screen that is wrong.</li>
+<li><strong>Running cost matters.</strong> A shop this size cannot carry a monthly server bill while it grows.</li>
+<li><strong>Two kinds of buyer, one shop.</strong> A customer buying one charger and a retailer buying two hundred should both feel the shop was built for them.</li>
+</ul>
+<hr>
+<h2>2. Why this architecture</h2>
+<p>Everything runs on Cloudflare&#39;s edge platform. There is no server to patch, no container to restart, no database host to pay for.</p>
+<p><strong>Cloudflare Pages</strong> serves the React build. <strong>A single Cloudflare Worker</strong> is the entire API — routing, authentication, pricing, orders, courier calls, analytics. <strong>D1</strong> is the database: SQLite, replicated at the edge, sitting close to the people using it. <strong>R2</strong> holds product photographs. <strong>KV</strong> caches courier lookups.</p>
+<p>Three reasons this was the right call for this client:</p>
+<p><strong>Cost.</strong> At this shop&#39;s volume, everything sits inside free tiers. The client pays for a domain. That is the bill.</p>
+<p><strong>Latency.</strong> The Worker and the database both run at the edge, so a shopper in Savar is not waiting on a round trip to Singapore. A cold Worker start is measured in single-digit milliseconds, and the deploy log shows a <strong>17 ms startup</strong>.</p>
+<p><strong>One language, one repository.</strong> The storefront, the dashboard and the API are all TypeScript in one repo. The type describing a product is written once and imported by all three. When a field changes, the compiler finds every place that has to change with it — before the code ever runs.</p>
+<hr>
+<h2>3. The storefront</h2>
+<p>A visitor is met by an offer banner — content the owner writes and switches on or off from the dashboard, without asking anyone.</p>
+<p><img src="/case-studies/images/01-offer-popup-on-arrival.png" alt="Offer popup as a visitor meets it" loading="lazy"></p>
+<p>Behind it, the shop opens with a welcome banner, then the two things a shopper actually wants: start shopping, or find an order they have already placed.</p>
+<p><img src="/case-studies/images/02-home-welcome-banner.png" alt="Welcome banner" loading="lazy"></p>
+<p>Underneath, the promises that decide whether a first-time visitor trusts a shop they have not heard of — genuine products, cash on delivery, returns, delivery time — and then the categories.</p>
+<p><img src="/case-studies/images/03-home-categories-and-trust.png" alt="Categories and trust strip" loading="lazy"></p>
+<p>Clearance lines and best sellers, each card showing the discount, the stock state and the price.</p>
+<p><img src="/case-studies/images/04-home-product-grid.png" alt="Product grid" loading="lazy"></p>
+<p>The footer carries a help block on every page — WhatsApp and email, one tap away — along with the policy pages and the payment methods accepted.</p>
+<p><img src="/case-studies/images/05-home-footer-help-and-payments.png" alt="Footer" loading="lazy"></p>
+<p>The catalogue filters by category, brand, stock and price, and sorts six ways. Every filter lives in the URL, so a filtered view is a link staff can send to a customer.</p>
+<p><img src="/case-studies/images/06-catalog-filters-and-sorting.png" alt="Catalogue" loading="lazy"></p>
+<p><img src="/case-studies/images/07-catalog-filtered-by-category.png" alt="Category filtered" loading="lazy"></p>
+<hr>
+<h2>4. Product photography, done properly</h2>
+<p>A shop like this lives on its photographs, and this is where the most careful work went.</p>
+<p><strong>Twelve photographs per product.</strong> Staff select a whole set at once or drag them onto the box; they can also paste links to pictures that already live somewhere else. Both routes end in the same ordered list. The first picture is the main one — the one on the cards, in the cart and on the invoice — and the arrows reorder without re-uploading.</p>
+<p><img src="/case-studies/images/43-admin-gallery-editor.png" alt="Gallery editor" loading="lazy"></p>
+<p><strong>Nothing is ever cropped.</strong> Product images use <code>object-fit: contain</code>, not <code>cover</code>. The difference matters: <code>cover</code> fills the frame by throwing away whatever does not fit, which on a product photo means slicing the ends off a phone or cutting the plug off a charger. The shopper is then looking at a picture of <em>part</em> of the thing they are buying. Every frame in the shop is square, so a square photograph fills it exactly and any other shape is shown whole with space at the sides.</p>
+<p><img src="/case-studies/images/09-product-detail-gallery.png" alt="Product page with gallery" loading="lazy"></p>
+<p><img src="/case-studies/images/10-product-detail-second-photo.png" alt="Second photograph selected" loading="lazy"></p>
+<p><strong>Hover to enlarge, click to open.</strong> Photographs appear all over the shop at thumbnail size — 220 pixels on a catalogue card, 30 in the dashboard&#39;s product table. At that size two black chargers look identical. Hovering any picture with a mouse shows it enlarged beside the cursor; clicking one opens it full screen with arrows, keyboard navigation and swipe.</p>
+<p><img src="/case-studies/images/08-catalog-hover-preview.png" alt="Hover preview on a catalogue card" loading="lazy"></p>
+<p><img src="/case-studies/images/12-product-lightbox-full-photo.png" alt="Full-screen photograph" loading="lazy"></p>
+<p>This is built as one delegated listener on the document rather than each component opting in — pictures here appear and disappear constantly as staff upload, filter and page through lists, and a delegated listener covers whatever is on screen at the time. A picture inside a link or a button keeps its own click, so a product card still opens its product.</p>
+<p>Below the gallery: the description rendered as real paragraphs and bullets, the specifications, and the ordering and delivery terms.</p>
+<p><img src="/case-studies/images/11-product-specs-and-delivery.png" alt="Specs and delivery" loading="lazy"></p>
+<hr>
+<h2>5. Two ways to buy</h2>
+<p>Every product offers <strong>Shop now</strong> and <strong>Add to cart</strong>. Shop now takes one item straight to checkout and does not touch the cart — a shopper who has been building a basket for ten minutes does not lose it because they used the wrong button.</p>
+<p>Volume pricing is a real tier table, resolved on the server. The unit price drops as quantity rises, and the cart recalculates live as the shopper changes numbers.</p>
+<p><img src="/case-studies/images/13-cart-empty-state.png" alt="Empty cart" loading="lazy"></p>
+<p><img src="/case-studies/images/14-cart-with-volume-pricing.png" alt="Cart with volume pricing" loading="lazy"></p>
+<p>The prices a shopper sees are never trusted. The browser sends product ids and quantities; the Worker looks up the current price and the applicable tier itself, computes the total, and that is what gets charged. A tampered request buys nothing at a discount.</p>
+<hr>
+<h2>6. Checkout, payment and the invoice</h2>
+<p>One page: delivery details, delivery zone, payment method.</p>
+<p><img src="/case-studies/images/15-checkout-delivery-form.png" alt="Checkout form" loading="lazy"></p>
+<p><img src="/case-studies/images/16-checkout-filled-in.png" alt="Checkout filled in" loading="lazy"></p>
+<p>Choosing bKash, Nagad, Rocket or bank transfer reveals the shop&#39;s own receiving number and asks for the transaction ID, which is stored against the order so staff can reconcile it later. Cash on delivery skips all of that.</p>
+<p><img src="/case-studies/images/17-checkout-payment-instructions.png" alt="Payment instructions" loading="lazy"></p>
+<p>Every order gets <strong>two numbers, and they never drift apart</strong>:</p>
+<ul>
+<li>an <strong>order number</strong> (<code>AGMT0DG3MDOV</code>) — the customer&#39;s tracking reference</li>
+<li>an <strong>invoice number</strong> (<code>INV-000193</code>) — the receipt reference</li>
+</ul>
+<p>The invoice number is a generated column derived from the order&#39;s own row id, so it cannot be skipped, collide, or fall out of step. There is no counter table to lock, which means concurrent checkouts never queue behind each other for a number.</p>
+<p>Staff can search the dashboard by either — or by half of either, or by the customer&#39;s name or phone. An exact match on an order or invoice number sorts to the top however old it is, because a customer reading out invoice 193 should not be answered with a newer order that merely contains &quot;193&quot; in its phone number.</p>
+<hr>
+<h2>7. Order tracking and customer accounts</h2>
+<p>A customer tracks an order with the order number and the phone they used — no account required, because most customers will not make one.</p>
+<p><img src="/case-studies/images/18-track-order-lookup.png" alt="Track an order" loading="lazy"></p>
+<p>Those who do get an account see their order history, can reorder, and can download any invoice.</p>
+<p><img src="/case-studies/images/22-customer-account-signin.png" alt="Customer account" loading="lazy"></p>
+<p>The shop also has a proper light and dark theme, following the operating system&#39;s setting unless the visitor overrides it.</p>
+<p><img src="/case-studies/images/23-home-dark-theme.png" alt="Dark theme home" loading="lazy"></p>
+<p><img src="/case-studies/images/24-product-dark-theme.png" alt="Dark theme product" loading="lazy"></p>
+<hr>
+<h2>8. Built for the phone first</h2>
+<p>Every screen was designed at 390 pixels wide and then allowed to grow, not the other way round. The phone gets a bottom navigation bar, a slide-out category drawer, and a full-screen photo viewer that responds to swipe.</p>
+<table>
+<tr>
+<td width="25%"><img src="/case-studies/images/26-mobile-home.png" alt="Mobile home" loading="lazy"></td>
+<td width="25%"><img src="/case-studies/images/27-mobile-menu-drawer.png" alt="Mobile menu" loading="lazy"></td>
+<td width="25%"><img src="/case-studies/images/28-mobile-catalog.png" alt="Mobile catalogue" loading="lazy"></td>
+<td width="25%"><img src="/case-studies/images/29-mobile-product.png" alt="Mobile product" loading="lazy"></td>
+</tr>
+<tr>
+<td><img src="/case-studies/images/30-mobile-lightbox.png" alt="Mobile photo viewer" loading="lazy"></td>
+<td><img src="/case-studies/images/31-mobile-cart.png" alt="Mobile cart" loading="lazy"></td>
+<td><img src="/case-studies/images/32-mobile-track.png" alt="Mobile tracking" loading="lazy"></td>
+<td><img src="/case-studies/images/25-mobile-offer-popup.png" alt="Mobile offer" loading="lazy"></td>
+</tr>
+</table><p>The whole application — storefront and dashboard together — is <strong>131 kB gzipped</strong> (68 kB of application code, 54 kB of React and the router, 9 kB of CSS). On a slow connection that is the difference between a shop and a spinner.</p>
+<hr>
+<h2>9. The dashboard</h2>
+<p>This is where most of the thinking went, because this is what the client actually uses.</p>
+<p><img src="/case-studies/images/33-admin-sign-in.png" alt="Staff sign-in" loading="lazy"></p>
+<p><img src="/case-studies/images/34-admin-dashboard-kpis.png" alt="Dashboard KPIs" loading="lazy"></p>
+<p>Revenue, gross profit, orders, average order value — each against the previous period. Stock on hand at cost, unrealised profit if everything sells at list, what needs restocking.</p>
+<p><img src="/case-studies/images/35-admin-revenue-and-pipeline.png" alt="Revenue and pipeline" loading="lazy"></p>
+<p>Every figure is derived from the order and stock ledgers at the moment the page loads. Nothing is a stored total that can drift from the rows it summarises.</p>
+<p><strong>Orders.</strong> The list shows order number, invoice number, customer, units, total, profit, margin, status and courier state. Opening one shows what was actually needed to fulfil it:</p>
+<p><img src="/case-studies/images/38-admin-orders-list.png" alt="Orders list" loading="lazy"></p>
+<p><img src="/case-studies/images/39-admin-order-delivery-details.png" alt="Order with delivery details" loading="lazy"></p>
+<p>Name; the phone as a tap-to-call link, because staff open this standing next to the parcel; the full street address; which delivery zone was charged; the customer&#39;s own note highlighted, because &quot;please call before delivery&quot; is useless if nobody sees it; how it was paid and exactly what the courier should collect. A <strong>Copy</strong> button hands the whole block over ready to paste into a courier form.</p>
+<p>An order with no address says so in red and says to phone the customer — that order cannot be booked with the courier at all, and the sooner someone knows the better.</p>
+<p>Delivery details are deliberately <em>not</em> in the list response. A page of forty orders would otherwise carry forty customers&#39; addresses and phone numbers into the browser whether anyone looked or not. They load for the one order a staff member opens.</p>
+<p><strong>Products.</strong> Cost, price, margin per unit, stock, stock value, status — the whole catalogue with its economics visible at a glance.</p>
+<p><img src="/case-studies/images/40-admin-products-with-margins.png" alt="Products with margins" loading="lazy"></p>
+<p><img src="/case-studies/images/41-admin-hover-preview.png" alt="Hover preview in the dashboard" loading="lazy"></p>
+<p>The editor computes margin, markup and discount live as figures are typed, so staff see the consequence of a price before saving it.</p>
+<p><img src="/case-studies/images/42-admin-product-editor.png" alt="Product editor" loading="lazy"></p>
+<p><strong>Stock is a ledger, not a number.</strong> Every movement — restock, sale, return, adjustment, damage — is a row recording who, when, why, and the balance afterwards. Editing the stock figure in the product form routes through the same ledger rather than writing over the row, so the history stays honest.</p>
+<p><img src="/case-studies/images/44-admin-stock-ledger-dialog.png" alt="Stock ledger" loading="lazy"></p>
+<p><strong>Inventory</strong> ranks what needs restocking by capital tied up, so the owner reorders the thing that costs the most to be out of.</p>
+<p><img src="/case-studies/images/47-admin-inventory-alerts.png" alt="Inventory alerts" loading="lazy"></p>
+<p><img src="/case-studies/images/48-admin-customers.png" alt="Customers" loading="lazy"></p>
+<hr>
+<h2>10. Editing the shop from inside the shop</h2>
+<p>The client&#39;s own words: <em>they want to edit the dashboard from a live preview under the storefront, so they clearly see and edit products.</em></p>
+<p>So the dashboard shows the real shop in a frame, with an edit panel beside it. Staff browse to whatever they want to change — a product, a blog post, a policy page — and the panel loads that thing and offers the fields worth editing. Save, and the frame refreshes showing the result.</p>
+<p><img src="/case-studies/images/45-admin-live-preview.png" alt="Live preview" loading="lazy"></p>
+<p><img src="/case-studies/images/46-admin-live-preview-editing.png" alt="Editing from the live preview" loading="lazy"></p>
+<p>Nobody has to find the item in a list first. Someone who spots a typo while looking at the shop fixes it where they spotted it — including adding photographs, with the same gallery editor.</p>
+<p>The two windows talk over <code>postMessage</code>, targeted at the shop&#39;s own origin rather than <code>*</code>, so the route never leaks to a page that has embedded the shop without permission. An iframe&#39;s URL cannot be watched from outside, because a single-page app changes route without ever firing a <code>load</code> event — so the shop announces its own route, and the dashboard answers by asking it to reload after a save.</p>
+<hr>
+<h2>11. Courier integration</h2>
+<p>Deliveries go through <strong>Steadfast Courier</strong>. The integration is deliberately narrow and explicit.</p>
+<p><strong>Booking is never automatic.</strong> Staff press <em>Send to Steadfast</em> on an order and confirm — the dialog states exactly how much cash the courier will be asked to collect. Real money leaving the building should require a human to say yes.</p>
+<p><strong>The courier is the authority on what happened.</strong> A status refresh asks Steadfast and moves the order to the matching checkpoint. Delivered means delivered; returned restocks every unit automatically and reverses the revenue.</p>
+<p><strong>Except when it does not.</strong> Steadfast reports some outcomes as <em>awaiting approval</em> — their accounts team has not signed off yet. Those are shown but move nothing, because recognising revenue or restocking inventory on a decision that can still be reversed is how books stop balancing. Partial deliveries do not move either: someone has to decide what was actually sold.</p>
+<p><img src="/case-studies/images/36-admin-courier-panel.png" alt="Courier panel" loading="lazy"></p>
+<p><img src="/case-studies/images/37-admin-top-products-and-alerts.png" alt="Top products and alerts" loading="lazy"></p>
+<p><strong>Money crosses one boundary, explicitly.</strong> This codebase counts in poisha; Steadfast counts in taka. That conversion happens in exactly one function, with a comment explaining that sending 145000 where 1450 was meant would ask the courier to collect a hundred times the order value from the customer. Orders already paid by bKash book at zero, so nobody is charged twice.</p>
+<p><strong>When it fails, it says why.</strong> Four different problems — keys never set, keys rejected, courier erroring, courier unreachable — need four different fixes and used to look identical. The dashboard now reports which one it is, what Steadfast itself replied, what to do about it, and whether each key is present with its length. Never a character of its value.</p>
+<hr>
+<h2>12. The calculation engine</h2>
+<p>The client asked for a system where the arithmetic looks after itself. It does, at the database level, where it cannot be bypassed.</p>
+<p><strong>Derived values are computed, never entered.</strong> Margin, markup, discount percentage, stock state, stock value, whether an order counts as revenue — all generated columns. They cannot be set to something inconsistent because there is nowhere to set them.</p>
+<pre><code class="language-sql">margin_pct REAL GENERATED ALWAYS AS (
+  CASE WHEN price &gt; 0 THEN ROUND((price - cost_price) * 100.0 / price, 2) ELSE 0 END
+) STORED
+</code></pre>
+<p><strong>Money is integers.</strong> Every amount is a count of poisha. ৳1,450.00 is <code>145000</code>. No floating-point drift, ever.</p>
+<p><strong>Triggers do the bookkeeping.</strong> Adding a line to an order writes a stock movement, decrements stock, increments units sold, and recomputes the order&#39;s totals, cost and profit. Cancelling or refunding puts every unit back and reverses the revenue. The application never has to remember — SQLite will not let it forget.</p>
+<p><strong>Overselling is impossible.</strong> <code>CHECK (stock &gt;= 0)</code> on the products table. Two customers racing for the last unit is not an application problem; the second write fails at the database and that customer is told the item just sold out.</p>
+<p><strong>Cost is captured at the moment of sale.</strong> Each order line stores the unit cost as it was that day. A supplier price change next month does not retroactively rewrite last month&#39;s profit.</p>
+<hr>
+<h2>13. Content the owner controls</h2>
+<p>Thirteen policy and company pages, a blog, and a press section — all editable from the dashboard, all live immediately.</p>
+<p><img src="/case-studies/images/50-admin-content-manager.png" alt="Content manager" loading="lazy"></p>
+<p><img src="/case-studies/images/19-blog-index.png" alt="Blog" loading="lazy"></p>
+<p><img src="/case-studies/images/20-press-coverage.png" alt="Press coverage" loading="lazy"></p>
+<p><img src="/case-studies/images/21-policy-page.png" alt="Policy page" loading="lazy"></p>
+<p>The offer popup and banner strip are content too: the owner writes the message, sets the link, and switches it on.</p>
+<p><img src="/case-studies/images/49-admin-offers-and-popup.png" alt="Offers and popup" loading="lazy"></p>
+<p>Settings cover the shop&#39;s identity, contact details, payment numbers, delivery rates per zone and the free-delivery threshold.</p>
+<p><img src="/case-studies/images/51-admin-settings.png" alt="Settings" loading="lazy"></p>
+<p>Body text is rendered by building React elements, never by setting <code>innerHTML</code> — so a stray tag typed into the dashboard stays text instead of becoming markup.</p>
+<hr>
+<h2>14. Documentation in Bangla</h2>
+<p>The staff running this shop read Bangla. So the handbook is in Bangla, inside the dashboard, one click from every screen it describes.</p>
+<p><img src="/case-studies/images/52-admin-bangla-guide.png" alt="Bangla guide" loading="lazy"></p>
+<p>Not a translation of developer notes — an explanation of the work. What each order checkpoint means and what it does to the accounts. How to photograph a product, what size to use, and how to crop a phone photo to square. What each courier status means and which ones move an order. What to do when Steadfast will not connect, with all four messages and what each one means.</p>
+<p><img src="/case-studies/images/53-admin-bangla-guide-photos.png" alt="Photography section" loading="lazy"></p>
+<hr>
+<h2>15. Security</h2>
+<ul>
+<li><strong>Passwords</strong> — PBKDF2-SHA256, 100,000 iterations, per-user salt. Sign-in hashes even when the account does not exist, so response timing does not reveal which usernames are real.</li>
+<li><strong>Sessions</strong> — HS256 JWTs with a <code>kind</code> claim. A customer token and a staff token are signed with the same key but are never interchangeable; a customer token presented to a staff route is rejected.</li>
+<li><strong>Roles</strong> — owner, admin and staff, enforced server-side. The dashboard hiding a button is a courtesy, not a control.</li>
+<li><strong>Prices</strong> — never trusted from the browser. Ever.</li>
+<li><strong>Secrets</strong> — courier and signing keys live as Worker secrets, injected by the deploy. None is in the repository, and none is ever returned to a caller, logged, or echoed in an error message.</li>
+<li><strong>Customer data</strong> — addresses and phone numbers are never sent to the browser in bulk, only for the single order a staff member opens.</li>
+<li><strong>The login page does not hint at the username.</strong> It used to carry a placeholder showing the real one. It does not any more.</li>
+</ul>
+<hr>
+<h2>16. Deployment</h2>
+<p>Push to <code>main</code>. GitHub Actions typechecks the whole repository, provisions any missing Cloudflare resources, applies pending D1 migrations, deploys the Worker, sets its secrets, ensures the owner account, builds the storefront, publishes it, and smoke-tests the result.</p>
+<p>The whole run takes <strong>70 to 105 seconds</strong> — under two minutes from <code>git push</code> to a live shop.</p>
+<p>Database changes are numbered migration files applied in order and recorded, so the schema on any environment is a known, reproducible state — not something that drifted.</p>
+<hr>
+<h2>17. Testing, and the bugs it caught</h2>
+<p>Every feature was verified by driving a real browser against the real application with Playwright — the same React build and the same Worker that go to production. That practice caught bugs that reading the code did not:</p>
+<ul>
+<li><strong>A free-delivery threshold of zero made every order free.</strong> <code>0</code> was read as &quot;no threshold set&quot; in one place and &quot;spend zero to qualify&quot; in another. Found by placing a small order and watching the delivery charge vanish.</li>
+<li><strong>Every sale wrote a phantom stock adjustment.</strong> The order triggers updated stock before writing the ledger row, so the guard never matched. The ledger showed a &quot;Dashboard stock edit&quot; beside every genuine sale. Fixed by writing the ledger first; verified by placing an order and reading back exactly one movement.</li>
+<li><strong>A write probe that only read.</strong> A deployment guard used <code>SELECT 1</code> to check database write access — but read permission passes that. The guard went green and the deploy failed a step later. It now performs a real write.</li>
+<li><strong>The invoice&#39;s WhatsApp line never rendered.</strong> Two settings were written by a migration but missing from the public settings query, so the invoice fell back to the short brand name and the contact line silently disappeared. Both public endpoints now read one shared allow-list.</li>
+<li><strong>The live preview could not find products.</strong> The dashboard&#39;s product search matched name, SKU and brand — but the preview knows a product only by the slug in its address. Found by watching the browser announce the right route and get no result.</li>
+</ul>
+<hr>
+<h2>18. What was delivered</h2>
+<p><strong>Storefront</strong> — home, catalogue with filters and six sorts, product pages with twelve-photo galleries and a full-screen viewer, cart with live tier pricing, one-page checkout, order tracking, customer accounts, printable invoices, blog, press, thirteen content pages, light and dark themes, offer popup and banner.</p>
+<p><strong>Dashboard</strong> — analytics with period comparison, orders with full delivery details and courier control, products with live margin arithmetic and gallery editing, a stock ledger, inventory ranked by capital at risk, customers, content management, offers, settings, a live storefront preview with inline editing, and a Bangla handbook.</p>
+<p><strong>Platform</strong> — a Cloudflare Worker API, a D1 schema of fifteen tables with generated columns and triggers, R2 media storage, courier integration, and a deployment pipeline that ships in a hundred seconds.</p>
+<p><strong>And the part that matters most:</strong> a shop the owner can run without calling the developer. The staff add products, edit the shop while looking at it, book couriers, chase deliveries and read their own margins — in a dashboard designed for them, documented in their own language.</p>
+<hr>
+<h3>Credits</h3>
+<p><strong>Built by <a href="https://sayadbayezid.com">Sayad Bayezid</a></strong> — architecture, backend, frontend, design, DevOps and documentation.
+<strong>Development partner:</strong> <a href="https://smartgentools.com">SmartGen</a>
+<strong>Client:</strong> Arif Gadgets, Savar, Dhaka — <a href="https://arifgadget.store">arifgadget.store</a></p>
+<p><em>Every screenshot in this case study was captured with Playwright driving a real Chromium browser against the running application. Nothing was mocked, staged in a design tool, or retouched.</em></p>
+</div>
+      
+      
+    </article>
+
+  </main>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-word"><span class="brand-pulse-sm"></span>Connect<em>with</em>Bayezid</span>
+        <p>Founder-led digital systems — web, SEO, marketing, product.</p>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <span class="footer-heading">Work</span>
+          <a href="/services.html">Services</a>
+          <a href="/products.html">Products</a>
+          <a href="/work.html">Case studies</a>
+        </div>
+        <div>
+          <span class="footer-heading">Studio</span>
+          <a href="/about.html">About</a>
+          <a href="https://sayadbayezid.com/verified-profiles/">Verified profiles</a>
+          <a href="/contact.html">Contact</a>
+        </div>
+        <div>
+          <span class="footer-heading">Elsewhere</span>
+          <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
+          <a href="https://www.genzfrontir.com" target="_blank" rel="noopener">GenZ Frontier</a>
+          <a href="https://github.com/Sayadbayezid" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
+    </div>
+  </footer>
+  <script src="/assets/main.js"></script>
+</body>
+</html>
