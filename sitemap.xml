@@ -147,4 +147,28 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/</loc>
+    <lastmod>2026-08-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/smart-ai-open-source-case-study-and-project-journal/</loc>
+    <lastmod>July 27, 2026</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>
