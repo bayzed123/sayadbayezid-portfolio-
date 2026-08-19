@@ -267,17 +267,40 @@
   .scroll-progress{ position:fixed; top:0; left:0; right:0; height:2.5px; z-index:70; background:transparent; }
   .scroll-progress-bar{ height:100%; width:0%; background:linear-gradient(90deg,var(--verified-mint),var(--signal-blue),var(--premium-gold)); box-shadow:0 0 10px rgba(79,158,255,.6); }
 
-  .site-header{
-    position:fixed; top:0; left:0; right:0; z-index:60;
-    backdrop-filter:blur(16px) saturate(140%); -webkit-backdrop-filter:blur(16px) saturate(140%);
-    background:rgba(4,5,11,.55); border-bottom:1px solid var(--glass-border);
+  .portfolio-site-header{
+    position:fixed; inset:0 0 auto; z-index:90;
+    background:rgba(4,5,11,.88); border-bottom:1px solid rgba(237,239,236,.12);
+    backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%);
   }
-  .header-inner{ max-width:1180px; margin:0 auto; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; }
+  .portfolio-site-header .header-inner{ max-width:1180px; margin:0 auto; min-height:58px; padding:10px 20px; display:flex; align-items:center; justify-content:space-between; gap:24px; }
+  .portfolio-site-header .brand-mark{ display:inline-flex; align-items:center; gap:10px; color:inherit; text-decoration:none; white-space:nowrap; }
+  .portfolio-site-header .brand-pulse{ width:16px; height:16px; border:2px solid var(--verified-mint); border-radius:50%; box-shadow:0 0 0 7px rgba(78,217,174,.08); position:relative; }
+  .portfolio-site-header .brand-pulse::after{ content:""; position:absolute; inset:4px; border-radius:50%; background:var(--verified-mint); }
+  .portfolio-site-header .brand-word{ font-family:var(--font-display); font-weight:700; letter-spacing:-.03em; font-size:1rem; }
+  .portfolio-site-header .brand-word em{ font-style:normal; color:var(--verified-mint); }
+  .portfolio-site-header .main-nav{ display:flex; align-items:center; justify-content:flex-end; gap:22px; }
+  .portfolio-site-header .main-nav a{ color:var(--text-slate); text-decoration:none; font-size:.78rem; white-space:nowrap; transition:color .2s ease; }
+  .portfolio-site-header .main-nav a:hover,.portfolio-site-header .main-nav a:focus-visible{ color:var(--text-ice); }
+  .portfolio-site-header .main-nav .nav-cta{ color:var(--void-black); background:var(--verified-mint); padding:8px 13px; border-radius:var(--r-pill); font-weight:700; }
+  .portfolio-site-header .nav-toggle{ display:none; width:42px; height:38px; border:1px solid rgba(237,239,236,.16); border-radius:12px; background:rgba(255,255,255,.04); color:var(--text-ice); padding:9px; cursor:pointer; }
+  .portfolio-site-header .nav-toggle span{ display:block; height:2px; margin:4px 0; border-radius:2px; background:currentColor; }
+  .identity-header{ position:relative; z-index:50; margin-top:58px; border-bottom:1px solid var(--glass-border); background:rgba(4,5,11,.55); }
+  .identity-header-inner{ max-width:1180px; margin:0 auto; padding:12px 20px; display:flex; align-items:center; justify-content:space-between; }
   .wordmark{ font-family:var(--font-display); font-weight:700; letter-spacing:.06em; font-size:1.05rem; }
   .wordmark-dot{ color:var(--verified-mint); }
   .header-tag{
     font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase;
     color:var(--text-slate); border:1px solid var(--glass-border); padding:5px 10px; border-radius:var(--r-pill);
+  }
+  @media (max-width:760px){
+    .portfolio-site-header .header-inner{ min-height:58px; padding:10px 16px; }
+    .portfolio-site-header .main-nav{ display:none; position:absolute; top:calc(100% + 8px); left:12px; right:12px; padding:8px; flex-direction:column; align-items:stretch; gap:0; background:rgba(4,5,11,.97); border:1px solid rgba(237,239,236,.14); border-radius:16px; box-shadow:0 18px 50px rgba(0,0,0,.4); }
+    .portfolio-site-header .main-nav.is-open{ display:flex; }
+    .portfolio-site-header .main-nav a{ display:block; padding:13px 14px; border-bottom:1px solid rgba(237,239,236,.09); font-size:.95rem; }
+    .portfolio-site-header .main-nav a:last-child{ border-bottom:0; }
+    .portfolio-site-header .main-nav .nav-cta{ margin-top:8px; text-align:center; border-bottom:0; }
+    .portfolio-site-header .nav-toggle{ display:block; }
+    .identity-header-inner{ padding:12px 16px; }
   }
 
   /* ---------- Reveal-on-scroll ---------- */
@@ -508,7 +531,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google tag (gtag.js) -->
 </head>
 <body>
-<header class="site-header legacy-site-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
+<header class="portfolio-site-header" id="portfolioSiteHeader">
+  <div class="header-inner">
+    <a href="/" class="brand-mark"><span class="brand-pulse" aria-hidden="true"></span><span class="brand-word">Connect<em>with</em>Bayezid</span></a>
+    <nav class="main-nav" id="portfolioMainNav" aria-label="Primary navigation">
+      <a href="/services.html">Services</a>
+      <a href="/products.html">Products</a>
+      <a href="/work.html">Work</a>
+      <a href="/case-studies/">Case Studies</a>
+      <a href="/about.html">About</a>
+      <a href="/client-login.html" class="nav-login-link">Client Login</a>
+      <a href="/contact.html" class="nav-cta">Start a project</a>
+    </nav>
+    <button class="nav-toggle" id="portfolioNavToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
     <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -553,8 +590,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-bar" id="scrollProgress"></div></div>
 
-<header class="site-header">
-  <div class="header-inner">
+<header class="identity-header">
+  <div class="identity-header-inner">
     <span class="wordmark">CWB<span class="wordmark-dot">.</span></span>
     <span class="header-tag">Verified Entity</span>
   </div>
@@ -871,8 +908,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
-<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div>
-<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
+
+
 </footer>
 
 <button class="back-to-top" id="backToTop" aria-label="Back to top">
@@ -883,6 +920,23 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 (function () {
   var yearEl = document.getElementById('year');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
+
+  var portfolioNavToggle = document.getElementById('portfolioNavToggle');
+  var portfolioMainNav = document.getElementById('portfolioMainNav');
+  if (portfolioNavToggle && portfolioMainNav) {
+    portfolioNavToggle.addEventListener('click', function () {
+      var open = portfolioMainNav.classList.toggle('is-open');
+      portfolioNavToggle.setAttribute('aria-expanded', String(open));
+      portfolioNavToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    });
+    portfolioMainNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        portfolioMainNav.classList.remove('is-open');
+        portfolioNavToggle.setAttribute('aria-expanded', 'false');
+        portfolioNavToggle.setAttribute('aria-label', 'Open menu');
+      });
+    });
+  }
 
   var revealEls = document.querySelectorAll('.reveal');
   revealEls.forEach(function (el) {
