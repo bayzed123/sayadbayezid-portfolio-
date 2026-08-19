@@ -137,6 +137,7 @@ src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
         <a href="/work.html">Work</a>
+        <a href="/case-studies.html">Case Studies</a>
         <a href="/about.html">About</a>
         <a href="/client-login.html" class="nav-login-link">Client Login</a>
         <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
@@ -164,7 +165,7 @@ function readFooter() {
           <span class="footer-heading">Work</span>
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
-          <a href="/work.html">Case studies</a>
+          <a href="/case-studies.html">Case studies</a>
         </div>
         <div>
           <span class="footer-heading">Studio</span>
