@@ -1,19 +1,17 @@
 name: Deploy Frontend to GitHub Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-  # Allows you to run this workflow manually from the Actions tab
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -28,15 +26,36 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: tools/invoice/package-lock.json
+
+      - name: Build Invoice Tool
+        working-directory: tools/invoice
+        run: |
+          npm ci
+          npm run build
+
+      - name: Assemble GitHub Pages artifact
+        run: |
+          rm -rf .pages
+          mkdir -p .pages/tools/invoice
+          cp -a ./* .pages/
+          rm -rf .pages/.git .pages/.github .pages/tools/invoice
+          cp -a tools/invoice/build/. .pages/tools/invoice/
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire root repository (where your index.html is located)
-          path: '.'
+          path: '.pages'
 
       - name: Deploy to GitHub Pages
         id: deployment
+        if: github.event_name != 'pull_request'
         uses: actions/deploy-pages@v4
