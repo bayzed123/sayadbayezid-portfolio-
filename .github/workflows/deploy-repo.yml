@@ -29,10 +29,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
 
       - name: Build Invoice Tool
         working-directory: tools/invoice
+        env:
+          NODE_OPTIONS: --openssl-legacy-provider
         run: |
           npm install
           npm run build
@@ -40,10 +42,10 @@ jobs:
       - name: Assemble GitHub Pages artifact
         run: |
           rm -rf .pages
+          mkdir -p .pages
+          rsync -a --exclude='.git' --exclude='.github' --exclude='.pages' --exclude='tools/invoice/build' ./ .pages/
           mkdir -p .pages/tools/invoice
-          cp -a ./* .pages/
-          rm -rf .pages/.git .pages/.github .pages/tools/invoice
-          cp -a tools/invoice/build/. .pages/tools/invoice/
+          rsync -a tools/invoice/build/ .pages/tools/invoice/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
