@@ -79,6 +79,7 @@ a { color: inherit; }
   display: flex; align-items: center; justify-content: space-between;
 }
 .brand-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-logo { display: block; width: 172px; height: auto; }
 .brand-pulse, .brand-pulse-sm { width: 9px; height: 9px; border-radius: 50%; background: var(--emerald); position: relative; flex-shrink: 0; }
 .brand-pulse-sm { width: 7px; height: 7px; }
 .brand-pulse::after, .brand-pulse-sm::after {
