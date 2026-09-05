@@ -4,11 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Connect with Bayezid — Digital systems for brands that verify their work</title>
-<meta name="description" content="Sayad Md Bayezid Hosan builds web platforms, SEO systems, and marketing infrastructure — verified across 22 professional channels, built to last." />
+<meta name="description" content="Sayad Md Bayezid Hosan builds web platforms, SEO systems, AI chatbots, lead tooling, and barcode commerce — verified across 22 professional channels, built to last." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css" />
+<link rel="preload" as="image" href="/assets/bayezid-portrait-800.webp" type="image/webp" fetchpriority="high" />
 <!-- Meta Pixel Code — base + PageView. Repeat this exact block in the
      <head> of every future page (services.html, products.html, etc.) so
      PageView fires site-wide, not just here. -->
@@ -28,24 +30,16 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1" alt=""
 /></noscript>
 <!-- End Meta Pixel Code -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HY9255GJYE');
-</script>
-<!-- End Google tag (gtag.js) -->
-
-    <!-- Google Tag Manager -->
+<!-- Google Tag Manager. NOTE: the gtag.js snippet below appeared twice in this
+     head — the same measurement library fetched and initialised two extra
+     times on every page load, for no extra measurement. One copy is kept. -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
 <!-- End Google Tag Manager -->
-    <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -71,7 +65,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "@graph":[
       {"@type":"Organization","@id":"https://sayadbayezid.com/#organization","name":"Connect with Bayezid","url":"https://sayadbayezid.com/","logo":{"@type":"ImageObject","url":"https://sayadbayezid.com/assets/connect-with-bayezid-logo.svg"},"founder":{"@type":"Person","name":"Sayad Md Bayezid Hosan","url":"https://sayadbayezid.com/authors.html"},"sameAs":["https://github.com/Sayadbayezid","https://sayadbayezid.com/verified-profiles/"],"contactPoint":{"@type":"ContactPoint","contactType":"business inquiries","email":"cwb.agency@outlook.com","telephone":"+8801519601517","areaServed":"BD"}},
       {"@type":"WebSite","@id":"https://sayadbayezid.com/#website","url":"https://sayadbayezid.com/","name":"Connect with Bayezid","publisher":{"@id":"https://sayadbayezid.com/#organization"},"potentialAction":{"@type":"SearchAction","target":"https://sayadbayezid.com/?q={search_term_string}","query-input":"required name=search_term_string"}},
-      {"@type":"FAQPage","@id":"https://sayadbayezid.com/#faq","mainEntity":[{"@type":"Question","name":"What do you build?","acceptedAnswer":{"@type":"Answer","text":"Web platforms, SEO systems, product tools, and the marketing infrastructure that connects them."}},{"@type":"Question","name":"Who will work on my project?","acceptedAnswer":{"@type":"Answer","text":"Sayad Md Bayezid Hosan leads the strategy, build, and maintenance directly, without account-manager hand-offs."}},{"@type":"Question","name":"How can I start?","acceptedAnswer":{"@type":"Answer","text":"Send a project brief through the contact page to receive an honest answer about fit and next steps."}}]}
+      {"@type":"FAQPage","@id":"https://sayadbayezid.com/#faq","mainEntity":[{"@type":"Question","name":"What do you build?","acceptedAnswer":{"@type":"Answer","text":"Web platforms, SEO systems, AI chatbots, lead-generation tooling, barcode commerce systems, and the marketing infrastructure that connects them."}},{"@type":"Question","name":"Who will work on my project?","acceptedAnswer":{"@type":"Answer","text":"Sayad Md Bayezid Hosan leads the strategy, build, and maintenance directly, without account-manager hand-offs."}},{"@type":"Question","name":"Can I try anything before hiring you?","acceptedAnswer":{"@type":"Answer","text":"Yes. The developer demo hub, the SEO audit tool, the barcode service, the lead collector, and the open-source documentation are all live and free to open right now."}},{"@type":"Question","name":"Can barcodes be added to a store I already have?","acceptedAnswer":{"@type":"Answer","text":"Yes. The barcode service loads from a single script tag, so an existing e-commerce admin dashboard starts generating barcodes without a rebuild or a migration."}},{"@type":"Question","name":"How can I start?","acceptedAnswer":{"@type":"Answer","text":"Send a project brief through the contact page to receive an honest answer about fit and next steps."}}]}
     ]
   }
   </script>
@@ -83,14 +77,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <a class="skip-link" href="#main">Skip to content</a>
 
+  <!-- ============================= HEADER: logo + navigation ============================= -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
-      <a href="/" class="brand-mark"><img src="/assets/connect-with-bayezid-logo.svg" alt="Connect with Bayezid" class="brand-logo" /></a>
+      <a href="/" class="brand-mark"><img src="/assets/connect-with-bayezid-logo.svg" alt="Connect with Bayezid" class="brand-logo" width="172" height="34" /></a>
       <nav class="main-nav" id="mainNav">
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
-        <a href="/work.html">Work</a>
+        <a href="/projects.html">Projects</a>
         <a href="/case-studies/">Case Studies</a>
+        <a href="/blog/">Blog</a>
         <a href="/about.html">About</a>
         <a href="/client-login.html" class="nav-login-link">Client Login</a>
         <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
@@ -109,7 +105,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="hero-inner">
         <p class="eyebrow reveal" data-reveal>
           <span class="eyebrow-mark"></span>
-          22 verified channels · founder-led · est. building since 2019
+          22 verified channels · founder-led · building since 2019
         </p>
         <h1 class="hero-title">
           <span class="reveal" data-reveal>Digital systems for</span>
@@ -117,20 +113,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="reveal" data-reveal>their work.</span>
         </h1>
         <p class="hero-sub reveal" data-reveal>
-          I'm Sayad Md Bayezid Hosan — I design and build the web platforms, SEO
-          systems, and marketing infrastructure behind SmartGen, SmartLeadGen, and
-          a growing list of client work. Every claim on this site is checkable.
+          <strong>Web platforms, SEO systems, AI chatbots, lead tooling, and barcode commerce —
+          built and maintained by one person who answers your messages.</strong>
+        </p>
+        <p class="hero-sub reveal" data-reveal>
+          I'm Sayad Md Bayezid Hosan. SmartGen, SmartLeadGen, Boyok, and a growing list of client
+          work all run on systems I designed, shipped, and still maintain. Every claim on this site
+          links to something you can open and check yourself.
         </p>
         <div class="hero-ctas reveal" data-reveal>
           <a href="/contact.html" class="btn btn-primary" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
-          <a href="/work.html" class="btn btn-ghost">See the work</a>
+          <a href="/projects.html" class="btn btn-ghost">See every live project</a>
         </div>
       </div>
 
       <div class="hero-avatar reveal" data-reveal>
         <div class="avatar-frame" id="avatarFrame">
           <div class="avatar-scan" aria-hidden="true"></div>
-          <img src="/assets/bayezid-portrait.jpg" alt="Sayad Md Bayezid Hosan" class="avatar-img" id="avatarImg" />
+          <picture>
+            <source type="image/webp" srcset="/assets/bayezid-portrait-480.webp 480w, /assets/bayezid-portrait-800.webp 800w" sizes="(max-width: 900px) 60vw, 420px" />
+            <img src="/assets/bayezid-portrait-800.webp" alt="Sayad Md Bayezid Hosan" class="avatar-img" id="avatarImg" width="800" height="1200" fetchpriority="high" decoding="async" />
+          </picture>
           <div class="avatar-placeholder" id="avatarPlaceholder" aria-hidden="true">
             <span>SB</span>
             <small>swap /assets/bayezid-portrait.jpg</small>
@@ -154,8 +157,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="stat-label">tools shipped on SmartGen<sup>+</sup></span>
         </div>
         <div class="trust-stat reveal" data-reveal>
-          <span class="stat-num" data-count="3">0</span>
-          <span class="stat-label">platforms in active production</span>
+          <span class="stat-num" data-count="14">0</span>
+          <span class="stat-label">projects live right now</span>
         </div>
         <div class="trust-stat reveal" data-reveal>
           <span class="stat-num" data-count="1">0</span>
@@ -164,82 +167,300 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <!-- ============================= SERVICES ============================= -->
-    <section class="section services" id="services">
-      <div class="section-head reveal" data-reveal>
-        <span class="section-eyebrow">01 / Services</span>
-        <h2>What I build, on retainer or by project.</h2>
-      </div>
-      <div class="services-grid">
-        <a href="/services.html#web" class="service-card reveal" data-reveal>
-          <span class="service-index">01</span>
-          <h3>Web platforms</h3>
-          <p>Full-stack builds on Cloudflare Workers + D1 — dashboards, SaaS tools, and client sites that stay fast under real traffic.</p>
-        </a>
-        <a href="/services.html#seo" class="service-card reveal" data-reveal>
-          <span class="service-index">02</span>
-          <h3>SEO systems</h3>
-          <p>Technical, on-page, and local SEO built as a repeatable system — not a one-time audit that goes stale in a quarter.</p>
-        </a>
-        <a href="/services.html#marketing" class="service-card reveal" data-reveal>
-          <span class="service-index">03</span>
-          <h3>Marketing infrastructure</h3>
-          <p>Pixel and conversion tracking, lead systems, and the analytics layer that tells you which of it is actually working.</p>
-        </a>
-        <a href="/services.html#products" class="service-card reveal" data-reveal>
-          <span class="service-index">04</span>
-          <h3>Product builds</h3>
-          <p>From idea to shipped tool — the same process behind SmartGen's 120+ utilities and SmartLeadGen's lead engine.</p>
-        </a>
+    <!-- ============================= INTRODUCTION — say hi ============================= -->
+    <section class="intro" id="hello">
+      <div class="intro-inner">
+        <div class="intro-portrait reveal" data-reveal>
+          <img src="/assets/bayezid-portrait-480.webp" alt="Sayad Md Bayezid Hosan" width="480" height="720" loading="lazy" decoding="async" />
+          <span class="intro-portrait-note"><span class="brand-pulse-sm"></span> Tangail, Bangladesh · working worldwide</span>
+        </div>
+        <div class="intro-copy reveal" data-reveal>
+          <span class="section-eyebrow">01 / Introduction</span>
+          <h2 class="intro-hi">Hi — I'm <em>Bayezid</em>, and I build the boring parts properly.</h2>
+          <p>
+            Most digital work fails quietly: a site nobody maintains, an SEO audit that goes stale in
+            a quarter, a dashboard that only the agency knows how to open. I build the opposite —
+            systems that keep running after the invoice is paid, documented well enough that you
+            could hand them to someone else tomorrow.
+          </p>
+          <p>
+            That means I ship fewer, deeper things: a tools platform with 120+ utilities, a lead
+            collector that only keeps verified data, a barcode engine that works when the shop's
+            internet doesn't, and open-source documentation anyone can reskin. All of it is live,
+            and all of it is linked from this page.
+          </p>
+          <div class="intro-facts">
+            <div><b>2019</b><span>building on the web since</span></div>
+            <div><b>Solo</b><span>strategy, build, and support</span></div>
+            <div><b>22</b><span>independently verified profiles</span></div>
+          </div>
+          <div class="intro-actions">
+            <a href="/about.html" class="btn btn-ghost">More about me<span class="btn-arrow">→</span></a>
+            <a href="/contact.html" class="btn btn-primary" data-pixel-event="ContactIntent" data-pixel-custom="true">Say hi<span class="btn-arrow">→</span></a>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ============================= FEATURED WORK ============================= -->
+    <!-- ============================= PRODUCTS & SERVICES SLIDER ============================= -->
+    <section class="section" id="services" data-slider>
+      <div class="section-head-row reveal" data-reveal>
+        <div class="section-head">
+          <span class="section-eyebrow">02 / Products &amp; Services</span>
+          <h2>What you actually get — and what changes because of it.</h2>
+          <p style="margin-top:14px">Slide through the work. Each card names the transformation first, the deliverables second.</p>
+        </div>
+        <div class="slider-nav">
+          <button class="slider-btn" type="button" data-slide="prev" aria-label="Previous products and services">←</button>
+          <button class="slider-btn" type="button" data-slide="next" aria-label="Next products and services">→</button>
+        </div>
+      </div>
+
+      <div class="offer-slider-wrap">
+        <div class="offer-slider" role="region" aria-label="Products and services" tabindex="0">
+
+          <a href="/services.html#web" class="offer-card">
+            <span class="offer-card-index">01 / Service</span>
+            <h3>Web platforms</h3>
+            <p>Full-stack builds on Cloudflare Workers and D1 — dashboards, SaaS tools, and client sites that stay fast under real traffic.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From a site you're afraid to touch, to a platform you can change on a Tuesday afternoon.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Loads fast on Bangladeshi mobile data, not just on fibre</li>
+              <li>You own the code and the hosting account</li>
+              <li>Documented handover, not a black box</li>
+            </ul>
+            <span class="offer-card-foot"><b>From project scope</b><span class="work-link">Details <span class="btn-arrow">→</span></span></span>
+          </a>
+
+          <a href="/services.html#seo" class="offer-card">
+            <span class="offer-card-index">02 / Service</span>
+            <h3>SEO systems</h3>
+            <p>Technical, on-page, and local SEO built as a repeatable system — not a one-time audit that goes stale in a quarter.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From guessing why traffic moved, to a checklist that tells you before it does.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Findings you can hand to any developer</li>
+              <li>Local SEO for businesses with a real address</li>
+              <li>Free self-serve audit tool included</li>
+            </ul>
+            <span class="offer-card-foot"><b>Retainer or project</b><span class="work-link">Details <span class="btn-arrow">→</span></span></span>
+          </a>
+
+          <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener" class="offer-card" data-pixel-event="ViewContent" data-pixel-content="Boyok Lead Collector">
+            <span class="offer-card-index">03 / Product</span>
+            <h3>Boyok Lead Collector</h3>
+            <p>Tired of collecting leads by hand? Boyok gathers business leads and keeps only what verifies — the export you get is the export you can send to.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From a spreadsheet of dead addresses, to a shortlist your team can actually call.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Verified data only — nothing unchecked ships</li>
+              <li>Scored by how weak a business's online presence is</li>
+              <li>CSV export and Google Sheets push</li>
+            </ul>
+            <span class="offer-card-foot"><b>Live now</b><span class="work-link">Open Boyok <span class="btn-arrow">→</span></span></span>
+          </a>
+
+          <a href="https://leads.sayadbayezid.com/barcode-saas/" target="_blank" rel="noopener" class="offer-card" data-pixel-event="ViewContent" data-pixel-content="Boyok Barcode SaaS">
+            <span class="offer-card-index">04 / Product</span>
+            <h3>Boyok Barcode &amp; Admin Dashboard</h3>
+            <p>An e-commerce admin dashboard with a barcode machine built in — add a product, get a barcode, print the label.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From a counter, a notebook, and a guess at stock levels, to a shop that knows what it has.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Works offline and online — same dashboard either way</li>
+              <li>Auto-generates barcodes as products are created</li>
+              <li>Injects into a store you already run</li>
+            </ul>
+            <span class="offer-card-foot"><b>Live now</b><span class="work-link">Open the dashboard <span class="btn-arrow">→</span></span></span>
+          </a>
+
+          <a href="https://chatbot.sayadbayezid.com" target="_blank" rel="noopener" class="offer-card" data-pixel-event="ViewContent" data-pixel-content="Chatbot Workspace">
+            <span class="offer-card-index">05 / Product</span>
+            <h3>AI chatbots for real businesses</h3>
+            <p>A conversation model configured around your actual products and your actual questions — plus an alternative e-commerce build for shops.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From answering the same five questions every night, to answering only the ones that need you.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Try it in the browser before committing</li>
+              <li>Handles product and order questions unattended</li>
+              <li>Sits alongside your existing storefront</li>
+            </ul>
+            <span class="offer-card-foot"><b>Live now</b><span class="work-link">Try the chatbot <span class="btn-arrow">→</span></span></span>
+          </a>
+
+          <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener" class="offer-card" data-pixel-event="ViewContent" data-pixel-content="SmartGen Docs">
+            <span class="offer-card-index">06 / Open source</span>
+            <h3>SmartGen Docs — seven site styles</h3>
+            <p>Open-source documentation material with a Switch Site Style control: the same content reskins itself for developers, students, clinicians, or clients.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From maintaining seven documentation sites, to maintaining one and switching its skin.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Premium, Book, Course, Magazine, Agency, Medicine, API</li>
+              <li>Print-ready clinical layout included</li>
+              <li>Free and open — more themes in progress</li>
+            </ul>
+            <span class="offer-card-foot"><b>Free · open source</b><span class="work-link">Read the docs <span class="btn-arrow">→</span></span></span>
+          </a>
+
+          <a href="/services.html#marketing" class="offer-card">
+            <span class="offer-card-index">07 / Service</span>
+            <h3>Marketing infrastructure</h3>
+            <p>Pixel and conversion tracking, lead systems, and the analytics layer that tells you which half of the spend is actually working.</p>
+            <div class="offer-transform">
+              <span>The transformation</span>
+              <p>From "the ads feel like they're working", to a number you can point at.</p>
+            </div>
+            <ul class="offer-benefits">
+              <li>Server-side tracking that ad-blockers don't erase</li>
+              <li>Events that mean something, not vanity counts</li>
+              <li>Set up once, readable by your own team</li>
+            </ul>
+            <span class="offer-card-foot"><b>Retainer or project</b><span class="work-link">Details <span class="btn-arrow">→</span></span></span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= LIVE PROJECTS PREVIEW ============================= -->
     <section class="section work" id="work">
-      <div class="section-head reveal" data-reveal>
-        <span class="section-eyebrow">02 / Products</span>
-        <h2>Built, shipped, and still running.</h2>
+      <div class="section-head-row reveal" data-reveal>
+        <div class="section-head">
+          <span class="section-eyebrow">03 / Live projects</span>
+          <h2>Built, shipped, and still running.</h2>
+        </div>
+        <a href="/projects.html" class="section-link">See all projects <span class="btn-arrow">→</span></a>
       </div>
       <div class="work-list">
+        <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="Developer Demo Hub">
+          <div class="work-media"><div class="work-media-glow"></div></div>
+          <div class="work-copy">
+            <span class="work-tag">Developer demos · root hub</span>
+            <h3>Developer Demo Hub</h3>
+            <p>Every client-facing demo I hand over, published from one repository — admin dashboards, storefronts, documentation templates, all auto-catalogued.</p>
+          </div>
+          <span class="work-link">demu.sayadbayezid.com <span class="btn-arrow">→</span></span>
+        </a>
+        <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="Boyok Lead Collector">
+          <div class="work-media"><div class="work-media-glow"></div></div>
+          <div class="work-copy">
+            <span class="work-tag">Product · Verified lead collection</span>
+            <h3>Boyok Lead Collector</h3>
+            <p>Collects business leads and keeps only the verified ones — scored, exportable, and built for agencies running real outreach.</p>
+          </div>
+          <span class="work-link">leads.sayadbayezid.com <span class="btn-arrow">→</span></span>
+        </a>
+        <a href="https://leads.sayadbayezid.com/barcode-saas/" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="Boyok Barcode SaaS">
+          <div class="work-media"><div class="work-media-glow"></div></div>
+          <div class="work-copy">
+            <span class="work-tag">Product · Commerce SaaS</span>
+            <h3>Boyok Barcode SaaS</h3>
+            <p>An e-commerce admin dashboard with an auto barcode machine — ready to use offline or online, and injectable into a store you already run.</p>
+          </div>
+          <span class="work-link">Open the dashboard <span class="btn-arrow">→</span></span>
+        </a>
         <a href="https://www.smartgentools.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="SmartGen">
           <div class="work-media"><div class="work-media-glow"></div></div>
           <div class="work-copy">
-            <span class="work-tag">Product · SEO tools</span>
+            <span class="work-tag">Platform · SEO tools</span>
             <h3>SmartGen</h3>
-            <p>120+ free web utilities plus a full digital-marketing curriculum, built and maintained solo.</p>
+            <p>120+ free web utilities plus a full digital-marketing curriculum, built and maintained solo — including the free SEO audit tool.</p>
           </div>
           <span class="work-link">smartgentools.com <span class="btn-arrow">→</span></span>
         </a>
-        <a href="/work.html#smartleadgen" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="SmartLeadGen">
+        <a href="/projects.html" class="work-row reveal" data-reveal>
           <div class="work-media"><div class="work-media-glow"></div></div>
           <div class="work-copy">
-            <span class="work-tag">Product · Lead generation</span>
-            <h3>SmartLeadGen</h3>
-            <p>Finds businesses with a weak online presence via Google Places, scores the opportunity, and hands agencies a ready outreach list.</p>
+            <span class="work-tag">And nine more · plus automation in build</span>
+            <h3>The full project list</h3>
+            <p>AI chatbots, the SEO audit tool, open-source documentation, barcode services, client storefronts, and the automation queue that's shipping next.</p>
           </div>
-          <span class="work-link">Case study <span class="btn-arrow">→</span></span>
-        </a>
-        <a href="https://www.genzfrontir.com" target="_blank" rel="noopener" class="work-row reveal" data-reveal data-pixel-event="ViewContent" data-pixel-content="GenZ Frontier">
-          <div class="work-media"><div class="work-media-glow"></div></div>
-          <div class="work-copy">
-            <span class="work-tag">Venture</span>
-            <h3>GenZ Frontier</h3>
-            <p>An early-stage venture in progress — details land here as it comes together.</p>
-          </div>
-          <span class="work-link">genzfrontir.com <span class="btn-arrow">→</span></span>
+          <span class="work-link">Open all projects <span class="btn-arrow">→</span></span>
         </a>
       </div>
     </section>
 
-    <!-- ============================= REVIEWS MARQUEE ============================= -->
+    <!-- ============================= BANNER / BONUS ============================= -->
+    <section class="bonus-banner">
+      <div class="bonus-inner reveal" data-reveal>
+        <div>
+          <span class="pill pill-soon">Bonus · free to use today</span>
+          <h2>Add auto-barcodes to your store with one line of code.</h2>
+          <p>
+            The barcode engine behind the Boyok dashboard also ships as a drop-in script. Paste one
+            tag into your existing e-commerce admin and barcodes start generating themselves — no
+            rebuild, no migration, no new platform to learn.
+          </p>
+          <ul class="bonus-list">
+            <li>Free beta — try it before you commit to anything</li>
+            <li>Works with the admin dashboard you already have</li>
+            <li>Offline-capable, so a dropped connection doesn't stop the counter</li>
+          </ul>
+          <div class="snippet-block">
+            <pre><code>&lt;script src="https://smartgentools.com/barcode-service/barcode-service.js"&gt;&lt;/script&gt;</code></pre>
+          </div>
+        </div>
+        <div class="bonus-action">
+          <a href="https://smartgentools.com/barcode-service/" target="_blank" rel="noopener" class="btn btn-primary btn-lg" data-pixel-event="ViewContent" data-pixel-content="Barcode Service Beta">Get the barcode service<span class="btn-arrow">→</span></a>
+          <a href="https://leads.sayadbayezid.com/barcode-saas/" target="_blank" rel="noopener" class="btn btn-ghost">See the full dashboard</a>
+          <p class="bonus-note"><b>Beta</b>smartgentools.com/barcode-service<br /><b>Full SaaS</b>leads.sayadbayezid.com/barcode-saas</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= CONTENT / BLOG ============================= -->
+    <section class="section" id="journal">
+      <div class="section-head-row reveal" data-reveal>
+        <div class="section-head">
+          <span class="section-eyebrow">04 / Journal</span>
+          <h2>What I learned building it, written down.</h2>
+        </div>
+        <a href="/blog/" class="section-link">All posts <span class="btn-arrow">→</span></a>
+      </div>
+      <div class="post-grid">
+        <a href="/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/" class="post-card reveal" data-reveal>
+          <span class="post-meta">Guide · 27 Jul 2026</span>
+          <h3>WhatsApp Cloud API: setup guide and integration costs</h3>
+          <p>Official Cloud API against Baileys, what Meta's integration actually requires, and what each route really costs once you're past the free tier.</p>
+          <span class="work-link">Read the guide <span class="btn-arrow">→</span></span>
+        </a>
+        <a href="/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/" class="post-card reveal" data-reveal>
+          <span class="post-meta">Build log · 19 Jun 2026</span>
+          <h3>Building the SmartGen HTML Code Library: 79 visual-to-code tools</h3>
+          <p>How 79 specialised generators got designed, built, and shipped as one coherent library instead of 79 unrelated pages.</p>
+          <span class="work-link">Read the build log <span class="btn-arrow">→</span></span>
+        </a>
+        <a href="/blog/smart-ai-open-source-case-study-and-project-journal/" class="post-card reveal" data-reveal>
+          <span class="post-meta">Project journal · 27 Jul 2026</span>
+          <h3>Smart AI open source: a case study and project journal</h3>
+          <p>An honest log of what worked and what didn't — encryption, AI routing with failover, and the WhatsApp delivery problem that stayed unsolved.</p>
+          <span class="work-link">Read the journal <span class="btn-arrow">→</span></span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ============================= SOCIAL PROOF ============================= -->
     <section class="section reviews">
       <div class="section-head reveal" data-reveal>
-        <span class="section-eyebrow">03 / Word of mouth</span>
+        <span class="section-eyebrow">05 / Social proof</span>
         <h2>What it's like to work together.</h2>
       </div>
       <div class="marquee-wrap">
         <div class="marquee-track" id="marqueeTrack">
-          <!-- populated from the API; duplicated once in JS for a seamless loop -->
+          <!-- skeleton cards paint instantly; real reviews swap in from the API -->
         </div>
       </div>
 
@@ -247,14 +468,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h3>Worked together? Leave a review.</h3>
         <p class="home-section-sub" style="margin-bottom:20px">Shown once approved — add a link to your photo if you'd like it to appear alongside your name.</p>
         <div class="review-form">
-          <input type="text" id="reviewName" placeholder="Your name" />
+          <input type="text" id="reviewName" placeholder="Your name" autocomplete="name" />
           <input type="url" id="reviewAvatar" placeholder="Link to your photo (optional)" />
           <div class="star-row" id="reviewStarRow">
-            <button type="button" data-star="1">★</button>
-            <button type="button" data-star="2">★</button>
-            <button type="button" data-star="3">★</button>
-            <button type="button" data-star="4">★</button>
-            <button type="button" data-star="5">★</button>
+            <button type="button" data-star="1" aria-label="1 star">★</button>
+            <button type="button" data-star="2" aria-label="2 stars">★</button>
+            <button type="button" data-star="3" aria-label="3 stars">★</button>
+            <button type="button" data-star="4" aria-label="4 stars">★</button>
+            <button type="button" data-star="5" aria-label="5 stars">★</button>
           </div>
           <textarea id="reviewComment" placeholder="What was it like working together?"></textarea>
           <button class="btn btn-primary" id="submitReviewBtn">Submit review</button>
@@ -263,11 +484,57 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <!-- ============================= ABOUT / VERIFIED ============================= -->
+    <!-- ============================= LEAD GENERATION ============================= -->
+    <section class="leadgen" id="start">
+      <div class="leadgen-inner">
+        <div class="leadgen-copy reveal" data-reveal>
+          <span class="section-eyebrow">06 / Start here</span>
+          <h2>Take something free first. Hire me second.</h2>
+          <p>
+            You shouldn't have to book a call to find out whether I'm any good. Everything below is
+            live, free, and needs no account — use it, and decide afterwards.
+          </p>
+          <div class="freebie-card">
+            <span class="pill pill-live">Free · no signup</span>
+            <h3>The free toolkit</h3>
+            <p>Four things you can use in the next ten minutes, all built and maintained here.</p>
+            <div class="freebie-links">
+              <a class="freebie-link" href="https://smartgentools.com/seo-audit-tool/" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="SEO Audit Tool">SEO audit tool ↗</a>
+              <a class="freebie-link" href="https://smartgentools.com/barcode-service/" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="Barcode Service Beta">Barcode service (beta) ↗</a>
+              <a class="freebie-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="SmartGen Docs">Open-source docs ↗</a>
+              <a class="freebie-link" href="https://demu.sayadbayezid.com" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="Developer Demo Hub">Developer demos ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-panel reveal" data-reveal>
+          <h3>Tell me what you're trying to fix</h3>
+          <p>Straight to me, not a queue. You'll get an honest answer about fit — including "this isn't worth paying me for" when that's the truth.</p>
+          <div class="review-form">
+            <div>
+              <label for="contactName">Your name</label>
+              <input type="text" id="contactName" placeholder="Name" autocomplete="name" />
+            </div>
+            <div>
+              <label for="contactEmail">Email</label>
+              <input type="email" id="contactEmail" placeholder="you@company.com" autocomplete="email" />
+            </div>
+            <div>
+              <label for="contactMessage">What needs building or fixing?</label>
+              <textarea id="contactMessage" placeholder="A sentence or two is plenty."></textarea>
+            </div>
+            <button class="btn btn-primary" id="contactSubmitBtn">Send it<span class="btn-arrow">→</span></button>
+            <div id="contactBanner"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= VERIFY ============================= -->
     <section class="section verify">
       <div class="verify-inner">
         <div class="verify-copy reveal" data-reveal>
-          <span class="section-eyebrow">04 / Why verify</span>
+          <span class="section-eyebrow">07 / Why verify</span>
           <h2>Anyone can claim a résumé.<br />Not everyone can link it.</h2>
           <p>Every platform I work from — PyPI, GitHub, ORCID, Stack Overflow, LinkedIn, Crunchbase — is listed and checkable in one place. No stock photos, no borrowed case studies.</p>
           <a href="https://sayadbayezid.com/verified-profiles/" target="_blank" rel="noopener" class="btn btn-ghost">
@@ -287,66 +554,107 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
     </section>
 
-    <!-- ============================= FAQ ============================= -->
+    <!-- ============================= FAQ ACCORDION ============================= -->
     <section class="section" id="seo-faq">
-      <div class="section-head"><span class="section-eyebrow">05 / FAQ</span><h2>Common questions, answered plainly.</h2></div>
-      <div class="services-grid" style="grid-template-columns:repeat(3,1fr)">
-        <article class="service-card"><h3>What do you build?</h3><p>Web platforms, SEO systems, product tools, and the marketing infrastructure that connects them.</p></article>
-        <article class="service-card"><h3>Who will work on my project?</h3><p>Sayad Md Bayezid Hosan leads the strategy, build, and maintenance directly, without account-manager hand-offs.</p></article>
-        <article class="service-card"><h3>How can I start?</h3><p><a href="/contact.html">Send a project brief</a> and you will receive an honest answer about fit and next steps.</p></article>
+      <div class="section-head reveal" data-reveal>
+        <span class="section-eyebrow">08 / FAQ</span>
+        <h2>Common questions, answered plainly.</h2>
       </div>
-    </section>
-
-    <!-- ============================= CTA ============================= -->
-    <section class="section cta-band">
-      <div class="cta-inner reveal" data-reveal>
-        <h2>Have a project worth building properly?</h2>
-        <p>Tell me what you're trying to fix or launch — I'll tell you honestly if I'm the right fit.</p>
-        <a href="/contact.html" class="btn btn-primary btn-lg" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>What do you build?</summary>
+          <div class="faq-answer"><p>Web platforms, SEO systems, AI chatbots, lead-generation tooling, barcode commerce systems, and the marketing infrastructure that connects them. If it needs to keep running after launch, it's the kind of work I take.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Who will actually work on my project?</summary>
+          <div class="faq-answer"><p>Me. Sayad Md Bayezid Hosan leads the strategy, the build, and the maintenance directly — there is no account manager between you and the person writing the code.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Can I try anything before hiring you?</summary>
+          <div class="faq-answer"><p>Yes, and you should. The <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">developer demo hub</a>, the <a href="https://smartgentools.com/seo-audit-tool/" target="_blank" rel="noopener">SEO audit tool</a>, the <a href="https://smartgentools.com/barcode-service/" target="_blank" rel="noopener">barcode service</a>, the <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">lead collector</a>, and the <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">open-source documentation</a> are all live right now.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Can barcodes be added to a store I already have?</summary>
+          <div class="faq-answer"><p>Yes. The barcode service loads from a single script tag, so an existing e-commerce admin dashboard starts generating barcodes without a rebuild or a migration. The full Boyok dashboard is there if you'd rather have the whole system.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Do the lead tools use scraped data?</summary>
+          <div class="faq-answer"><p>Only verified data is collected and only verified data is exported. Discovery runs against Google's own Places API rather than scraping, and anything that doesn't verify never reaches your list.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How do we start?</summary>
+          <div class="faq-answer"><p><a href="/contact.html">Send a project brief</a> — a couple of sentences is enough. You'll get an honest answer about fit and next steps, including when the answer is that you don't need me.</p></div>
+        </details>
       </div>
     </section>
 
   </main>
 
+  <!-- ============================= FOOTER ============================= -->
   <footer class="site-footer">
+    <div class="footer-cta">
+      <span class="section-eyebrow">Ready when you are</span>
+      <h2>Have a project worth building properly?</h2>
+      <p>Tell me what you're trying to fix or launch — I'll tell you honestly if I'm the right fit, and what it would take.</p>
+      <div class="footer-cta-actions">
+        <a href="/contact.html" class="btn btn-primary btn-lg" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
+        <a href="/projects.html" class="btn btn-ghost btn-lg">Browse every project</a>
+      </div>
+    </div>
+
     <div class="footer-inner">
       <div class="footer-brand">
         <span class="brand-word"><span class="brand-pulse-sm"></span>Connect<em>with</em>Bayezid</span>
         <p>Founder-led digital systems — web, SEO, marketing, product.</p>
         <address class="footer-address">Aulibad, Kalihati, Tangail — 1970<br />Parkhi Union, Kalihati Upazila, Tangail District, Bangladesh</address>
+        <div class="social-row">
+          <a class="social-link" href="https://github.com/Sayadbayezid" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+          <a class="social-link" href="https://sayadbayezid.com/verified-profiles/" aria-label="Verified profiles">ID</a>
+          <a class="social-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" aria-label="SmartGen Docs">DC</a>
+          <a class="social-link" href="https://www.genzfrontir.com" target="_blank" rel="noopener" aria-label="GenZ Frontier">GF</a>
+          <a class="social-link" href="mailto:cwb.agency@outlook.com" aria-label="Email">@</a>
+        </div>
+        <button class="share-btn" id="shareBtn" type="button" style="margin-top:14px">Share this page</button>
       </div>
       <div class="footer-cols">
         <div>
           <span class="footer-heading">Work</span>
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
+          <a href="/projects.html">All projects</a>
           <a href="/case-studies/">Case studies</a>
           <a href="/proofline-atlas.html">Proofline Atlas</a>
         </div>
         <div>
           <span class="footer-heading">Studio</span>
+          <a href="/about.html">About</a>
+          <a href="/blog/">Blog</a>
           <a href="/editorial-policy.html">Editorial guidelines</a>
           <a href="/authors.html">Authors &amp; team</a>
-          <a href="/about.html">About</a>
           <a href="https://sayadbayezid.com/verified-profiles/">Verified profiles</a>
           <a href="/contact.html">Contact</a>
         </div>
         <div>
-          <span class="footer-heading">Elsewhere</span>
-          <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
-          <a href="https://www.genzfrontir.com" target="_blank" rel="noopener">GenZ Frontier</a>
-          <a href="https://github.com/Sayadbayezid" target="_blank" rel="noopener">GitHub</a>
+          <span class="footer-heading">Live builds</span>
+          <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Developer demos</a>
+          <a href="https://chatbot.sayadbayezid.com" target="_blank" rel="noopener">AI chatbot</a>
+          <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">Boyok Leads</a>
+          <a href="https://leads.sayadbayezid.com/barcode-saas/" target="_blank" rel="noopener">Barcode SaaS</a>
+          <a href="https://smartgentools.com/seo-audit-tool/" target="_blank" rel="noopener">SEO audit tool</a>
           <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
         </div>
       </div>
     </div>
     <div class="footer-legal">
-      <span class="footer-legal-links"><a href="/privacy-policy.html">Privacy Policy</a></span> <span><a href="/terms-of-service.html">Terms of Service</a></span>
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms-of-service.html">Terms of Service</a>
+      <a href="/business-integration-policy.html">Imprint &amp; business policy</a>
+      <a href="/editorial-policy.html">Editorial policy</a>
+      <a href="/contact.html">Contact</a>
       <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
     </div>
+  </footer>
 
-</footer>
-
-  <script src="/assets/main.js"></script>
+  <script src="/assets/main.js" defer></script>
 </body>
 </html>
