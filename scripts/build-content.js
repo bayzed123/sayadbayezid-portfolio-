@@ -136,6 +136,7 @@ src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
       <nav class="main-nav" id="mainNav">
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
+        <a href="/projects.html">Projects</a>
         <a href="/work.html">Work</a>
         <a href="/case-studies/">Case Studies</a>
         <a href="/about.html">About</a>
@@ -165,6 +166,7 @@ function readFooter() {
           <span class="footer-heading">Work</span>
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
+          <a href="/projects.html">All projects</a>
           <a href="/case-studies/">Case studies</a>
           <a href="/proofline-atlas.html">Proofline Atlas</a>
         </div>
@@ -272,14 +274,21 @@ ${richBody}
 
 function renderIndexPage(type, entries, canonicalPath = `/${type.dir}/`) {
   const cards = entries
-    .map((e) => {
+    .map((e, i) => {
       const href = `/${type.dir}/${e.slug}.html`;
       const highlights = (e.meta.highlights || []).slice(0, 3).map((point) => `<li>${escapeHtml(point)}</li>`).join("");
       const liveLink = e.meta.liveUrl ? `<a href="${escapeHtml(e.meta.liveUrl)}" target="_blank" rel="noopener" class="case-study-card-live">Live demo ↗</a>` : "";
+      // The newest entry leads the grid at full width (see .case-study-index-card
+      // :first-child in the stylesheet) and is the page's LCP candidate, so it's
+      // the only cover fetched eagerly — the rest load as they're scrolled to.
+      const isLead = i === 0;
+      const cover = e.meta.cover
+        ? `<img src="/${type.dir}/${escapeHtml(e.meta.cover)}" alt="${escapeHtml(e.meta.title)} cover" width="1280" height="720" decoding="async" ${isLead ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'} />`
+        : `<span class="case-study-card-placeholder">${escapeHtml(type.label)}</span>`;
       return `
         <article class="case-study-index-card">
           <a href="${href}" class="case-study-card-media" aria-label="Read ${escapeHtml(e.meta.title)}">
-            ${e.meta.cover ? `<img src="/${type.dir}/${escapeHtml(e.meta.cover)}" alt="${escapeHtml(e.meta.title)} cover" loading="eager" />` : `<span class="case-study-card-placeholder">${escapeHtml(type.label)}</span>`}
+            ${cover}
           </a>
           <div class="case-study-card-body">
             <span class="case-study-card-label">${escapeHtml(e.meta.category || type.label)}${e.meta.date ? " · " + escapeHtml(e.meta.date) : ""}</span>
