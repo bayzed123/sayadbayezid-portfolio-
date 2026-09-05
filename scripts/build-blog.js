@@ -179,6 +179,7 @@ function generatePostHTML(post) {
     <meta name="twitter:image" content="${post.image}">
     
     <link rel="canonical" href="${SITE_URL}/blog/${post.slug}/">
+    <meta name="robots" content="index, follow, max-image-preview:large">
     
     <script>
         if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
@@ -314,7 +315,7 @@ function generatePostHTML(post) {
 </head>
 <body>
     ${GTM_NOSCRIPT}
-    <header id="main-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies.html">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
+    <header id="main-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/projects.html">Projects</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
 
     <main class="blog-post-container">
         <article class="blog-post-article reveal-up">
@@ -483,6 +484,7 @@ function generateArchiveHTML() {
     <meta name="twitter:description" content="Expert tutorials and insights on web utilities, SEO, and digital growth.">
     
     <link rel="canonical" href="${SITE_URL}/blog/">
+    <meta name="robots" content="index, follow, max-image-preview:large">
     
     <script type="application/ld+json">
     {
@@ -509,7 +511,7 @@ function generateArchiveHTML() {
 </head>
 <body>
     ${GTM_NOSCRIPT}
-    <header id="main-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies.html">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
+    <header id="main-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/projects.html">Projects</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
 
     <main>
         <section class="blog-hero reveal-up">
@@ -562,6 +564,24 @@ function generateBlogJSON(posts) {
 }
 
 /**
+ * Normalise a front-matter date to W3C YYYY-MM-DD, or return null if it can't
+ * be parsed. Accepts a Date, an ISO string, or a human-written form such as
+ * "July 27, 2026".
+ */
+function toW3CDate(value) {
+  if (!value) return null;
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? null : value.toISOString().split('T')[0];
+  }
+  if (typeof value !== 'string') return null;
+  const trimmed = value.trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) return trimmed;          // already W3C
+  if (/^\d{4}-\d{2}-\d{2}T/.test(trimmed)) return trimmed.split('T')[0]; // ISO datetime
+  const parsed = new Date(trimmed);
+  return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString().split('T')[0];
+}
+
+/**
  * Update sitemap.xml with blog posts
  */
 function updateSitemap(posts) {
@@ -591,14 +611,10 @@ function updateSitemap(posts) {
   }
 
   posts.forEach(post => {
-    let postDate = today;
-    if (post.date) {
-      if (post.date instanceof Date) {
-        postDate = post.date.toISOString().split('T')[0];
-      } else if (typeof post.date === 'string') {
-        postDate = post.date.split('T')[0];
-      }
-    }
+    // <lastmod> must be a W3C date (YYYY-MM-DD). A human-written front-matter
+    // date like "July 27, 2026" is silently ignored by crawlers, so normalise
+    // it here rather than trusting every post author to get the format right.
+    const postDate = toW3CDate(post.date) || today;
     blogEntries += `  <url>
     <loc>${SITE_URL}/blog/${post.slug}/</loc>
     <lastmod>${postDate}</lastmod>
