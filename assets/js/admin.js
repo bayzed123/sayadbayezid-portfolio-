@@ -517,6 +517,7 @@
   function loadContent() {
     loadContentStatus();
     updateSlugPreview();
+    renderSeoPanel();
     var blog = document.querySelector('[data-blog-list]');
     var cases = document.querySelector('[data-case-list]');
     skeleton(blog, 3); skeleton(cases, 3);
@@ -562,15 +563,179 @@
       .slice(0, 80);
   }
 
+// --- the pre-publish checklist and the two previews ----------------------
+  //
+  // Every rule is a real constraint with a reason, not a score to chase. The
+  // character ranges are where Google actually truncates and where a field
+  // stops carrying enough information — a title of 12 characters is not a
+  // style problem, it is a title that tells a searcher nothing.
+
+  var SEO_RULES = [
+    {
+      label: 'Title is 15–70 characters',
+      // Under 15 says nothing; over 70 is cut off in most results.
+      test: function (v) { return v.title.length >= 15 && v.title.length <= 70; },
+      detail: function (v) { return v.title.length + ' characters'; }
+    },
+    {
+      label: 'SEO title is 30–65 characters',
+      // Blank is fine — it falls back to the title, and that is checked above.
+      test: function (v) {
+        return !v.seoTitle || (v.seoTitle.length >= 30 && v.seoTitle.length <= 65);
+      },
+      detail: function (v) {
+        return v.seoTitle ? v.seoTitle.length + ' characters' : 'blank — using the title';
+      }
+    },
+    {
+      label: 'Meta description is 70–158 characters',
+      test: function (v) { return v.description.length >= 70 && v.description.length <= 158; },
+      detail: function (v) { return v.description.length + ' characters'; }
+    },
+    {
+      label: 'A cover image is set',
+      test: function (v) { return !!v.image; },
+      // Alt text is called out separately rather than failing the row: an
+      // image with no alt still works for sighted readers, it just excludes
+      // everyone else and says nothing to a crawler.
+      detail: function (v) {
+        if (!v.image) return 'none';
+        return v.imageAlt ? 'set, with alt text' : 'set — but no alt text yet';
+      },
+      warn: function (v) { return !!v.image && !v.imageAlt; }
+    },
+    {
+      label: 'A summary is written',
+      test: function (v) { return (v.summary || v.description).length >= 40; },
+      detail: function (v) {
+        return v.summary ? v.summary.length + ' characters'
+          : (v.description ? 'reusing the meta description' : 'none');
+      }
+    },
+    {
+      label: 'URL slug is short and readable',
+      // Three to six words reads well in a result and survives being pasted
+      // into a message. Longer still works; it just stops being readable.
+      test: function (v) {
+        var words = v.slug ? v.slug.split('-').filter(Boolean).length : 0;
+        return v.slug.length > 0 && v.slug.length <= 60 && words <= 8;
+      },
+      detail: function (v) {
+        if (!v.slug) return 'none yet';
+        return v.slug.length + ' characters, ' + v.slug.split('-').filter(Boolean).length + ' words';
+      }
+    },
+    {
+      label: 'Keywords added',
+      test: function (v) { return v.keywords.length >= 2; },
+      detail: function (v) { return v.keywords.length ? v.keywords.length + ' added' : 'none'; }
+    },
+    {
+      label: 'Article body has real depth (300+ characters)',
+      test: function (v) { return v.body.length >= 300; },
+      detail: function (v) { return v.body.length + ' characters'; }
+    }
+  ];
+
+  function seoValues() {
+    var get = function (id) { return (document.getElementById(id).value || '').trim(); };
+    var explicit = get('c-slug');
+    return {
+      title: get('c-title'),
+      seoTitle: get('c-seotitle'),
+      description: get('c-description'),
+      summary: get('c-summary'),
+      image: get('c-image'),
+      imageAlt: get('c-imagealt'),
+      keywords: get('c-keywords').split(',').map(function (k) { return k.trim(); }).filter(Boolean),
+      slug: slugify(explicit || get('c-title')),
+      body: get('c-body'),
+      type: document.getElementById('c-type').value
+    };
+  }
+
+  /** Google trims on pixel width; character counts are the honest approximation. */
+  function clip(text, max) {
+    return text.length > max ? text.slice(0, max - 1).replace(/[\s,;:.]+$/, '') + '…' : text;
+  }
+
+  function renderSeoPanel() {
+    var v = seoValues();
+    var list = document.querySelector('[data-seo-checklist]');
+    if (!list) return;
+
+    clear(list);
+    SEO_RULES.forEach(function (rule) {
+      var ok = rule.test(v);
+      var warn = ok && rule.warn && rule.warn(v);
+      var li = el('li', 'seo-check ' + (ok ? (warn ? 'is-warn' : 'is-ok') : 'is-todo'));
+      li.appendChild(el('span', 'seo-check-mark', ok ? (warn ? '!' : '✓') : '○'));
+      var text = el('span', 'seo-check-text');
+      text.appendChild(el('span', null, rule.label));
+      text.appendChild(el('span', 'seo-check-detail', rule.detail(v)));
+      li.appendChild(text);
+      list.appendChild(li);
+    });
+
+    // --- Google preview ---
+    var path = v.type === 'blog' ? 'blog' : 'case-studies';
+    document.querySelector('[data-serp-url]').textContent =
+      'sayadbayezid.com › ' + path + (v.slug ? ' › ' + v.slug : '');
+    // Google shows the title tag, so the preview must too — otherwise the
+    // preview lies about the one field this panel exists to get right.
+    var serpTitle = v.seoTitle || (v.title ? v.title + ' - Sayad Md Bayezid Hosan' : '');
+    document.querySelector('[data-serp-title]').textContent =
+      serpTitle ? clip(serpTitle, 65) : 'Your title will appear here';
+    document.querySelector('[data-serp-desc]').textContent =
+      v.description ? clip(v.description, 158) : 'And the meta description underneath it.';
+
+    // --- Card preview ---
+    var cardImage = document.querySelector('[data-card-image]');
+    clear(cardImage);
+    if (v.image) {
+      // The console is served from the same origin as the site, so a
+      // site-relative path resolves on its own. An absolute URL passes
+      // through untouched.
+      var img = el('img');
+      img.alt = v.imageAlt || '';
+      // A path that does not resolve has to say so. A silently broken image
+      // in a preview is worse than no preview: it looks like the cover is
+      // fine right up until the post is published.
+      img.addEventListener('error', function () {
+        clear(cardImage);
+        cardImage.appendChild(el('span', null, 'That image path did not load'));
+      });
+      img.src = v.image;
+      cardImage.appendChild(img);
+    } else {
+      cardImage.appendChild(el('span', null, 'No cover image'));
+    }
+    document.querySelector('[data-card-meta]').textContent =
+      (document.getElementById('c-category').value || 'General').trim();
+    document.querySelector('[data-card-title]').textContent = v.title || 'Your title will appear here';
+    document.querySelector('[data-card-desc]').textContent =
+      clip(v.summary || v.description || 'The summary shown on the blog grid.', 165);
+
+    // Live character counts next to the labels they belong to.
+    ['c-title', 'c-seotitle', 'c-description', 'c-summary'].forEach(function (id) {
+      var badge = document.querySelector('[data-count-for="' + id + '"]');
+      if (badge) badge.textContent = (document.getElementById(id).value || '').trim().length;
+    });
+  }
+
   function publishPayload(preview) {
     var form = document.getElementById('publishForm');
     var data = new FormData(form);
     var payload = {
       type: data.get('type'),
       title: data.get('title'),
+      seoTitle: data.get('seoTitle'),
       description: data.get('description'),
+      summary: data.get('summary'),
+      keywords: data.get('keywords'),
       category: data.get('category'),
       image: data.get('image'),
+      imageAlt: data.get('imageAlt'),
       body: data.get('body')
     };
     var slug = String(data.get('slug') || '').trim();
@@ -617,11 +782,15 @@
     var notice = document.getElementById('publishNotice');
     var preview = document.querySelector('[data-publish-preview]');
 
-    ['c-title', 'c-slug', 'c-type'].forEach(function (id) {
+    var repaint = function () { updateSlugPreview(); renderSeoPanel(); };
+    ['c-title', 'c-seotitle', 'c-slug', 'c-type', 'c-category', 'c-description',
+     'c-summary', 'c-keywords', 'c-image', 'c-imagealt', 'c-body'].forEach(function (id) {
       var field = document.getElementById(id);
-      if (field) field.addEventListener('input', updateSlugPreview);
-      if (field) field.addEventListener('change', updateSlugPreview);
+      if (!field) return;
+      field.addEventListener('input', repaint);
+      field.addEventListener('change', repaint);
     });
+    repaint();
 
     document.getElementById('previewBtn').addEventListener('click', function () {
       notice.textContent = 'Building the file…';

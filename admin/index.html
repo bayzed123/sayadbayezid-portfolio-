@@ -222,19 +222,75 @@
             </div>
           </div>
           <div class="field">
-            <label for="c-description">Description</label>
-            <input type="text" id="c-description" name="description" maxlength="300"
-                   placeholder="One sentence. Shown on the cards and in search results.">
+            <label for="c-seotitle">SEO title <span class="field-count" data-count-for="c-seotitle"></span></label>
+            <input type="text" id="c-seotitle" name="seoTitle" maxlength="120"
+                   placeholder="Leave blank to use the title above">
+            <p class="field-hint">The &lt;title&gt; tag. A headline written to be read is often the wrong length for a search result.</p>
           </div>
           <div class="field">
-            <label for="c-image">Cover image</label>
-            <input type="text" id="c-image" name="image" placeholder="https://… or /blog-posts/images/…">
+            <label for="c-description">Meta description <span class="field-count" data-count-for="c-description"></span></label>
+            <textarea id="c-description" name="description" rows="2" maxlength="300"
+                      placeholder="What someone sees under the title in Google."></textarea>
+          </div>
+          <div class="field">
+            <label for="c-summary">Summary <span class="field-count" data-count-for="c-summary"></span></label>
+            <textarea id="c-summary" name="summary" rows="2" maxlength="300"
+                      placeholder="Leave blank to reuse the meta description."></textarea>
+            <p class="field-hint">Shown on the blog cards and the homepage grid.</p>
+          </div>
+          <div class="field">
+            <label for="c-keywords">Keywords</label>
+            <input type="text" id="c-keywords" name="keywords"
+                   placeholder="whatsapp cloud api, meta integration, pricing">
+            <p class="field-hint">Comma separated. Used for the keywords meta and to match related articles.</p>
+          </div>
+          <div class="publish-row">
+            <div class="field publish-grow">
+              <label for="c-image">Cover image</label>
+              <input type="text" id="c-image" name="image" placeholder="https://… or /blog-posts/images/…">
+            </div>
+            <div class="field publish-grow">
+              <label for="c-imagealt">Cover image alt text</label>
+              <input type="text" id="c-imagealt" name="imageAlt" maxlength="200"
+                     placeholder="What the image shows">
+            </div>
           </div>
           <div class="field">
             <label for="c-body">Body (Markdown)</label>
             <textarea id="c-body" name="body" rows="14" required
                       placeholder="## A heading&#10;&#10;Write the post here."></textarea>
           </div>
+          <div class="seo-panel">
+            <div class="seo-col">
+              <h4>Before you publish</h4>
+              <ul class="seo-checklist" data-seo-checklist></ul>
+            </div>
+            <div class="seo-col">
+              <h4>Google preview</h4>
+              <div class="serp-preview" data-serp-preview>
+                <div class="serp-site">
+                  <span class="serp-favicon" aria-hidden="true"></span>
+                  <span>
+                    <span class="serp-name">Connect with Bayezid</span>
+                    <span class="serp-url" data-serp-url>sayadbayezid.com › blog</span>
+                  </span>
+                </div>
+                <div class="serp-title" data-serp-title>Your title will appear here</div>
+                <div class="serp-desc" data-serp-desc>And the meta description underneath it, trimmed the way Google trims it.</div>
+              </div>
+
+              <h4 style="margin-top:20px">Card preview</h4>
+              <div class="card-preview" data-card-preview>
+                <div class="card-preview-image" data-card-image><span>No cover image</span></div>
+                <div class="card-preview-body">
+                  <span class="card-preview-meta" data-card-meta>Category</span>
+                  <h3 data-card-title>Your title will appear here</h3>
+                  <p data-card-desc>The summary shown on the blog grid.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="row gap-8 wrap-row">
             <button type="button" class="btn btn-ghost" id="previewBtn">Preview file</button>
             <button type="submit" class="btn btn-primary">Publish to GitHub</button>
