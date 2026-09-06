@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
         xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
   <url>
     <loc>https://sayadbayezid.com/</loc>
@@ -91,17 +92,29 @@
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/marketing-banner.png</image:loc>
+      <image:title>smartflow-ai-case-study-and-project-journal</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://sayadbayezid.com/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/</loc>
     <lastmod>2026-07-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/workflow-diagram.png</image:loc>
+      <image:title>WhatsApp Cloud API Setup Guide and Integration Costs</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/</loc>
     <lastmod>2026-06-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://i.ibb.co/qMqwVFWv/IMG-5260.jpg</image:loc>
+      <image:title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</image:title>
+    </image:image>
   </url>
 </urlset>
