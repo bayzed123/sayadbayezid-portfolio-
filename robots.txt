@@ -4,7 +4,9 @@
 # Allow all search engines to crawl the entire site
 User-agent: *
 Allow: /
-Disallow: 
+# The operations console. It holds no secrets — every byte of real data comes
+# from an authenticated API call — but it has no business in a search index.
+Disallow: /admin/
 
 # Specific rules for Google
 User-agent: Googlebot
