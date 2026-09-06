@@ -127,6 +127,15 @@ function readBlogPosts() {
       // Alt text for the cover image. Falls back to the title, which is a
       // reasonable description of a post's own cover and beats an empty alt.
       imageAlt: attributes.imagealt || attributes.image_alt || '',
+      // The <title> tag when it should differ from the on-page headline. A
+      // headline written to be read is often the wrong length for a search
+      // result, and forcing one string to do both jobs makes it worse at each.
+      seoTitle: attributes.seotitle || attributes.seo_title || '',
+      // The card blurb. Falls back to the meta description, which is what
+      // every existing post relies on.
+      summary: attributes.summary || '',
+      // Accepts a comma-separated string or a list, because both get written.
+      keywords: normaliseKeywords(attributes.keywords),
       // Last substantive edit. Google reads dateModified, and a post that is
       // updated but still claims its original date looks stale.
       updated: toW3CDate(attributes.updated || attributes.modified) || null,
@@ -154,6 +163,13 @@ function readBlogPosts() {
   }
 
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+/** Keywords as a clean list, from either a comma-separated string or a list. */
+function normaliseKeywords(value) {
+  if (Array.isArray(value)) return value.map((k) => String(k).trim()).filter(Boolean);
+  if (typeof value === 'string') return value.split(',').map((k) => k.trim()).filter(Boolean);
+  return [];
 }
 
 /**
@@ -337,7 +353,7 @@ function buildRelatedHTML(post, allPosts) {
               <a href="/blog/${other.slug}/" class="related-card">
                 <span class="related-card-meta">${escapeText(other.category || '')}</span>
                 <h3>${escapeText(other.title)}</h3>
-                <p>${escapeText(truncate(other.description || '', 120))}</p>
+                <p>${escapeText(truncate(other.summary || other.description || '', 120))}</p>
                 <span class="related-card-link">Read this next <span class="btn-arrow">→</span></span>
               </a>`).join('');
 
@@ -452,7 +468,12 @@ function buildStructuredData(post) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     author: { '@type': 'Person', name: post.author, url: `${SITE_URL}/about.html` },
     publisher: { '@type': 'Person', name: AUTHOR_NAME, url: SITE_URL },
-    ...(post.tags && post.tags.length ? { keywords: post.tags.join(', ') } : {}),
+    // Front-matter keywords win; tags are the fallback, which is what every
+    // post written before the keywords field existed relies on.
+    ...(function () {
+      const words = (post.keywords && post.keywords.length) ? post.keywords : (post.tags || []);
+      return words.length ? { keywords: words.join(', ') } : {};
+    })(),
     ...(post.category ? { articleSection: post.category } : {}),
   };
   if (image) {
@@ -559,10 +580,10 @@ function generatePostHTML(post, allPosts) {
     ${GTM_HEAD}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${post.title} - ${AUTHOR_NAME}</title>
+    <title>${escapeText(post.seoTitle || `${post.title} - ${AUTHOR_NAME}`)}</title>
     <meta name="description" content="${post.description}">
     <meta name="author" content="${post.author}">
-    <meta name="keywords" content="${post.tags.join(', ')}">
+    <meta name="keywords" content="${escapeAttr((post.keywords.length ? post.keywords : post.tags).join(', '))}">
     
     <meta property="og:title" content="${post.title}">
     <meta property="og:description" content="${post.description}">
@@ -1176,7 +1197,7 @@ function updateHomepageJournal(posts) {
     return `        <a href="/blog/${escapeAttr(post.slug)}/" class="post-card reveal" data-reveal>
           <span class="post-meta">${escapeText(label)}</span>
           <h3>${escapeText(post.title)}</h3>
-          <p>${escapeText(truncate(post.description || '', 165))}</p>
+          <p>${escapeText(truncate(post.summary || post.description || '', 165))}</p>
           <span class="work-link">Read the post <span class="btn-arrow">→</span></span>
         </a>`;
   }).join('\n');

@@ -13,6 +13,8 @@ tests/*.png
 /console-report.png
 /admin-settings-logo.png
 /home-journal.png
+/seo-panel.png
+/post-page.png
 
 # Production
 dist/
