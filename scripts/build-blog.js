@@ -19,6 +19,8 @@ const BLOG_POSTS_DIR = path.join(__dirname, '../blog-posts');
 const BLOG_OUTPUT_DIR = path.join(__dirname, '../blog');
 const TEMPLATES_DIR = path.join(__dirname, '../templates');
 const INCLUDES_DIR = path.join(__dirname, '../_includes');
+/** How many posts the homepage journal grid shows. Three fills the row. */
+const HOMEPAGE_POST_COUNT = 3;
 const AUTHOR_NAME = 'Sayad Md Bayezid Hosan';
 const SITE_URL = 'https://sayadbayezid.com';
 const GTM_HEAD = `<!-- Google Tag Manager -->
@@ -66,10 +68,31 @@ function readBlogPosts() {
   const files = fs.readdirSync(BLOG_POSTS_DIR).filter(file => file.endsWith('.md'));
   const posts = [];
 
+  const unreadable = [];
+
   files.forEach(file => {
     const filePath = path.join(BLOG_POSTS_DIR, file);
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const { attributes: rawAttributes, body } = matter(fileContent);
+
+    // One malformed file used to take the whole build down. js-yaml throws on
+    // front matter it cannot parse — most often an unquoted value containing a
+    // colon, like `title: WhatsApp Cloud API: costs` — and the throw escaped
+    // this loop, so a single typo in one draft stopped every other post from
+    // publishing. The author's symptom was "I wrote a post and nothing
+    // appeared", with the cause buried in an Actions log they had no reason to
+    // open.
+    //
+    // Now the bad file is skipped, every good post still ships, and the
+    // failure is printed as a GitHub Actions error annotation so it shows on
+    // the run summary without blocking the ones that are fine.
+    let parsed;
+    try {
+      parsed = matter(fileContent);
+    } catch (error) {
+      unreadable.push({ file, message: error.message.split('\n')[0] });
+      return;
+    }
+    const { attributes: rawAttributes, body } = parsed;
     // Front-matter keys are matched case-insensitively. One post was written
     // with "Title:" and "Description:" capitalised, which the parser treats as
     // different keys from "title" and "description" — so it published as
@@ -99,6 +122,18 @@ function readBlogPosts() {
       category: attributes.category || 'General',
     });
   });
+
+  if (unreadable.length) {
+    console.log('');
+    unreadable.forEach(({ file, message }) => {
+      // ::error:: renders as a red annotation on the workflow run without
+      // failing the job, so the good posts still get committed and pushed.
+      console.log(`::error file=blog-posts/${file}::Front matter could not be parsed, so this post was NOT published. ${message}. Wrap any value containing a colon in double quotes, e.g. title: "A post: with a colon".`);
+      console.log(`❌ Skipped blog-posts/${file} — ${message}`);
+      console.log(`   Wrap values containing a colon in double quotes: title: "A post: with a colon"`);
+    });
+    console.log('');
+  }
 
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
@@ -726,6 +761,109 @@ function toW3CDate(value) {
   return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString().split('T')[0];
 }
 
+
+/**
+ * Rewrite the "Journal" grid on the homepage with the latest posts.
+ *
+ * That grid used to be hand-written HTML, so publishing a post updated
+ * /blog/ and the sitemap but never the homepage — the newest post simply
+ * never appeared where most visitors would look for it.
+ *
+ * Only the contents of <div class="post-grid"> inside <section id="journal">
+ * are replaced. The heading, the eyebrow and the "All posts" link are left
+ * alone: they are editorial copy, not generated content. Running this twice
+ * produces the same file, because the grid is rebuilt from posts rather than
+ * appended to.
+ */
+function updateHomepageJournal(posts) {
+  const homepagePath = path.join(__dirname, '../index.html');
+  if (!fs.existsSync(homepagePath)) {
+    console.log('⚠️  index.html not found at root. Skipping homepage journal update.');
+    return;
+  }
+
+  const latest = posts.slice(0, HOMEPAGE_POST_COUNT);
+  if (!latest.length) {
+    console.log('⚠️  No posts to show on the homepage. Leaving the journal grid as it is.');
+    return;
+  }
+
+  const html = fs.readFileSync(homepagePath, 'utf8');
+
+  // Anchored on the journal section so a .post-grid elsewhere on the page can
+  // never be clobbered by accident.
+  const sectionRegex = /(<section class="section" id="journal">[\s\S]*?<div class="post-grid">)([\s\S]*?)(<\/div>\s*<\/section>)/;
+  const match = html.match(sectionRegex);
+  if (!match) {
+    console.log('⚠️  Could not find the journal post-grid in index.html. Skipping.');
+    return;
+  }
+
+  const cards = latest.map(post => {
+    const label = [titleCase(post.category), formatCardDate(post.date)].filter(Boolean).join(' · ');
+    return `        <a href="/blog/${escapeAttr(post.slug)}/" class="post-card reveal" data-reveal>
+          <span class="post-meta">${escapeText(label)}</span>
+          <h3>${escapeText(post.title)}</h3>
+          <p>${escapeText(truncate(post.description || '', 165))}</p>
+          <span class="work-link">Read the post <span class="btn-arrow">→</span></span>
+        </a>`;
+  }).join('\n');
+
+  const updated = html.replace(sectionRegex, `$1\n${cards}\n      $3`);
+  if (updated === html) {
+    console.log('ℹ️  Homepage journal already up to date.');
+    return;
+  }
+
+  fs.writeFileSync(homepagePath, updated);
+  console.log(`✅ Updated: / homepage journal grid (${latest.length} latest posts)`);
+}
+
+/**
+ * "2026-09-06" -> "6 Sep 2026". Returns '' for anything unparseable.
+ *
+ * en-US rather than en-GB purely for the month abbreviation: en-GB renders
+ * September as "Sept", which would sit next to the existing "Jul" and "Jun"
+ * cards at a different width. en-US gives three letters for every month.
+ */
+function formatCardDate(value) {
+  if (!value) return '';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return '';
+  const [month, day, year] = parsed
+    .toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+    .replace(',', '')
+    .split(' ');
+  return `${day} ${month} ${year}`;
+}
+
+/** Categories come from front matter in whatever case the author typed. */
+function titleCase(str) {
+  return String(str ?? '')
+    .toLowerCase()
+    .replace(/\b[a-z]/g, (c) => c.toUpperCase());
+}
+
+/** Cut on a word boundary so a card never ends mid-word. */
+function truncate(text, max) {
+  const clean = String(text).replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/, '') + '…';
+}
+
+function escapeText(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeAttr(str) {
+  return escapeText(str).replace(/"/g, '&quot;');
+}
+
 /**
  * Update sitemap.xml with blog posts
  */
@@ -813,6 +951,7 @@ function buildBlog() {
   console.log(`✅ Generated: /blog/blog.json\n`);
 
   updateSitemap(posts);
+  updateHomepageJournal(posts);
 
   console.log('🎉 Blog build completed successfully!');
   console.log(`📊 Total posts: ${posts.length}`);

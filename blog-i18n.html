@@ -14,10 +14,10 @@
     <meta property="og:description" data-i18n="blog.description" content="Read insights on web development, digital marketing, and tech entrepreneurship" />
     <meta property="og:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
   <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sayadbayezid.com/blog.html" />
+    <meta property="og:url" content="https://sayadbayezid.com/blog/" />
 
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://sayadbayezid.com/blog.html" />
+    <link rel="canonical" href="https://sayadbayezid.com/blog/" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -371,7 +371,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <li><a href="/#services" data-i18n="nav.services">Services</a></li>
                 <li><a href="/#achievements" data-i18n="nav.achievements">Achievements</a></li>
                 <li><a href="/#projects" data-i18n="nav.projects">Projects</a></li>
-                <li><a href="/blog.html" data-i18n="nav.blog">Blog</a></li>
+                <li><a href="/blog/" data-i18n="nav.blog">Blog</a></li>
                 <li><a href="/#contact" data-i18n="nav.contact">Contact</a></li>
             </ul>
         </div>
@@ -423,12 +423,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         // Load and display blog posts
         async function loadBlogPosts() {
             try {
-                const response = await fetch('/blogs/index.json');
+                const response = await fetch('/blog/blog.json');
                 if (!response.ok) throw new Error('Failed to load blog index');
                 const data = await response.json();
                 window.blogData = data; // Store globally for translator
 
-                const blogs = data.blogs || [];
+                // blog.json is a plain array. It used to be read as data.blogs,
+                // which is undefined on an array and rendered an empty feed.
+                const blogs = Array.isArray(data) ? data : (data.blogs || []);
                 const blogGrid = document.getElementById('blog-grid');
                 const loading = document.getElementById('loading');
                 const emptyState = document.getElementById('empty-state');
@@ -450,8 +452,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                                 <span>${blog.date}</span>
                             </div>
                             <h3>${blog.title}</h3>
-                            <p>${blog.excerpt}</p>
-                            <a href="/blog-loader.html?slug=${blog.slug}" class="blog-link">${readMoreText}</a>
+                            <p>${blog.description || ''}</p>
+                            <a href="/blog/${blog.slug}/" class="blog-link">${readMoreText}</a>
                         </div>
                     </div>
                 `).join('');

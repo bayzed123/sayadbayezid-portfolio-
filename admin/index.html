@@ -191,6 +191,59 @@
 
     <!-- Content ---------------------------------------------------------- -->
     <section class="view" data-view-panel="content" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Publish</h2>
+          <span class="meta" data-content-status></span>
+        </div>
+        <form id="publishForm" class="publish-form">
+          <div class="publish-row">
+            <div class="field">
+              <label for="c-type">Type</label>
+              <select id="c-type" name="type">
+                <option value="blog">Blog post</option>
+                <option value="case-study">Case study</option>
+              </select>
+            </div>
+            <div class="field publish-grow">
+              <label for="c-title">Title</label>
+              <input type="text" id="c-title" name="title" required placeholder="What the post is called">
+            </div>
+          </div>
+          <div class="publish-row">
+            <div class="field publish-grow">
+              <label for="c-slug">URL slug</label>
+              <input type="text" id="c-slug" name="slug" placeholder="left blank, built from the title">
+              <p class="field-hint" data-slug-preview></p>
+            </div>
+            <div class="field">
+              <label for="c-category">Category</label>
+              <input type="text" id="c-category" name="category" placeholder="Guide">
+            </div>
+          </div>
+          <div class="field">
+            <label for="c-description">Description</label>
+            <input type="text" id="c-description" name="description" maxlength="300"
+                   placeholder="One sentence. Shown on the cards and in search results.">
+          </div>
+          <div class="field">
+            <label for="c-image">Cover image</label>
+            <input type="text" id="c-image" name="image" placeholder="https://… or /blog-posts/images/…">
+          </div>
+          <div class="field">
+            <label for="c-body">Body (Markdown)</label>
+            <textarea id="c-body" name="body" rows="14" required
+                      placeholder="## A heading&#10;&#10;Write the post here."></textarea>
+          </div>
+          <div class="row gap-8 wrap-row">
+            <button type="button" class="btn btn-ghost" id="previewBtn">Preview file</button>
+            <button type="submit" class="btn btn-primary">Publish to GitHub</button>
+          </div>
+          <p class="notice" id="publishNotice" role="status" aria-live="polite"></p>
+          <pre class="publish-preview" data-publish-preview hidden></pre>
+        </form>
+      </div>
+
       <div class="grid-halves">
         <div class="card">
           <div class="card-head"><h2>Blog posts</h2><span class="meta" data-count="blog"></span></div>

@@ -515,6 +515,8 @@
   }
 
   function loadContent() {
+    loadContentStatus();
+    updateSlugPreview();
     var blog = document.querySelector('[data-blog-list]');
     var cases = document.querySelector('[data-case-list]');
     skeleton(blog, 3); skeleton(cases, 3);
@@ -539,6 +541,133 @@
     emptyState(cases, 'Case studies are generated from content/.',
       'Open /case-studies/ to see the published set. Rebuilt automatically on push.');
     document.querySelector('[data-count="cases"]').textContent = '';
+  }
+
+
+  // --- publishing -----------------------------------------------------------
+  //
+  // Posts and case studies are Markdown files in this repository, turned into
+  // HTML by a GitHub Actions workflow on push. Publishing from here is a
+  // commit: the Worker writes the file, the existing pipeline does the rest.
+  // Nothing new to keep in sync, and anything published this way can still be
+  // edited or reverted as an ordinary commit.
+
+  /** Mirrors the Worker's slug rule so the URL shown here is the one you get. */
+  function slugify(value) {
+    return String(value || '')
+      .toLowerCase()
+      .replace(/['"]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80);
+  }
+
+  function publishPayload(preview) {
+    var form = document.getElementById('publishForm');
+    var data = new FormData(form);
+    var payload = {
+      type: data.get('type'),
+      title: data.get('title'),
+      description: data.get('description'),
+      category: data.get('category'),
+      image: data.get('image'),
+      body: data.get('body')
+    };
+    var slug = String(data.get('slug') || '').trim();
+    if (slug) payload.slug = slug;
+    if (preview) payload.preview = true;
+    return payload;
+  }
+
+  function updateSlugPreview() {
+    var hint = document.querySelector('[data-slug-preview]');
+    if (!hint) return;
+    var explicit = document.getElementById('c-slug').value.trim();
+    var slug = slugify(explicit || document.getElementById('c-title').value);
+    var type = document.getElementById('c-type').value;
+    if (!slug) { hint.textContent = 'The address is built from the title.'; return; }
+    hint.textContent = type === 'blog'
+      ? 'Will publish at /blog/' + slug + '/'
+      : 'Will publish at /case-studies/' + slug + '.html';
+  }
+
+  function loadContentStatus() {
+    var badge = document.querySelector('[data-content-status]');
+    if (!badge) return;
+    badge.textContent = 'checking…';
+    api('/api/admin/content/status').then(function (data) {
+      // Say what is wrong, not just that something is. A token set under the
+      // wrong name has cost real time on this project more than once.
+      if (data.ok) {
+        badge.textContent = 'Publishing to ' + data.repo + ' (' + data.branch + ')';
+        badge.removeAttribute('data-kind');
+      } else {
+        badge.textContent = data.error || 'Publishing is not configured.';
+        badge.setAttribute('data-kind', 'error');
+      }
+    }).catch(function (error) {
+      badge.textContent = error.message;
+      badge.setAttribute('data-kind', 'error');
+    });
+  }
+
+  function wirePublishForm() {
+    var form = document.getElementById('publishForm');
+    if (!form) return;
+    var notice = document.getElementById('publishNotice');
+    var preview = document.querySelector('[data-publish-preview]');
+
+    ['c-title', 'c-slug', 'c-type'].forEach(function (id) {
+      var field = document.getElementById(id);
+      if (field) field.addEventListener('input', updateSlugPreview);
+      if (field) field.addEventListener('change', updateSlugPreview);
+    });
+
+    document.getElementById('previewBtn').addEventListener('click', function () {
+      notice.textContent = 'Building the file…';
+      notice.setAttribute('data-kind', 'pending');
+      api('/api/admin/content', { method: 'POST', body: publishPayload(true) })
+        .then(function (data) {
+          // textContent, never innerHTML — this is the author's own prose but
+          // the rule holds everywhere on this page.
+          preview.textContent = data.contents;
+          preview.hidden = false;
+          notice.textContent = 'This is exactly what would be committed to ' + data.path;
+          notice.setAttribute('data-kind', 'pending');
+        })
+        .catch(function (error) {
+          preview.hidden = true;
+          notice.textContent = error.message;
+          notice.setAttribute('data-kind', 'error');
+        });
+    });
+
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var submit = form.querySelector('button[type=submit]');
+      submit.disabled = true;
+      notice.textContent = 'Committing…';
+      notice.setAttribute('data-kind', 'pending');
+
+      api('/api/admin/content', { method: 'POST', body: publishPayload(false) })
+        .then(function (data) {
+          preview.hidden = true;
+          clear(notice);
+          notice.removeAttribute('data-kind');
+          notice.appendChild(el('span', null, 'Committed ' + data.path + '. '));
+          var link = el('a', null, 'It will appear at ' + data.url + ' once the build finishes.');
+          link.href = data.url; link.target = '_blank'; link.rel = 'noopener';
+          notice.appendChild(link);
+          form.reset();
+          updateSlugPreview();
+          loadContent();
+        })
+        .catch(function (error) {
+          notice.textContent = error.message;
+          notice.setAttribute('data-kind', 'error');
+        })
+        .finally(function () { submit.disabled = false; });
+    });
   }
 
   function moderationTable(container, endpoint, status, kind) {
@@ -1090,6 +1219,7 @@
     }, 260);
   }
   document.getElementById('addProjectBtn').addEventListener('click', function () { openDrawer(null); });
+  wirePublishForm();
   document.getElementById('drawerClose').addEventListener('click', closeDrawer);
   scrim.addEventListener('click', closeDrawer);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) closeDrawer(); });
