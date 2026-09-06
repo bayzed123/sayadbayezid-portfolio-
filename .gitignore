@@ -7,6 +7,12 @@ node_modules/
 coverage/
 # Screenshots the browser suites write next to themselves.
 tests/*.png
+# Screenshot names the browser suites use, in case one is run from the repo
+# root. Deliberately not *.png — 173 site images are tracked.
+/cms.png
+/console-report.png
+/admin-settings-logo.png
+/home-journal.png
 
 # Production
 dist/

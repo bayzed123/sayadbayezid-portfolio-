@@ -412,3 +412,41 @@ table.data td.actions .btn { margin-left: 6px; }
 .incident-when { color: var(--text-dim); font-size: 0.73rem; margin-left: auto; flex: none; }
 .incident-more { font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
 .unmeasured { color: var(--text-dim); font-style: italic; }
+
+/* ============================================================ publish form
+ *
+ * Writing a post is the one place in this console where the form is the
+ * work, not a dialog over a table — so it gets room to breathe and a
+ * monospace body field, rather than being squeezed into the drawer the
+ * project registry uses.
+ */
+.publish-form { display: grid; gap: 14px; }
+.publish-row { display: grid; grid-template-columns: 200px 1fr; gap: 14px; align-items: start; }
+.publish-grow { min-width: 0; }
+.publish-form textarea {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.82rem;
+  line-height: 1.65;
+  resize: vertical;
+  min-height: 220px;
+}
+/* The exact file that will be committed. Scrolls rather than stretching the
+ * card, and wraps so a long front-matter line stays readable. */
+.publish-preview {
+  margin: 0;
+  padding: 14px 16px;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.76rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+  max-height: 420px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 720px) {
+  .publish-row { grid-template-columns: 1fr; }
+}

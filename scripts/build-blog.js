@@ -68,10 +68,31 @@ function readBlogPosts() {
   const files = fs.readdirSync(BLOG_POSTS_DIR).filter(file => file.endsWith('.md'));
   const posts = [];
 
+  const unreadable = [];
+
   files.forEach(file => {
     const filePath = path.join(BLOG_POSTS_DIR, file);
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const { attributes: rawAttributes, body } = matter(fileContent);
+
+    // One malformed file used to take the whole build down. js-yaml throws on
+    // front matter it cannot parse — most often an unquoted value containing a
+    // colon, like `title: WhatsApp Cloud API: costs` — and the throw escaped
+    // this loop, so a single typo in one draft stopped every other post from
+    // publishing. The author's symptom was "I wrote a post and nothing
+    // appeared", with the cause buried in an Actions log they had no reason to
+    // open.
+    //
+    // Now the bad file is skipped, every good post still ships, and the
+    // failure is printed as a GitHub Actions error annotation so it shows on
+    // the run summary without blocking the ones that are fine.
+    let parsed;
+    try {
+      parsed = matter(fileContent);
+    } catch (error) {
+      unreadable.push({ file, message: error.message.split('\n')[0] });
+      return;
+    }
+    const { attributes: rawAttributes, body } = parsed;
     // Front-matter keys are matched case-insensitively. One post was written
     // with "Title:" and "Description:" capitalised, which the parser treats as
     // different keys from "title" and "description" — so it published as
@@ -101,6 +122,18 @@ function readBlogPosts() {
       category: attributes.category || 'General',
     });
   });
+
+  if (unreadable.length) {
+    console.log('');
+    unreadable.forEach(({ file, message }) => {
+      // ::error:: renders as a red annotation on the workflow run without
+      // failing the job, so the good posts still get committed and pushed.
+      console.log(`::error file=blog-posts/${file}::Front matter could not be parsed, so this post was NOT published. ${message}. Wrap any value containing a colon in double quotes, e.g. title: "A post: with a colon".`);
+      console.log(`❌ Skipped blog-posts/${file} — ${message}`);
+      console.log(`   Wrap values containing a colon in double quotes: title: "A post: with a colon"`);
+    });
+    console.log('');
+  }
 
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 }
