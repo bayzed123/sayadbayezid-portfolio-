@@ -128,14 +128,12 @@
 }
 
 /*
- * PATH NOTE: build-blog.js writes posts to /blog/<slug>/index.html and
- * that template links stylesheets as ../../assets/css/style.css and
- * ../../assets/css/blog.css (two levels up). The premium redesign built
- * this session uses flat paths — /assets/style.css, /assets/main.js,
- * files at the repo root, no /css or /js subfolders. Those two structures
- * don't match yet. Before this blog.css does anything visible, either:
- *   (a) move the new premium style.css to assets/css/style.css to match
- *       the existing blog templates' expected path, or
- *   (b) update build-blog.js's path strings to the flat /assets/... form.
- * Say which you'd rather do and the file paths get aligned to match.
+ * Paths: build-blog.js links /assets/style.css (the site's design tokens) and
+ * /assets/css/blog.css, both root-absolute, so a post at any depth resolves
+ * them identically. This file only defines blog-specific classes; every
+ * colour, font and radius comes from the tokens in /assets/style.css.
+ *
+ * It used to link assets/css/style.css, which does not exist — so every var()
+ * below resolved to nothing and the blog rendered unstyled against the rest of
+ * the site. That is fixed; keep these two paths in step if either moves.
  */
