@@ -19,6 +19,8 @@ const BLOG_POSTS_DIR = path.join(__dirname, '../blog-posts');
 const BLOG_OUTPUT_DIR = path.join(__dirname, '../blog');
 const TEMPLATES_DIR = path.join(__dirname, '../templates');
 const INCLUDES_DIR = path.join(__dirname, '../_includes');
+/** How many posts the homepage journal grid shows. Three fills the row. */
+const HOMEPAGE_POST_COUNT = 3;
 const AUTHOR_NAME = 'Sayad Md Bayezid Hosan';
 const SITE_URL = 'https://sayadbayezid.com';
 const GTM_HEAD = `<!-- Google Tag Manager -->
@@ -726,6 +728,109 @@ function toW3CDate(value) {
   return Number.isNaN(parsed.getTime()) ? null : parsed.toISOString().split('T')[0];
 }
 
+
+/**
+ * Rewrite the "Journal" grid on the homepage with the latest posts.
+ *
+ * That grid used to be hand-written HTML, so publishing a post updated
+ * /blog/ and the sitemap but never the homepage — the newest post simply
+ * never appeared where most visitors would look for it.
+ *
+ * Only the contents of <div class="post-grid"> inside <section id="journal">
+ * are replaced. The heading, the eyebrow and the "All posts" link are left
+ * alone: they are editorial copy, not generated content. Running this twice
+ * produces the same file, because the grid is rebuilt from posts rather than
+ * appended to.
+ */
+function updateHomepageJournal(posts) {
+  const homepagePath = path.join(__dirname, '../index.html');
+  if (!fs.existsSync(homepagePath)) {
+    console.log('⚠️  index.html not found at root. Skipping homepage journal update.');
+    return;
+  }
+
+  const latest = posts.slice(0, HOMEPAGE_POST_COUNT);
+  if (!latest.length) {
+    console.log('⚠️  No posts to show on the homepage. Leaving the journal grid as it is.');
+    return;
+  }
+
+  const html = fs.readFileSync(homepagePath, 'utf8');
+
+  // Anchored on the journal section so a .post-grid elsewhere on the page can
+  // never be clobbered by accident.
+  const sectionRegex = /(<section class="section" id="journal">[\s\S]*?<div class="post-grid">)([\s\S]*?)(<\/div>\s*<\/section>)/;
+  const match = html.match(sectionRegex);
+  if (!match) {
+    console.log('⚠️  Could not find the journal post-grid in index.html. Skipping.');
+    return;
+  }
+
+  const cards = latest.map(post => {
+    const label = [titleCase(post.category), formatCardDate(post.date)].filter(Boolean).join(' · ');
+    return `        <a href="/blog/${escapeAttr(post.slug)}/" class="post-card reveal" data-reveal>
+          <span class="post-meta">${escapeText(label)}</span>
+          <h3>${escapeText(post.title)}</h3>
+          <p>${escapeText(truncate(post.description || '', 165))}</p>
+          <span class="work-link">Read the post <span class="btn-arrow">→</span></span>
+        </a>`;
+  }).join('\n');
+
+  const updated = html.replace(sectionRegex, `$1\n${cards}\n      $3`);
+  if (updated === html) {
+    console.log('ℹ️  Homepage journal already up to date.');
+    return;
+  }
+
+  fs.writeFileSync(homepagePath, updated);
+  console.log(`✅ Updated: / homepage journal grid (${latest.length} latest posts)`);
+}
+
+/**
+ * "2026-09-06" -> "6 Sep 2026". Returns '' for anything unparseable.
+ *
+ * en-US rather than en-GB purely for the month abbreviation: en-GB renders
+ * September as "Sept", which would sit next to the existing "Jul" and "Jun"
+ * cards at a different width. en-US gives three letters for every month.
+ */
+function formatCardDate(value) {
+  if (!value) return '';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return '';
+  const [month, day, year] = parsed
+    .toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+    .replace(',', '')
+    .split(' ');
+  return `${day} ${month} ${year}`;
+}
+
+/** Categories come from front matter in whatever case the author typed. */
+function titleCase(str) {
+  return String(str ?? '')
+    .toLowerCase()
+    .replace(/\b[a-z]/g, (c) => c.toUpperCase());
+}
+
+/** Cut on a word boundary so a card never ends mid-word. */
+function truncate(text, max) {
+  const clean = String(text).replace(/\s+/g, ' ').trim();
+  if (clean.length <= max) return clean;
+  const cut = clean.slice(0, max);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > max * 0.6 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.\s]+$/, '') + '…';
+}
+
+function escapeText(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeAttr(str) {
+  return escapeText(str).replace(/"/g, '&quot;');
+}
+
 /**
  * Update sitemap.xml with blog posts
  */
@@ -813,6 +918,7 @@ function buildBlog() {
   console.log(`✅ Generated: /blog/blog.json\n`);
 
   updateSitemap(posts);
+  updateHomepageJournal(posts);
 
   console.log('🎉 Blog build completed successfully!');
   console.log(`📊 Total posts: ${posts.length}`);
