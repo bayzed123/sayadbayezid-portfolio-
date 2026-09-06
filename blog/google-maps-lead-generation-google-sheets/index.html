@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
+<!-- End Google Tag Manager -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HY9255GJYE');
+</script>
+<!-- End Google tag (gtag.js) -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps Lead Generation to Google Sheets | NexusLeads - Sayad Md Bayezid Hosan</title>
+    <meta name="description" content="Discover public local-business prospects, verify contact signals, and organize leads and outreach drafts in Google Sheets with the privacy-first NexusLeads workflow.">
+    <meta name="author" content="Sayad Md Bayezid Hosan">
+    <meta name="keywords" content="">
+    
+    <meta property="og:title" content="Google Maps Lead Generation to Google Sheets | NexusLeads">
+    <meta property="og:description" content="Discover public local-business prospects, verify contact signals, and organize leads and outreach drafts in Google Sheets with the privacy-first NexusLeads workflow.">
+    <meta property="og:image" content="https://sayadbayezid.com/assets/images/blog-default.svg">
+    <meta property="og:url" content="https://sayadbayezid.com/blog/google-maps-lead-generation-google-sheets/">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-09-06">
+    <meta property="article:author" content="Sayad Md Bayezid Hosan">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Google Maps Lead Generation to Google Sheets | NexusLeads">
+    <meta name="twitter:description" content="Discover public local-business prospects, verify contact signals, and organize leads and outreach drafts in Google Sheets with the privacy-first NexusLeads workflow.">
+    <meta name="twitter:image" content="https://sayadbayezid.com/assets/images/blog-default.svg">
+    
+    <link rel="canonical" href="https://sayadbayezid.com/blog/google-maps-lead-generation-google-sheets/">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    
+    <script>
+        if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+            location.replace('https:' + location.href.substring(location.protocol.length));
+        }
+    </script>
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Google Maps Lead Generation to Google Sheets | NexusLeads",
+        "description": "Discover public local-business prospects, verify contact signals, and organize leads and outreach drafts in Google Sheets with the privacy-first NexusLeads workflow.",
+        "image": "https://sayadbayezid.com/assets/images/blog-default.svg",
+        "datePublished": "2026-09-06",
+        "author": {
+            "@type": "Person",
+            "name": "Sayad Md Bayezid Hosan",
+            "url": "https://sayadbayezid.com/about/"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Sayad Md Bayezid Hosan",
+            "url": "https://sayadbayezid.com"
+        }
+    }
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/assets/css/blog.css">
+    
+    <style>
+        /* Print Styles */
+        @media print {
+            header, footer, .newsletter-section, .blog-related-posts, #print-button, #share-button, #main-header, #main-footer, .share-modal {
+                display: none !important;
+            }
+            body { background: white; color: black; }
+            .blog-post-container { max-width: 100%; padding: 0; }
+            .blog-post-article { box-shadow: none; border: none; }
+            .blog-post-title { page-break-after: avoid; }
+            .blog-post-content { color: black; }
+            .blog-post-content a { color: #0066cc; text-decoration: underline; }
+            img { max-width: 100%; height: auto; page-break-inside: avoid; }
+            h2, h3, h4 { page-break-after: avoid; page-break-inside: avoid; }
+            p { orphans: 3; widows: 3; }
+            pre { background: #f5f5f5 !important; border: 1px solid #ddd !important; page-break-inside: avoid; }
+        }
+
+        /* Share Modal Styles */
+        .share-modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .share-modal.show {
+            display: flex;
+            opacity: 1;
+        }
+        .share-modal-content {
+            background: var(--surface-raised, #161F1A);
+            border: 1px solid var(--line, rgba(237,239,236,.1));
+            padding: 2.5rem 2rem;
+            border-radius: 16px;
+            max-width: 350px;
+            width: 90%;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 26px 64px rgba(0,0,0,.5);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        .share-modal.show .share-modal-content {
+            transform: translateY(0);
+        }
+        .share-close {
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 28px;
+            color: var(--text-dim, #5C6A62);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .share-close:hover { color: var(--emerald, #00D084); }
+        .share-modal h3 {
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            color: var(--paper, #EDEFEC);
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 1.5rem;
+        }
+        .share-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .share-btn {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .share-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        .share-btn.fb { background: #1877F2; }
+        .share-btn.tw { background: #000000; }
+        .share-btn.li { background: #0A66C2; }
+        .share-btn.wa { background: #25D366; }
+        .share-btn.copy { background: #4b5563; }
+    </style>
+    
+    <script src="/assets/js/blog.js" defer></script>
+    <script src="/assets/js/engagement.js" defer></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789336661158068" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="siteHeader">
+      <div class="header-inner">
+        <a href="/" class="brand-mark"><img src="/assets/connect-with-bayezid-logo.svg" alt="Connect with Bayezid" class="brand-logo" width="172" height="34" /></a>
+        <nav class="main-nav" id="mainNav">
+          <a href="/services.html">Services</a>
+          <a href="/products.html">Products</a>
+          <a href="/projects.html">Projects</a>
+          <a href="/case-studies/">Case Studies</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+          <a href="/about.html">About</a>
+          <a href="/client-login.html" class="nav-login-link">Client Login</a>
+          <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main class="blog-post-container">
+        <article class="blog-post-article reveal-up">
+            <header class="blog-post-header">
+                <div class="blog-post-meta">
+                    <time datetime="2026-09-06">September 6, 2026</time>
+                    <span class="meta-separator">•</span>
+                    <span class="blog-post-category">General</span>
+                    <span class="meta-separator">•</span>
+                    <span class="blog-post-author">By Sayad Md Bayezid Hosan</span>
+                </div>
+                <h1 class="blog-post-title">Google Maps Lead Generation to Google Sheets | NexusLeads</h1>
+                <p class="blog-post-excerpt">Discover public local-business prospects, verify contact signals, and organize leads and outreach drafts in Google Sheets with the privacy-first NexusLeads workflow.</p>
+            </header>
+
+            
+
+            <img src="https://sayadbayezid.com/assets/images/blog-default.svg" alt="Google Maps Lead Generation to Google Sheets | NexusLeads" class="blog-post-featured-image reveal-up delay-100">
+
+            <div class="blog-post-content reveal-up delay-200">
+                <blockquote>
+<p><strong>Editorial note:</strong> This guide is written for agencies, freelancers, local growth teams, real-estate teams, founders, and developers who need a practical way to research public business prospects. It explains a workflow—not a promise of guaranteed contact accuracy, search rankings, conversions, or outreach results.</p>
+</blockquote>
+<h2>What is Google Maps lead generation to Google Sheets?</h2>
+<p>Google Maps lead generation to Google Sheets is the process of turning a focused search—such as a business category plus a city—into a structured prospect list that can be reviewed and organized in a spreadsheet. Instead of copying business names, phone numbers, websites, and other public details by hand, a purpose-built workflow can discover candidate businesses, verify the available public contact signals, and place the usable records into a Google Sheet.</p>
+<p>The important distinction is between <strong>discovery</strong> and <strong>verification</strong>. A business appearing in a local search does not automatically mean that it has a usable phone number, a public email signal, a relevant website, or a genuine fit for your offer. A higher-quality process separates those stages, filters out incomplete records, and leaves the final decision to a human operator.</p>
+<p>NexusLeads is designed around that sequence. Its public product page describes a workflow that turns a keyword and location into public business data, social profiles, and personalized email or WhatsApp drafts, then organizes the output in separate <strong>Leads</strong> and <strong>Outreach</strong> tabs in Google Sheets. The site also states that the workflow uses Google Places discovery, verifies public details, and supports a verified-only filter when both a public phone number and email are required.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<h2>Why direct Google Sheets delivery matters</h2>
+<p>For many small teams, Google Sheets is not merely an export destination. It is the working surface where a campaign is reviewed, assigned, filtered, annotated, and handed to another person. A CSV download adds another step: download the file, inspect the columns, upload it, remove duplicates, create outreach fields, and decide which rows are ready for contact.</p>
+<p>A direct Google Sheets workflow reduces that friction. It also makes the boundary between research and outreach more visible. One tab can hold the verified lead record, while a second tab can hold a draft message, a proposed angle, and the next action. That separation helps a team avoid treating every discovered business as an approved contact.</p>
+<table>
+<thead>
+<tr>
+<th>Workflow stage</th>
+<th>What happens</th>
+<th>Quality control question</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Define the target</td>
+<td>Enter a keyword, location, or research prompt</td>
+<td>Is the market narrow enough to produce a relevant list?</td>
+</tr>
+<tr>
+<td>Discover candidates</td>
+<td>Find public businesses matching the query</td>
+<td>Does the result fit the business category and location?</td>
+</tr>
+<tr>
+<td>Verify public details</td>
+<td>Check available phone, email, website, and social signals</td>
+<td>Which fields are actually public and usable?</td>
+</tr>
+<tr>
+<td>Prepare outreach</td>
+<td>Generate a context-aware draft for review</td>
+<td>Is the message relevant, accurate, and respectful?</td>
+</tr>
+<tr>
+<td>Export and organize</td>
+<td>Sync selected records to Leads and Outreach tabs</td>
+<td>Has a human reviewed the rows before contact?</td>
+</tr>
+</tbody></table>
+<h2>The NexusLeads method: from a search idea to an outreach-ready list</h2>
+<p>A reliable local prospecting workflow should be understandable enough that another person can audit it. NexusLeads presents the process as four steps: describe the target, discover candidates, verify public details, and reach out with context.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<h3>1. Describe the target with a keyword and location</h3>
+<p>Start with a specific market rather than a vague request. “Businesses in London” is too broad for most campaigns. “Independent restaurants in London with a public website and signs of weak local SEO” is more useful because it describes a category, a geography, and an observable business need.</p>
+<p>A strong query usually contains four elements:</p>
+<table>
+<thead>
+<tr>
+<th>Element</th>
+<th>Example</th>
+<th>Why it helps</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Business type</td>
+<td>Independent restaurants</td>
+<td>Defines the prospect category</td>
+</tr>
+<tr>
+<td>Location</td>
+<td>London</td>
+<td>Defines the service area</td>
+</tr>
+<tr>
+<td>Public signal</td>
+<td>Website, phone, email, or social link</td>
+<td>Sets a verification requirement</td>
+</tr>
+<tr>
+<td>Opportunity angle</td>
+<td>Local SEO, website improvement, paid media, or branding</td>
+<td>Gives outreach a reason to exist</td>
+</tr>
+</tbody></table>
+<p>This structure is useful for agencies and freelancers because it connects the lead list to a service offer. It is also helpful for developers building a repeatable workflow because the query can be stored as an input and reused across campaigns.</p>
+<h3>2. Discover candidate businesses</h3>
+<p>The discovery stage should expand the candidate pool without pretending that every result is qualified. NexusLeads states that it uses Google Places discovery and processes enrichment in small batches. The public page describes safe five-lead enrichment batches and a target of 20–50 leads per search.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<p>A smaller batch approach can be useful operationally. It makes it easier to identify a bad query, review the returned fields, and correct the workflow before spending time on a large campaign. It also encourages a research mindset rather than an indiscriminate “collect everything” mindset.</p>
+<h3>3. Verify public details</h3>
+<p>Verification is where a generic Google Maps scraper becomes a more useful lead-generation workflow. A verified-only filter should be understood precisely: it does not mean that a business is guaranteed to buy, that an email address is guaranteed to deliver, or that every public field is current. It means the workflow applies a defined condition to the public data it can check.</p>
+<p>NexusLeads says that its verified-only mode can require both a public phone number and email. The site also says that it collects public business information such as business name, category, address, website, rating, public phone numbers, public email signals, and public social links, and that it does not access private account data.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<p>For responsible prospecting, keep these distinctions clear:</p>
+<blockquote>
+<p><strong>Public does not mean personal, permanent, or permission to send anything.</strong> Public business information should be used carefully, with accurate personalization, appropriate contact practices, and respect for applicable law and platform terms.</p>
+</blockquote>
+<h3>4. Prepare outreach with context</h3>
+<p>The best lead list is not necessarily the largest one. It is the list where a sales or agency team can explain why each row is relevant. NexusLeads describes outreach drafts for email and WhatsApp and provides 11 outreach skills on its public product page.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<p>A draft should be treated as a starting point for human editing. It should reference an observable business context—such as an outdated website, a missing service page, a weak local presence, or a relevant partnership opportunity—without inventing facts. The operator should be able to remove a row, edit the message, or decide not to contact the business.</p>
+<h2>Use case 1: Agency owners building a repeatable prospecting lane</h2>
+<p>An SEO, web-design, paid-media, or growth agency often needs a steady way to identify businesses that may benefit from a service. The challenge is not simply finding company names. The challenge is creating a repeatable process that a founder, salesperson, or assistant can run without lowering the agency’s quality standard.</p>
+<p>Consider a web agency searching for independent restaurants in a defined city. The operator can specify the category and location, require public contact signals, review the websites, and use the Leads tab for factual records. The Outreach tab can hold a draft that mentions a specific business opportunity, such as a confusing mobile navigation structure or an unclear reservation path—but only if the reviewer has actually observed it.</p>
+<p>The agency benefit is operational consistency. Each search can use the same fields, the same verification rule, and the same review process. That makes it easier to compare campaigns and train a new team member without handing over an opaque spreadsheet.</p>
+<p><strong>Recommended landing-page angle:</strong> “Build a verified local prospecting lane for your agency—then send only the rows you approve to Google Sheets.”</p>
+<h2>Use case 2: Freelancers finding businesses with a visible opportunity</h2>
+<p>A freelancer may not need a large database. They may need ten relevant businesses in a service area where a focused offer makes sense. For example, a freelance designer could search for local professional firms with a public website and then review whether the websites clearly explain services, location, and contact options.</p>
+<p>The key is to avoid generic outreach. A freelancer should not send the same “I can improve your website” message to every row. Instead, the workflow can help create a shortlist, while the freelancer manually confirms the opportunity and writes a respectful, specific message.</p>
+<p><strong>Recommended landing-page angle:</strong> “Find a smaller list of businesses you can genuinely help, with public details organized for a human review.”</p>
+<h2>Use case 3: Local growth teams mapping a service area</h2>
+<p>A local marketing team may need to map businesses across several neighborhoods or towns. Google Sheets is useful here because the team can sort by location, category, website status, or review notes. A dedicated Leads tab can remain factual, while the Outreach tab can track the campaign angle and status.</p>
+<p>A practical process is to begin with one neighborhood, check the quality of the returned data, and then expand to adjacent areas. This is more defensible than launching a broad search and discovering later that the list contains duplicate, irrelevant, or incomplete rows.</p>
+<p><strong>Recommended landing-page angle:</strong> “Turn service-area research into an organized local campaign without losing track of which businesses were actually verified.”</p>
+<h2>Use case 4: Real-estate and property-service teams expanding territory</h2>
+<p>Real-estate teams, brokers, property managers, contractors, and related service businesses often operate by geography. A territory-based lead workflow can help identify brokerages, property services, renovation companies, photographers, mortgage professionals, or other businesses that may be relevant to a partnership or referral strategy.</p>
+<p>The outreach must be especially context-aware. A partnership message should explain the relationship being proposed and why the business appears relevant. It should not imply an existing relationship, invent a listing, or create urgency that is not real.</p>
+<p><strong>Recommended landing-page angle:</strong> “Research territory-based business opportunities and prepare location-aware outreach drafts for review.”</p>
+<h2>Use case 5: Developers and technical founders using BYOK</h2>
+<p>BYOK means <strong>Bring Your Own Keys</strong>: the user supplies supported provider credentials and pays those provider costs directly, while the platform may charge a separate platform fee. NexusLeads states that its BYOK options allow users to use their own Google Maps, Gemini, and enrichment keys, with provider charges billed separately.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<p>This model can be useful for teams that want clearer control over provider billing or want to avoid placing every provider credential into a shared platform account. It also creates an obligation: the product must explain which keys are required, what each key is used for, what permissions are needed, and how the user can revoke or rotate access.</p>
+<p>A developer-oriented NexusLeads page should include a simple architecture diagram:</p>
+<pre><code class="language-mermaid">flowchart LR
+    A[Keyword + location or research prompt] --&gt; B[Public business discovery]
+    B --&gt; C[Enrichment and verification]
+    C --&gt; D{Verified-only filter}
+    D --&gt;|Pass| E[Leads tab]
+    D --&gt;|Pass| F[Outreach draft]
+    D --&gt;|Review| G[Human approval]
+    G --&gt; H[Selected rows synced to Google Sheets]
+    I[User-owned provider keys] -. controlled configuration .-&gt; B
+</code></pre>
+<p>The phrase <strong>stateless lead generation API</strong> should not be used as a vague trust signal. If the product claims stateless behavior, the technical documentation should define what is and is not retained, how jobs are identified, how errors are handled, and whether any logs or temporary files exist.</p>
+<h2>How to create better prompts for local-business lead research</h2>
+<p>The prompt should define the market, the location, the required public fields, and the qualification signal. A useful prompt is specific without assuming facts that have not been verified.</p>
+<h3>Prompt template for agencies</h3>
+<blockquote>
+<p>Find independent [BUSINESS TYPE] in [CITY or REGION] with a public website, public phone number, and public email signal. Return business name, category, address, website, public contact details, and a short note about observable opportunities related to [SERVICE]. Keep only records that meet the verification rule.</p>
+</blockquote>
+<h3>Prompt template for partnerships</h3>
+<blockquote>
+<p>Find freelancers and small agencies in [CITY] offering [SERVICE] who may be relevant for a delivery partnership. Return only public business details and explain the partnership relevance without inventing company facts.</p>
+</blockquote>
+<h3>Prompt template for local campaigns</h3>
+<blockquote>
+<p>Find [BUSINESS TYPE] in [LOCATION] with public contact details and a visible need related to [CAMPAIGN GOAL]. Organize verified records for review and prepare concise outreach drafts that reference only observable information.</p>
+</blockquote>
+<h2>How NexusLeads compares with common alternatives</h2>
+<p>The goal of a comparison is not to declare one universal winner. It is to explain which workflow fits which job.</p>
+<table>
+<thead>
+<tr>
+<th>Tool or category</th>
+<th>Core orientation</th>
+<th>Typical output or workflow</th>
+<th>Where NexusLeads is differentiated</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ParseHub</td>
+<td>Broad no-code web scraping and interactive extraction</td>
+<td>JSON, Excel, API, and other data workflows</td>
+<td>NexusLeads is more narrowly focused on verified public business research, outreach drafts, and Google Sheets organization. ParseHub’s official page emphasizes clicking to select data, interactive pages, APIs, schedules, and cloud collection.<a href="https://www.parsehub.com/" title="ParseHub official web-scraping product page">2</a></td>
+</tr>
+<tr>
+<td>Apollo</td>
+<td>B2B contact database, lead scoring, intent, and sales engagement</td>
+<td>Contact search, sequences, CRM sync, and outreach</td>
+<td>NexusLeads is oriented toward user-directed local business discovery and public-data verification rather than a large contact database. Apollo’s official product page emphasizes database filters, scoring, intent, sequences, and CRM integrations.<a href="https://www.apollo.io/product/lead-generation" title="Apollo official B2B lead-generation product page">3</a></td>
+</tr>
+<tr>
+<td>Instant Data Scraper</td>
+<td>Browser extension for no-code extraction</td>
+<td>Excel or CSV export from detected tables and lists</td>
+<td>NexusLeads adds a structured lead workflow, verified-only filtering, outreach drafts, and direct Leads/Outreach Sheet tabs. The Chrome Web Store listing describes Instant Data Scraper’s browser-local extraction and Excel/CSV export.<a href="https://chromewebstore.google.com/detail/instant-data-scraper/ofaokhiedipichpaobibbnahnkdoiiah?hl=en-US" title="Instant Data Scraper official Chrome Web Store listing">4</a></td>
+</tr>
+<tr>
+<td>Workflow automation tools</td>
+<td>Flexible orchestration</td>
+<td>User-built nodes and integrations</td>
+<td>NexusLeads packages a focused research-to-outreach workflow for teams that want less setup and more product guidance.</td>
+</tr>
+</tbody></table>
+<h2>What makes a lead list trustworthy?</h2>
+<p>Trust is not created by a badge or a large row count. It is built through transparent process details. A trustworthy lead workflow should make the following visible:</p>
+<ol>
+<li><strong>Source scope:</strong> Explain whether the workflow uses public business information, user-provided data, or private account data. NexusLeads states that it uses public business information and does not access private account data.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></li>
+<li><strong>Verification rule:</strong> Define what “verified” means for the product. NexusLeads describes a verified-only option based on public phone and email availability.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></li>
+<li><strong>Human review:</strong> Make clear that drafts are reviewed before sending. NexusLeads states that it prepares drafts and does not automatically send emails or WhatsApp messages.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></li>
+<li><strong>User control:</strong> Explain whether users can select individual rows and disable automatic push. NexusLeads says users can turn Auto-Push off and use Sync Selected.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></li>
+<li><strong>Credential handling:</strong> Describe BYOK requirements, provider billing, access scopes, and key rotation. Do not promise security properties that have not been documented and tested.</li>
+<li><strong>Limitations:</strong> State that public data can be incomplete, outdated, duplicated, or unavailable for some businesses.</li>
+</ol>
+<h2>E-E-A-T signals for this article and product page</h2>
+<p>Google’s structured-data documentation says that Organization markup can help Google understand an organization’s administrative details and disambiguate it from other organizations. Google also recommends validating structured data and using the URL Inspection tool after deployment.<a href="https://developers.google.com/search/docs/appearance/structured-data/organization" title="Google Search Central Organization structured data documentation">5</a> Structured data does not replace strong content or prove expertise by itself, so the page should combine markup with visible evidence.</p>
+<p>For NexusLeads, the most credible E-E-A-T implementation is practical and verifiable:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Recommended implementation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Experience</td>
+<td>Add a short “How this workflow was built and tested” section with screenshots or a live dashboard link, provided the screenshots represent the current product.</td>
+</tr>
+<tr>
+<td>Expertise</td>
+<td>Name the author and link to the founder’s profile and verified project portfolio. The founder page identifies Sayad Md Bayezid Hosan and links to the live lead-collection project.<a href="https://sayadbayezid.com/" title="Sayad Md Bayezid Hosan official founder and project portfolio page">6</a></td>
+</tr>
+<tr>
+<td>Authoritativeness</td>
+<td>Link to product documentation, privacy policy, support, and the live dashboard. Avoid unsupported claims such as “best” or “most accurate.”</td>
+</tr>
+<tr>
+<td>Trustworthiness</td>
+<td>State what data is collected, what is not accessed, how drafts work, how BYOK billing works, and how users control Sheet sync.</td>
+</tr>
+<tr>
+<td>Editorial transparency</td>
+<td>Add a publication date, last-reviewed date, author bio, correction policy, and clear disclosure that the article describes the NexusLeads product.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Author bio recommendation:</strong> “Written by Sayad Md Bayezid Hosan, founder and builder of SmartGen tools. Bayezid maintains the NexusLeads lead-collection workflow and publishes links to live projects and verified profiles so readers can inspect the work directly.”</p>
+</blockquote>
+<h2>Recommended Organization, Tool, and FAQ structured data</h2>
+<p>Place structured data only when the visible page contains the same information. Google states that structured data should describe the content on the page, and it recommends validation with the Rich Results Test.<a href="https://developers.google.com/search/docs/appearance/structured-data/organization" title="Google Search Central Organization structured data documentation">5</a> Google’s SoftwareApplication documentation requires a name and offer price for supported software-app rich results, and it requires a rating or review when seeking eligibility for that rich-result type.<a href="https://developers.google.com/search/docs/appearance/structured-data/software-app" title="Google Search Central SoftwareApplication structured data documentation">7</a> Because the public NexusLeads page does not provide an independent aggregate rating in the reviewed content, the example below intentionally omits <code>aggregateRating</code> and <code>review</code> rather than inventing either.</p>
+<p>The following JSON-LD is a starting point. Replace the image URL, logo URL, dates, and any pricing fields if the article is published on a different URL or the product details change.</p>
+<pre><code class="language-html">&lt;script type=&quot;application/ld+json&quot;&gt;
+{
+  &quot;@context&quot;: &quot;https://schema.org&quot;,
+  &quot;@graph&quot;: [
+    {
+      &quot;@type&quot;: &quot;Organization&quot;,
+      &quot;@id&quot;: &quot;https://leads.sayadbayezid.com/#organization&quot;,
+      &quot;name&quot;: &quot;NexusLeads&quot;,
+      &quot;alternateName&quot;: &quot;SmartGen NexusLeads&quot;,
+      &quot;url&quot;: &quot;https://leads.sayadbayezid.com/&quot;,
+      &quot;description&quot;: &quot;A lead-research workflow for discovering public business data, verifying contact signals, preparing outreach drafts, and organizing selected records in Google Sheets.&quot;,
+      &quot;email&quot;: &quot;support@sayadbayezid.com&quot;,
+      &quot;founder&quot;: {
+        &quot;@type&quot;: &quot;Person&quot;,
+        &quot;name&quot;: &quot;Sayad Md Bayezid Hosan&quot;,
+        &quot;url&quot;: &quot;https://sayadbayezid.com/&quot;
+      },
+      &quot;sameAs&quot;: [
+        &quot;https://sayadbayezid.com/&quot;,
+        &quot;https://smartgentools.com/&quot;
+      ]
+    },
+    {
+      &quot;@type&quot;: &quot;SoftwareApplication&quot;,
+      &quot;@id&quot;: &quot;https://leads.sayadbayezid.com/#software&quot;,
+      &quot;name&quot;: &quot;NexusLeads&quot;,
+      &quot;url&quot;: &quot;https://leads.sayadbayezid.com/&quot;,
+      &quot;applicationCategory&quot;: &quot;BusinessApplication&quot;,
+      &quot;operatingSystem&quot;: &quot;Web&quot;,
+      &quot;description&quot;: &quot;A privacy-conscious lead research and outreach-draft tool that organizes verified public business details in Google Sheets.&quot;,
+      &quot;provider&quot;: {
+        &quot;@id&quot;: &quot;https://leads.sayadbayezid.com/#organization&quot;
+      },
+      &quot;offers&quot;: {
+        &quot;@type&quot;: &quot;Offer&quot;,
+        &quot;price&quot;: &quot;0&quot;,
+        &quot;priceCurrency&quot;: &quot;USD&quot;,
+        &quot;description&quot;: &quot;Free tier available; paid BYOK and managed options may apply. Confirm current pricing on the live product page.&quot;
+      },
+      &quot;featureList&quot;: [
+        &quot;Keyword and location research&quot;,
+        &quot;Public business detail verification&quot;,
+        &quot;Verified-only filtering&quot;,
+        &quot;Leads and Outreach Google Sheets tabs&quot;,
+        &quot;Email and WhatsApp draft preparation&quot;,
+        &quot;Manual or selected-row Sheet synchronization&quot;,
+        &quot;Bring Your Own Keys option&quot;
+      ]
+    },
+    {
+      &quot;@type&quot;: &quot;Article&quot;,
+      &quot;@id&quot;: &quot;https://leads.sayadbayezid.com/google-maps-lead-generation-google-sheets/#article&quot;,
+      &quot;headline&quot;: &quot;Google Maps Lead Generation to Google Sheets: A Privacy-First Workflow for Verified Local Prospects&quot;,
+      &quot;description&quot;: &quot;A practical guide to discovering public local-business prospects, verifying contact signals, preparing outreach drafts, and organizing selected leads in Google Sheets.&quot;,
+      &quot;author&quot;: {
+        &quot;@type&quot;: &quot;Person&quot;,
+        &quot;name&quot;: &quot;Sayad Md Bayezid Hosan&quot;,
+        &quot;url&quot;: &quot;https://sayadbayezid.com/&quot;
+      },
+      &quot;publisher&quot;: {
+        &quot;@id&quot;: &quot;https://leads.sayadbayezid.com/#organization&quot;
+      },
+      &quot;mainEntityOfPage&quot;: &quot;https://leads.sayadbayezid.com/google-maps-lead-generation-google-sheets/&quot;,
+      &quot;datePublished&quot;: &quot;2026-09-07&quot;,
+      &quot;dateModified&quot;: &quot;2026-09-07&quot;
+    },
+    {
+      &quot;@type&quot;: &quot;FAQPage&quot;,
+      &quot;@id&quot;: &quot;https://leads.sayadbayezid.com/google-maps-lead-generation-google-sheets/#faq&quot;,
+      &quot;mainEntity&quot;: [
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;What does a Google Maps lead-generation workflow do?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;It turns a focused keyword and location into a list of public business records, applies a defined verification rule, and organizes selected records for review or Google Sheets delivery.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Does NexusLeads access private account data?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;The NexusLeads product page states that the tool searches public business information and does not access private account data.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Does NexusLeads send emails or WhatsApp messages automatically?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;No. The product page states that NexusLeads prepares drafts for review and leaves the selection, editing, and sending decision to the user.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;What does BYOK mean in NexusLeads?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;BYOK means Bring Your Own Keys. NexusLeads states that users can configure their own supported provider keys, while provider charges are billed separately by those providers.&quot;
+          }
+        },
+        {
+          &quot;@type&quot;: &quot;Question&quot;,
+          &quot;name&quot;: &quot;Can I choose which leads go to Google Sheets?&quot;,
+          &quot;acceptedAnswer&quot;: {
+            &quot;@type&quot;: &quot;Answer&quot;,
+            &quot;text&quot;: &quot;The NexusLeads product page states that users can turn Auto-Push off, review returned leads, select the rows they want, and use Sync Selected.&quot;
+          }
+        }
+      ]
+    }
+  ]
+}
+&lt;/script&gt;
+</code></pre>
+<p>FAQ markup should not be treated as a guarantee of a Google FAQ rich result. Google’s Search Central documentation explains how structured data is interpreted and validated, but search appearance is not guaranteed.<a href="https://developers.google.com/search/docs/appearance/structured-data/organization" title="Google Search Central Organization structured data documentation">5</a> The visible questions and answers remain valuable because they address buyer objections and improve the page’s usefulness.</p>
+<h2>Frequently asked questions</h2>
+<h3>Is NexusLeads a Google Maps scraper?</h3>
+<p>NexusLeads is positioned on its public page as a lead-research workflow that uses Google Places discovery, public business information, verification, outreach drafts, and Google Sheets organization. The product page specifically states that discovery runs against Google’s Places API rather than scraping.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a> The safest description is therefore a <strong>public business lead-research and verification workflow</strong>, not a generic scraping product.</p>
+<h3>What information can the workflow collect?</h3>
+<p>The public product page lists business name, category, address, website, rating, public phone numbers, public email signals, and public social links.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a> Availability depends on the business, the source, the query, and the verification process. A blank field should remain blank or be marked unavailable rather than filled with an assumption.</p>
+<h3>Does “verified-only” mean every lead will convert?</h3>
+<p>No. Verification is a data-quality condition, not a buying-intent guarantee. A verified public phone number or email signal does not establish that the business is interested, that the contact is the decision-maker, or that outreach will be successful.</p>
+<h3>Can I review leads before sending them to Google Sheets?</h3>
+<p>The product page states that Auto-Push can be turned off so users can review returned leads, select the rows they want, and use Sync Selected.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a> This is an important control for teams that want a human approval step.</p>
+<h3>Does NexusLeads automatically send outreach?</h3>
+<p>The product page states that NexusLeads prepares email and WhatsApp drafts but does not automatically send them. The user decides which leads to select, what to edit, and when to contact someone.<a href="https://leads.sayadbayezid.com/" title="NexusLeads official product page">1</a></p>
+<h3>What is the best keyword for this workflow?</h3>
+<p>The strongest primary keyword for a dedicated landing page is <strong>Google Maps lead generation to Google Sheets</strong>. Supporting long-tail terms include <strong>auto push Google Maps leads to Google Sheets</strong>, <strong>Google Maps lead scraper Google Sheets</strong>, <strong>local business leads spreadsheet</strong>, <strong>privacy-first lead generation tool</strong>, and <strong>BYOK lead generation API</strong>. Search-volume values for these exact worldwide phrases should be checked in an SEO platform before being published as numeric claims.</p>
+<h2>Final checklist before publishing</h2>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Search intent</td>
+<td>Keep the page focused on the source-to-destination workflow, not generic scraping education.</td>
+</tr>
+<tr>
+<td>Product truth</td>
+<td>Recheck pricing, limits, provider names, and feature counts before publication.</td>
+</tr>
+<tr>
+<td>E-E-A-T</td>
+<td>Add the author name, founder link, live product link, support contact, and editorial review date.</td>
+</tr>
+<tr>
+<td>Compliance</td>
+<td>Add a clear public-data scope, human-review statement, and responsible outreach note.</td>
+</tr>
+<tr>
+<td>Structured data</td>
+<td>Validate JSON-LD with Google’s Rich Results Test and ensure every marked claim is visible on the page.<a href="https://developers.google.com/search/docs/appearance/structured-data/organization" title="Google Search Central Organization structured data documentation">5</a></td>
+</tr>
+<tr>
+<td>Internal links</td>
+<td>Link to the dashboard, pricing, prompt library, FAQ, privacy policy, support, and founder page.</td>
+</tr>
+<tr>
+<td>Conversion</td>
+<td>Use one primary CTA such as “Try NexusLeads free” and a secondary CTA such as “See how the workflow works.”</td>
+</tr>
+<tr>
+<td>Measurement</td>
+<td>Track clicks to the live dashboard, account starts, completed searches, selected-row syncs, and qualified human-reviewed leads.</td>
+</tr>
+</tbody></table>
+<h2>Conclusion</h2>
+<p>The most valuable Google Maps lead-generation workflow is not the one that produces the most rows. It is the one that helps a team define a useful market, discover relevant public businesses, verify the signals that matter, prepare context-aware drafts, and keep the final decision under human control.</p>
+<p>NexusLeads has a clear opportunity to own that position: <strong>privacy-conscious local lead research, verified public business data, direct Google Sheets organization, and user-controlled outreach preparation</strong>. By focusing the page on the exact job to be done—moving a keyword and location into a clean, reviewable lead workflow—SmartGen can attract agencies, freelancers, local growth teams, real-estate teams, and developers who need a practical alternative to broad scraping tools, large sales databases, or file-only browser extensions.</p>
+
+            </div>
+
+            <footer class="blog-post-footer reveal-up delay-300">
+                <div class="blog-post-tags">
+                    
+                </div>
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button id="print-button" class="btn btn-ghost" title="Print or download this article as PDF">
+                        <span>🖨️</span>
+                        <span>Print / Download</span>
+                    </button>
+                    <button id="share-button" class="btn btn-ghost" title="Share this article">
+                        <span>📤</span>
+                        <span>Share</span>
+                    </button>
+                </div>
+            </footer>
+        </article>
+
+        
+
+
+        <section class="engagement" data-engagement="/blog/google-maps-lead-generation-google-sheets/" hidden>
+            <div class="rating-block">
+                <h2>Was this post useful?</h2>
+                <p class="engagement-sub">One tap. It helps me judge what to write next.</p>
+                <fieldset class="rating-stars" data-rating-stars>
+                    <legend>Rate this post from 1 to 5</legend>
+                    <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5" title="5 out of 5">★</label>
+                    <input type="radio" id="rating-4" name="rating" value="4" /><label for="rating-4" title="4 out of 5">★</label>
+                    <input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3" title="3 out of 5">★</label>
+                    <input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2" title="2 out of 5">★</label>
+                    <input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1" title="1 out of 5">★</label>
+                </fieldset>
+                <p class="rating-summary" data-rating-summary></p>
+            </div>
+
+            <div class="comment-block">
+                <h2>Comments <span class="comment-count" data-comment-count></span></h2>
+                <p class="engagement-sub">Questions and corrections welcome — I read all of them.</p>
+
+                <ol class="comment-list" data-comment-list></ol>
+                <p class="comment-empty" data-comment-empty>No comments yet. Yours would be the first.</p>
+
+                <form class="comment-form" data-comment-form novalidate>
+                    <div class="comment-form-row">
+                        <div>
+                            <label for="comment-name">Name</label>
+                            <input type="text" id="comment-name" name="name" maxlength="80" required placeholder="What should I call you?" />
+                        </div>
+                        <div>
+                            <label for="comment-email">Email <span class="comment-form-note">— optional, never published</span></label>
+                            <input type="email" id="comment-email" name="email" maxlength="200" placeholder="Only if you want a reply" />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="comment-body">Comment</label>
+                        <textarea id="comment-body" name="body" maxlength="2000" required placeholder="What did this miss, or what would you want next?"></textarea>
+                    </div>
+
+                    <div class="comment-hp" aria-hidden="true">
+                        <label for="comment-website">Leave this field empty</label>
+                        <input type="text" id="comment-website" name="website" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <div class="comment-form-actions">
+                        <button type="submit" class="btn btn-primary">Post comment</button>
+                        <p class="comment-form-note">Comments are read before they appear, so yours won't show straight away.</p>
+                    </div>
+                    <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
+
+        <section class="section cta-band reveal-up">
+            <div class="cta-inner">
+                <span class="section-eyebrow">Connect with Bayezid</span>
+                <h2>Building something worth writing about?</h2>
+                <p>These posts come out of real client builds. Tell me what you're trying to fix or launch and you'll get an honest answer about fit.</p>
+                <a href="/contact.html" class="btn btn-primary btn-lg" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
+            </div>
+        </section>
+
+        <section class="blog-related-posts reveal-up" data-post-slug="google-maps-lead-generation-google-sheets" data-post-tags="">
+            <h2 class="related-posts-title">📚 Related Posts</h2>
+            <div id="related-posts-grid" class="blog-grid">
+                </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" id="main-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="brand-word"><span class="brand-pulse-sm"></span>Connect<em>with</em>Bayezid</span>
+          <p>Founder-led digital systems — web, SEO, marketing, product.</p>
+          <address class="footer-address">Aulibad, Kalihati, Tangail — 1970<br />Parkhi Union, Kalihati Upazila, Tangail District, Bangladesh</address>
+          <div class="social-row">
+            <a class="social-link" href="https://github.com/Sayadbayezid" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+            <a class="social-link" href="/verified-profiles/" aria-label="Verified profiles">ID</a>
+            <a class="social-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" aria-label="SmartGen Docs">DC</a>
+            <a class="social-link" href="mailto:cwb.agency@outlook.com" aria-label="Email">@</a>
+          </div>
+        </div>
+        <div class="footer-cols">
+          <div>
+            <span class="footer-heading">Work</span>
+            <a href="/services.html">Services</a>
+            <a href="/products.html">Products</a>
+            <a href="/projects.html">All projects</a>
+            <a href="/case-studies/">Case studies</a>
+            <a href="/proofline-atlas.html">Proofline Atlas</a>
+          </div>
+          <div>
+            <span class="footer-heading">Studio</span>
+            <a href="/about.html">About</a>
+            <a href="/blog/">Blog</a>
+            <a href="/editorial-policy.html">Editorial guidelines</a>
+            <a href="/authors.html">Authors &amp; team</a>
+            <a href="/verified-profiles/">Verified profiles</a>
+            <a href="/contact.html">Contact</a>
+          </div>
+          <div>
+            <span class="footer-heading">Live builds</span>
+            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Developer demos</a>
+            <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
+            <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
+            <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">Boyok Leads</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/business-integration-policy.html">Imprint &amp; business policy</a>
+        <a href="/contact.html">Contact</a>
+        <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
+      </div>
+    </footer>
+    <script src="/assets/main.js" defer></script>
+
+    <div id="shareModal" class="share-modal">
+        <div class="share-modal-content">
+            <span class="share-close">&times;</span>
+            <h3>Share this article</h3>
+            <div class="share-buttons">
+                <button onclick="shareTo('facebook')" class="share-btn fb">📘 Facebook</button>
+                <button onclick="shareTo('twitter')" class="share-btn tw">𝕏 Twitter</button>
+                <button onclick="shareTo('linkedin')" class="share-btn li">💼 LinkedIn</button>
+                <button onclick="shareTo('whatsapp')" class="share-btn wa">💬 WhatsApp</button>
+                <button onclick="shareTo('copy')" class="share-btn copy">🔗 Copy Link</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const printBtn = document.getElementById('print-button');
+            if (printBtn) {
+                printBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.print();
+                });
+            }
+            
+            const shareBtn = document.getElementById('share-button');
+            const modal = document.getElementById('shareModal');
+            const closeBtn = document.querySelector('.share-close');
+            
+            if (shareBtn && modal) {
+                shareBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    modal.classList.add('show');
+                });
+                
+                closeBtn.addEventListener('click', function() {
+                    modal.classList.remove('show');
+                });
+                
+                window.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                    }
+                });
+            }
+        });
+
+        function shareTo(platform) {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent(document.title);
+            let shareUrl = '';
+            
+            switch(platform) {
+                case 'facebook':
+                    shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=' + url;
+                    break;
+                case 'twitter':
+                    shareUrl = 'https://twitter.com/intent/tweet?url=' + url + '&text=' + title;
+                    break;
+                case 'linkedin':
+                    shareUrl = 'https://www.linkedin.com/shareArticle?mini=true&url=' + url + '&title=' + title;
+                    break;
+                case 'whatsapp':
+                    shareUrl = 'https://api.whatsapp.com/send?text=' + title + ' ' + url;
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(window.location.href).then(() => {
+                        alert('✅ Link copied to clipboard!');
+                    }).catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+                    return; 
+            }
+            
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=no,resizable=no');
+            }
+        }
+    </script>
+</body>
+</html>
