@@ -166,3 +166,126 @@
  * below resolved to nothing and the blog rendered unstyled against the rest of
  * the site. That is fixed; keep these two paths in step if either moves.
  */
+
+/* ============================================================ code samples
+ *
+ * A bar above each block carrying the language and a copy button. The language
+ * matters for scanning: a reader deciding whether to read a block needs to
+ * know if it is shell, JSON or JavaScript before they start.
+ */
+.code-block {
+  margin: 1.6rem 0;
+  border: 1px solid rgba(237, 239, 236, 0.12);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0A0F0D;
+}
+.code-block-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px 7px 14px;
+  background: rgba(237, 239, 236, 0.04);
+  border-bottom: 1px solid rgba(237, 239, 236, 0.09);
+}
+.code-block-lang {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5C6A62;
+}
+.code-copy {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: #93A199;
+  background: transparent;
+  border: 1px solid rgba(237, 239, 236, 0.16);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+.code-copy:hover { color: #00D084; border-color: rgba(0, 208, 132, 0.45); }
+.code-copy.is-copied { color: #00D084; border-color: rgba(0, 208, 132, 0.6); }
+.code-block pre { margin: 0; border: 0; border-radius: 0; background: transparent; }
+
+/* ============================================================ breadcrumbs */
+.post-breadcrumb { margin-bottom: 18px; }
+.post-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.76rem;
+  color: #5C6A62;
+}
+.post-breadcrumb li + li::before { content: '/'; margin-right: 8px; color: #5C6A62; }
+.post-breadcrumb a { color: #93A199; text-decoration: none; }
+.post-breadcrumb a:hover { color: #00D084; }
+.post-breadcrumb [aria-current='page'] {
+  color: #5C6A62;
+  max-width: 46ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ============================================================ FAQ
+ *
+ * details/summary so it works without JavaScript and stays keyboard
+ * accessible, and so the answers are in the HTML for crawlers.
+ */
+.post-faq { margin: 3rem 0 1rem; }
+.post-faq h2 { margin-bottom: 1rem; }
+.faq-item {
+  border: 1px solid rgba(237, 239, 236, 0.1);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  background: rgba(237, 239, 236, 0.02);
+}
+.faq-item summary {
+  cursor: pointer;
+  padding: 14px 18px;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: '+'; color: #00D084; flex: none; }
+.faq-item[open] summary::after { content: '−'; }
+.faq-answer { padding: 0 18px 16px; color: #93A199; }
+.faq-answer > :first-child { margin-top: 0; }
+
+/* ============================================================ related posts */
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+.related-card {
+  display: block;
+  padding: 20px;
+  border: 1px solid rgba(237, 239, 236, 0.1);
+  border-radius: 12px;
+  text-decoration: none;
+  background: rgba(237, 239, 236, 0.02);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.related-card:hover { border-color: rgba(0, 208, 132, 0.4); transform: translateY(-2px); }
+.related-card-meta {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #5C6A62;
+}
+.related-card h3 { font-size: 1.02rem; margin: 8px 0 6px; }
+.related-card p { font-size: 0.86rem; color: #93A199; margin: 0 0 12px; }
+.related-card-link { font-size: 0.82rem; font-weight: 600; color: #00D084; }
