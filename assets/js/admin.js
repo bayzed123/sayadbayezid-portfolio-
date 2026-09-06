@@ -524,33 +524,301 @@
     }).catch(function (e) { emptyState(container, 'Could not load leads.', e.message); });
   }
 
+  // --- analytics -----------------------------------------------------------
+
+  var analyticsRange = '28d';
+
+  /** Horizontal bars for a categorical breakdown. Sorted by the API, drawn in
+   *  the order given, widths relative to the largest — a share-of-total scale
+   *  would render a long tail as invisible slivers. */
+  function barList(container, rows, labelKey, valueKey, unit) {
+    clear(container);
+    if (!rows.length) { emptyState(container, 'No data in this range.'); return; }
+    var max = Math.max.apply(null, rows.map(function (r) { return r[valueKey]; }).concat([1]));
+    var wrap = el('div', 'funnel');
+    rows.forEach(function (row) {
+      var line = el('div', 'funnel-row');
+      var label = el('span', null, row[labelKey] || '—');
+      label.title = row[labelKey] || '';
+      line.appendChild(label);
+      var track = el('div', 'funnel-track');
+      var fill = el('div', 'funnel-fill');
+      fill.style.setProperty('--pct', Math.max((row[valueKey] / max) * 100, row[valueKey] ? 4 : 0) + '%');
+      track.appendChild(fill);
+      line.appendChild(track);
+      line.appendChild(el('span', 'funnel-value', num(row[valueKey]) + (unit || '')));
+      wrap.appendChild(line);
+    });
+    container.appendChild(wrap);
+  }
+
+  /** Two series on one set of axes, each scaled to its own maximum. Clicks and
+   *  impressions differ by an order of magnitude; a shared scale would flatten
+   *  clicks onto the axis and say nothing. The legend states the scaling so the
+   *  chart is not quietly misleading about relative size. */
+  function dualLineChart(container, points, aKey, bKey, aLabel, bLabel) {
+    clear(container);
+    if (!points.length) { emptyState(container, 'No data in this range.'); return; }
+    var w = 640, h = 200, padL = 34, padR = 34, padT = 14, padB = 26;
+    var maxA = Math.max.apply(null, points.map(function (p) { return p[aKey]; }).concat([1]));
+    var maxB = Math.max.apply(null, points.map(function (p) { return p[bKey]; }).concat([1]));
+    var stepX = (w - padL - padR) / Math.max(points.length - 1, 1);
+    var yFor = function (v, max) { return padT + (h - padT - padB) * (1 - v / max); };
+
+    var chart = svg('svg', { class: 'chart', viewBox: '0 0 ' + w + ' ' + h, role: 'img' });
+    [0, 0.5, 1].forEach(function (f) {
+      var gy = padT + (h - padT - padB) * f;
+      chart.appendChild(svg('line', { x1: padL, x2: w - padR, y1: gy, y2: gy, stroke: 'rgba(237,239,236,0.07)', 'stroke-width': 1 }));
+    });
+
+    [[aKey, maxA, '#00D084'], [bKey, maxB, '#5AA9E6']].forEach(function (series) {
+      var d = points.map(function (p, i) {
+        return (i ? 'L' : 'M') + (padL + i * stepX).toFixed(1) + ' ' + yFor(p[series[0]], series[1]).toFixed(1);
+      }).join(' ');
+      var path = svg('path', {
+        d: d, fill: 'none', stroke: series[2], 'stroke-width': 2.1,
+        'stroke-linecap': 'round', 'stroke-linejoin': 'round', class: 'line-path'
+      });
+      chart.appendChild(path);
+      requestAnimationFrame(function () {
+        var len = 0;
+        try { len = path.getTotalLength(); } catch (e) {}
+        path.style.setProperty('--len', (len || 1200).toFixed(0));
+      });
+    });
+
+    points.forEach(function (p, i) {
+      if (i % Math.ceil(points.length / 7) !== 0) return;
+      var label = svg('text', {
+        x: (padL + i * stepX).toFixed(1), y: h - 8,
+        fill: '#5C6A62', 'font-size': 10, 'text-anchor': 'middle'
+      });
+      label.textContent = String(p.date || '').slice(8) || '';
+      chart.appendChild(label);
+    });
+    container.appendChild(chart);
+
+    var legend = el('div', 'chart-legend');
+    [[aLabel, '#00D084', maxA], [bLabel, '#5AA9E6', maxB]].forEach(function (item) {
+      var span = el('span');
+      var swatch = el('i');
+      swatch.style.background = item[1];
+      span.appendChild(swatch);
+      span.appendChild(document.createTextNode(item[0] + ' (peak ' + num(item[2]) + ')'));
+      legend.appendChild(span);
+    });
+    container.appendChild(legend);
+  }
+
   function loadAnalytics() {
     var container = document.querySelector('[data-analytics]');
-    clear(container);
-    var configured = state.overview && state.overview.analytics && state.overview.analytics.configured;
+    skeleton(container, 6);
 
-    if (!configured) {
-      // No sample charts. An operations console that shows invented traffic is
-      // actively harmful — this says plainly what is missing instead.
-      [
-        ['Google Analytics 4', 'Sessions, acquisition channels and conversion funnels for sayadbayezid.com.'],
-        ['Search Console', 'Impressions, clicks, average position and the queries behind them.'],
-        ['Tag Manager', 'Which tags are live, and when each last fired.']
-      ].forEach(function (item) {
+    api('/api/admin/analytics?range=' + analyticsRange).then(function (data) {
+      clear(container);
+
+      if (!data.configured) {
         var panel = el('div', 'pending-panel');
-        panel.style.marginBottom = '14px';
-        panel.appendChild(el('h3', null, item[0]));
-        panel.appendChild(el('p', null, item[1]));
-        var note = el('p');
-        note.appendChild(document.createTextNode('Connects once '));
-        note.appendChild(el('code', null, 'GOOGLE_SERVICE_ACCOUNT_JSON'));
-        note.appendChild(document.createTextNode(' is set as a Worker secret and the service-account email is granted read access to each property.'));
-        panel.appendChild(note);
+        panel.appendChild(el('h3', null, 'Analytics is not connected'));
+        panel.appendChild(el('p', null, data.note || ''));
         container.appendChild(panel);
+        return;
+      }
+
+      // Range switch.
+      var bar = el('div', 'comment-form-actions');
+      bar.style.marginBottom = '18px';
+      [['7d', '7 days'], ['28d', '28 days'], ['90d', '90 days']].forEach(function (option) {
+        var button = el('button', 'btn btn-sm ' + (analyticsRange === option[0] ? 'btn-primary' : 'btn-ghost'), option[1]);
+        button.addEventListener('click', function () { analyticsRange = option[0]; loadAnalytics(); });
+        bar.appendChild(button);
       });
-      return;
-    }
-    emptyState(container, 'Analytics connected.', 'Reporting panels land in the next change.');
+      var diagnose = el('button', 'btn btn-ghost btn-sm', 'Diagnose connection');
+      diagnose.style.marginLeft = 'auto';
+      diagnose.addEventListener('click', showDiagnosis);
+      bar.appendChild(diagnose);
+      container.appendChild(bar);
+
+      // --- GA4 ---------------------------------------------------------
+      if (data.analyticsError) {
+        container.appendChild(sourceError('Google Analytics', data.analyticsError));
+      } else if (data.analytics) {
+        var a = data.analytics;
+        var stats = el('div', 'stat-grid');
+        [
+          ['Sessions', num(a.totals.sessions), 'in the last ' + data.days + ' days', '#00D084'],
+          ['Users', num(a.totals.users), 'unique visitors', '#5AA9E6'],
+          ['Page views', num(a.totals.pageViews), 'across the site', '#D4AF6A'],
+          ['Engagement', (a.totals.engagementRate * 100).toFixed(1) + '%', 'of sessions engaged', '#00A868']
+        ].forEach(function (s) {
+          var card = el('div', 'stat');
+          card.style.setProperty('--accent', s[3]);
+          card.appendChild(el('div', 'stat-label', s[0]));
+          card.appendChild(el('div', 'stat-value', s[1]));
+          card.appendChild(el('div', 'stat-sub', s[2]));
+          stats.appendChild(card);
+        });
+        container.appendChild(stats);
+
+        var traffic = card('Traffic', 'sessions and users per day');
+        dualLineChart(traffic.body, a.timeseries, 'sessions', 'users', 'Sessions', 'Users');
+        container.appendChild(traffic.root);
+
+        var split = el('div', 'grid-halves');
+        split.style.marginTop = '16px';
+
+        var channels = card('Acquisition', 'sessions by channel');
+        barList(channels.body, a.channels, 'channel', 'sessions');
+        split.appendChild(channels.root);
+
+        var geo = card('Geography', 'users by country');
+        barList(geo.body, a.countries.filter(function (c) { return c.users > 0; }).slice(0, 8), 'country', 'users');
+        split.appendChild(geo.root);
+        container.appendChild(split);
+
+        var pages = card('Top pages', 'by views');
+        table(pages.body, ['Page', 'Views', 'Users'], a.pages, function (p) {
+          var tr = el('tr');
+          var cell = el('td');
+          var link = el('a', null, p.path);
+          link.href = 'https://sayadbayezid.com' + p.path;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          cell.appendChild(link);
+          tr.appendChild(cell);
+          tr.appendChild(el('td', 'mono', num(p.views)));
+          tr.appendChild(el('td', 'mono', num(p.users)));
+          return tr;
+        });
+        pages.root.style.marginTop = '16px';
+        container.appendChild(pages.root);
+      }
+
+      // --- Search Console ----------------------------------------------
+      if (data.searchError) {
+        container.appendChild(sourceError('Search Console', data.searchError));
+      } else if (data.search) {
+        var s = data.search;
+        var searchStats = el('div', 'stat-grid');
+        searchStats.style.marginTop = '22px';
+        [
+          ['Clicks', num(s.totals.clicks), 'from Google search', '#00D084'],
+          ['Impressions', num(s.totals.impressions), 'times shown', '#5AA9E6'],
+          ['CTR', (s.totals.ctr * 100).toFixed(2) + '%', 'clicks per impression', '#D4AF6A'],
+          ['Avg position', s.totals.position.toFixed(1), 'lower is better', '#E5A23F']
+        ].forEach(function (stat) {
+          var card_ = el('div', 'stat');
+          card_.style.setProperty('--accent', stat[3]);
+          card_.appendChild(el('div', 'stat-label', stat[0]));
+          card_.appendChild(el('div', 'stat-value', stat[1]));
+          card_.appendChild(el('div', 'stat-sub', stat[2]));
+          searchStats.appendChild(card_);
+        });
+        container.appendChild(searchStats);
+
+        var searchChart = card('Search performance', s.site);
+        dualLineChart(searchChart.body, s.timeseries, 'clicks', 'impressions', 'Clicks', 'Impressions');
+        container.appendChild(searchChart.root);
+
+        var queries = card('Queries', 'what people searched to find you');
+        queries.root.style.marginTop = '16px';
+        table(queries.body, ['Query', 'Clicks', 'Impressions', 'Position'], s.queries, function (q) {
+          var tr = el('tr');
+          tr.appendChild(el('td', null, q.query));
+          tr.appendChild(el('td', 'mono', num(q.clicks)));
+          tr.appendChild(el('td', 'mono', num(q.impressions)));
+          tr.appendChild(el('td', 'mono', q.position.toFixed(1)));
+          return tr;
+        });
+        container.appendChild(queries.root);
+      }
+    }).catch(function (error) {
+      emptyState(container, 'Could not load analytics.', error.message);
+    });
+  }
+
+  /** A card shell, so each panel does not rebuild the same four elements. */
+  function card(title, meta) {
+    var root = el('div', 'card');
+    var head = el('div', 'card-head');
+    head.appendChild(el('h2', null, title));
+    if (meta) head.appendChild(el('span', 'meta', meta));
+    root.appendChild(head);
+    var body = el('div');
+    root.appendChild(body);
+    return { root: root, body: body };
+  }
+
+  /** One source failing must not look like the whole section failing, and the
+   *  reason has to be Google's own words — those name the actual cause. */
+  function sourceError(name, detail) {
+    var panel = el('div', 'pending-panel');
+    panel.style.marginTop = '16px';
+    panel.style.textAlign = 'left';
+    panel.appendChild(el('h3', null, name + ' could not be read'));
+    var p = el('p', null, detail);
+    p.style.margin = '0 0 12px';
+    panel.appendChild(p);
+    var hint = el('p');
+    hint.style.margin = '0';
+    hint.appendChild(document.createTextNode('Use '));
+    hint.appendChild(el('code', null, 'Diagnose connection'));
+    hint.appendChild(document.createTextNode(' above to see which properties the service account can actually reach.'));
+    panel.appendChild(hint);
+    return panel;
+  }
+
+  function showDiagnosis() {
+    var container = document.querySelector('[data-analytics]');
+    skeleton(container, 5);
+    api('/api/admin/analytics/diagnose').then(function (d) {
+      clear(container);
+      var back = el('button', 'btn btn-ghost btn-sm', '← Back to analytics');
+      back.style.marginBottom = '16px';
+      back.addEventListener('click', loadAnalytics);
+      container.appendChild(back);
+
+      var head = card('Connection', 'what the service account can reach');
+      var who = el('p', 'field-hint');
+      who.style.margin = '0 0 14px';
+      who.appendChild(document.createTextNode('Share each property with '));
+      who.appendChild(el('code', null, d.serviceAccount || 'the service account'));
+      who.appendChild(document.createTextNode(' at read access.'));
+      head.body.appendChild(who);
+
+      var rows = [
+        ['Google Analytics', d.ga4],
+        ['Search Console', d.searchConsole],
+        ['Tag Manager', d.tagManager]
+      ];
+      table(head.body, ['Surface', 'Status', 'Detail'], rows, function (row) {
+        var tr = el('tr');
+        tr.appendChild(el('td', null, row[0]));
+        var st = el('td');
+        st.appendChild(pill(row[1] && row[1].ok ? 'up' : 'down'));
+        tr.appendChild(st);
+        var detail = el('td');
+        detail.style.maxWidth = '520px';
+        if (row[1] && row[1].ok) {
+          if (row[1].propertyId) detail.appendChild(el('div', 'mono', 'property ' + row[1].propertyId));
+          if (typeof row[1].sessionsLast7Days === 'number') {
+            detail.appendChild(el('div', null, num(row[1].sessionsLast7Days) + ' sessions in the last 7 days'));
+          }
+          if (row[1].visible) {
+            detail.appendChild(el('div', null, row[1].shared ? 'Reading ' + row[1].expecting : 'Configured site is not among those visible'));
+            (row[1].visible || []).forEach(function (site) { detail.appendChild(el('div', 'mono', site)); });
+          }
+          if (row[1].accounts) (row[1].accounts).forEach(function (a) { detail.appendChild(el('div', 'mono', a)); });
+        } else {
+          detail.appendChild(el('div', null, (row[1] && row[1].error) || d.detail || 'Not reachable'));
+        }
+        tr.appendChild(detail);
+        return tr;
+      });
+      container.appendChild(head.root);
+    }).catch(function (error) {
+      emptyState(container, 'Could not run the diagnosis.', error.message);
+    });
   }
 
   function loadSettings() {

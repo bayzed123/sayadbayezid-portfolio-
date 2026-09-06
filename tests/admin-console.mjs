@@ -191,12 +191,37 @@ console.log('== charts and empty states ==');
 
   await page.click('.side-link[data-view="analytics"]');
   await page.waitForSelector('[data-view-panel="analytics"]:not([hidden])');
-  await page.waitForSelector('[data-analytics] .pending-panel', { timeout: 8000 });
-  const analytics = await page.locator('[data-analytics]').textContent();
-  check('analytics states what is missing', analytics.includes('GOOGLE_SERVICE_ACCOUNT_JSON'));
-  // The whole point: no invented traffic numbers while it is unconfigured.
-  check('and shows no fabricated figures',
-    (await page.locator('[data-analytics] svg').count()) === 0);
+  // Either it is connected and draws real panels, or it is not and says so.
+  // What must never appear is a chart of numbers nobody measured.
+  await page.waitForSelector('[data-analytics] .stat, [data-analytics] .pending-panel', { timeout: 20000 });
+  const connected = (await page.locator('[data-analytics] .stat').count()) > 0;
+
+  if (connected) {
+    check('analytics renders real stat cards', (await page.locator('[data-analytics] .stat').count()) >= 4);
+    check('traffic chart drawn', (await page.locator('[data-analytics] svg path.line-path').count()) > 0);
+    check('range switch present', (await page.locator('[data-analytics] button', { hasText: '28 days' }).count()) > 0);
+    check('diagnose available', (await page.locator('[data-analytics] button', { hasText: 'Diagnose' }).count()) > 0);
+
+    // Range switching must actually refetch, not just restyle a button.
+    await page.click('[data-analytics] button:has-text("7 days")');
+    await page.waitForFunction(
+      () => document.querySelector('[data-analytics] .stat-sub')?.textContent.includes('7 days'),
+      null, { timeout: 20000 });
+    check('switching range refetches', true);
+
+    await page.click('[data-analytics] button:has-text("Diagnose")');
+    await page.waitForSelector('[data-analytics] table', { timeout: 20000 });
+    const diag = await page.locator('[data-analytics]').textContent();
+    check('diagnosis lists every surface',
+      diag.includes('Google Analytics') && diag.includes('Search Console') && diag.includes('Tag Manager'));
+    // MII is the base64 prefix of any DER-encoded key, so this catches a leaked
+    // key without embedding a fragment of a particular one.
+    check('diagnosis never shows a private key', !/BEGIN PRIVATE KEY|\bMII[A-Za-z0-9+/]{20}/.test(await page.content()));
+  } else {
+    check('analytics states what is missing',
+      (await page.locator('[data-analytics]').textContent()).includes('GOOGLE_SERVICE_ACCOUNT_JSON'));
+    check('and shows no fabricated figures', (await page.locator('[data-analytics] svg').count()) === 0);
+  }
 
   check('no JS errors', errors.length === 0, errors.join('; '));
   await ctx.close();
