@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations Console — Connect with Bayezid</title>
+
+  <!-- This page must never be indexed. It holds no secrets, but it should not
+       appear in search results or be summarised by a crawler either. -->
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="referrer" content="same-origin">
+
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="icon" href="/favicon.ico">
+</head>
+<body>
+
+<!-- ==================================================================
+     Sign in. Shown until a valid session exists; the console markup
+     below stays in the document but hidden, and holds no data until
+     the API has answered an authenticated request.
+     ================================================================== -->
+<div class="gate" id="gate">
+  <form class="gate-card" id="loginForm" autocomplete="on">
+    <span class="gate-mark"><span class="gate-pulse"></span>Connect<em>with</em>Bayezid</span>
+    <h1>Operations console</h1>
+    <p class="sub">Client health, content, moderation and leads in one place.</p>
+
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" autocomplete="username" required autocapitalize="off" spellcheck="false">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="current-password" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Sign in</button>
+    <p class="notice" id="loginNotice" role="status" aria-live="polite"></p>
+  </form>
+</div>
+
+<!-- ==================================================================
+     Console
+     ================================================================== -->
+<div class="shell" id="shell" hidden>
+
+  <aside class="sidebar" id="sidebar">
+    <span class="side-mark"><span class="gate-pulse"></span>Console</span>
+
+    <div class="side-group">
+      <div class="side-group-label">Overview</div>
+      <button class="side-link" data-view="overview" aria-current="page">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Dashboard
+      </button>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-label">Clients</div>
+      <button class="side-link" data-view="projects">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>
+        Project health<span class="side-badge" data-badge="projectsDown"></span>
+      </button>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-label">Portfolio</div>
+      <button class="side-link" data-view="content">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v6h6M7 14h9M7 17h6"/></svg>
+        Case studies &amp; blog
+      </button>
+      <button class="side-link" data-view="reviews">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></svg>
+        Reviews<span class="side-badge" data-badge="reviewsPending"></span>
+      </button>
+      <button class="side-link" data-view="comments">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>
+        Comments<span class="side-badge" data-badge="commentsPending"></span>
+      </button>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-label">Pipeline</div>
+      <button class="side-link" data-view="enquiries">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        Enquiries<span class="side-badge" data-badge="enquiriesNew"></span>
+      </button>
+      <button class="side-link" data-view="leads">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Newsletter leads
+      </button>
+    </div>
+
+    <div class="side-group">
+      <div class="side-group-label">Insight</div>
+      <button class="side-link" data-view="analytics">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18M6 20v-6M11 20V8M16 20v-9M21 20V5"/></svg>
+        Analytics
+      </button>
+      <button class="side-link" data-view="settings">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7.5 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 15H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 8.5l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
+        System status
+      </button>
+    </div>
+
+    <div class="side-foot">
+      <small>Signed in · session expires <span data-session-expiry>—</span></small>
+      <button class="btn btn-ghost btn-sm btn-block" id="signOutBtn">Sign out</button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+      <div>
+        <p class="crumb" data-crumb>Console</p>
+        <h1 data-title>Dashboard</h1>
+      </div>
+      <span class="grow"></span>
+      <button class="btn btn-ghost btn-sm" id="refreshBtn">Refresh</button>
+    </div>
+
+    <!-- Dashboard ------------------------------------------------------- -->
+    <section class="view" data-view-panel="overview">
+      <div class="stat-grid" data-stats></div>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h2>Enquiries</h2>
+            <span class="meta">last 14 days</span>
+          </div>
+          <div data-chart="enquiries"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Pipeline</h2></div>
+          <div data-funnel></div>
+        </div>
+      </div>
+      <div class="grid-halves" style="margin-top:16px">
+        <div class="card">
+          <div class="card-head"><h2>Client availability</h2></div>
+          <div data-health-summary></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Needs attention</h2></div>
+          <div data-attention></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project health --------------------------------------------------- -->
+    <section class="view" data-view-panel="projects" hidden>
+      <div class="callout">
+        <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <p><strong>Credentials are write-only.</strong> An account ID or API token is encrypted before it reaches the database and is never sent back to this page — you will only ever see the last four characters. There is no reveal button, by design.</p>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Client projects</h2>
+          <span class="meta"><button class="btn btn-primary btn-sm" id="addProjectBtn">Add project</button></span>
+        </div>
+        <div class="table-wrap" data-projects></div>
+      </div>
+    </section>
+
+    <!-- Content ---------------------------------------------------------- -->
+    <section class="view" data-view-panel="content" hidden>
+      <div class="grid-halves">
+        <div class="card">
+          <div class="card-head"><h2>Blog posts</h2><span class="meta" data-count="blog"></span></div>
+          <div data-blog-list></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h2>Case studies</h2><span class="meta" data-count="cases"></span></div>
+          <div data-case-list></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reviews ---------------------------------------------------------- -->
+    <section class="view" data-view-panel="reviews" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Testimonials</h2>
+          <span class="meta">
+            <select id="reviewFilter" style="background:var(--surface);color:var(--paper);border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:0.78rem">
+              <option value="pending">Awaiting approval</option>
+              <option value="approved">Published</option>
+              <option value="all">All</option>
+            </select>
+          </span>
+        </div>
+        <div class="table-wrap" data-reviews></div>
+      </div>
+    </section>
+
+    <!-- Comments --------------------------------------------------------- -->
+    <section class="view" data-view-panel="comments" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Page comments</h2>
+          <span class="meta">
+            <select id="commentFilter" style="background:var(--surface);color:var(--paper);border:1px solid var(--line);border-radius:7px;padding:5px 9px;font-size:0.78rem">
+              <option value="pending">Awaiting approval</option>
+              <option value="approved">Published</option>
+              <option value="all">All</option>
+            </select>
+          </span>
+        </div>
+        <div class="table-wrap" data-comments></div>
+      </div>
+    </section>
+
+    <!-- Enquiries -------------------------------------------------------- -->
+    <section class="view" data-view-panel="enquiries" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Contact enquiries</h2>
+          <span class="meta">delivery status shown per row</span>
+        </div>
+        <div class="table-wrap" data-enquiries></div>
+      </div>
+    </section>
+
+    <!-- Leads ------------------------------------------------------------ -->
+    <section class="view" data-view-panel="leads" hidden>
+      <div class="card">
+        <div class="card-head"><h2>Newsletter subscribers</h2><span class="meta" data-count="leads"></span></div>
+        <div class="table-wrap" data-leads></div>
+      </div>
+    </section>
+
+    <!-- Analytics -------------------------------------------------------- -->
+    <section class="view" data-view-panel="analytics" hidden>
+      <div data-analytics></div>
+    </section>
+
+    <!-- System status ---------------------------------------------------- -->
+    <section class="view" data-view-panel="settings" hidden>
+      <div class="card">
+        <div class="card-head"><h2>System status</h2><span class="meta">read-only</span></div>
+        <div data-settings></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Add-project drawer ------------------------------------------------- -->
+<div class="drawer-scrim" id="drawerScrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-labelledby="drawerTitle">
+  <div class="drawer-head">
+    <h2 id="drawerTitle">Add a client project</h2>
+    <button class="drawer-close" id="drawerClose" aria-label="Close">&times;</button>
+  </div>
+  <form id="projectForm">
+    <div class="field">
+      <label for="p-name">Project name</label>
+      <input type="text" id="p-name" name="name" required placeholder="Rinova BD">
+    </div>
+    <div class="field">
+      <label for="p-provider">Backend provider</label>
+      <select id="p-provider" name="provider">
+        <option value="cloudflare">Cloudflare</option>
+        <option value="vercel">Vercel</option>
+        <option value="netlify">Netlify</option>
+        <option value="hostinger">Hostinger</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="p-health">Health URL</label>
+      <input type="url" id="p-health" name="healthUrl" placeholder="https://api.example.com/health">
+      <p class="field-hint">Polled on demand. Must be https.</p>
+    </div>
+    <div class="field">
+      <label for="p-dash">Dashboard URL</label>
+      <input type="url" id="p-dash" name="dashboardUrl" placeholder="https://dash.cloudflare.com/...">
+    </div>
+    <div class="field">
+      <label for="p-account">Account ID</label>
+      <input type="password" id="p-account" name="accountId" autocomplete="off" placeholder="Stored encrypted">
+      <p class="field-hint">Encrypted before storage. Only the last four characters are ever shown again.</p>
+    </div>
+    <div class="field">
+      <label for="p-token">API token</label>
+      <input type="password" id="p-token" name="apiToken" autocomplete="off" placeholder="Stored encrypted">
+      <p class="field-hint">Never returned to this page once saved.</p>
+    </div>
+    <div class="field">
+      <label for="p-notes">Notes</label>
+      <textarea id="p-notes" name="notes" placeholder="Anything worth remembering about this deployment."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Save project</button>
+    <p class="notice" id="projectNotice" role="status" aria-live="polite"></p>
+  </form>
+</aside>
+
+<script src="/assets/js/admin.js" defer></script>
+</body>
+</html>
