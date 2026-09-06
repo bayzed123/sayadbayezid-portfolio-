@@ -8,7 +8,12 @@
     "tags": [],
     "image": "https://sayadbayezid.com/assets/images/blog-default.svg",
     "author": "Sayad Md Bayezid Hosan",
-    "category": "General"
+    "category": "General",
+    "imageAlt": "",
+    "updated": null,
+    "faq": [],
+    "images": [],
+    "video": null
   },
   {
     "slug": "smart-ai-open-source-case-study-and-project-journal",
@@ -19,7 +24,12 @@
     "tags": [],
     "image": "https://sayadbayezid.com/blog-posts/images/marketing-banner.png",
     "author": "Sayad Md Bayezid Hosan",
-    "category": "General"
+    "category": "General",
+    "imageAlt": "",
+    "updated": null,
+    "faq": [],
+    "images": [],
+    "video": null
   },
   {
     "slug": "whatsapp-cloud-api-setup-guide-and-integration-costs",
@@ -34,7 +44,12 @@
     ],
     "image": "/blog-posts/images/workflow-diagram.png",
     "author": "Sayad Md Bayezid Hosan",
-    "category": "case study"
+    "category": "case study",
+    "imageAlt": "",
+    "updated": null,
+    "faq": [],
+    "images": [],
+    "video": null
   },
   {
     "slug": "building-the-smartgen-html-code-library-79-visual-to-code-tools",
@@ -50,6 +65,11 @@
     ],
     "image": "https://i.ibb.co/qMqwVFWv/IMG-5260.jpg",
     "author": "SmartGen Editorial Team",
-    "category": "Product Updates"
+    "category": "Product Updates",
+    "imageAlt": "",
+    "updated": null,
+    "faq": [],
+    "images": [],
+    "video": null
   }
 ]

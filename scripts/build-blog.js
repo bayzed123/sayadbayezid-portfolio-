@@ -19,6 +19,10 @@ const BLOG_POSTS_DIR = path.join(__dirname, '../blog-posts');
 const BLOG_OUTPUT_DIR = path.join(__dirname, '../blog');
 const TEMPLATES_DIR = path.join(__dirname, '../templates');
 const INCLUDES_DIR = path.join(__dirname, '../_includes');
+/** How many related posts to show, and how much overlap earns a slot. */
+const RELATED_MAX = 3;
+const RELATED_MIN_SCORE = 3;
+
 /** How many posts the homepage journal grid shows. Three fills the row. */
 const HOMEPAGE_POST_COUNT = 3;
 const AUTHOR_NAME = 'Sayad Md Bayezid Hosan';
@@ -120,6 +124,20 @@ function readBlogPosts() {
       image: attributes.image || `${SITE_URL}/assets/images/blog-default.svg`,
       author: attributes.author || AUTHOR_NAME,
       category: attributes.category || 'General',
+      // Alt text for the cover image. Falls back to the title, which is a
+      // reasonable description of a post's own cover and beats an empty alt.
+      imageAlt: attributes.imagealt || attributes.image_alt || '',
+      // Last substantive edit. Google reads dateModified, and a post that is
+      // updated but still claims its original date looks stale.
+      updated: toW3CDate(attributes.updated || attributes.modified) || null,
+      // [{ question, answer }] — rendered as an accordion and as FAQPage
+      // schema. Only emitted when the author actually wrote FAQs; an empty
+      // FAQPage is a structured-data error, not a neutral omission.
+      faq: normaliseFaq(attributes.faq),
+      // [{ url, alt, caption }] for images used in the body, so the sitemap
+      // and schema can describe them.
+      images: normaliseImages(attributes.images),
+      video: attributes.video || null,
     });
   });
 
@@ -136,6 +154,53 @@ function readBlogPosts() {
   }
 
   return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+}
+
+/**
+ * FAQ entries from front matter. Accepts the two shapes people actually
+ * write — a list of {question, answer} maps, or a list of single-key maps —
+ * and drops anything without both halves, because a question with no answer
+ * is an invalid FAQPage entry rather than a partial one.
+ */
+function normaliseFaq(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((entry) => {
+      if (!entry || typeof entry !== 'object') return null;
+      if (entry.question && entry.answer) {
+        return { question: String(entry.question).trim(), answer: String(entry.answer).trim() };
+      }
+      const keys = Object.keys(entry);
+      if (keys.length === 1) {
+        return { question: String(keys[0]).trim(), answer: String(entry[keys[0]]).trim() };
+      }
+      return null;
+    })
+    .filter((entry) => entry && entry.question && entry.answer);
+}
+
+/** Body images from front matter, each with its own alt text. */
+function normaliseImages(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((entry) => {
+      if (typeof entry === 'string') return { url: entry.trim(), alt: '', caption: '' };
+      if (!entry || typeof entry !== 'object' || !entry.url) return null;
+      return {
+        url: String(entry.url).trim(),
+        alt: String(entry.alt || '').trim(),
+        caption: String(entry.caption || '').trim(),
+      };
+    })
+    .filter((entry) => entry && entry.url);
+}
+
+/** Relative paths become absolute; schema and og:image both require it. */
+function absoluteUrl(value) {
+  const url = String(value || '').trim();
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  return `${SITE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
 }
 
 /**
@@ -188,7 +253,293 @@ function replaceManualTags(htmlContent, authorProfileBox, authorFooterBox) {
 /**
  * Generate HTML for a single blog post
  */
-function generatePostHTML(post) {
+/**
+ * Words too common to signal that two posts are about the same thing. Without
+ * this, "the guide to" matches "a guide for" and everything relates to
+ * everything — which is the failure this whole function exists to avoid.
+ */
+const STOP_WORDS = new Set(`a an and are as at be but by for from how in into is it its of on or
+that the this to what when where which who why with you your guide using use complete step steps
+best top new
+`.split(/\s+/).filter(Boolean));
+
+/** Meaningful terms from a post's title, description and tags. */
+function postTerms(post) {
+  const text = `${post.title} ${post.description} ${(post.tags || []).join(' ')}`.toLowerCase();
+  return new Set(
+    text
+      .split(/[^a-z0-9]+/)
+      .filter((word) => word.length > 3 && !STOP_WORDS.has(word)),
+  );
+}
+
+/**
+ * Related posts, scored — never padded.
+ *
+ * The previous version matched on exact tag equality. Two of four posts had no
+ * tags at all and the rest had none in common, so the section hid itself on
+ * every post: honest, but useless. Loosening it to "any three recent posts"
+ * would have been worse, because a reader who clicks a suggestion that turns
+ * out to be unrelated stops trusting every suggestion after it.
+ *
+ * So: score real overlap, and show nothing when nothing scores. A post with no
+ * genuine relatives gets no section, which is the correct answer.
+ */
+function findRelatedPosts(post, allPosts) {
+  const terms = postTerms(post);
+  const tags = new Set((post.tags || []).map((t) => String(t).toLowerCase()));
+
+  const scored = allPosts
+    .filter((other) => other.slug !== post.slug)
+    .map((other) => {
+      let score = 0;
+      const reasons = [];
+
+      const sharedTags = (other.tags || []).filter((t) => tags.has(String(t).toLowerCase()));
+      if (sharedTags.length) {
+        score += sharedTags.length * 3;
+        reasons.push(`tags: ${sharedTags.join(', ')}`);
+      }
+
+      if (post.category && other.category &&
+          post.category.toLowerCase() === other.category.toLowerCase() &&
+          post.category.toLowerCase() !== 'general') {
+        // "General" is the fallback category, so sharing it says nothing.
+        score += 2;
+        reasons.push(`category: ${other.category}`);
+      }
+
+      const shared = [...postTerms(other)].filter((word) => terms.has(word));
+      if (shared.length) {
+        score += shared.length;
+        reasons.push(`terms: ${shared.slice(0, 4).join(', ')}`);
+      }
+
+      return { post: other, score, reasons };
+    })
+    .filter((entry) => entry.score >= RELATED_MIN_SCORE)
+    .sort((a, b) => b.score - a.score || new Date(b.post.date) - new Date(a.post.date))
+    .slice(0, RELATED_MAX);
+
+  return scored;
+}
+
+/**
+ * Related posts as real HTML, not a client-side fetch. Two reasons: internal
+ * links only pass value to crawlers if they are in the markup, and a reader
+ * with slow JS should still see where to go next.
+ */
+function buildRelatedHTML(post, allPosts) {
+  const related = findRelatedPosts(post, allPosts);
+  if (!related.length) return '';
+
+  const cards = related.map(({ post: other }) => `
+              <a href="/blog/${other.slug}/" class="related-card">
+                <span class="related-card-meta">${escapeText(other.category || '')}</span>
+                <h3>${escapeText(other.title)}</h3>
+                <p>${escapeText(truncate(other.description || '', 120))}</p>
+                <span class="related-card-link">Read this next <span class="btn-arrow">→</span></span>
+              </a>`).join('');
+
+  return `
+        <section class="blog-related-posts reveal-up" aria-labelledby="related-heading">
+          <h2 id="related-heading" class="related-posts-title">Related reading</h2>
+          <div class="related-grid">${cards}
+          </div>
+        </section>`;
+}
+
+/**
+ * Wraps every code block so it can be copied in one click.
+ *
+ * Done at build time rather than by walking the DOM on load: the button is in
+ * the HTML, so it does not appear a moment late, and a reader whose JavaScript
+ * fails still sees a normally formatted code block instead of a button that
+ * does nothing.
+ *
+ * The language label comes from the fence (```bash), which marked renders as
+ * class="language-bash". It is shown because a reader scanning a long post
+ * needs to know whether a block is shell, JSON or JavaScript before reading it.
+ */
+function addCodeCopyButtons(html) {
+  return html.replace(
+    /<pre><code(?:\s+class="language-([a-z0-9+#-]+)")?>([\s\S]*?)<\/code><\/pre>/gi,
+    (match, language, code) => {
+      const label = language ? escapeText(language) : 'code';
+      return `<div class="code-block" data-language="${escapeAttr(label)}">` +
+             `<div class="code-block-bar"><span class="code-block-lang">${label}</span>` +
+             `<button type="button" class="code-copy" aria-label="Copy this ${label} sample">Copy</button></div>` +
+             `<pre><code${language ? ` class="language-${escapeAttr(language)}"` : ''}>${code}</code></pre>` +
+             `</div>`;
+    },
+  );
+}
+
+/**
+ * Post directories with no source file left.
+ *
+ * Renaming a post changes its slug, so the build writes a new directory and
+ * simply stops touching the old one — which keeps serving whatever it last
+ * contained, forever, with no source to regenerate it from. One such
+ * directory was found live: titled "Untitled", absent from the sitemap,
+ * linked from nowhere, still returning 200.
+ *
+ * Reported rather than deleted. A directory here is usually stale output, but
+ * it could also be a hand-written page someone dropped under /blog/, and
+ * silently removing that would be worse than leaving a stale one.
+ */
+function reportOrphanedPostDirs(posts) {
+  if (!fs.existsSync(BLOG_OUTPUT_DIR)) return;
+  const published = new Set(posts.map((post) => post.slug));
+  const orphans = fs
+    .readdirSync(BLOG_OUTPUT_DIR, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !published.has(entry.name))
+    .map((entry) => entry.name);
+
+  if (!orphans.length) return;
+  console.log('');
+  orphans.forEach((slug) => {
+    console.log(`::warning file=blog/${slug}/index.html::/blog/${slug}/ has no source in blog-posts/. It is still served but cannot be regenerated — delete it, or add the .md back if the post was renamed.`);
+    console.log(`⚠️  Orphaned: /blog/${slug}/ has no source .md and will keep serving stale content.`);
+  });
+  console.log('');
+}
+
+/** XML text escaping. An unescaped & makes the whole sitemap unparseable. */
+function escapeXml(str) {
+  return String(str ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+/** Reading time at 200 words a minute, floored at one. */
+function readingTime(markdown) {
+  const words = String(markdown || '').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(words / 200));
+}
+
+/**
+ * Structured data for a post, as one @graph.
+ *
+ * Built with JSON.stringify rather than string interpolation. The previous
+ * version interpolated the title straight into a JSON literal, so an ordinary
+ * title — He said "hello" — produced invalid JSON and Google discarded the
+ * whole block silently. Nothing on the page looked wrong; the post simply had
+ * no structured data.
+ *
+ * Only blocks the post can actually support are emitted. An empty FAQPage or
+ * an ImageObject with no image is a structured-data error, not a harmless
+ * placeholder, and Search Console reports them as such.
+ */
+function buildStructuredData(post) {
+  const url = `${SITE_URL}/blog/${post.slug}/`;
+  const image = absoluteUrl(post.image);
+  const graph = [];
+
+  const article = {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    // Only claim a modification when there was one. Repeating datePublished
+    // here tells Google the post is freshly updated every time it is built.
+    ...(post.updated ? { dateModified: post.updated } : {}),
+    url,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    author: { '@type': 'Person', name: post.author, url: `${SITE_URL}/about.html` },
+    publisher: { '@type': 'Person', name: AUTHOR_NAME, url: SITE_URL },
+    ...(post.tags && post.tags.length ? { keywords: post.tags.join(', ') } : {}),
+    ...(post.category ? { articleSection: post.category } : {}),
+  };
+  if (image) {
+    article.image = {
+      '@type': 'ImageObject',
+      url: image,
+      // Alt text is what the image means; without it the ImageObject says a
+      // file exists and nothing about it.
+      ...(post.imageAlt || post.title ? { caption: post.imageAlt || post.title } : {}),
+    };
+  }
+  graph.push(article);
+
+  // Breadcrumbs mirror the visible trail exactly. A schema trail that does not
+  // match what the reader sees is a structured-data violation.
+  graph.push({
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${SITE_URL}/blog/` },
+      { '@type': 'ListItem', position: 3, name: post.title, item: url },
+    ],
+  });
+
+  if (post.faq && post.faq.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      mainEntity: post.faq.map((entry) => ({
+        '@type': 'Question',
+        name: entry.question,
+        acceptedAnswer: { '@type': 'Answer', text: entry.answer },
+      })),
+    });
+  }
+
+  if (post.video && post.video.url) {
+    graph.push({
+      '@type': 'VideoObject',
+      name: post.video.name || post.title,
+      description: post.video.description || post.description,
+      thumbnailUrl: absoluteUrl(post.video.thumbnail || post.image),
+      uploadDate: post.video.uploadDate || post.date,
+      contentUrl: absoluteUrl(post.video.url),
+    });
+  }
+
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2);
+}
+
+/**
+ * The visible breadcrumb trail. Exists for readers as much as for search:
+ * Google shows URL parts as breadcrumbs in results, and a reader landing
+ * mid-site from search needs to know where they are.
+ */
+function buildBreadcrumbHTML(post) {
+  return `<nav class="post-breadcrumb" aria-label="Breadcrumb">
+              <ol>
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog/">Blog</a></li>
+                <li aria-current="page">${escapeText(post.title)}</li>
+              </ol>
+            </nav>`;
+}
+
+/**
+ * The FAQ block, when the post declares one. Plain details/summary so it works
+ * with no JavaScript and stays keyboard-accessible, and so the answer text is
+ * in the HTML for crawlers rather than injected later.
+ */
+function buildFaqHTML(post) {
+  if (!post.faq || !post.faq.length) return '';
+  const items = post.faq.map((entry) => `
+                <details class="faq-item">
+                  <summary>${escapeText(entry.question)}</summary>
+                  <div class="faq-answer">${marked(entry.answer)}</div>
+                </details>`).join('');
+  return `
+        <section class="post-faq" aria-labelledby="faq-heading">
+          <h2 id="faq-heading">Frequently asked questions</h2>
+          <div class="faq-list">${items}
+          </div>
+        </section>`;
+}
+
+function generatePostHTML(post, allPosts) {
   let htmlContent = marked(post.content);
   const authorProfileBox = loadAuthorProfileBox();
   const authorFooterBox = loadAuthorFooterBox();
@@ -197,6 +548,7 @@ function generatePostHTML(post) {
   const hasManualFooter = post.content.includes('');
   
   htmlContent = replaceManualTags(htmlContent, authorProfileBox, authorFooterBox);
+  htmlContent = addCodeCopyButtons(htmlContent);
   
   const autoProfileBox = hasManualProfile ? '' : authorProfileBox;
   const autoFooterBox = hasManualFooter ? '' : authorFooterBox;
@@ -214,16 +566,17 @@ function generatePostHTML(post) {
     
     <meta property="og:title" content="${post.title}">
     <meta property="og:description" content="${post.description}">
-    <meta property="og:image" content="${post.image}">
+    <meta property="og:image" content="${absoluteUrl(post.image)}">
     <meta property="og:url" content="${SITE_URL}/blog/${post.slug}/">
+    <meta property="og:image:alt" content="${escapeAttr(post.imageAlt || post.title)}">
     <meta property="og:type" content="article">
-    <meta property="article:published_time" content="${post.date}">
+    <meta property="article:published_time" content="${post.date}">${post.updated ? `\n    <meta property="article:modified_time" content="${post.updated}">` : ''}
     <meta property="article:author" content="${post.author}">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${post.title}">
     <meta name="twitter:description" content="${post.description}">
-    <meta name="twitter:image" content="${post.image}">
+    <meta name="twitter:image" content="${absoluteUrl(post.image)}">
     
     <link rel="canonical" href="${SITE_URL}/blog/${post.slug}/">
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -235,24 +588,7 @@ function generatePostHTML(post) {
     </script>
     
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "${post.title}",
-        "description": "${post.description}",
-        "image": "${post.image}",
-        "datePublished": "${post.date}",
-        "author": {
-            "@type": "Person",
-            "name": "${post.author}",
-            "url": "${SITE_URL}/about/"
-        },
-        "publisher": {
-            "@type": "Person",
-            "name": "${AUTHOR_NAME}",
-            "url": "${SITE_URL}"
-        }
-    }
+${buildStructuredData(post)}
     </script>
 
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -386,6 +722,7 @@ function generatePostHTML(post) {
 
     <main class="blog-post-container">
         <article class="blog-post-article reveal-up">
+            ${buildBreadcrumbHTML(post)}
             <header class="blog-post-header">
                 <div class="blog-post-meta">
                     <time datetime="${post.date}">${new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
@@ -393,6 +730,8 @@ function generatePostHTML(post) {
                     <span class="blog-post-category">${post.category}</span>
                     <span class="meta-separator">•</span>
                     <span class="blog-post-author">By ${post.author}</span>
+                    <span class="meta-separator">•</span>
+                    <span class="blog-post-readtime">${readingTime(post.content)} min read</span>
                 </div>
                 <h1 class="blog-post-title">${post.title}</h1>
                 <p class="blog-post-excerpt">${post.description}</p>
@@ -400,11 +739,12 @@ function generatePostHTML(post) {
 
             ${autoProfileBox}
 
-            <img src="${post.image}" alt="${post.title}" class="blog-post-featured-image reveal-up delay-100">
+            <img src="${post.image}" alt="${escapeAttr(post.imageAlt || post.title)}" class="blog-post-featured-image reveal-up delay-100" loading="lazy" decoding="async">
 
             <div class="blog-post-content reveal-up delay-200">
                 ${htmlContent}
             </div>
+${buildFaqHTML(post)}
 
             <footer class="blog-post-footer reveal-up delay-300">
                 <div class="blog-post-tags">
@@ -435,11 +775,7 @@ ${engagementSection(`/blog/${post.slug}/`, { noun: 'post' })}
             </div>
         </section>
 
-        <section class="blog-related-posts reveal-up" data-post-slug="${post.slug}" data-post-tags="${post.tags.join(',')}">
-            <h2 class="related-posts-title">📚 Related Posts</h2>
-            <div id="related-posts-grid" class="blog-grid">
-                </div>
-        </section>
+${buildRelatedHTML(post, allPosts)}
     </main>
 
     <footer class="site-footer" id="main-footer">
@@ -536,6 +872,42 @@ ${engagementSection(`/blog/${post.slug}/`, { noun: 'post' })}
                     }
                 });
             }
+        });
+
+        // Copy a code sample. Uses the async clipboard API with a
+        // document.execCommand fallback, because the async one is unavailable
+        // on any page not served over https — including a local preview.
+        document.addEventListener('click', function (event) {
+            const button = event.target.closest('.code-copy');
+            if (!button) return;
+            const code = button.closest('.code-block').querySelector('code');
+            if (!code) return;
+            const text = code.innerText;
+
+            const done = function (ok) {
+                button.textContent = ok ? 'Copied' : 'Press Ctrl+C';
+                button.classList.toggle('is-copied', ok);
+                setTimeout(function () {
+                    button.textContent = 'Copy';
+                    button.classList.remove('is-copied');
+                }, 2000);
+            };
+
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+                return;
+            }
+            const scratch = document.createElement('textarea');
+            scratch.value = text;
+            scratch.setAttribute('readonly', '');
+            scratch.style.position = 'fixed';
+            scratch.style.opacity = '0';
+            document.body.appendChild(scratch);
+            scratch.select();
+            let ok = false;
+            try { ok = document.execCommand('copy'); } catch (error) { ok = false; }
+            document.body.removeChild(scratch);
+            done(ok);
         });
 
         function shareTo(platform) {
@@ -897,14 +1269,59 @@ function updateSitemap(posts) {
     // <lastmod> must be a W3C date (YYYY-MM-DD). A human-written front-matter
     // date like "July 27, 2026" is silently ignored by crawlers, so normalise
     // it here rather than trusting every post author to get the format right.
-    const postDate = toW3CDate(post.date) || today;
+    // Prefer the last edit: <lastmod> is a claim about the content, and a
+    // post that was revised but still reports its original date reads as
+    // stale to a crawler deciding whether to recrawl.
+    const postDate = toW3CDate(post.updated || post.date) || today;
+
+    // Image and video entries, so the post's media can be discovered and
+    // appear in image and video search. Only what the post actually declares:
+    // an <image:image> pointing at a file that does not exist is worse than
+    // no entry at all.
+    const media = [];
+    const cover = absoluteUrl(post.image);
+    if (cover && !cover.endsWith('/assets/images/blog-default.svg')) {
+      media.push(`    <image:image>
+      <image:loc>${escapeXml(cover)}</image:loc>
+      <image:title>${escapeXml(post.imageAlt || post.title)}</image:title>
+    </image:image>`);
+    }
+    (post.images || []).forEach((img) => {
+      const url = absoluteUrl(img.url);
+      if (!url) return;
+      media.push(`    <image:image>
+      <image:loc>${escapeXml(url)}</image:loc>
+      <image:title>${escapeXml(img.alt || img.caption || post.title)}</image:title>
+    </image:image>`);
+    });
+    if (post.video && post.video.url) {
+      const v = post.video;
+      media.push(`    <video:video>
+      <video:thumbnail_loc>${escapeXml(absoluteUrl(v.thumbnail || post.image))}</video:thumbnail_loc>
+      <video:title>${escapeXml(v.name || post.title)}</video:title>
+      <video:description>${escapeXml(v.description || post.description)}</video:description>
+      <video:content_loc>${escapeXml(absoluteUrl(v.url))}</video:content_loc>
+      <video:publication_date>${escapeXml(toW3CDate(v.uploadDate || post.date) || postDate)}</video:publication_date>
+    </video:video>`);
+    }
+
     blogEntries += `  <url>
     <loc>${SITE_URL}/blog/${post.slug}/</loc>
     <lastmod>${postDate}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>\n`;
+${media.length ? media.join('\n') + '\n' : ''}  </url>\n`;
   });
+
+  // Declaring a namespace that is used nowhere is harmless; using one that is
+  // not declared makes the entire sitemap invalid, and Search Console rejects
+  // the file rather than the offending entry.
+  if (!sitemapContent.includes('xmlns:video=')) {
+    sitemapContent = sitemapContent.replace(
+      'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"',
+      'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"\n        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"',
+    );
+  }
 
   if (sitemapContent.includes('</urlset>')) {
     sitemapContent = sitemapContent.replace('</urlset>', `${blogEntries}</urlset>`);
@@ -936,7 +1353,7 @@ function buildBlog() {
       fs.mkdirSync(postDir, { recursive: true });
     }
 
-    let postHTML = generatePostHTML(post);
+    let postHTML = generatePostHTML(post, posts);
     
     fs.writeFileSync(path.join(postDir, 'index.html'), postHTML);
     console.log(`✅ Generated: /blog/${post.slug}/index.html`);
@@ -952,6 +1369,7 @@ function buildBlog() {
 
   updateSitemap(posts);
   updateHomepageJournal(posts);
+  reportOrphanedPostDirs(posts);
 
   console.log('🎉 Blog build completed successfully!');
   console.log(`📊 Total posts: ${posts.length}`);
