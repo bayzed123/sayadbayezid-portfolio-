@@ -5,6 +5,8 @@ node_modules/
 
 # Testing
 coverage/
+# Screenshots the browser suites write next to themselves.
+tests/*.png
 
 # Production
 dist/

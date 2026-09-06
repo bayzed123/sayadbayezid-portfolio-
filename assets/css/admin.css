@@ -377,3 +377,38 @@ table.data td.actions .btn { margin-left: 6px; }
   .topbar h1 { font-size: 1.24rem; }
   .stat-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 }
+
+/* ============================================================ developer report
+ *
+ * The incident list: what actually failed, grouped by project. Deliberately not
+ * a table — a failure detail is a sentence of arbitrary length (a fetch error,
+ * a status line) and squeezing those into a column made every row wrap.
+ */
+.incident-block { padding: 14px 0; border-bottom: 1px solid var(--line); }
+.incident-block:last-child { border-bottom: 0; }
+.incident-name {
+  font-weight: 600;
+  font-size: 0.86rem;
+  margin-bottom: 8px;
+}
+.incident-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 5px 0;
+  font-size: 0.79rem;
+  flex-wrap: wrap;
+}
+.incident-code {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.72rem;
+  color: #E5735F;
+  border: 1px solid rgba(229, 115, 95, 0.3);
+  border-radius: 5px;
+  padding: 1px 6px;
+  flex: none;
+}
+.incident-detail { color: var(--text-soft); min-width: 0; overflow-wrap: anywhere; }
+.incident-when { color: var(--text-dim); font-size: 0.73rem; margin-left: auto; flex: none; }
+.incident-more { font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
+.unmeasured { color: var(--text-dim); font-style: italic; }

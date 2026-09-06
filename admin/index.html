@@ -63,6 +63,10 @@
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"/></svg>
         Project health<span class="side-badge" data-badge="projectsDown"></span>
       </button>
+      <button class="side-link" data-view="report">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M8 15v-3M12 15V9M16 15v-5"/></svg>
+        Developer report
+      </button>
     </div>
 
     <div class="side-group">
@@ -162,6 +166,26 @@
           <span class="meta"><button class="btn btn-primary btn-sm" id="addProjectBtn">Add project</button></span>
         </div>
         <div class="table-wrap" data-projects></div>
+      </div>
+    </section>
+
+    <!-- Developer report ------------------------------------------------- -->
+    <section class="view" data-view-panel="report" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Developer report</h2>
+          <span class="meta" data-report-generated></span>
+        </div>
+        <div data-report-range></div>
+        <div class="stat-grid" data-report-summary></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Per project</h2></div>
+        <div class="table-wrap" data-report-table></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Incidents</h2><span class="meta">What actually failed, newest first</span></div>
+        <div data-report-incidents></div>
       </div>
     </section>
 
@@ -278,6 +302,7 @@
       <label for="p-dash">Dashboard URL</label>
       <input type="url" id="p-dash" name="dashboardUrl" placeholder="https://dash.cloudflare.com/...">
     </div>
+    <p class="notice" id="editingHint" data-kind="pending" hidden></p>
     <div class="field">
       <label for="p-account">Account ID</label>
       <input type="password" id="p-account" name="accountId" autocomplete="off" placeholder="Stored encrypted">

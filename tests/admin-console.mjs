@@ -154,6 +154,10 @@ console.log('== client credentials are never rendered ==');
   await page.fill('#p-account', SECRET_ACCOUNT);
   await page.fill('#p-token', SECRET_TOKEN);
   await page.click('#projectForm button[type="submit"]');
+  // Wait for the drawer to close, not for the table: the table is already on
+  // screen from the earlier load, so waiting for it returned immediately and
+  // the credential-clearing check below raced the save it was meant to follow.
+  await page.waitForSelector('#drawer', { state: 'hidden', timeout: 10000 });
   await page.waitForSelector('[data-projects] table', { timeout: 10000 });
 
   check('project appears in the table',

@@ -241,6 +241,7 @@
   var VIEWS = {
     overview: { title: 'Dashboard', crumb: 'Console', load: loadOverview },
     projects: { title: 'Project health', crumb: 'Clients', load: loadProjects },
+    report: { title: 'Developer report', crumb: 'Clients', load: loadReport },
     content: { title: 'Case studies & blog', crumb: 'Portfolio', load: loadContent },
     reviews: { title: 'Reviews', crumb: 'Portfolio', load: loadReviews },
     comments: { title: 'Comments', crumb: 'Portfolio', load: loadComments },
@@ -388,6 +389,9 @@
             });
             actions.appendChild(check);
           }
+          var edit = el('button', 'btn btn-ghost btn-sm', 'Edit');
+          edit.addEventListener('click', function () { openDrawer(p); });
+          actions.appendChild(edit);
           var archive = el('button', 'btn btn-ghost btn-sm', 'Archive');
           archive.addEventListener('click', function () {
             api('/api/admin/projects/' + p.id, { method: 'POST', body: { action: 'archive' } }).then(loadProjects);
@@ -400,6 +404,114 @@
         emptyState(container, 'No client projects yet.', 'Add one to start tracking its health.');
       }
     }).catch(function (e) { emptyState(container, 'Could not load projects.', e.message); });
+  }
+
+
+  // --- developer report ----------------------------------------------------
+  //
+  // The weekly report used to be written into a Google Doc and two Sheets by a
+  // service account. It is assembled from this backend's own health rows now,
+  // so there is no Google dependency and nothing to pay for.
+
+  var reportDays = 7;
+
+  /** Uptime is null when nothing was measured. Never render that as 100%. */
+  function uptimeLabel(pct) {
+    return pct === null || pct === undefined ? 'not measured' : pct + '%';
+  }
+
+  function loadReport() {
+    var summary = document.querySelector('[data-report-summary]');
+    var tableBox = document.querySelector('[data-report-table]');
+    var incidents = document.querySelector('[data-report-incidents]');
+    var rangeBox = document.querySelector('[data-report-range]');
+
+    clear(rangeBox);
+    var bar = el('div', 'comment-form-actions');
+    bar.style.marginBottom = '18px';
+    [[7, '7 days'], [30, '30 days'], [90, '90 days']].forEach(function (option) {
+      var button = el('button', 'btn btn-sm ' + (reportDays === option[0] ? 'btn-primary' : 'btn-ghost'), option[1]);
+      button.addEventListener('click', function () { reportDays = option[0]; loadReport(); });
+      bar.appendChild(button);
+    });
+    rangeBox.appendChild(bar);
+
+    skeleton(tableBox, 3);
+    api('/api/admin/projects/report?days=' + reportDays).then(function (data) {
+      document.querySelector('[data-report-generated]').textContent =
+        'Generated ' + fmtDate(data.generatedAt);
+
+      clear(summary);
+      [
+        { label: 'Projects tracked', value: num(data.summary.total),
+          sub: num(data.summary.up) + ' up, ' + num(data.summary.down) + ' down', accent: '#5AA9E6' },
+        // Called out on its own card rather than folded into "up": a project
+        // nobody has checked is not a healthy one, and the old Google report
+        // could not tell the two apart either.
+        { label: 'Never checked', value: num(data.summary.unmeasured),
+          sub: data.summary.unmeasured ? 'press Check to measure these' : 'every project has been measured',
+          accent: data.summary.unmeasured ? '#D4AF6A' : '#00A868' },
+        { label: 'Incidents', value: num(data.summary.incidents),
+          sub: 'failed checks in the last ' + data.days + ' days',
+          accent: data.summary.incidents ? '#E5735F' : '#00D084' },
+        { label: 'Window', value: data.days + 'd', sub: 'health polls are on demand', accent: '#00A868' }
+      ].forEach(function (stat) {
+        var card = el('div', 'stat');
+        card.style.setProperty('--accent', stat.accent);
+        card.appendChild(el('div', 'stat-label', stat.label));
+        card.appendChild(el('div', 'stat-value', stat.value));
+        card.appendChild(el('div', 'stat-sub', stat.sub));
+        summary.appendChild(card);
+      });
+
+      table(tableBox,
+        ['Project', 'Status', 'Uptime', 'Checks', 'Avg latency', 'Worst', 'Last checked'],
+        data.projects,
+        function (row) {
+          var tr = el('tr');
+          tr.appendChild(el('td', null, row.name));
+          var st = el('td'); st.appendChild(pill(row.status)); tr.appendChild(st);
+          // "not measured" is dimmed so it reads as an absence rather than a
+          // number — it is the row most likely to be misread as a good result.
+          var up = el('td', null, uptimeLabel(row.uptimePct));
+          if (row.uptimePct === null) up.className = 'unmeasured';
+          tr.appendChild(up);
+          tr.appendChild(el('td', 'mono', num(row.checks)));
+          tr.appendChild(el('td', 'mono', row.avgLatencyMs === null ? '—' : row.avgLatencyMs + ' ms'));
+          tr.appendChild(el('td', 'mono', row.worstLatencyMs === null ? '—' : row.worstLatencyMs + ' ms'));
+          tr.appendChild(el('td', null, fmtDate(row.lastCheckedAt)));
+          return tr;
+        });
+      if (!data.projects.length) {
+        emptyState(tableBox, 'No client projects yet.', 'Add one on the Project health page.');
+      }
+
+      clear(incidents);
+      var any = false;
+      data.projects.forEach(function (row) {
+        if (!row.incidents.length) return;
+        any = true;
+        var block = el('div', 'incident-block');
+        block.appendChild(el('div', 'incident-name', row.name));
+        row.incidents.forEach(function (incident) {
+          var line = el('div', 'incident-line');
+          line.appendChild(el('span', 'incident-code', incident.statusCode ? 'HTTP ' + incident.statusCode : 'no response'));
+          // detail is the fetch error or status line the project returned —
+          // textContent, never innerHTML, like everything else on this page.
+          line.appendChild(el('span', 'incident-detail', incident.detail || ''));
+          line.appendChild(el('span', 'incident-when', fmtDate(incident.at)));
+          block.appendChild(line);
+        });
+        if (row.incidentCount > row.incidents.length) {
+          block.appendChild(el('div', 'incident-more',
+            'and ' + (row.incidentCount - row.incidents.length) + ' more'));
+        }
+        incidents.appendChild(block);
+      });
+      if (!any) emptyState(incidents, 'No failures in this window.', 'Every check that ran came back healthy.');
+    }).catch(function (error) {
+      emptyState(tableBox, 'Could not load the report.', error.message);
+    });
   }
 
   function loadContent() {
@@ -921,16 +1033,63 @@
   // --- add-project drawer --------------------------------------------------
   var drawer = document.getElementById('drawer');
   var scrim = document.getElementById('drawerScrim');
-  function openDrawer() {
+  // The id being edited, or '' when adding. The same drawer serves both: an
+  // edit form that looked different would drift from the add form.
+  var editingProject = '';
+
+  /**
+   * Opens the drawer. Pass a project to edit it.
+   *
+   * Credential fields are never pre-filled, because there is nothing to
+   * pre-fill them with — the API stores ciphertext and does not hand it back.
+   * Left blank on an edit they are omitted from the request entirely, so the
+   * stored value survives; that is what the hint above them says, and it is
+   * why the submit handler below deletes empty credential keys rather than
+   * sending "".
+   */
+  function openDrawer(project) {
+    var form = document.getElementById('projectForm');
+    var hint = document.getElementById('editingHint');
+    form.reset();
+    editingProject = project ? project.id : '';
+
+    document.getElementById('drawerTitle').textContent =
+      project ? 'Edit ' + project.name : 'Add a client project';
+    document.querySelector('#projectForm button[type=submit]').textContent =
+      project ? 'Save changes' : 'Save project';
+
+    if (project) {
+      document.getElementById('p-name').value = project.name || '';
+      document.getElementById('p-provider').value = project.provider || 'other';
+      document.getElementById('p-health').value = project.health_url || '';
+      document.getElementById('p-dash').value = project.dashboard_url || '';
+      document.getElementById('p-notes').value = project.notes || '';
+      hint.textContent = 'Leave the two credential fields blank to keep the stored ones — '
+        + 'they cannot be shown here. Fill one in only to replace it.';
+      hint.hidden = false;
+      document.getElementById('p-account').placeholder = 'Unchanged (' + (project.account_hint || 'not set') + ')';
+      document.getElementById('p-token').placeholder = 'Unchanged (' + (project.token_hint || 'not set') + ')';
+    } else {
+      hint.hidden = true;
+      document.getElementById('p-account').placeholder = 'Stored encrypted';
+      document.getElementById('p-token').placeholder = 'Stored encrypted';
+    }
+
     drawer.hidden = false; scrim.hidden = false;
     requestAnimationFrame(function () { drawer.classList.add('open'); scrim.classList.add('open'); });
     document.getElementById('p-name').focus();
   }
   function closeDrawer() {
     drawer.classList.remove('open'); scrim.classList.remove('open');
-    setTimeout(function () { drawer.hidden = true; scrim.hidden = true; }, 260);
+    setTimeout(function () {
+      drawer.hidden = true; scrim.hidden = true;
+      // Never leave a typed credential sitting in the DOM after the drawer
+      // closes, cancelled or not.
+      document.getElementById('projectForm').reset();
+      editingProject = '';
+    }, 260);
   }
-  document.getElementById('addProjectBtn').addEventListener('click', openDrawer);
+  document.getElementById('addProjectBtn').addEventListener('click', function () { openDrawer(null); });
   document.getElementById('drawerClose').addEventListener('click', closeDrawer);
   scrim.addEventListener('click', closeDrawer);
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !drawer.hidden) closeDrawer(); });
@@ -943,14 +1102,24 @@
     notice.textContent = 'Saving…';
     notice.setAttribute('data-kind', 'pending');
 
-    api('/api/admin/projects', {
-      method: 'POST',
-      body: {
-        name: data.get('name'), provider: data.get('provider'),
-        healthUrl: data.get('healthUrl'), dashboardUrl: data.get('dashboardUrl'),
-        accountId: data.get('accountId'), apiToken: data.get('apiToken'),
-        notes: data.get('notes')
-      }
+    var body = {
+      name: data.get('name'), provider: data.get('provider'),
+      healthUrl: data.get('healthUrl'), dashboardUrl: data.get('dashboardUrl'),
+      notes: data.get('notes')
+    };
+
+    // Credentials are sent only when something was actually typed. On an edit
+    // this is what protects the stored value: the API treats an explicit ""
+    // as "clear this", so sending an untouched empty field would wipe a
+    // client's API token as a side effect of fixing a URL.
+    var account = data.get('accountId');
+    var token = data.get('apiToken');
+    if (account) body.accountId = account;
+    if (token) body.apiToken = token;
+
+    api(editingProject ? '/api/admin/projects/' + editingProject : '/api/admin/projects', {
+      method: editingProject ? 'PATCH' : 'POST',
+      body: body
     }).then(function () {
       // Clear immediately: the credential fields should not sit in the DOM
       // after the request that consumed them.
