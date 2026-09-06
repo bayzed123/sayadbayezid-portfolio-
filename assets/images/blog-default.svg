@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Connect with Bayezid">
+  <!-- Fallback cover for a post with no image, or whose image fails to load.
+       SVG rather than a JPEG: a few hundred bytes, sharp at any card size, and
+       it carries the site's own palette instead of a grey box. -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#161F1A"/>
+      <stop offset="1" stop-color="#0A0F0D"/>
+    </linearGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M64 0H0v64" fill="none" stroke="rgba(237,239,236,.07)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <rect width="1200" height="675" fill="url(#grid)"/>
+  <circle cx="600" cy="300" r="46" fill="none" stroke="#00D084" stroke-width="2" opacity=".55"/>
+  <circle cx="600" cy="300" r="15" fill="#00D084"/>
+  <text x="600" y="410" fill="#EDEFEC" font-family="Georgia, serif" font-size="40" text-anchor="middle">Connect with Bayezid</text>
+  <text x="600" y="452" fill="#5C6A62" font-family="ui-monospace, Menlo, monospace" font-size="19" letter-spacing="2" text-anchor="middle">JOURNAL</text>
+</svg>

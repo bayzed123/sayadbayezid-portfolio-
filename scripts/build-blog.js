@@ -68,12 +68,23 @@ function readBlogPosts() {
   files.forEach(file => {
     const filePath = path.join(BLOG_POSTS_DIR, file);
     const fileContent = fs.readFileSync(filePath, 'utf8');
-    const { attributes, body } = matter(fileContent);
+    const { attributes: rawAttributes, body } = matter(fileContent);
+    // Front-matter keys are matched case-insensitively. One post was written
+    // with "Title:" and "Description:" capitalised, which the parser treats as
+    // different keys from "title" and "description" — so it published as
+    // "Untitled" with an empty excerpt, and nothing flagged it. A capital
+    // letter in a key is a typo, not a different field.
+    const attributes = Object.fromEntries(
+      Object.entries(rawAttributes).map(([key, value]) => [key.toLowerCase(), value]),
+    );
 
-    const slug = slugify(attributes.title || file.replace('.md', ''), {
-      lower: true,
-      strict: true,
-    });
+    // An explicit `slug:` wins. Two posts already declare one, and it was
+    // being ignored — which made every published URL a function of the title,
+    // so correcting a title silently moved a live, indexed page. Deriving from
+    // the filename (not the title) is the fallback, for the same reason.
+    const slug = attributes.slug
+      ? slugify(String(attributes.slug), { lower: true, strict: true })
+      : slugify(file.replace('.md', ''), { lower: true, strict: true });
 
     posts.push({
       slug,
@@ -82,7 +93,7 @@ function readBlogPosts() {
       content: body,
       date: attributes.date || new Date().toISOString().split('T')[0],
       tags: attributes.tags || [],
-      image: attributes.image || `${SITE_URL}/assets/images/blog-default.jpg`,
+      image: attributes.image || `${SITE_URL}/assets/images/blog-default.svg`,
       author: attributes.author || AUTHOR_NAME,
       category: attributes.category || 'General',
     });
@@ -208,10 +219,9 @@ function generatePostHTML(post) {
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../../assets/css/style.css">
-    <link rel="stylesheet" href="../../assets/css/blog.css">
-    <link rel="stylesheet" href="../../assets/css/ads.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/assets/css/blog.css">
     
     <style>
         /* Print Styles */
@@ -252,14 +262,15 @@ function generatePostHTML(post) {
             opacity: 1;
         }
         .share-modal-content {
-            background: white;
+            background: var(--surface-raised, #161F1A);
+            border: 1px solid var(--line, rgba(237,239,236,.1));
             padding: 2.5rem 2rem;
             border-radius: 16px;
             max-width: 350px;
             width: 90%;
             position: relative;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            box-shadow: 0 26px 64px rgba(0,0,0,.5);
             transform: translateY(20px);
             transition: transform 0.3s ease;
         }
@@ -271,15 +282,16 @@ function generatePostHTML(post) {
             right: 15px;
             top: 10px;
             font-size: 28px;
-            color: #666;
+            color: var(--text-dim, #5C6A62);
             cursor: pointer;
             transition: color 0.2s;
         }
-        .share-close:hover { color: #000; }
+        .share-close:hover { color: var(--emerald, #00D084); }
         .share-modal h3 {
             margin-top: 0;
             margin-bottom: 1.5rem;
-            color: #1f2937;
+            color: var(--paper, #EDEFEC);
+            font-family: 'Fraunces', Georgia, serif;
             font-size: 1.5rem;
         }
         .share-buttons {
@@ -309,13 +321,31 @@ function generatePostHTML(post) {
         .share-btn.copy { background: #4b5563; }
     </style>
     
-    <script src="../../assets/js/blog.js" defer></script>
+    <script src="/assets/js/blog.js" defer></script>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789336661158068" crossorigin="anonymous"></script>
 </head>
 <body>
     ${GTM_NOSCRIPT}
-    <header id="main-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/projects.html">Projects</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="siteHeader">
+      <div class="header-inner">
+        <a href="/" class="brand-mark"><img src="/assets/connect-with-bayezid-logo.svg" alt="Connect with Bayezid" class="brand-logo" width="172" height="34" /></a>
+        <nav class="main-nav" id="mainNav">
+          <a href="/services.html">Services</a>
+          <a href="/products.html">Products</a>
+          <a href="/projects.html">Projects</a>
+          <a href="/case-studies/">Case Studies</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+          <a href="/about.html">About</a>
+          <a href="/client-login.html" class="nav-login-link">Client Login</a>
+          <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
 
     <main class="blog-post-container">
         <article class="blog-post-article reveal-up">
@@ -344,11 +374,11 @@ function generatePostHTML(post) {
                     ${post.tags.map(tag => `<span class="blog-tag">${tag}</span>`).join('')}
                 </div>
                 <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                    <button id="print-button" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #2563eb; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Print or download this article as PDF">
+                    <button id="print-button" class="btn btn-ghost" title="Print or download this article as PDF">
                         <span>🖨️</span>
                         <span>Print / Download</span>
                     </button>
-                    <button id="share-button" style="display: inline-flex; align-items: center; gap: 0.5rem; background: #6b7280; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;" title="Share this article">
+                    <button id="share-button" class="btn btn-ghost" title="Share this article">
                         <span>📤</span>
                         <span>Share</span>
                     </button>
@@ -358,13 +388,13 @@ function generatePostHTML(post) {
 
         ${autoFooterBox ? autoFooterBox : ''}
 
-        <section class="newsletter-section reveal-up" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); padding: 5rem 2rem; border-radius: 30px; margin: 4rem auto; max-width: 900px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
-            <h2 style="font-size: 2.2rem; color: #2c3e50; margin-bottom: 1rem; font-weight: 800;">Connect with Bayezid</h2>
-            <p style="color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.6;">Get my latest insights on digital marketing, full-stack web development, and tech updates delivered straight to your inbox.</p>
-            <form action="#" style="display: flex; gap: 10px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
-                <input type="email" placeholder="Enter your email address" required style="flex: 1; min-width: 250px; padding: 15px 25px; border-radius: 50px; border: 1px solid #ddd; font-size: 1rem; outline: none; transition: border-color 0.3s ease;">
-                <button type="submit" style="background: #2563eb; color: white; padding: 15px 35px; border-radius: 50px; border: none; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(37,99,235,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Subscribe</button>
-            </form>
+        <section class="section cta-band reveal-up">
+            <div class="cta-inner">
+                <span class="section-eyebrow">Connect with Bayezid</span>
+                <h2>Building something worth writing about?</h2>
+                <p>These posts come out of real client builds. Tell me what you're trying to fix or launch and you'll get an honest answer about fit.</p>
+                <a href="/contact.html" class="btn btn-primary btn-lg" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
+            </div>
         </section>
 
         <section class="blog-related-posts reveal-up" data-post-slug="${post.slug}" data-post-tags="${post.tags.join(',')}">
@@ -374,7 +404,55 @@ function generatePostHTML(post) {
         </section>
     </main>
 
-    <footer id="main-footer"><div class="footer-showcase-link"><a href="/proofline-atlas.html">Proofline Atlas — Successful Deliveries</a></div></footer>
+    <footer class="site-footer" id="main-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="brand-word"><span class="brand-pulse-sm"></span>Connect<em>with</em>Bayezid</span>
+          <p>Founder-led digital systems — web, SEO, marketing, product.</p>
+          <address class="footer-address">Aulibad, Kalihati, Tangail — 1970<br />Parkhi Union, Kalihati Upazila, Tangail District, Bangladesh</address>
+          <div class="social-row">
+            <a class="social-link" href="https://github.com/Sayadbayezid" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+            <a class="social-link" href="/verified-profiles/" aria-label="Verified profiles">ID</a>
+            <a class="social-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" aria-label="SmartGen Docs">DC</a>
+            <a class="social-link" href="mailto:cwb.agency@outlook.com" aria-label="Email">@</a>
+          </div>
+        </div>
+        <div class="footer-cols">
+          <div>
+            <span class="footer-heading">Work</span>
+            <a href="/services.html">Services</a>
+            <a href="/products.html">Products</a>
+            <a href="/projects.html">All projects</a>
+            <a href="/case-studies/">Case studies</a>
+            <a href="/proofline-atlas.html">Proofline Atlas</a>
+          </div>
+          <div>
+            <span class="footer-heading">Studio</span>
+            <a href="/about.html">About</a>
+            <a href="/blog/">Blog</a>
+            <a href="/editorial-policy.html">Editorial guidelines</a>
+            <a href="/authors.html">Authors &amp; team</a>
+            <a href="/verified-profiles/">Verified profiles</a>
+            <a href="/contact.html">Contact</a>
+          </div>
+          <div>
+            <span class="footer-heading">Live builds</span>
+            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Developer demos</a>
+            <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
+            <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
+            <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">Boyok Leads</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/business-integration-policy.html">Imprint &amp; business policy</a>
+        <a href="/contact.html">Contact</a>
+        <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
+      </div>
+    </footer>
+    <script src="/assets/main.js" defer></script>
 
     <div id="shareModal" class="share-modal">
         <div class="share-modal-content">
@@ -501,17 +579,35 @@ function generateArchiveHTML() {
     }
     </script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/blog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/style.css">
+    <link rel="stylesheet" href="/assets/css/blog.css">
     
-    <script src="../assets/js/blog.js" defer></script>
+    <script src="/assets/js/blog.js" defer></script>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789336661158068" crossorigin="anonymous"></script>
 </head>
 <body>
     ${GTM_NOSCRIPT}
-    <header id="main-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/projects.html">Projects</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header" id="siteHeader">
+      <div class="header-inner">
+        <a href="/" class="brand-mark"><img src="/assets/connect-with-bayezid-logo.svg" alt="Connect with Bayezid" class="brand-logo" width="172" height="34" /></a>
+        <nav class="main-nav" id="mainNav">
+          <a href="/services.html">Services</a>
+          <a href="/products.html">Products</a>
+          <a href="/projects.html">Projects</a>
+          <a href="/case-studies/">Case Studies</a>
+          <a href="/blog/" aria-current="page">Blog</a>
+          <a href="/about.html">About</a>
+          <a href="/client-login.html" class="nav-login-link">Client Login</a>
+          <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
+        </nav>
+        <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
 
     <main>
         <section class="blog-hero reveal-up">
@@ -536,20 +632,66 @@ function generateArchiveHTML() {
             </div>
         </section>
         
-        <section class="newsletter-section reveal-up" style="background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); padding: 5rem 2rem; border-radius: 30px; margin: 4rem auto; max-width: 1000px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.03);">
-            <h2 style="font-size: 2.5rem; color: #2c3e50; margin-bottom: 1rem; font-weight: 800;">Connect with Bayezid</h2>
-            <p style="color: #666; font-size: 1.1rem; max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.6;">Get my latest tech updates, development guidelines, and tool reviews delivered straight to your inbox every week.</p>
-            
-            <form action="#" style="display: flex; gap: 10px; max-width: 500px; margin: 0 auto; flex-wrap: wrap; justify-content: center;">
-                <input type="email" placeholder="Enter your email address" required style="flex: 1; min-width: 250px; padding: 15px 25px; border-radius: 50px; border: 1px solid #ddd; font-size: 1rem; outline: none; transition: border-color 0.3s ease;">
-                <button type="submit" style="background: #2563eb; color: white; padding: 15px 35px; border-radius: 50px; border: none; font-weight: 600; font-size: 1rem; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(37,99,235,0.3)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Subscribe Now</button>
-            </form>
-            <p style="font-size: 0.8rem; color: #999; margin-top: 1.5rem;">No spam, ever. Unsubscribe at any time.</p>
+        <section class="section cta-band reveal-up">
+            <div class="cta-inner">
+                <span class="section-eyebrow">Connect with Bayezid</span>
+                <h2>Building something worth writing about?</h2>
+                <p>These posts come out of real client builds. Tell me what you're trying to fix or launch and you'll get an honest answer about fit.</p>
+                <a href="/contact.html" class="btn btn-primary btn-lg" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project<span class="btn-arrow">→</span></a>
+            </div>
         </section>
 
     </main>
 
-    <footer id="main-footer"><div class="footer-showcase-link"><a href="/proofline-atlas.html">Proofline Atlas — Successful Deliveries</a></div></footer>
+    <footer class="site-footer" id="main-footer">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <span class="brand-word"><span class="brand-pulse-sm"></span>Connect<em>with</em>Bayezid</span>
+          <p>Founder-led digital systems — web, SEO, marketing, product.</p>
+          <address class="footer-address">Aulibad, Kalihati, Tangail — 1970<br />Parkhi Union, Kalihati Upazila, Tangail District, Bangladesh</address>
+          <div class="social-row">
+            <a class="social-link" href="https://github.com/Sayadbayezid" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+            <a class="social-link" href="/verified-profiles/" aria-label="Verified profiles">ID</a>
+            <a class="social-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" aria-label="SmartGen Docs">DC</a>
+            <a class="social-link" href="mailto:cwb.agency@outlook.com" aria-label="Email">@</a>
+          </div>
+        </div>
+        <div class="footer-cols">
+          <div>
+            <span class="footer-heading">Work</span>
+            <a href="/services.html">Services</a>
+            <a href="/products.html">Products</a>
+            <a href="/projects.html">All projects</a>
+            <a href="/case-studies/">Case studies</a>
+            <a href="/proofline-atlas.html">Proofline Atlas</a>
+          </div>
+          <div>
+            <span class="footer-heading">Studio</span>
+            <a href="/about.html">About</a>
+            <a href="/blog/">Blog</a>
+            <a href="/editorial-policy.html">Editorial guidelines</a>
+            <a href="/authors.html">Authors &amp; team</a>
+            <a href="/verified-profiles/">Verified profiles</a>
+            <a href="/contact.html">Contact</a>
+          </div>
+          <div>
+            <span class="footer-heading">Live builds</span>
+            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Developer demos</a>
+            <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
+            <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
+            <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">Boyok Leads</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/business-integration-policy.html">Imprint &amp; business policy</a>
+        <a href="/contact.html">Contact</a>
+        <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
+      </div>
+    </footer>
+    <script src="/assets/main.js" defer></script>
 </body>
 </html>`;
 

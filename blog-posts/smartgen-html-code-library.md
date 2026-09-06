@@ -1,5 +1,6 @@
 ---
 title: "Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools"
+slug: "building-the-smartgen-html-code-library-79-visual-to-code-tools"
 description: "Discover the development of the SmartGen HTML Code Library. We deployed 79 specialized visual-to-code web tools to generate HTML and CSS without manual coding."
 keywords: "HTML Code library, CSS generators, visual to code, web development utilities, frontend tools, SmartGen platform"
 date: "2026-06-19"
