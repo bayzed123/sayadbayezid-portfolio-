@@ -170,6 +170,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </style>
     
     <script src="/assets/js/blog.js" defer></script>
+    <script src="/assets/js/engagement.js" defer></script>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789336661158068" crossorigin="anonymous"></script>
 </head>
@@ -386,6 +387,59 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </article>
 
         
+
+
+        <section class="engagement" data-engagement="/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/" hidden>
+            <div class="rating-block">
+                <h2>Was this post useful?</h2>
+                <p class="engagement-sub">One tap. It helps me judge what to write next.</p>
+                <fieldset class="rating-stars" data-rating-stars>
+                    <legend>Rate this post from 1 to 5</legend>
+                    <input type="radio" id="rating-5" name="rating" value="5" /><label for="rating-5" title="5 out of 5">★</label>
+                    <input type="radio" id="rating-4" name="rating" value="4" /><label for="rating-4" title="4 out of 5">★</label>
+                    <input type="radio" id="rating-3" name="rating" value="3" /><label for="rating-3" title="3 out of 5">★</label>
+                    <input type="radio" id="rating-2" name="rating" value="2" /><label for="rating-2" title="2 out of 5">★</label>
+                    <input type="radio" id="rating-1" name="rating" value="1" /><label for="rating-1" title="1 out of 5">★</label>
+                </fieldset>
+                <p class="rating-summary" data-rating-summary></p>
+            </div>
+
+            <div class="comment-block">
+                <h2>Comments <span class="comment-count" data-comment-count></span></h2>
+                <p class="engagement-sub">Questions and corrections welcome — I read all of them.</p>
+
+                <ol class="comment-list" data-comment-list></ol>
+                <p class="comment-empty" data-comment-empty>No comments yet. Yours would be the first.</p>
+
+                <form class="comment-form" data-comment-form novalidate>
+                    <div class="comment-form-row">
+                        <div>
+                            <label for="comment-name">Name</label>
+                            <input type="text" id="comment-name" name="name" maxlength="80" required placeholder="What should I call you?" />
+                        </div>
+                        <div>
+                            <label for="comment-email">Email <span class="comment-form-note">— optional, never published</span></label>
+                            <input type="email" id="comment-email" name="email" maxlength="200" placeholder="Only if you want a reply" />
+                        </div>
+                    </div>
+                    <div>
+                        <label for="comment-body">Comment</label>
+                        <textarea id="comment-body" name="body" maxlength="2000" required placeholder="What did this miss, or what would you want next?"></textarea>
+                    </div>
+
+                    <div class="comment-hp" aria-hidden="true">
+                        <label for="comment-website">Leave this field empty</label>
+                        <input type="text" id="comment-website" name="website" tabindex="-1" autocomplete="off" />
+                    </div>
+
+                    <div class="comment-form-actions">
+                        <button type="submit" class="btn btn-primary">Post comment</button>
+                        <p class="comment-form-note">Comments are read before they appear, so yours won't show straight away.</p>
+                    </div>
+                    <p class="form-status" data-form-status role="status" aria-live="polite"></p>
+                </form>
+            </div>
+        </section>
 
         <section class="section cta-band reveal-up">
             <div class="cta-inner">

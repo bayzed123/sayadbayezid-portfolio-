@@ -99,6 +99,35 @@
 .blog-post-content code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; background: var(--surface); padding: 2px 6px; border-radius: 4px; }
 .blog-post-content pre code { background: none; padding: 0; }
 
+/* Markdown tables had no styling at all, so a wide one ran straight past the
+   right edge — the WhatsApp post pushed a 390px viewport 110px sideways, which
+   drags the whole page with it. display:block turns the table into its own
+   scroll container so it scrolls instead of the document. */
+.blog-post-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 0 0 22px;
+  font-size: 0.92rem;
+}
+.blog-post-content thead { background: var(--surface); }
+.blog-post-content th,
+.blog-post-content td {
+  border: 1px solid var(--line);
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+.blog-post-content th { color: var(--paper); font-weight: 600; white-space: nowrap; }
+.blog-post-content tbody tr:nth-child(even) { background: rgba(237, 239, 236, 0.02); }
+
+/* A long unbroken token in inline code — an API path, a hash — is the other
+   thing that widens the page, and it has no scroll container of its own. */
+.blog-post-content code { overflow-wrap: anywhere; }
+.blog-post-content pre code { overflow-wrap: normal; }
+
 .blog-post-footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); }
 .blog-post-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .blog-tag {

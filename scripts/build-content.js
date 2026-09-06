@@ -44,6 +44,7 @@
  */
 
 const fs = require("fs");
+const { engagementSection } = require("./engagement-section");
 const path = require("path");
 const { marked } = require("marked");
 
@@ -152,7 +153,7 @@ src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
 `;
 }
 
-function readFooter() {
+function readFooter(extraScripts = "") {
   return `
   </main>
   <footer class="site-footer">
@@ -189,7 +190,7 @@ function readFooter() {
       <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
     </div>
   </footer>
-  <script src="/assets/main.js"></script>
+  <script src="/assets/main.js"></script>${extraScripts}
 </body>
 </html>
 `;
@@ -269,7 +270,8 @@ ${richBody}
       ${embedBlock(meta)}
       ${gallery}
     </article>
-` + readFooter();
+${engagementSection(`/${type.dir}/${slug}.html`, { noun: type.dir === "case-studies" ? "case study" : "article" })}
+` + readFooter('\n  <script src="/assets/js/engagement.js" defer></script>');
 }
 
 function renderIndexPage(type, entries, canonicalPath = `/${type.dir}/`) {

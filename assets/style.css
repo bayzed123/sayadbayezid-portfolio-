@@ -879,3 +879,148 @@ a { color: inherit; }
   .footer-legal > span:last-child { margin-left: 0; }
   .section { padding: 78px 20px; }
 }
+
+/* ---------------------------------------------------------------------------
+   Page engagement — the rating and comment thread under a blog post or case
+   study. Served by /api/engagement; the markup ships hidden and engagement.js
+   reveals it once the API answers, so a reader never meets a comment box that
+   cannot reach anything.
+   --------------------------------------------------------------------------- */
+.engagement {
+  max-width: 780px;
+  margin: 72px auto 0;
+  padding: 44px 0 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 56px;
+}
+.engagement h2 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--paper);
+  margin: 0 0 6px;
+}
+.engagement-sub { color: var(--text-soft); font-size: 0.92rem; margin: 0 0 20px; }
+
+/* Rating ------------------------------------------------------------------ */
+.rating-block {
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 30px 28px;
+  text-align: center;
+}
+.rating-stars {
+  border: 0;
+  margin: 0 0 12px;
+  padding: 0;
+  /* Reversed so `input:checked ~ label` can reach the lower-valued stars,
+     which sit later in the DOM; row-reverse puts 1 back on the left. */
+  display: inline-flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  gap: 4px;
+}
+.rating-stars legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.rating-stars input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.rating-stars label {
+  font-size: 1.95rem;
+  line-height: 1;
+  color: var(--line);
+  cursor: pointer;
+  padding: 2px;
+  transition: color 0.18s var(--ease), transform 0.18s var(--ease);
+}
+.rating-stars input:checked ~ label,
+.rating-stars label:hover,
+.rating-stars label:hover ~ label { color: var(--gold); }
+.rating-stars label:hover { transform: translateY(-2px); }
+/* Keyboard users get the same focus ring the rest of the site uses. */
+.rating-stars input:focus-visible + label {
+  outline: 2px solid var(--emerald);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.rating-summary {
+  margin: 0;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Comments ---------------------------------------------------------------- */
+.comment-count:not(:empty)::before { content: '('; }
+.comment-count:not(:empty)::after { content: ')'; }
+.comment-count { color: var(--text-dim); font-size: 1rem; font-family: 'JetBrains Mono', monospace; }
+
+.comment-list { list-style: none; margin: 0 0 32px; padding: 0; display: grid; gap: 18px; }
+.comment {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--emerald-deep);
+  border-radius: 12px;
+  padding: 18px 20px;
+}
+.comment-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.comment-author { color: var(--paper); font-weight: 600; font-size: 0.95rem; }
+.comment-date { color: var(--text-dim); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; }
+.comment p { margin: 0 0 10px; color: var(--text-soft); font-size: 0.93rem; line-height: 1.65; }
+.comment p:last-child { margin-bottom: 0; }
+.comment-empty { color: var(--text-dim); font-size: 0.9rem; margin: 0 0 32px; }
+
+.comment-form { display: grid; gap: 14px; }
+.comment-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.comment-form label { display: block; font-size: 0.82rem; color: var(--text-soft); margin-bottom: 6px; }
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--paper);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+.comment-form textarea { min-height: 120px; resize: vertical; }
+.comment-form input::placeholder,
+.comment-form textarea::placeholder { color: var(--text-dim); }
+.comment-form input:focus, .comment-form textarea:focus {
+  outline: none;
+  border-color: var(--emerald-deep);
+  box-shadow: 0 0 0 3px var(--emerald-soft);
+}
+.comment-form-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.comment-form-note { color: var(--text-dim); font-size: 0.78rem; margin: 0; }
+
+/* The honeypot. Hidden from sight and from assistive technology, so only a
+   bot filling every field will put anything in it. */
+.comment-hp {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.form-status { margin: 0; font-size: 0.86rem; min-height: 1.2em; }
+.form-status[data-kind='ok'] { color: var(--emerald); }
+.form-status[data-kind='error'] { color: #E5735F; }
+.form-status[data-kind='pending'] { color: var(--text-soft); }
+
+@media (max-width: 640px) {
+  .engagement { margin-top: 56px; gap: 44px; }
+  .rating-block { padding: 24px 18px; }
+  .rating-stars label { font-size: 1.7rem; }
+  .comment-form-row { grid-template-columns: 1fr; }
+}
+
+@media print {
+  .engagement { display: none !important; }
+}

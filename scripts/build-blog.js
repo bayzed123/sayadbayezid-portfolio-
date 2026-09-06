@@ -12,6 +12,7 @@ const path = require('path');
 const matter = require('front-matter');
 const { marked } = require('marked');
 const slugify = require('slugify');
+const { engagementSection } = require('./engagement-section');
 
 // Configuration
 const BLOG_POSTS_DIR = path.join(__dirname, '../blog-posts');
@@ -322,6 +323,7 @@ function generatePostHTML(post) {
     </style>
     
     <script src="/assets/js/blog.js" defer></script>
+    <script src="/assets/js/engagement.js" defer></script>
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9789336661158068" crossorigin="anonymous"></script>
 </head>
@@ -388,6 +390,7 @@ function generatePostHTML(post) {
 
         ${autoFooterBox ? autoFooterBox : ''}
 
+${engagementSection(`/blog/${post.slug}/`, { noun: 'post' })}
         <section class="section cta-band reveal-up">
             <div class="cta-inner">
                 <span class="section-eyebrow">Connect with Bayezid</span>
