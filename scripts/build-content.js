@@ -218,6 +218,44 @@ function imageGallery(meta) {
   return `<div class="content-gallery">\n        ${items}\n      </div>`;
 }
 
+/**
+ * Markdown files sitting in a content folder that no meta.json points at.
+ *
+ * A body is either the `body` array or a `markdown` file — never both — so a
+ * .md dropped into the folder without adding the "markdown" key is simply
+ * never read. Nothing errors, the page still builds, and the document is
+ * invisible on the site. One 839-line developer document sat unpublished this
+ * way, and the only clue was that the generated page was 10 KB.
+ *
+ * Reported, not auto-included: a folder may legitimately hold notes or a
+ * draft, and silently publishing those would be worse than not publishing the
+ * one that was meant to go out.
+ */
+function reportUnreferencedMarkdown(slug, slugDir, meta) {
+  const referenced = new Set();
+  if (meta.markdown) referenced.add(path.normalize(meta.markdown));
+
+  const found = [];
+  const walk = (dir, prefix) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const rel = prefix ? path.join(prefix, entry.name) : entry.name;
+      if (entry.isDirectory()) walk(path.join(dir, entry.name), rel);
+      else if (entry.name.toLowerCase().endsWith(".md") && !referenced.has(path.normalize(rel))) {
+        found.push(rel);
+      }
+    }
+  };
+  walk(slugDir, "");
+
+  for (const file of found) {
+    console.log(
+      `::warning file=content/case-studies/${slug}/${file}::This Markdown file is not published. ` +
+      `Nothing in ${slug}/meta.json references it — add "markdown": "${file}" to use it as the page body.`,
+    );
+    console.warn(`  ! ${slug}: ${file} is not published — meta.json has no "markdown": "${file}"`);
+  }
+}
+
 function renderMarkdown(markdownFile, slugDir) {
   const markdownPath = path.join(slugDir, markdownFile);
   if (!fs.existsSync(markdownPath)) {
@@ -346,6 +384,8 @@ function buildContentType(type) {
       console.warn(`  ! ${slug}: meta.json has no "title", skipping`);
       continue;
     }
+
+    reportUnreferencedMarkdown(slug, slugDir, meta);
 
     // Copy any referenced local images alongside the generated page.
     for (const img of meta.images || []) {
