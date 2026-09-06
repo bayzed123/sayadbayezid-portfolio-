@@ -1,46 +1,50 @@
-# bayezid-agency-api
+# sayadbayezid.com
 
-Tiny Cloudflare Worker with one job: receive an event the browser Pixel
-already fired on connectwithbayezid's agency site, and forward it to Meta's
-Conversions API server-side — the "dual delivery" pattern Meta recommends,
-since the browser Pixel alone can be blocked by ad-blockers or Safari's
-tracking prevention.
+The portfolio and content site for Sayad Md Bayezid Hosan — Connect with
+Bayezid. Static HTML, no bundler, deployed to GitHub Pages from `main`.
 
-## One-time setup
+## Layout
 
-1. `npm install`
-2. Set the Conversions API access token as a Worker secret — **never** put
-   this in `wrangler.jsonc` or commit it anywhere:
-   ```
-   npx wrangler secret put META_CONVERSIONS_API_TOKEN
-   ```
-   (paste the token from Events Manager → Conversions API → Set up direct
-   integration)
-3. GitHub repo → Settings → Secrets and variables → Actions, add:
-   - `CLOUDFLARE_API_TOKEN`
-   - `CLOUDFLARE_ACCOUNT_ID`
-4. Push to `main` — GitHub Actions deploys automatically on any change under
-   `worker/`.
+| Path | What it is |
+| --- | --- |
+| `index.html`, `services.html`, `projects.html`, … | Hand-written pages |
+| `blog-posts/*.md` | Blog sources — front matter + Markdown |
+| `content/**` | Case study and news sources |
+| `blog/`, `case-studies/`, `news/` | **Generated. Do not edit by hand.** |
+| `scripts/build-blog.js` | `blog-posts/*.md` → `blog/` |
+| `scripts/build-content.js` | `content/**` → `case-studies/`, `news/` |
+| `assets/` | Styles, scripts, images |
 
-## Endpoint
+Anything under `blog/`, `case-studies/` or `news/` is rebuilt by
+`.github/workflows/build-content.yml` on every push that touches a source
+file or a generator, and the result is committed back to `main`. A fix
+applied to generated HTML will be overwritten on the next push — change the
+generator or the Markdown source instead.
+
+## Building locally
 
 ```
-POST /api/track
-{
-  "event_name": "Lead",
-  "event_id": "<same uuid the browser fbq() call used>",
-  "event_source_url": "https://sayadbayezid.com/",
-  "custom_data": { "content_name": "SmartGen" }
-}
+npm install
+npm run build        # blog + case studies + news
 ```
 
-`event_id` must match what the browser-side `fbq()` call sent for the same
-click — that's what tells Meta these are one event delivered twice, not two
-separate events.
+Both generators are idempotent: running them twice produces no second diff.
 
-## Rotating the token
+## The API is a separate repository
 
-If it's ever pasted somewhere it shouldn't be (chat, a screenshot, a public
-repo), treat it as compromised: Events Manager → Conversions API →
-generate a new one, then `wrangler secret put META_CONVERSIONS_API_TOKEN`
-again with the new value.
+The site talks to a Cloudflare Worker at
+`bayezid-agency-api.sayadmdbayezidhosan.workers.dev` for reviews, the contact
+form, page ratings and comments, and Meta Conversions API delivery.
+
+That Worker lives in **[bayzed123/bayezid-agency-worker](https://github.com/bayzed123/bayezid-agency-worker)**
+and deploys itself from its own `main`. It is not built from this repository.
+
+This repo used to carry a copy of the Worker source in `worker/` and `src/`,
+plus a manual "Legacy agency Worker deploy" workflow. Both copies had drifted
+well behind the real one while still declaring the same Worker name, so
+running that workflow would have replaced the live API with stale code. The
+workflow never actually got that far — it failed at type-checking, because
+`worker/` had no `package.json` or `tsconfig.json` of its own and so resolved
+this repo's, which has neither `@cloudflare/workers-types` nor `wrangler`.
+The duplicates and the workflow have been removed. Deploy the API from its
+own repository.
