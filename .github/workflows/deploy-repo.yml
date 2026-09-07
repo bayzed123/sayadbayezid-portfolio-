@@ -31,6 +31,22 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      # A shipped fix nobody can see has not shipped. Pages serves
+      # /assets/js/admin.js with a cache lifetime, so a returning browser keeps
+      # running yesterday's console until that expires -- which is exactly how a
+      # merged change comes to look like it did nothing. Stamping the commit
+      # onto the URL makes every deploy a new URL, which a cache cannot answer.
+      #
+      # Done here rather than in the file so the committed HTML keeps clean
+      # URLs and nobody has to remember to bump a version by hand.
+      - name: Stamp the admin console assets with the commit
+        run: |
+          set -euo pipefail
+          sha="${GITHUB_SHA::12}"
+          perl -pi -e 's{(/assets/(?:css/admin\.css|js/admin\.js))(\?v=[^"]*)?"}{$1?v='"$sha"'"}g' admin/index.html
+          # Printed so the run log shows what the browser will be asked to fetch.
+          grep -n 'assets/css/admin\.css\|assets/js/admin\.js' admin/index.html
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

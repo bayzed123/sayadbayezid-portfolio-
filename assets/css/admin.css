@@ -424,6 +424,41 @@ table.data td.actions .btn { margin-left: 6px; }
   white-space: pre-wrap; overflow-wrap: anywhere;
 }
 .incident-entry + .incident-entry { margin-top: 10px; }
+
+/* The URL the check actually polled. For a 404 this is the whole answer: no
+   code of yours ran, so the thing to fix is the address, not a source file. */
+.incident-where {
+  display: flex; gap: 8px; align-items: baseline;
+  margin-top: 6px; font-size: 0.7rem; min-width: 0;
+}
+.incident-method {
+  flex: none; padding: 1px 6px; border-radius: 4px;
+  border: 1px solid var(--line); color: var(--text-dim);
+  font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.62rem;
+  letter-spacing: 0.06em;
+}
+.incident-url {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: var(--text-soft); overflow-wrap: anywhere; min-width: 0;
+}
+.incident-note { margin-top: 6px; font-size: 0.7rem; color: var(--amber); }
+
+/* File, line and column — shown only when the failing server reported them.
+   Absent for a 404, and that absence is correct rather than a gap. */
+.incident-trace { margin-top: 8px; }
+.incident-trace-title {
+  font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: 4px;
+}
+.incident-frame {
+  display: flex; gap: 10px; align-items: baseline;
+  padding: 3px 0; font-size: 0.7rem; min-width: 0;
+}
+.incident-file {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  color: var(--text); overflow-wrap: anywhere; min-width: 0;
+}
+.incident-pos { flex: none; color: var(--text-dim); font-size: 0.66rem; }
 .incident-when { color: var(--text-dim); font-size: 0.73rem; margin-left: auto; flex: none; }
 .incident-more { font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
 .unmeasured { color: var(--text-dim); font-style: italic; }

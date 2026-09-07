@@ -77,6 +77,64 @@
         d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
   }
   function num(value) { return Number(value || 0).toLocaleString(); }
+
+  // --- reading a source location out of what a server said -----------------
+  //
+  // A health check is an HTTP request to somebody else's server. It can never
+  // know that server's source file on its own -- the only way a file, line and
+  // column reach us is if the server put them in its reply, which is what a
+  // stack trace is. So: parse what is there, and show nothing when there is
+  // nothing. A 404 has no source location because no code of yours ran; the
+  // URL is the location that matters in that case, and it is shown separately.
+
+  // Paths that end in a source-file extension, followed by :line and
+  // optionally :column. Deliberately extension-anchored so that a host:port
+  // ("localhost:8787") or a bare URL ("https://api.example.com/health") cannot
+  // be mistaken for a code location.
+  var LOCATION_RE = new RegExp(
+    '(?:^|[\\s(@])' +
+    '((?:[A-Za-z][A-Za-z0-9+.-]*:\\/\\/)?[^\\s()\'"`]*?' +
+    '[A-Za-z0-9_.\\-\\/\\\\]+\\.' +
+    '(?:[cm]?[jt]sx?|py|rb|go|rs|java|php|cs|kt|swift|sql|vue|svelte))' +
+    ':(\\d+)(?::(\\d+))?',
+    'g'
+  );
+  // CPython's traceback shape, which puts the line number in words instead.
+  var PY_LOCATION_RE = /File "([^"\n]+)", line (\d+)/g;
+
+  function sourceLocations(text) {
+    if (!text) return [];
+    var body = String(text);
+    var found = [];
+    var seen = {};
+    function add(file, line, column) {
+      // A line number of 0 is what a minified bundle reports when it has no
+      // real mapping. It points at nothing, so it is worse than saying nothing.
+      if (!file || !line || Number(line) < 1) return;
+      var label = file + ':' + line + (column ? ':' + column : '');
+      if (seen[label]) return;
+      seen[label] = true;
+      found.push({ file: file, line: Number(line), column: column ? Number(column) : null, label: label });
+    }
+    var match;
+    LOCATION_RE.lastIndex = 0;
+    while ((match = LOCATION_RE.exec(body)) !== null) add(match[1], match[2], match[3]);
+    PY_LOCATION_RE.lastIndex = 0;
+    while ((match = PY_LOCATION_RE.exec(body)) !== null) add(match[1], match[2], null);
+    // The first frames are the ones nearest the failure; the rest is usually
+    // framework. Three is enough to orient without reprinting the trace.
+    return found.slice(0, 3);
+  }
+
+  // application/json on a health endpoint is the expected case and saying so
+  // every time is noise. A health URL answering text/html almost always means
+  // the request fell through to an error page, so that is worth printing.
+  function unexpectedContentType(value) {
+    if (!value) return null;
+    var type = String(value).split(';')[0].trim().toLowerCase();
+    if (!type || type === 'application/json' || type === 'text/plain') return null;
+    return type;
+  }
   function skeleton(container, rows) {
     clear(container);
     for (var i = 0; i < (rows || 4); i++) container.appendChild(el('div', 'skeleton'));
@@ -540,11 +598,43 @@
           line.appendChild(el('span', 'incident-detail', incident.detail || ''));
           line.appendChild(el('span', 'incident-when', fmtDate(incident.at)));
           entry.appendChild(line);
+          // The URL this check actually polled — not the project's current
+          // one. When a wrong health URL is corrected, every past failure would
+          // otherwise appear to have been polling the corrected URL, which is
+          // the opposite of what happened. Older rows stored no URL and simply
+          // show none.
+          if (incident.url) {
+            var where = el('div', 'incident-where');
+            where.appendChild(el('span', 'incident-method', 'GET'));
+            where.appendChild(el('span', 'incident-url', incident.url));
+            entry.appendChild(where);
+          }
           // What the server actually said. "HTTP 404" five times is a count;
           // {"error":"No route for GET /health/"} is the answer, and it was
           // already being stored — it just was not being shown.
           if (incident.body) {
             entry.appendChild(el('pre', 'incident-body', incident.body));
+          }
+          var oddType = unexpectedContentType(incident.contentType);
+          if (oddType) {
+            entry.appendChild(el('div', 'incident-note',
+              'Answered with ' + oddType + ', not JSON — usually a request that fell through to an error page.'));
+          }
+          // File, line and column, but only when the server put them in its
+          // reply. Nothing is invented: a 404 never ran your code, so it has no
+          // source location, and this stays absent rather than guessing.
+          var locations = sourceLocations(incident.body);
+          if (locations.length) {
+            var trace = el('div', 'incident-trace');
+            trace.appendChild(el('div', 'incident-trace-title', 'Reported in'));
+            locations.forEach(function (location) {
+              var item = el('div', 'incident-frame');
+              item.appendChild(el('span', 'incident-file', location.file));
+              item.appendChild(el('span', 'incident-pos',
+                'line ' + location.line + (location.column ? ', column ' + location.column : '')));
+              trace.appendChild(item);
+            });
+            entry.appendChild(trace);
           }
           block.appendChild(entry);
         });
