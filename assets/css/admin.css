@@ -408,7 +408,22 @@ table.data td.actions .btn { margin-left: 6px; }
   padding: 1px 6px;
   flex: none;
 }
+/* Amber, matching the status pill: a wrong URL is not an outage, and a list
+   of them should not read like one. */
+.incident-code.is-warn { color: var(--amber); border-color: rgba(229, 162, 63, 0.32); }
 .incident-detail { color: var(--text-soft); min-width: 0; overflow-wrap: anywhere; }
+
+/* What the server replied. Usually the whole diagnosis in one line, so it is
+   shown rather than hidden behind another click. */
+.incident-body {
+  margin: 6px 0 0 0; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: 6px;
+  background: var(--surface-raised);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.68rem; line-height: 1.5; color: var(--text-soft);
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.incident-entry + .incident-entry { margin-top: 10px; }
 .incident-when { color: var(--text-dim); font-size: 0.73rem; margin-left: auto; flex: none; }
 .incident-more { font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
 .unmeasured { color: var(--text-dim); font-style: italic; }

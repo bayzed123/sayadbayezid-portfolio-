@@ -30,11 +30,18 @@ await page.route('**/api/admin/projects/report**', route => route.fulfill({
       { id:'a', name:'Rinovabd', provider:'test', status:'misconfigured',
         healthUrl:'https://api-v2.example.test/', lastCheckedAt:'2026-09-07 09:54:03',
         checks:3, misconfiguredChecks:2, uptimePct:100, avgLatencyMs:162, worstLatencyMs:200,
-        incidents:[], incidentCount:0 },
+        incidents:[
+          { statusCode:404, status:'misconfigured', detail:'HTTP 404 — the server answered, so it is running',
+            body:'{"ok":false,"error":{"code":"NOT_FOUND","message":"This API route does not exist."}}',
+            at:'2026-09-07 09:54:03' },
+        ], incidentCount:1 },
       { id:'b', name:'Broken thing', provider:'test', status:'down',
         healthUrl:'https://b.example.test/health', lastCheckedAt:'2026-09-07 09:00:00',
         checks:4, misconfiguredChecks:0, uptimePct:25, avgLatencyMs:900, worstLatencyMs:9000,
-        incidents:[], incidentCount:3 },
+        incidents:[
+          { statusCode:503, status:'down', detail:'HTTP 503',
+            body:'upstream connect error', at:'2026-09-07 09:00:00' },
+        ], incidentCount:3 },
       { id:'c', name:'Healthy', provider:'test', status:'up',
         healthUrl:'https://c.example.test/health', lastCheckedAt:'2026-09-07 09:50:00',
         checks:5, misconfiguredChecks:0, uptimePct:100, avgLatencyMs:80, worstLatencyMs:120,
@@ -98,6 +105,26 @@ check('misconfigured is a warning, not an error', (await pillClass('Rinovabd')).
 check('down is still an error', (await pillClass('Broken thing')).includes('down'),
   await pillClass('Broken thing'));
 check('up is still up', (await pillClass('Healthy')).includes('up'), await pillClass('Healthy'));
+
+console.log('== an incident says what the server actually replied ==');
+// "HTTP 404" five times is a count, not an explanation. The response body was
+// already being stored and simply was not shown, which is what left the reader
+// asking what the error actually was.
+const incidents = (await page.locator('[data-report-incidents]').innerText()).replace(/\s+/g,' ');
+check('the response body is on the page', /This API route does not exist/.test(incidents), incidents);
+check('and the downed one shows its body too', /upstream connect error/.test(incidents), incidents);
+check('the status code is still shown', /HTTP 404/.test(incidents), incidents);
+// A body is text the server chose; it must never become markup.
+check('the body is rendered as text, not markup',
+  await page.locator('[data-report-incidents] .incident-body').count() === 2,
+  String(await page.locator('[data-report-incidents] .incident-body').count()));
+
+console.log('== incident colour matches the status ==');
+const codes = await page.locator('[data-report-incidents] .incident-code').evaluateAll(
+  els => els.map(e => e.className));
+// A wrong URL listed in red reads as an outage; it is not one.
+check('a misconfigured incident is amber', codes.some(c => c.includes('is-warn')), JSON.stringify(codes));
+check('a real failure stays red', codes.some(c => !c.includes('is-warn')), JSON.stringify(codes));
 
 console.log('== the summary names it as its own state ==');
 const summary = (await page.locator('[data-report-summary]').innerText()).replace(/\s+/g,' ');
