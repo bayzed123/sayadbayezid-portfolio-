@@ -839,6 +839,87 @@
     });
   }
 
+
+  /**
+   * The reply editor.
+   *
+   * Inline rather than a modal: the point of a reply is that it is written
+   * while the message it answers is on screen, and a modal covers exactly
+   * that. Only one is open at a time, so a half-typed reply cannot be
+   * abandoned invisibly in a row that scrolled away.
+   */
+  function openReply(row, endpoint, container, onDone) {
+    var existing = document.querySelector('.reply-editor');
+    if (existing) existing.remove();
+
+    // Scoped to the card the row came from. Reviews and Comments each have a
+    // host, and a document-wide lookup would always find the first one — so
+    // replying from Comments would open the editor over on Reviews, off screen.
+    var card = container.closest('.card');
+    var host = (card && card.querySelector('[data-reply-host]')) || container.parentNode || document.body;
+    var box = el('div', 'reply-editor');
+
+    box.appendChild(el('span', 'reply-label', 'Replying to ' + (row.name || 'this message')));
+    box.appendChild(el('blockquote', 'reply-quote', row.comment || row.body || ''));
+
+    var field = el('textarea', 'reply-input');
+    field.rows = 4;
+    field.maxLength = 2000;
+    field.placeholder = 'Answer them in your own words. This appears publicly under their message.';
+    field.value = row.reply || '';
+    field.setAttribute('aria-label', 'Your reply');
+    box.appendChild(field);
+
+    var note = el('p', 'reply-note');
+    box.appendChild(note);
+
+    var bar = el('div', 'reply-actions');
+    var save = el('button', 'btn btn-primary btn-sm', 'Post reply');
+    var cancel = el('button', 'btn btn-ghost btn-sm', 'Cancel');
+    var clearBtn = el('button', 'btn btn-danger btn-sm', 'Remove reply');
+
+    var send = function (text) {
+      save.disabled = true;
+      clearBtn.disabled = true;
+      note.textContent = 'Saving…';
+      note.removeAttribute('data-kind');
+      api(endpoint + '/' + row.id, { method: 'POST', body: { action: 'reply', reply: text } })
+        .then(function () { box.remove(); onDone(); })
+        .catch(function (error) {
+          note.textContent = error.message;
+          note.setAttribute('data-kind', 'error');
+          save.disabled = false;
+          clearBtn.disabled = false;
+        });
+    };
+
+    save.addEventListener('click', function () {
+      var text = field.value.trim();
+      if (!text) {
+        // Saving an empty box would delete the reply, which is not what the
+        // button says. Removing one is a separate, labelled action.
+        note.textContent = 'Write something, or use Remove reply to take the existing one down.';
+        note.setAttribute('data-kind', 'error');
+        return;
+      }
+      send(text);
+    });
+    cancel.addEventListener('click', function () { box.remove(); });
+    clearBtn.addEventListener('click', function () {
+      if (!confirm('Take your reply down from the public page?')) return;
+      send('');
+    });
+
+    bar.appendChild(save);
+    bar.appendChild(cancel);
+    if (row.reply) bar.appendChild(clearBtn);
+    box.appendChild(bar);
+
+    host.appendChild(box);
+    box.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    field.focus();
+  }
+
   function moderationTable(container, endpoint, status, kind) {
     skeleton(container, 3);
     api(endpoint + '?status=' + status).then(function (data) {
@@ -852,9 +933,23 @@
           tr.appendChild(el('td', null, kind === 'reviews' ? '★'.repeat(row.rating || 0) : (row.target || '—')));
           var body = el('td', null, row.comment || row.body || '');
           body.style.maxWidth = '340px';
+          // The reply lives under the message it answers, not in its own
+          // column: read apart from what it replies to, a reply is meaningless.
+          if (row.reply) {
+            var shown = el('div', 'reply-shown');
+            shown.appendChild(el('span', 'reply-label', 'Your reply'));
+            shown.appendChild(el('p', null, row.reply));
+            if (row.replied_at) shown.appendChild(el('span', 'reply-date', fmtDate(row.replied_at)));
+            body.appendChild(shown);
+          }
           tr.appendChild(body);
           tr.appendChild(el('td', null, fmtDate(row.created_at)));
           var actions = el('td', 'actions');
+          var reply = el('button', 'btn btn-ghost btn-sm', row.reply ? 'Edit reply' : 'Reply');
+          reply.addEventListener('click', function () {
+            openReply(row, endpoint, container, function () { moderationTable(container, endpoint, status, kind); });
+          });
+          actions.appendChild(reply);
           if (!row.approved) {
             var approve = el('button', 'btn btn-primary btn-sm', 'Approve');
             approve.addEventListener('click', function () {
