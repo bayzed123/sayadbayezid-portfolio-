@@ -658,15 +658,27 @@ a { color: inherit; }
 /* ----------------------------------------------------- Journal / blog cards */
 .post-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .post-card {
-  display: flex; flex-direction: column; min-width: 0; text-decoration: none;
-  background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 28px 26px;
+  display: flex; flex-direction: column; min-width: 0; text-decoration: none; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
   transition: transform .28s var(--ease), border-color .28s ease, background .28s ease;
 }
 .post-card:hover { transform: translateY(-5px); border-color: rgba(0, 208, 132, .45); background: var(--surface-raised); }
+/* A fixed ratio, so a tall screenshot and a wide banner still line the three
+   cards up instead of leaving one heading floating below the others. */
+.post-card-media { display: block; aspect-ratio: 16 / 9; overflow: hidden; background: #07110D; border-bottom: 1px solid var(--line); }
+.post-card-media img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top center; transition: transform .35s var(--ease); }
+.post-card:hover .post-card-media img { transform: scale(1.04); }
+.post-card-body { display: flex; flex-direction: column; flex: 1; padding: 24px 24px 26px; }
 .post-meta { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: .06em; }
 .post-card h3 { font-size: 1.18rem; line-height: 1.28; margin: 14px 0 12px; }
 .post-card p { font-size: .9rem; flex: 1; }
 .post-card .work-link { margin-top: 20px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .post-card, .post-card-media img { transition: none; }
+  .post-card:hover { transform: none; }
+  .post-card:hover .post-card-media img { transform: none; }
+}
 
 /* ----------------------------------------------------- Lead generation */
 .leadgen { background: var(--surface); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
