@@ -527,13 +527,26 @@
         var block = el('div', 'incident-block');
         block.appendChild(el('div', 'incident-name', row.name));
         row.incidents.forEach(function (incident) {
+          var entry = el('div', 'incident-entry');
           var line = el('div', 'incident-line');
-          line.appendChild(el('span', 'incident-code', incident.statusCode ? 'HTTP ' + incident.statusCode : 'no response'));
+          var code = el('span', 'incident-code', incident.statusCode ? 'HTTP ' + incident.statusCode : 'no response');
+          // Amber for a wrong URL, red for a real failure — the same
+          // distinction the status column makes, so a list of incidents does
+          // not read as a list of outages when none of them were.
+          if (incident.status === 'misconfigured') code.className = 'incident-code is-warn';
+          line.appendChild(code);
           // detail is the fetch error or status line the project returned —
           // textContent, never innerHTML, like everything else on this page.
           line.appendChild(el('span', 'incident-detail', incident.detail || ''));
           line.appendChild(el('span', 'incident-when', fmtDate(incident.at)));
-          block.appendChild(line);
+          entry.appendChild(line);
+          // What the server actually said. "HTTP 404" five times is a count;
+          // {"error":"No route for GET /health/"} is the answer, and it was
+          // already being stored — it just was not being shown.
+          if (incident.body) {
+            entry.appendChild(el('pre', 'incident-body', incident.body));
+          }
+          block.appendChild(entry);
         });
         if (row.incidentCount > row.incidents.length) {
           block.appendChild(el('div', 'incident-more',
