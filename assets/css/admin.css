@@ -554,3 +554,76 @@ table.data td.actions .btn { margin-left: 6px; }
 @media (max-width: 900px) {
   .seo-panel { grid-template-columns: 1fr; }
 }
+
+/* --- image manager and FAQ builder --------------------------------------- */
+
+.field-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+
+.btn-small { padding: 6px 12px; font-size: 0.76rem; }
+
+.input-with-button { display: flex; gap: 8px; align-items: stretch; }
+.input-with-button input { flex: 1; min-width: 0; }
+
+/* The "Image +" / "Question +" affordance: reads as an action, not a form
+   control, so it does not compete with the fields it sits above. */
+.icon-button {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--line-strong); background: transparent;
+  color: var(--text-soft); font-size: 0.75rem; font-weight: 600;
+  cursor: pointer; white-space: nowrap;
+  transition: color 0.16s var(--ease), border-color 0.16s var(--ease), background 0.16s var(--ease);
+}
+.icon-button:hover { color: var(--paper); border-color: var(--emerald-deep); background: var(--surface-hover); }
+.icon-button-plus { color: var(--emerald); font-weight: 700; }
+
+.media-panel, .faq-panel {
+  margin-top: 14px; padding: 15px;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+}
+.faq-panel { display: grid; gap: 4px; }
+
+.media-drop {
+  display: grid; gap: 4px; justify-items: center; text-align: center;
+  padding: 22px 16px; cursor: pointer;
+  border: 1px dashed var(--line-strong); border-radius: var(--radius-sm);
+  color: var(--text-soft); font-size: 0.8rem;
+  transition: border-color 0.16s var(--ease), background 0.16s var(--ease);
+}
+.media-drop span { font-size: 0.72rem; color: var(--text-dim); }
+.media-drop:hover,
+.media-drop:focus-visible,
+.media-drop[data-over] { border-color: var(--emerald); background: var(--surface-hover); }
+
+.media-status { font-size: 0.75rem; color: var(--text-soft); margin: 10px 0 0; }
+.media-status[data-kind="error"] { color: var(--rose); }
+
+.media-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.media-item {
+  display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center;
+  padding: 10px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+.media-thumb {
+  width: 56px; height: 56px; object-fit: cover;
+  border-radius: 6px; background: var(--surface-hover);
+}
+.media-main { min-width: 0; display: grid; gap: 6px; }
+.media-path {
+  font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.68rem; color: var(--text-dim);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.media-actions { display: flex; gap: 6px; }
+
+.faq-list { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 12px; counter-reset: faq; }
+.faq-item {
+  display: grid; gap: 8px;
+  padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-sm);
+}
+.faq-remove { justify-self: start; }
+
+@media (max-width: 640px) {
+  .media-item { grid-template-columns: 44px 1fr; }
+  .media-thumb { width: 44px; height: 44px; }
+  .media-actions { grid-column: 1 / -1; }
+}
