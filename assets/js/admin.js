@@ -634,6 +634,35 @@
       label: 'Article body has real depth (300+ characters)',
       test: function (v) { return v.body.length >= 300; },
       detail: function (v) { return v.body.length + ' characters'; }
+    },
+    {
+      // Passes when there are none: a post with no body images is not
+      // missing anything. It only fails once an image is there without alt.
+      label: 'Every body image has alt text',
+      test: function (v) {
+        return v.images.every(function (image) { return !!image.alt; });
+      },
+      detail: function (v) {
+        if (!v.images.length) return 'no body images';
+        var missing = v.images.filter(function (image) { return !image.alt; }).length;
+        return missing ? missing + ' of ' + v.images.length + ' still missing alt text'
+          : v.images.length + ' described';
+      }
+    },
+    {
+      // Same shape: an article that needs no FAQ should not be nagged, but a
+      // half-written pair is dropped at publish and the author should see it
+      // here rather than notice it missing on the live page.
+      label: 'FAQ entries are complete',
+      test: function (v) {
+        return v.faq.every(function (entry) { return entry.question && entry.answer; });
+      },
+      detail: function (v) {
+        if (!v.faq.length) return 'none added';
+        var partial = v.faq.filter(function (entry) { return !entry.question || !entry.answer; }).length;
+        return partial ? partial + ' incomplete — they will not be published'
+          : v.faq.length + (v.faq.length === 1 ? ' question' : ' questions');
+      }
     }
   ];
 
@@ -650,7 +679,9 @@
       keywords: get('c-keywords').split(',').map(function (k) { return k.trim(); }).filter(Boolean),
       slug: slugify(explicit || get('c-title')),
       body: get('c-body'),
-      type: document.getElementById('c-type').value
+      type: document.getElementById('c-type').value,
+      images: bodyImages.slice(),
+      faq: faqEntries()
     };
   }
 
@@ -723,6 +754,293 @@
     });
   }
 
+  // --- images and FAQ ------------------------------------------------------
+
+  // Uploaded body images, in the order they were added. Each entry is
+  // { url, alt, name } — the alt text lives here rather than in the Markdown
+  // so it can reach the sitemap and the schema as well as the <img> tag.
+  var bodyImages = [];
+  // Where the cursor was before the author clicked a button. Clicking moves
+  // focus off the textarea, so the position has to be captured beforehand or
+  // every insert lands at the end.
+  var bodyCaret = null;
+
+  function readAsBase64(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onerror = function () { reject(new Error('Could not read ' + file.name + '.')); };
+      reader.onload = function () { resolve(String(reader.result)); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function uploadImage(file) {
+    return readAsBase64(file).then(function (data) {
+      return api('/api/admin/media', { method: 'POST', body: { filename: file.name, data: data } });
+    });
+  }
+
+  function insertAtCaret(textarea, text) {
+    var at = bodyCaret === null ? textarea.value.length : bodyCaret;
+    var before = textarea.value.slice(0, at);
+    var after = textarea.value.slice(at);
+    // Markdown needs the image on its own line; adding the breaks only when
+    // they are missing keeps repeated inserts from stacking blank lines.
+    var lead = before === '' || /\n\n$/.test(before) ? '' : (/\n$/.test(before) ? '\n' : '\n\n');
+    var tail = after === '' || /^\n/.test(after) ? '' : '\n';
+    textarea.value = before + lead + text + '\n' + tail + after;
+    bodyCaret = (before + lead + text + '\n').length;
+    textarea.focus();
+    textarea.setSelectionRange(bodyCaret, bodyCaret);
+    textarea.dispatchEvent(new Event('input', { bubbles: true }));
+  }
+
+  function renderMediaList() {
+    var list = document.querySelector('[data-media-list]');
+    if (!list) return;
+    clear(list);
+    bodyImages.forEach(function (image, index) {
+      var row = el('li', 'media-item');
+
+      var thumb = el('img', 'media-thumb');
+      thumb.src = image.url;
+      thumb.alt = '';
+      thumb.loading = 'lazy';
+      row.appendChild(thumb);
+
+      var main = el('div', 'media-main');
+      main.appendChild(el('code', 'media-path', image.url));
+
+      // An image with no alt text is invisible to a screen reader and to
+      // Google, so the field is right here rather than somewhere else.
+      var alt = el('input', 'media-alt');
+      alt.type = 'text';
+      alt.maxLength = 200;
+      alt.placeholder = 'Alt text — what the image shows';
+      alt.value = image.alt;
+      alt.setAttribute('aria-label', 'Alt text for ' + image.name);
+      alt.addEventListener('input', function () {
+        bodyImages[index].alt = alt.value;
+        renderSeoPanel();
+      });
+      main.appendChild(alt);
+      row.appendChild(main);
+
+      var actions = el('div', 'media-actions');
+      var insert = el('button', 'btn btn-ghost btn-small', 'Insert');
+      insert.type = 'button';
+      insert.addEventListener('click', function () {
+        var body = document.getElementById('c-body');
+        insertAtCaret(body, '![' + (bodyImages[index].alt || '') + '](' + image.url + ')');
+      });
+      actions.appendChild(insert);
+
+      var remove = el('button', 'btn btn-ghost btn-small', 'Remove');
+      remove.type = 'button';
+      // Only from the list. The file stays in the repository and any copy
+      // already in the body keeps working — silently rewriting the author's
+      // prose would be a worse surprise than an unused upload.
+      remove.title = 'Take it off this list. The uploaded file and anything already in the body stay as they are.';
+      remove.addEventListener('click', function () {
+        bodyImages.splice(index, 1);
+        renderMediaList();
+        renderSeoPanel();
+      });
+      actions.appendChild(remove);
+      row.appendChild(actions);
+
+      list.appendChild(row);
+    });
+  }
+
+  function handleFiles(files) {
+    var status = document.querySelector('[data-media-status]');
+    var queue = Array.prototype.slice.call(files || []);
+    if (!queue.length) return;
+
+    var done = 0;
+    var failures = [];
+    status.textContent = 'Uploading ' + queue.length + (queue.length === 1 ? ' image…' : ' images…');
+    status.removeAttribute('data-kind');
+
+    // Sequential on purpose: each upload is a commit, and GitHub rejects
+    // concurrent writes to the same branch with a 409.
+    var chain = Promise.resolve();
+    queue.forEach(function (file) {
+      chain = chain.then(function () {
+        return uploadImage(file)
+          .then(function (result) {
+            done += 1;
+            if (!bodyImages.some(function (image) { return image.url === result.url; })) {
+              bodyImages.push({ url: result.url, alt: '', name: result.name });
+            }
+            renderMediaList();
+          })
+          .catch(function (error) { failures.push(file.name + ': ' + error.message); });
+      });
+    });
+
+    chain.then(function () {
+      if (failures.length) {
+        // Name every file that failed and why. "Some uploads failed" is not
+        // something an author can act on.
+        status.textContent = (done ? done + ' uploaded. ' : '') + failures.join('  •  ');
+        status.setAttribute('data-kind', 'error');
+      } else {
+        status.textContent = done + (done === 1 ? ' image uploaded.' : ' images uploaded.') +
+          ' Put the cursor where it should go and press Insert.';
+        status.removeAttribute('data-kind');
+      }
+      renderSeoPanel();
+    });
+  }
+
+  function wireMediaPanel() {
+    var toggle = document.querySelector('[data-image-toggle]');
+    var panel = document.getElementById('imageManager');
+    var drop = document.querySelector('[data-media-drop]');
+    var input = document.querySelector('[data-media-file]');
+    var body = document.getElementById('c-body');
+    if (!toggle || !panel || !drop || !input || !body) return;
+
+    ['keyup', 'click', 'select'].forEach(function (event) {
+      body.addEventListener(event, function () { bodyCaret = body.selectionStart; });
+    });
+    body.addEventListener('blur', function () { bodyCaret = body.selectionStart; });
+
+    toggle.addEventListener('click', function () {
+      panel.hidden = !panel.hidden;
+      toggle.setAttribute('aria-expanded', String(!panel.hidden));
+      if (!panel.hidden && !bodyImages.length) input.click();
+    });
+
+    drop.addEventListener('click', function () { input.click(); });
+    drop.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); input.click(); }
+    });
+    input.addEventListener('change', function () {
+      handleFiles(input.files);
+      // Reset, or choosing the same file twice fires no change event.
+      input.value = '';
+    });
+
+    ['dragenter', 'dragover'].forEach(function (event) {
+      drop.addEventListener(event, function (e) {
+        e.preventDefault();
+        drop.setAttribute('data-over', 'true');
+      });
+    });
+    ['dragleave', 'drop'].forEach(function (event) {
+      drop.addEventListener(event, function (e) {
+        e.preventDefault();
+        drop.removeAttribute('data-over');
+      });
+    });
+    drop.addEventListener('drop', function (e) {
+      handleFiles(e.dataTransfer && e.dataTransfer.files);
+    });
+  }
+
+  function wireCoverUpload() {
+    var button = document.querySelector('[data-upload-cover]');
+    var input = document.querySelector('[data-cover-file]');
+    var status = document.querySelector('[data-cover-status]');
+    var field = document.getElementById('c-image');
+    if (!button || !input || !field) return;
+
+    button.addEventListener('click', function () { input.click(); });
+    input.addEventListener('change', function () {
+      var file = input.files && input.files[0];
+      input.value = '';
+      if (!file) return;
+      status.textContent = 'Uploading ' + file.name + '…';
+      status.removeAttribute('data-kind');
+      button.disabled = true;
+      uploadImage(file)
+        .then(function (result) {
+          field.value = result.url;
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+          status.textContent = result.reused
+            ? 'That image was already uploaded — reusing ' + result.url
+            : 'Uploaded to ' + result.url;
+        })
+        .catch(function (error) {
+          status.textContent = error.message;
+          status.setAttribute('data-kind', 'error');
+        })
+        .finally(function () { button.disabled = false; });
+    });
+  }
+
+  // Rows are read out of the DOM at publish time rather than mirrored into an
+  // array, so a half-typed pair can never be out of step with what is on screen.
+  function faqEntries() {
+    return Array.prototype.map.call(
+      document.querySelectorAll('[data-faq-list] .faq-item'),
+      function (item) {
+        return {
+          question: item.querySelector('[data-faq-question]').value.trim(),
+          answer: item.querySelector('[data-faq-answer]').value.trim()
+        };
+      }
+    );
+  }
+
+  function addFaqRow(question, answer) {
+    var list = document.querySelector('[data-faq-list]');
+    if (!list) return;
+    var item = el('li', 'faq-item');
+
+    var q = el('input', 'faq-question');
+    q.type = 'text';
+    q.maxLength = 300;
+    q.placeholder = 'Does this work without a paid plan?';
+    q.value = question || '';
+    q.setAttribute('data-faq-question', '');
+    q.setAttribute('aria-label', 'Question');
+    item.appendChild(q);
+
+    var a = el('textarea', 'faq-answer');
+    a.rows = 3;
+    a.maxLength = 2000;
+    a.placeholder = 'Answer it in a sentence or two, in plain language.';
+    a.value = answer || '';
+    a.setAttribute('data-faq-answer', '');
+    a.setAttribute('aria-label', 'Answer');
+    item.appendChild(a);
+
+    var remove = el('button', 'btn btn-ghost btn-small faq-remove', 'Remove');
+    remove.type = 'button';
+    remove.addEventListener('click', function () { item.remove(); renderSeoPanel(); });
+    item.appendChild(remove);
+
+    [q, a].forEach(function (node) { node.addEventListener('input', renderSeoPanel); });
+    list.appendChild(item);
+    q.focus();
+  }
+
+  function wireFaqBuilder() {
+    var add = document.querySelector('[data-faq-add]');
+    if (!add) return;
+    add.addEventListener('click', function () { addFaqRow('', ''); });
+  }
+
+  function resetAuthoringPanels() {
+    bodyImages = [];
+    bodyCaret = null;
+    renderMediaList();
+    var faqList = document.querySelector('[data-faq-list]');
+    if (faqList) clear(faqList);
+    ['[data-media-status]', '[data-cover-status]'].forEach(function (selector) {
+      var node = document.querySelector(selector);
+      if (node) { node.textContent = ''; node.removeAttribute('data-kind'); }
+    });
+    var panel = document.getElementById('imageManager');
+    var toggle = document.querySelector('[data-image-toggle]');
+    if (panel) panel.hidden = true;
+    if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+
   function publishPayload(preview) {
     var form = document.getElementById('publishForm');
     var data = new FormData(form);
@@ -740,6 +1058,14 @@
     };
     var slug = String(data.get('slug') || '').trim();
     if (slug) payload.slug = slug;
+    // The Worker drops incomplete pairs, but sending them would show the
+    // author a preview that does not match what gets committed.
+    var faq = faqEntries().filter(function (entry) { return entry.question && entry.answer; });
+    if (faq.length) payload.faq = faq;
+    var images = bodyImages
+      .filter(function (image) { return image.url; })
+      .map(function (image) { return { url: image.url, alt: image.alt }; });
+    if (images.length) payload.images = images;
     if (preview) payload.preview = true;
     return payload;
   }
@@ -779,6 +1105,9 @@
   function wirePublishForm() {
     var form = document.getElementById('publishForm');
     if (!form) return;
+    wireMediaPanel();
+    wireCoverUpload();
+    wireFaqBuilder();
     var notice = document.getElementById('publishNotice');
     var preview = document.querySelector('[data-publish-preview]');
 
@@ -828,6 +1157,7 @@
           link.href = data.url; link.target = '_blank'; link.rel = 'noopener';
           notice.appendChild(link);
           form.reset();
+          resetAuthoringPanels();
           updateSlugPreview();
           loadContent();
         })

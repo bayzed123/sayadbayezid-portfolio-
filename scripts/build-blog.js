@@ -73,6 +73,7 @@ function readBlogPosts() {
   const posts = [];
 
   const unreadable = [];
+  const undated = [];
 
   files.forEach(file => {
     const filePath = path.join(BLOG_POSTS_DIR, file);
@@ -119,13 +120,15 @@ function readBlogPosts() {
       title: attributes.title || 'Untitled',
       description: attributes.description || '',
       content: body,
-      date: attributes.date || new Date().toISOString().split('T')[0],
+      date: attributes.date || (undated.push(file), new Date().toISOString().split('T')[0]),
       tags: attributes.tags || [],
       image: attributes.image || `${SITE_URL}/assets/images/blog-default.svg`,
       author: attributes.author || AUTHOR_NAME,
       category: attributes.category || 'General',
-      // Alt text for the cover image. Falls back to the title, which is a
-      // reasonable description of a post's own cover and beats an empty alt.
+      // Alt text for the cover image. Left empty when the author wrote none:
+      // on a card the heading sits inside the same link and already says where
+      // it goes, so an empty alt is correct there and a duplicated title is
+      // just noise read out twice.
       imageAlt: attributes.imagealt || attributes.image_alt || '',
       // The <title> tag when it should differ from the on-page headline. A
       // headline written to be read is often the wrong length for a search
@@ -136,6 +139,10 @@ function readBlogPosts() {
       summary: attributes.summary || '',
       // Accepts a comma-separated string or a list, because both get written.
       keywords: normaliseKeywords(attributes.keywords),
+      // Computed once here rather than in each renderer: the homepage builds
+      // its cards at build time and /blog/ builds them in the browser, and two
+      // implementations of the same sum drift.
+      readingMinutes: readingTime(body),
       // Last substantive edit. Google reads dateModified, and a post that is
       // updated but still claims its original date looks stale.
       updated: toW3CDate(attributes.updated || attributes.modified) || null,
@@ -149,6 +156,19 @@ function readBlogPosts() {
       video: attributes.video || null,
     });
   });
+
+  if (undated.length) {
+    console.log('');
+    undated.forEach((file) => {
+      // Silent until now, and the worst kind of silent: the fallback is
+      // today's date, so the post's datePublished, its position in the feed
+      // and its sitemap lastmod all moved forward on every single build. To a
+      // crawler the post claimed to be brand new, every day, forever.
+      console.log(`::warning file=blog-posts/${file}::No date in the front matter, so this post is being dated today — and re-dated on every build. Add a line like date: "2026-07-27" with the day it was actually published.`);
+      console.log(`⚠️  blog-posts/${file} has no date: — its published date moves forward on every build.`);
+    });
+    console.log('');
+  }
 
   if (unreadable.length) {
     console.log('');
@@ -1193,12 +1213,26 @@ function updateHomepageJournal(posts) {
   }
 
   const cards = latest.map(post => {
-    const label = [titleCase(post.category), formatCardDate(post.date)].filter(Boolean).join(' · ');
-    return `        <a href="/blog/${escapeAttr(post.slug)}/" class="post-card reveal" data-reveal>
-          <span class="post-meta">${escapeText(label)}</span>
-          <h3>${escapeText(post.title)}</h3>
-          <p>${escapeText(truncate(post.summary || post.description || '', 165))}</p>
-          <span class="work-link">Read the post <span class="btn-arrow">→</span></span>
+    const label = [
+      titleCase(post.category),
+      formatCardDate(post.date),
+      `${post.readingMinutes} min read`,
+    ].filter(Boolean).join(' · ');
+    // The card image is inside the same link as the heading, so alt="" is
+    // correct when the author wrote none: the heading already announces where
+    // the link goes, and repeating the title makes a screen reader say it
+    // twice. loading="lazy" because this grid sits well below the fold.
+    const media = `
+          <span class="post-card-media">
+            <img src="${escapeAttr(post.image)}" alt="${escapeAttr(post.imageAlt || '')}" loading="lazy" decoding="async">
+          </span>`;
+    return `        <a href="/blog/${escapeAttr(post.slug)}/" class="post-card reveal" data-reveal>${media}
+          <span class="post-card-body">
+            <span class="post-meta">${escapeText(label)}</span>
+            <h3>${escapeText(post.title)}</h3>
+            <p>${escapeText(truncate(post.summary || post.description || '', 165))}</p>
+            <span class="work-link">Read the post <span class="btn-arrow">→</span></span>
+          </span>
         </a>`;
   }).join('\n');
 

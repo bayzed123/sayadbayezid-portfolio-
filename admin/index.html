@@ -247,7 +247,12 @@
           <div class="publish-row">
             <div class="field publish-grow">
               <label for="c-image">Cover image</label>
-              <input type="text" id="c-image" name="image" placeholder="https://… or /blog-posts/images/…">
+              <div class="input-with-button">
+                <input type="text" id="c-image" name="image" placeholder="https://… or /blog-posts/images/…">
+                <button type="button" class="btn btn-ghost btn-small" data-upload-cover>Upload</button>
+              </div>
+              <input type="file" hidden accept="image/png,image/jpeg,image/gif,image/webp" data-cover-file>
+              <p class="field-hint" data-cover-status></p>
             </div>
             <div class="field publish-grow">
               <label for="c-imagealt">Cover image alt text</label>
@@ -256,9 +261,38 @@
             </div>
           </div>
           <div class="field">
-            <label for="c-body">Body (Markdown)</label>
+            <div class="field-head">
+              <label for="c-body">Body (Markdown)</label>
+              <button type="button" class="icon-button" data-image-toggle
+                      aria-expanded="false" aria-controls="imageManager">
+                <span aria-hidden="true">🖼</span> Image <span class="icon-button-plus" aria-hidden="true">+</span>
+              </button>
+            </div>
             <textarea id="c-body" name="body" rows="14" required
                       placeholder="## A heading&#10;&#10;Write the post here."></textarea>
+            <p class="field-hint">Put the cursor where an image should go, then use <b>Image +</b>.</p>
+          </div>
+
+          <div class="media-panel" id="imageManager" hidden>
+            <div class="media-drop" data-media-drop tabindex="0" role="button"
+                 aria-label="Choose images to upload, or drop them here">
+              <b>Drop images here</b>
+              <span>or click to choose — png, jpg, gif or webp, up to 5 MB each</span>
+            </div>
+            <input type="file" hidden multiple accept="image/png,image/jpeg,image/gif,image/webp" data-media-file>
+            <p class="media-status" data-media-status></p>
+            <ul class="media-list" data-media-list></ul>
+          </div>
+
+          <div class="faq-panel">
+            <div class="field-head">
+              <label>FAQ</label>
+              <button type="button" class="icon-button" data-faq-add>
+                <span aria-hidden="true">❓</span> Question <span class="icon-button-plus" aria-hidden="true">+</span>
+              </button>
+            </div>
+            <p class="field-hint">Each pair is shown on the page and described to Google as FAQPage data. Both halves are needed, or the entry is left out.</p>
+            <ol class="faq-list" data-faq-list></ol>
           </div>
           <div class="seo-panel">
             <div class="seo-col">

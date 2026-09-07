@@ -40,9 +40,11 @@ const rowState = async (label) => {
   return (await row.getAttribute('class')) || '';
 };
 
-check('all eight rules are listed', await rows().count() === 8, await rows().count());
-check('an empty form starts with everything to do',
-  await page.locator('.seo-check.is-ok').count() <= 1, await page.locator('.seo-check.is-ok').count());
+check('all ten rules are listed', await rows().count() === 10, await rows().count());
+// The image and FAQ rules pass on an empty form on purpose — a post with
+// neither is not missing anything — so only they may be green here.
+check('an empty form starts with everything else to do',
+  await page.locator('.seo-check.is-ok').count() <= 3, await page.locator('.seo-check.is-ok').count());
 
 // --- title band ---
 await page.fill('#c-title', 'Too short');
@@ -123,7 +125,7 @@ check('keywords rule passes with three', (await rowState('Keywords added')).incl
 check('body depth passes at 320 characters', (await rowState('real depth')).includes('is-ok'));
 check('slug rule passes for a readable slug', (await rowState('URL slug')).includes('is-ok'));
 check('summary rule passes', (await rowState('A summary is written')).includes('is-ok'));
-check('every rule is now satisfied', await page.locator('.seo-check.is-ok').count() === 8,
+check('every rule is now satisfied', await page.locator('.seo-check.is-ok').count() === 10,
   await page.locator('.seo-check.is-ok').count());
 
 check('no JS errors', errs.length===0, errs.join('\n'));
