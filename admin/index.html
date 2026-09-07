@@ -263,14 +263,54 @@
           <div class="field">
             <div class="field-head">
               <label for="c-body">Body (Markdown)</label>
-              <button type="button" class="icon-button" data-image-toggle
-                      aria-expanded="false" aria-controls="imageManager">
-                <span aria-hidden="true">🖼</span> Image <span class="icon-button-plus" aria-hidden="true">+</span>
-              </button>
+              <span class="field-actions">
+                <button type="button" class="icon-button" data-import-toggle
+                        aria-expanded="false" aria-controls="importPanel">
+                  <span aria-hidden="true">📄</span> Import <span class="icon-button-plus" aria-hidden="true">+</span>
+                </button>
+                <button type="button" class="icon-button" data-image-toggle
+                        aria-expanded="false" aria-controls="imageManager">
+                  <span aria-hidden="true">🖼</span> Image <span class="icon-button-plus" aria-hidden="true">+</span>
+                </button>
+              </span>
             </div>
             <textarea id="c-body" name="body" rows="14" required
                       placeholder="## A heading&#10;&#10;Write the post here."></textarea>
             <p class="field-hint">Put the cursor where an image should go, then use <b>Image +</b>.</p>
+          </div>
+
+
+          <div class="media-panel" id="importPanel" hidden>
+            <div class="media-drop" data-import-drop tabindex="0" role="button"
+                 aria-label="Choose a file to import, or drop one here">
+              <b>Drop a file here</b>
+              <span>or click to choose — .md, .html or .txt</span>
+            </div>
+            <input type="file" hidden data-import-file
+                   accept=".md,.markdown,.mdown,.html,.htm,.txt,.text,text/plain,text/html,text/markdown">
+
+            <div class="import-or"><span>or paste it</span></div>
+            <textarea class="import-paste" data-import-paste rows="6"
+                      placeholder="Paste plain text, Markdown, or a copied web page here."
+                      aria-label="Content to import"></textarea>
+
+            <div class="import-controls">
+              <label class="import-field">
+                <span>Treat as</span>
+                <select data-import-format aria-label="Source format">
+                  <option value="text">Plain text</option>
+                  <option value="markdown">Markdown</option>
+                  <option value="html">HTML</option>
+                </select>
+              </label>
+              <span class="import-modes">
+                <label><input type="radio" name="importMode" value="cursor" checked> Insert at cursor</label>
+                <label><input type="radio" name="importMode" value="replace"> Replace the body</label>
+              </span>
+              <button type="button" class="btn btn-primary btn-small" data-import-insert>Convert</button>
+            </div>
+            <p class="field-hint">The format is guessed as you paste; change it above if the guess is wrong. HTML is converted to Markdown — headings, lists, links, tables, quotes and code blocks are kept.</p>
+            <p class="media-status" data-import-status></p>
           </div>
 
           <div class="media-panel" id="imageManager" hidden>

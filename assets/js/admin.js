@@ -1028,6 +1028,14 @@
   function resetAuthoringPanels() {
     bodyImages = [];
     bodyCaret = null;
+    var paste = document.querySelector('[data-import-paste]');
+    if (paste) paste.value = '';
+    var importPanel = document.getElementById('importPanel');
+    var importToggle = document.querySelector('[data-import-toggle]');
+    if (importPanel) importPanel.hidden = true;
+    if (importToggle) importToggle.setAttribute('aria-expanded', 'false');
+    var importStatus = document.querySelector('[data-import-status]');
+    if (importStatus) { importStatus.textContent = ''; importStatus.removeAttribute('data-kind'); }
     renderMediaList();
     var faqList = document.querySelector('[data-faq-list]');
     if (faqList) clear(faqList);
@@ -1039,6 +1047,355 @@
     var toggle = document.querySelector('[data-image-toggle]');
     if (panel) panel.hidden = true;
     if (toggle) toggle.setAttribute('aria-expanded', 'false');
+  }
+
+  // --- importing text, Markdown and HTML -----------------------------------
+
+  /**
+   * Plain text to Markdown.
+   *
+   * The only real work is paragraphs. A pasted plain-text document usually
+   * separates them with a blank line, but plenty are hard-wrapped at some
+   * column instead — joining those back up is what stops every line becoming
+   * its own paragraph in the rendered post.
+   */
+  function textToMarkdown(text) {
+    var normalised = String(text || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+    return normalised
+      .split(/\n{2,}/)
+      .map(function (block) {
+        var lines = block.split('\n').map(function (l) { return l.trim(); }).filter(Boolean);
+        if (!lines.length) return '';
+        // A block whose lines all look like list items stays a list; anything
+        // else is one paragraph, rewrapped.
+        var allBullets = lines.every(function (l) { return /^([-*+]|\d+[.)])\s+/.test(l); });
+        return allBullets ? lines.join('\n') : lines.join(' ');
+      })
+      .filter(Boolean)
+      .join('\n\n');
+  }
+
+  var HTML_SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1, IFRAME: 1, OBJECT: 1, EMBED: 1, HEAD: 1 };
+
+  // Elements the block walker must hand to inlineOf rather than recurse into.
+  // Recursing would reach their text but never their own handler, so a link
+  // sitting directly in <body> — which is how a copied fragment often
+  // arrives — would quietly lose its href and an image its src.
+  var HTML_INLINE = {
+    A: 1, IMG: 1, STRONG: 1, B: 1, EM: 1, I: 1, CODE: 1, DEL: 1, S: 1,
+    SPAN: 1, SMALL: 1, ABBR: 1, SUB: 1, SUP: 1, MARK: 1, U: 1, BR: 1, Q: 1,
+  };
+
+  function mdEscape(text) {
+    // Only the characters that would change the meaning of the output. Escaping
+    // more than this turns ordinary prose into a thicket of backslashes.
+    return String(text).replace(/([\\`*_[\]])/g, '\\$1');
+  }
+
+  /**
+   * HTML to Markdown, walking the parsed tree.
+   *
+   * Written here rather than pulled from a CDN on purpose: this page holds the
+   * admin session and proxies client API credentials, and it currently loads
+   * no third-party JavaScript at all. That is worth keeping.
+   *
+   * DOMParser does not execute scripts and the tree is never attached to the
+   * live document, so a pasted document carrying <script> is inert — and the
+   * tag is skipped rather than transcribed.
+   */
+  function htmlToMarkdown(html) {
+    var doc = new DOMParser().parseFromString(String(html || ''), 'text/html');
+    var out = walkBlock(doc.body, 0);
+    return out.replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function inlineOf(node) {
+    if (node.nodeType === 3) return mdEscape(node.nodeValue.replace(/\s+/g, ' '));
+    if (node.nodeType !== 1) return '';
+    var tag = node.tagName;
+    if (HTML_SKIP[tag]) return '';
+    var inner = Array.prototype.map.call(node.childNodes, inlineOf).join('');
+
+    switch (tag) {
+      case 'BR': return '  \n';
+      case 'STRONG': case 'B': return inner.trim() ? '**' + inner.trim() + '**' : '';
+      case 'EM': case 'I': return inner.trim() ? '*' + inner.trim() + '*' : '';
+      case 'DEL': case 'S': return inner.trim() ? '~~' + inner.trim() + '~~' : '';
+      case 'CODE': {
+        // Inside <pre> the block handler owns it; standalone it is a span.
+        var raw = node.textContent;
+        return raw ? '`' + raw + '`' : '';
+      }
+      case 'A': {
+        var href = node.getAttribute('href') || '';
+        var label = inner.trim() || href;
+        // javascript: and data: URLs have no business in a post body, and a
+        // link is the one place a pasted document can smuggle one through.
+        if (!/^(https?:|mailto:|#|\/)/i.test(href)) return label;
+        return href ? '[' + label + '](' + href + ')' : label;
+      }
+      case 'IMG': {
+        var src = node.getAttribute('src') || '';
+        if (!/^(https?:|\/)/i.test(src)) return '';
+        return '![' + (node.getAttribute('alt') || '') + '](' + src + ')';
+      }
+      default: return inner;
+    }
+  }
+
+  function walkBlock(node, depth) {
+    var parts = [];
+    Array.prototype.forEach.call(node.childNodes, function (child) {
+      if (child.nodeType === 3) {
+        var loose = child.nodeValue.replace(/\s+/g, ' ');
+        if (loose.trim()) parts.push(mdEscape(loose.trim()));
+        return;
+      }
+      if (child.nodeType !== 1) return;
+      var tag = child.tagName;
+      if (HTML_SKIP[tag]) return;
+
+      switch (tag) {
+        case 'H1': case 'H2': case 'H3': case 'H4': case 'H5': case 'H6': {
+          var level = Number(tag[1]);
+          var heading = inlineOf(child).trim();
+          if (heading) parts.push('\n' + new Array(level + 1).join('#') + ' ' + heading + '\n');
+          break;
+        }
+        case 'P': {
+          var para = inlineOf(child).trim();
+          if (para) parts.push('\n' + para + '\n');
+          break;
+        }
+        case 'PRE': {
+          var code = child.querySelector('code');
+          var body = (code || child).textContent.replace(/\n+$/, '');
+          // The language, when the source used the conventional class, so the
+          // copy button and syntax label on the built page still work.
+          var cls = (code && code.className) || '';
+          var lang = (cls.match(/language-([\w+-]+)/) || [])[1] || '';
+          if (body) parts.push('\n```' + lang + '\n' + body + '\n```\n');
+          break;
+        }
+        case 'BLOCKQUOTE': {
+          var quoted = walkBlock(child, depth).trim();
+          if (quoted) {
+            parts.push('\n' + quoted.split('\n').map(function (l) { return l ? '> ' + l : '>'; }).join('\n') + '\n');
+          }
+          break;
+        }
+        case 'UL': case 'OL': {
+          var list = renderList(child, depth);
+          if (list) parts.push('\n' + list + '\n');
+          break;
+        }
+        case 'HR': parts.push('\n---\n'); break;
+        case 'TABLE': {
+          var table = tableToMarkdown(child);
+          if (table) parts.push('\n' + table + '\n');
+          break;
+        }
+        case 'LI': break; // handled by its list
+        default: {
+          if (HTML_INLINE[tag]) {
+            var span = inlineOf(child).trim();
+            if (span) parts.push(span);
+            break;
+          }
+          var nestedBlock = walkBlock(child, depth);
+          if (nestedBlock.trim()) parts.push(nestedBlock);
+        }
+      }
+    });
+    return parts.join('\n');
+  }
+
+  /**
+   * A list, and any lists nested inside its items.
+   *
+   * Each level indents by two spaces. Recursing through walkBlock instead
+   * would re-emit the parent item's own text, because the nested list and that
+   * text are siblings inside the same <li>.
+   */
+  function renderList(list, depth) {
+    var ordered = list.tagName === 'OL';
+    var indent = new Array(depth * 2 + 1).join(' ');
+    var lines = [];
+    var index = 0;
+    Array.prototype.forEach.call(list.children, function (li) {
+      if (li.tagName !== 'LI') return;
+      index += 1;
+      var marker = ordered ? index + '. ' : '- ';
+      lines.push(indent + marker + inlineOfExcluding(li).trim());
+      Array.prototype.forEach.call(li.children, function (kid) {
+        if (kid.tagName !== 'UL' && kid.tagName !== 'OL') return;
+        var sub = renderList(kid, depth + 1);
+        if (sub) lines.push(sub);
+      });
+    });
+    return lines.join('\n');
+  }
+
+  /** The item's own text, with any nested list left out of it. */
+  function inlineOfExcluding(li) {
+    var clone = li.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll('ul, ol'), function (n) {
+      n.parentNode.removeChild(n);
+    });
+    return inlineOf(clone);
+  }
+
+  function tableToMarkdown(table) {
+    var rows = Array.prototype.map.call(table.querySelectorAll('tr'), function (tr) {
+      return Array.prototype.map.call(tr.children, function (cell) {
+        // A pipe inside a cell would end the column early.
+        return inlineOf(cell).trim().replace(/\|/g, '\\|') || ' ';
+      });
+    }).filter(function (r) { return r.length; });
+    if (!rows.length) return '';
+    var width = Math.max.apply(null, rows.map(function (r) { return r.length; }));
+    var pad = function (r) { while (r.length < width) r.push(' '); return r; };
+    var head = pad(rows[0]);
+    var rule = new Array(width + 1).join('---|').split('|').slice(0, width);
+    var body = rows.slice(1).map(function (r) { return '| ' + pad(r).join(' | ') + ' |'; });
+    return ['| ' + head.join(' | ') + ' |', '| ' + rule.join(' | ') + ' |'].concat(body).join('\n');
+  }
+
+  /**
+   * What a file is, from its name. The extension is the author's own claim
+   * about a file they chose themselves, so it does not need the byte-level
+   * scrutiny an upload does — nothing here is committed or served.
+   */
+  function importKind(filename) {
+    var ext = String(filename || '').split('.').pop().toLowerCase();
+    if (ext === 'md' || ext === 'markdown' || ext === 'mdown') return 'markdown';
+    if (ext === 'html' || ext === 'htm' || ext === 'xhtml') return 'html';
+    if (ext === 'txt' || ext === 'text' || ext === 'log') return 'text';
+    if (ext === 'pdf') return 'pdf';
+    return '';
+  }
+
+  /** Guesses the format of pasted text, so the common case needs no choice. */
+  function sniffFormat(content) {
+    var sample = String(content || '').slice(0, 4000);
+    if (/<\/?(?:html|body|div|p|h[1-6]|table|ul|ol|article|section)\b[^>]*>/i.test(sample)) return 'html';
+    if (/^\s{0,3}#{1,6}\s|\n\s{0,3}#{1,6}\s|\n\s*[-*+]\s|\[[^\]]*\]\([^)]*\)|^```|\n```/.test(sample)) return 'markdown';
+    return 'text';
+  }
+
+  function convertToMarkdown(content, format) {
+    if (format === 'markdown') return String(content || '').replace(/\r\n/g, '\n').trim();
+    if (format === 'html') return htmlToMarkdown(content);
+    return textToMarkdown(content);
+  }
+
+  function wireImportPanel() {
+    var toggle = document.querySelector('[data-import-toggle]');
+    var panel = document.getElementById('importPanel');
+    var drop = document.querySelector('[data-import-drop]');
+    var input = document.querySelector('[data-import-file]');
+    var paste = document.querySelector('[data-import-paste]');
+    var format = document.querySelector('[data-import-format]');
+    var status = document.querySelector('[data-import-status]');
+    var insertBtn = document.querySelector('[data-import-insert]');
+    var body = document.getElementById('c-body');
+    if (!toggle || !panel || !body) return;
+
+    var setStatus = function (message, kind) {
+      status.textContent = message;
+      if (kind) status.setAttribute('data-kind', kind); else status.removeAttribute('data-kind');
+    };
+
+    toggle.addEventListener('click', function () {
+      panel.hidden = !panel.hidden;
+      toggle.setAttribute('aria-expanded', String(!panel.hidden));
+      if (!panel.hidden) paste.focus();
+    });
+
+    // Auto-detect as they paste, but never overrule a choice they made.
+    var touched = false;
+    format.addEventListener('change', function () { touched = true; });
+    paste.addEventListener('input', function () {
+      if (touched || !paste.value.trim()) return;
+      format.value = sniffFormat(paste.value);
+    });
+
+    var apply = function (content, chosen, label) {
+      var markdown = convertToMarkdown(content, chosen);
+      if (!markdown.trim()) {
+        setStatus('That produced no text. Check the file, or paste the content instead.', 'error');
+        return;
+      }
+      var mode = (document.querySelector('[name=importMode]:checked') || {}).value || 'cursor';
+      if (mode === 'replace') {
+        // Replacing is destructive and cannot be undone from here, so it asks
+        // — but only when there is actually something to lose.
+        if (body.value.trim() && !confirm('Replace everything currently in the body?')) return;
+        body.value = markdown;
+        bodyCaret = markdown.length;
+        body.dispatchEvent(new Event('input', { bubbles: true }));
+      } else {
+        insertAtCaret(body, markdown);
+      }
+      setStatus(
+        label + ' → ' + markdown.length.toLocaleString() + ' characters of Markdown, ' +
+        (mode === 'replace' ? 'replacing the body.' : 'inserted at the cursor.')
+      );
+      renderSeoPanel();
+    };
+
+    insertBtn.addEventListener('click', function () {
+      var content = paste.value;
+      if (!content.trim()) { setStatus('Paste something first, or choose a file.', 'error'); return; }
+      apply(content, format.value || sniffFormat(content), 'Pasted ' + (format.value || 'text'));
+    });
+
+    var readFile = function (file) {
+      var kind = importKind(file.name);
+      if (kind === 'pdf') {
+        // Deliberately not handled in the browser. See IMPORT_PDF_NOTE.
+        setStatus(
+          'PDF import is not wired up yet — it needs a PDF library this console does not ship. ' +
+          'Open the PDF, copy the text, and paste it above as plain text.',
+          'error',
+        );
+        return;
+      }
+      if (!kind) {
+        setStatus('"' + file.name + '" is not a text, Markdown or HTML file.', 'error');
+        return;
+      }
+      setStatus('Reading ' + file.name + '…');
+      var reader = new FileReader();
+      reader.onerror = function () { setStatus('Could not read ' + file.name + '.', 'error'); };
+      reader.onload = function () {
+        var content = String(reader.result);
+        paste.value = content;
+        format.value = kind;
+        apply(content, kind, file.name);
+      };
+      reader.readAsText(file);
+    };
+
+    input.addEventListener('change', function () {
+      var file = input.files && input.files[0];
+      input.value = '';
+      if (file) readFile(file);
+    });
+    drop.addEventListener('click', function () { input.click(); });
+    drop.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); input.click(); }
+    });
+    ['dragenter', 'dragover'].forEach(function (name) {
+      drop.addEventListener(name, function (e) { e.preventDefault(); drop.setAttribute('data-over', 'true'); });
+    });
+    ['dragleave', 'drop'].forEach(function (name) {
+      drop.addEventListener(name, function (e) { e.preventDefault(); drop.removeAttribute('data-over'); });
+    });
+    drop.addEventListener('drop', function (e) {
+      var file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (file) readFile(file);
+    });
   }
 
   function publishPayload(preview) {
@@ -1108,6 +1465,7 @@
     wireMediaPanel();
     wireCoverUpload();
     wireFaqBuilder();
+    wireImportPanel();
     var notice = document.getElementById('publishNotice');
     var preview = document.querySelector('[data-publish-preview]');
 
