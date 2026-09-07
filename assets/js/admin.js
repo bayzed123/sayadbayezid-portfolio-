@@ -89,7 +89,11 @@
     container.appendChild(wrap);
   }
   function pill(status) {
-    var known = { up: 'up', down: 'down', sent: 'up', failed: 'down', not_configured: 'warn' };
+    // misconfigured is amber, not red: the service answered, so nothing is
+    // broken out there — the health URL in this console is wrong. Showing it
+    // as down sends someone to check their servers for no reason.
+    var known = { up: 'up', down: 'down', sent: 'up', failed: 'down',
+                  not_configured: 'warn', misconfigured: 'warn' };
     var node = el('span', 'pill ' + (known[status] || 'unknown'));
     node.appendChild(el('i', 'dot'));
     node.appendChild(el('span', null, String(status || 'unknown').replace(/_/g, ' ')));
@@ -200,8 +204,18 @@
     container.appendChild(wrap);
   }
 
-  function ring(container, up, total) {
+  /**
+   * up / total, with projects whose health URL is wrong left out of both.
+   *
+   * A check that never reached the service is not evidence about it. Counting
+   * one as a failure here would paint the dial red for a typo — which is
+   * exactly what it did while both registered projects were pointed at URLs
+   * that answered 404.
+   */
+  function ring(container, up, total, misconfigured) {
     clear(container);
+    var skipped = misconfigured || 0;
+    total = Math.max((total || 0) - skipped, 0);
     var size = 132, stroke = 12, r = (size - stroke) / 2, c = 2 * Math.PI * r;
     var pct = total ? up / total : 0;
     var chart = svg('svg', { class: 'chart dial', viewBox: '0 0 ' + size + ' ' + size, width: size, height: size });
@@ -221,7 +235,9 @@
     value.textContent = total ? Math.round(pct * 100) + '%' : '—';
     chart.appendChild(value);
     var caption = svg('text', { x: size / 2, y: size / 2 + 22, fill: '#5C6A62', 'font-size': 10, 'text-anchor': 'middle' });
-    caption.textContent = total ? up + ' of ' + total + ' up' : 'no projects';
+    caption.textContent = total
+      ? up + ' of ' + total + ' up'
+      : (skipped ? skipped + ' need a health URL' : 'no projects');
     chart.appendChild(caption);
 
     var box = el('div');
@@ -293,7 +309,8 @@
       });
 
       updateBadges(data);
-      ring(document.querySelector('[data-health-summary]'), data.projects.up || 0, data.projects.total || 0);
+      ring(document.querySelector('[data-health-summary]'), data.projects.up || 0,
+           data.projects.total || 0, data.projects.misconfigured || 0);
 
       funnel(document.querySelector('[data-funnel]'), [
         { label: 'Newsletter leads', value: data.leads ? data.leads.total : 0 },
@@ -445,6 +462,14 @@
       [
         { label: 'Projects tracked', value: num(data.summary.total),
           sub: num(data.summary.up) + ' up, ' + num(data.summary.down) + ' down', accent: '#5AA9E6' },
+        // Its own card for the same reason "Never checked" has one: a project
+        // whose health URL is wrong is neither healthy nor broken, and the fix
+        // is a field here rather than anything on the server.
+        { label: 'Wrong health URL', value: num(data.summary.misconfigured),
+          sub: data.summary.misconfigured
+            ? 'the server answered — edit the URL'
+            : 'every health URL resolves',
+          accent: data.summary.misconfigured ? '#D4AF6A' : '#00A868' },
         // Called out on its own card rather than folded into "up": a project
         // nobody has checked is not a healthy one, and the old Google report
         // could not tell the two apart either.
@@ -476,7 +501,15 @@
           var up = el('td', null, uptimeLabel(row.uptimePct));
           if (row.uptimePct === null) up.className = 'unmeasured';
           tr.appendChild(up);
-          tr.appendChild(el('td', 'mono', num(row.checks)));
+          var checksCell = el('td', 'mono', num(row.checks));
+          // Say how many of those checks never reached the service, so the
+          // count and the uptime figure cannot look inconsistent.
+          if (row.misconfiguredChecks) {
+            var note = el('div', 'unmeasured', row.misconfiguredChecks + ' wrong URL');
+            note.style.fontSize = '0.68rem';
+            checksCell.appendChild(note);
+          }
+          tr.appendChild(checksCell);
           tr.appendChild(el('td', 'mono', row.avgLatencyMs === null ? '—' : row.avgLatencyMs + ' ms'));
           tr.appendChild(el('td', 'mono', row.worstLatencyMs === null ? '—' : row.worstLatencyMs + ' ms'));
           tr.appendChild(el('td', null, fmtDate(row.lastCheckedAt)));
