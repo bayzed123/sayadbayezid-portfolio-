@@ -984,6 +984,23 @@ a { color: inherit; }
 .comment-date { color: var(--text-dim); font-size: 0.78rem; font-family: 'JetBrains Mono', monospace; }
 .comment p { margin: 0 0 10px; color: var(--text-soft); font-size: 0.93rem; line-height: 1.65; }
 .comment p:last-child { margin-bottom: 0; }
+
+/* The author's reply, nested under the comment it answers. Indented and
+   ruled so it reads as a response rather than as a second comment — a reply
+   a reader cannot attribute is worse than no reply at all. */
+.comment-reply {
+  margin: 14px 0 0 0; padding: 12px 0 0 16px;
+  border-left: 2px solid var(--emerald-deep);
+}
+.comment-reply-head { display: flex; align-items: baseline; gap: 9px; flex-wrap: wrap; margin-bottom: 7px; }
+.comment-reply-author { color: var(--paper); font-weight: 600; font-size: 0.9rem; }
+.comment-reply-badge {
+  padding: 2px 8px; border-radius: 100px;
+  border: 1px solid rgba(0, 208, 132, .35); background: rgba(0, 208, 132, .09);
+  color: var(--emerald); font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: .06em;
+}
+.comment-reply p { font-size: 0.9rem; }
 .comment-empty { color: var(--text-dim); font-size: 0.9rem; margin: 0 0 32px; }
 
 .comment-form { display: grid; gap: 14px; }

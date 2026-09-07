@@ -627,3 +627,35 @@ table.data td.actions .btn { margin-left: 6px; }
   .media-thumb { width: 44px; height: 44px; }
   .media-actions { grid-column: 1 / -1; }
 }
+
+/* --- replying to a comment or review ------------------------------------- */
+
+.reply-label {
+  display: block; font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.07em;
+  color: var(--emerald); margin-bottom: 5px;
+}
+
+/* The published reply, shown under the message it answers. The rule down the
+   left is what makes it read as a response rather than a second comment. */
+.reply-shown {
+  margin-top: 10px; padding-left: 11px;
+  border-left: 2px solid var(--emerald-deep);
+}
+.reply-shown p { margin: 0; font-size: 0.8rem; color: var(--text-soft); }
+.reply-date { display: block; margin-top: 4px; font-size: 0.68rem; color: var(--text-dim); }
+
+.reply-editor {
+  margin-top: 14px; padding: 16px;
+  border: 1px solid var(--emerald-deep); border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+}
+.reply-quote {
+  margin: 0 0 12px; padding-left: 11px;
+  border-left: 2px solid var(--line-strong);
+  font-size: 0.8rem; color: var(--text-dim);
+}
+.reply-input { width: 100%; resize: vertical; }
+.reply-note { font-size: 0.74rem; color: var(--text-soft); margin: 8px 0 0; min-height: 1em; }
+.reply-note[data-kind="error"] { color: var(--rose); }
+.reply-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }

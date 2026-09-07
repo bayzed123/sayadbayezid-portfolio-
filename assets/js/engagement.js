@@ -52,6 +52,8 @@
     starsEl.setAttribute('data-voted', 'true');
   }
 
+  var AUTHOR_NAME = 'Sayad Md Bayezid Hosan';
+
   function formatDate(value) {
     var parsed = new Date(String(value).replace(' ', 'T') + (String(value).endsWith('Z') ? '' : 'Z'));
     if (isNaN(parsed.getTime())) return '';
@@ -101,6 +103,45 @@
           p.textContent = para.trim();
           item.appendChild(p);
         });
+
+      // The owner's reply, nested under the comment it answers. Attributed
+      // explicitly: a reply that reads as just another comment is worse than
+      // no reply, because the reader cannot tell who is answering.
+      if (comment.reply) {
+        var reply = document.createElement('div');
+        reply.className = 'comment-reply';
+
+        var byline = document.createElement('div');
+        byline.className = 'comment-reply-head';
+        var who = document.createElement('span');
+        who.className = 'comment-reply-author';
+        who.textContent = AUTHOR_NAME;
+        byline.appendChild(who);
+        var badge = document.createElement('span');
+        badge.className = 'comment-reply-badge';
+        badge.textContent = 'Author';
+        byline.appendChild(badge);
+        var repliedWhen = formatDate(comment.replied_at);
+        if (repliedWhen) {
+          var rtime = document.createElement('time');
+          rtime.className = 'comment-date';
+          rtime.textContent = repliedWhen;
+          byline.appendChild(rtime);
+        }
+        reply.appendChild(byline);
+
+        // Same treatment as the comment body: text nodes, never markup.
+        String(comment.reply)
+          .split(/\n{2,}/)
+          .forEach(function (para) {
+            if (!para.trim()) return;
+            var p = document.createElement('p');
+            p.textContent = para.trim();
+            reply.appendChild(p);
+          });
+
+        item.appendChild(reply);
+      }
 
       listEl.appendChild(item);
     });
