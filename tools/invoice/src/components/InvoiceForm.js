@@ -217,6 +217,7 @@ class InvoiceForm extends React.Component {
                 <option value="$">AUD (Australian Dollar)</option>
                 <option value="$">SGD (Signapore Dollar)</option>
                 <option value="¥">CNY (Chinese Renminbi)</option>
+                <option value="৳">BDT (Bangladeshi Taka)</option>
                 <option value="₿">BTC (Bitcoin)</option>
               </Form.Select>
             </Form.Group>
