@@ -33,6 +33,11 @@ await page.route('**/api/admin/projects/report**', route => route.fulfill({
         incidents:[
           { statusCode:404, status:'misconfigured', detail:'HTTP 404 — the server answered, so it is running',
             body:'{"ok":false,"error":{"code":"NOT_FOUND","message":"This API route does not exist."}}',
+            contentType:'application/json',
+            // The URL as it was polled. The project's healthUrl above is the
+            // corrected one, so if the row ever shows that instead, it is
+            // claiming a check hit an address it never hit.
+            url:'https://api-v2.example.test/health',
             at:'2026-09-07 09:54:03' },
         ], incidentCount:1 },
       { id:'b', name:'Broken thing', provider:'test', status:'down',
@@ -40,7 +45,13 @@ await page.route('**/api/admin/projects/report**', route => route.fulfill({
         checks:4, misconfiguredChecks:0, uptimePct:25, avgLatencyMs:900, worstLatencyMs:9000,
         incidents:[
           { statusCode:503, status:'down', detail:'HTTP 503',
-            body:'upstream connect error', at:'2026-09-07 09:00:00' },
+            body:'upstream connect error\n    at handler (/app/src/index.ts:120:15)\n    at fetch (/app/src/router.ts:44:9)',
+            contentType:'text/html; charset=utf-8',
+            url:'https://b.example.test/health', at:'2026-09-07 09:00:00' },
+          // An older row, recorded before the URL was stored. It must render
+          // without one rather than borrowing the project's current URL.
+          { statusCode:500, status:'down', detail:'HTTP 500',
+            body:null, contentType:null, url:null, at:'2026-09-07 08:00:00' },
         ], incidentCount:3 },
       { id:'c', name:'Healthy', provider:'test', status:'up',
         healthUrl:'https://c.example.test/health', lastCheckedAt:'2026-09-07 09:50:00',
@@ -130,6 +141,45 @@ console.log('== the summary names it as its own state ==');
 const summary = (await page.locator('[data-report-summary]').innerText()).replace(/\s+/g,' ');
 check('a card counts the wrong health URLs', /Wrong health URL/i.test(summary), summary);
 check('and tells the reader the server answered', /server answered/i.test(summary), summary);
+
+console.log('== an incident says which address was polled ==');
+// "Which one failed" is not answerable from a status code. The URL the check
+// actually used is, and for a 404 it is the entire fix.
+const whereText = (await page.locator('[data-report-incidents]').innerText()).replace(/\s+/g,' ');
+check('the polled URL is shown', /https:\/\/api-v2\.example\.test\/health/.test(whereText), whereText);
+// Read through the count rather than waiting on .first(): when the element is
+// missing this must report a failure, not hang for 30s and abort the run.
+const methods = await page.locator('[data-report-incidents] .incident-method').allInnerTexts();
+check('and is marked as the GET that was made', methods[0] === 'GET', JSON.stringify(methods));
+// The project's current healthUrl ends in "/" — the wrong one that was fixed.
+// If it leaks into an incident row, the row is lying about what was polled.
+check('it is the URL polled, not the project\'s current one',
+  !/api-v2\.example\.test\/ /.test(whereText), whereText);
+// Two of the three incidents stored a URL; the third predates the column.
+check('an incident with no stored URL shows none',
+  await page.locator('[data-report-incidents] .incident-where').count() === 2,
+  String(await page.locator('[data-report-incidents] .incident-where').count()));
+
+console.log('== file, line and column, when the server reported them ==');
+const trace = page.locator('[data-report-incidents] .incident-trace');
+check('a stack trace in the body becomes a source location', await trace.count() === 1,
+  String(await trace.count()));
+const frames = (await trace.allInnerTexts()).join(' ').replace(/\s+/g,' ');
+check('the file is named', /\/app\/src\/index\.ts/.test(frames), frames);
+check('with its line number', /line 120/.test(frames), frames);
+check('and its column', /column 15/.test(frames), frames);
+check('deeper frames are kept in order', frames.indexOf('index.ts') < frames.indexOf('router.ts'), frames);
+// The whole point of not inventing this: a 404 ran none of your code.
+const rinovaEntry = page.locator('[data-report-incidents] .incident-entry').first();
+check('a 404 claims no source location',
+  await rinovaEntry.locator('.incident-trace').count() === 0);
+
+console.log('== an unexpected content type is called out ==');
+const notes = await page.locator('[data-report-incidents] .incident-note').allInnerTexts();
+check('answering HTML is flagged', notes.some(n => /text\/html/.test(n)), JSON.stringify(notes));
+// Saying "application/json" on a healthy JSON endpoint every time is noise.
+check('answering JSON is not flagged', !notes.some(n => /application\/json/.test(n)),
+  JSON.stringify(notes));
 
 console.log('== no script errors ==');
 check('the console stayed clean', errs.length === 0, errs.join(' | '));
