@@ -1,6 +1,7 @@
 ---
 title: Google Maps Lead Generation to Google Sheets | NexusLeads  
 description: Discover public local-business prospects, verify contact signals, and organize leads and outreach drafts in Google Sheets with the privacy-first NexusLeads workflow.
+date: "2026-09-07"
 image: 
 ---
 > **Editorial note:** This guide is written for agencies, freelancers, local growth teams, real-estate teams, founders, and developers who need a practical way to research public business prospects. It explains a workflow—not a promise of guaranteed contact accuracy, search rankings, conversions, or outreach results.

@@ -139,18 +139,26 @@ function renderPosts(posts) {
     // Staggered animation delay for cards (0ms, 100ms, 200ms)
     const delayClass = index % 3 === 0 ? '' : (index % 3 === 1 ? 'delay-100' : 'delay-200');
 
+    // The heading sits inside the same link, so alt="" is correct when the
+    // author wrote none — repeating the title makes a screen reader announce
+    // it twice. The old markup used the title unconditionally.
+    const alt = escapeAttr(post.imageAlt || '');
+    const cover = escapeAttr(post.image || FALLBACK_COVER);
+    const tag = post.tags && post.tags.length > 0 ? post.tags[0] : (post.category || 'General');
+
     return `
-    <a href="/blog/${post.slug}/" class="blog-card reveal-up ${delayClass}">
-      <img src="${post.image}" alt="${post.title}" class="blog-card-image" onerror="this.src='/assets/images/blog-default.svg'">
+    <a href="/blog/${escapeAttr(post.slug)}/" class="blog-card reveal-up ${delayClass}">
+      <img src="${cover}" alt="${alt}" class="blog-card-image" loading="lazy" decoding="async"
+           onerror="this.onerror=null;this.src='${FALLBACK_COVER}'">
       <div class="blog-card-content">
-        <span class="blog-card-tag">${post.tags && post.tags.length > 0 ? post.tags[0] : 'General'}</span>
+        <span class="blog-card-tag">${escapeHtml(tag)}</span>
         <h3 class="blog-card-title">${escapeHtml(post.title)}</h3>
-        <p class="blog-card-excerpt">${escapeHtml(post.description)}</p>
-        
+        <p class="blog-card-excerpt">${escapeHtml(post.summary || post.description)}</p>
+
         <!-- Premium Animated Read Article Button -->
         <div class="premium-read-btn">
           Read Article 
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <line x1="5" y1="12" x2="19" y2="12"></line>
             <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
@@ -158,8 +166,8 @@ function renderPosts(posts) {
 
       </div>
       <div class="blog-card-footer">
-        <span>${escapeHtml(post.author)}</span>
         <span>${formatDate(post.date)}</span>
+        ${post.readingMinutes ? `<span>${post.readingMinutes} min read</span>` : `<span>${escapeHtml(post.author)}</span>`}
       </div>
     </a>
   `}).join('');
@@ -195,8 +203,10 @@ async function initRelatedPosts() {
     const delayClass = index % 3 === 0 ? '' : (index % 3 === 1 ? 'delay-100' : 'delay-200');
     
     return `
-    <a href="/blog/${post.slug}/" class="blog-card reveal-up ${delayClass}">
-      <img src="${post.image}" alt="${post.title}" class="blog-card-image" onerror="this.src='/assets/images/blog-default.svg'">
+    <a href="/blog/${escapeAttr(post.slug)}/" class="blog-card reveal-up ${delayClass}">
+      <img src="${escapeAttr(post.image || FALLBACK_COVER)}" alt="${escapeAttr(post.imageAlt || '')}"
+           class="blog-card-image" loading="lazy" decoding="async"
+           onerror="this.onerror=null;this.src='${FALLBACK_COVER}'">
       <div class="blog-card-content">
         <h3 class="blog-card-title" style="font-size: 1.1rem;">${escapeHtml(post.title)}</h3>
         <div style="margin-top: 1rem;">
@@ -218,6 +228,23 @@ function escapeHtml(text) {
   div.textContent = text;
   return div.innerHTML;
 }
+
+/**
+ * Utility: escape a value being interpolated into a double-quoted attribute.
+ *
+ * escapeHtml above is not enough here: textContent -> innerHTML leaves a
+ * double quote untouched, so a value containing one would close the attribute
+ * early and let the rest be parsed as markup.
+ */
+function escapeAttr(value) {
+  return String(value == null ? '' : value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+const FALLBACK_COVER = '/assets/images/blog-default.svg';
 
 /**
  * Utility: Format date
