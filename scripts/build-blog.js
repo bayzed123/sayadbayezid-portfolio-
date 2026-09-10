@@ -868,6 +868,10 @@ ${buildRelatedHTML(post, allPosts)}
       </div>
     </footer>
     <script src="/assets/main.js" defer></script>
+    <!-- The support dock. Emitted here, not added to the generated files by
+         hand: every content build rewrites these pages, so a tag that only
+         exists in the output survives exactly until the next build. -->
+    <script src="/assets/js/support.js" defer></script>
 
     <div id="shareModal" class="share-modal">
         <div class="share-modal-content">
@@ -1143,6 +1147,10 @@ function generateArchiveHTML() {
       </div>
     </footer>
     <script src="/assets/main.js" defer></script>
+    <!-- The support dock. Emitted here, not added to the generated files by
+         hand: every content build rewrites these pages, so a tag that only
+         exists in the output survives exactly until the next build. -->
+    <script src="/assets/js/support.js" defer></script>
 </body>
 </html>`;
 

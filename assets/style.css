@@ -1053,3 +1053,106 @@ a { color: inherit; }
 @media print {
   .engagement { display: none !important; }
 }
+
+/* ---------------------------------------------------------------------------
+   Support dock — one button, bottom right, that opens the messaging channels.
+
+   z-index 90 keeps it under the fixed header (100) and the skip link (200):
+   an open menu should cover the dock, not fight it.
+   --------------------------------------------------------------------------- */
+.support-dock {
+  position: fixed;
+  z-index: 90;
+  right: 20px;
+  /* env() keeps it clear of the iPhone home indicator; the max() is the
+     fallback for every browser that does not know env(). */
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.support-channels {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+/* Without this the panel is permanently open: a display rule outranks the
+   hidden attribute's own display:none, so toggling .hidden in JS changes the
+   semantics for a screen reader and nothing at all on screen. */
+.support-channels[hidden] { display: none; }
+
+.support-channel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 15px 10px 12px;
+  border-radius: 999px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  color: var(--paper);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  transform-origin: right center;
+  animation: support-rise 180ms ease-out both;
+}
+.support-channel:nth-child(2) { animation-delay: 45ms; }
+.support-channel svg { width: 20px; height: 20px; flex: none; }
+.support-channel:hover,
+.support-channel:focus-visible { border-color: rgba(237, 239, 236, 0.28); }
+
+/* Brand colours on the icons only. A visitor recognises these two marks
+   instantly, and that recognition is the reason the dock works at all. */
+.support-channel.is-whatsapp svg { color: #25D366; }
+.support-channel.is-messenger svg { color: #0084FF; }
+
+.support-launcher {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--emerald);
+  color: var(--void);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 208, 132, 0.34);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.support-launcher:hover { transform: translateY(-2px); }
+.support-launcher:focus-visible { outline: 2px solid var(--paper); outline-offset: 3px; }
+.support-launcher svg { width: 26px; height: 26px; }
+
+/* One button, two icons: the close mark replaces the chat mark when open,
+   so the control that opened the panel is the control that closes it. */
+.support-icon-close { display: none; }
+.support-dock.is-open .support-icon-open { display: none; }
+.support-dock.is-open .support-icon-close { display: block; }
+
+@keyframes support-rise {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Motion is decoration here. Someone who has asked their system to stop
+   animating things still gets the whole feature, just without the movement. */
+@media (prefers-reduced-motion: reduce) {
+  .support-channel { animation: none; }
+  .support-launcher { transition: none; }
+  .support-launcher:hover { transform: none; }
+}
+
+@media (max-width: 480px) {
+  .support-dock { right: 14px; bottom: max(14px, env(safe-area-inset-bottom, 0px)); }
+  .support-launcher { width: 50px; height: 50px; }
+}
+
+/* A print-out of the page has no working chat button on it. */
+@media print {
+  .support-dock { display: none !important; }
+}
