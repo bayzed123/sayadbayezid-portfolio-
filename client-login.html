@@ -2,267 +2,45 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Client Login — Connect with Bayezid</title>
-<meta name="description" content="Client login portal for Connect with Bayezid — connect your Facebook, Instagram, or WhatsApp Business account with our team.">
-<style>
-  :root{
-    --bg: #FBFBFA; --panel: #FFFFFF; --text: #191B1F; --muted: #5C6370; --faint: #8A909B;
-    --border: #E6E7EA; --accent: #2C4699; --accent-soft: #EDF0FB; --accent-deep: #1B2E66;
-    --fb: #1877F2; --fb-dark: #0F5FCC;
-    --radius: 12px; --maxw: 440px;
-  }
-  *{ box-sizing: border-box; }
-  body{
-    margin:0; min-height:100vh; background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.6; -webkit-font-smoothing: antialiased;
-    display:flex; align-items:center; justify-content:center; padding: 32px 18px;
-  }
-  .card{
-    width:100%; max-width: var(--maxw); background: var(--panel); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 36px 28px 28px; box-shadow: 0 10px 30px rgba(27,46,102,.08);
-    text-align:center;
-  }
-  .logo-mark{
-    width:56px; height:56px; border-radius: 16px; margin: 0 auto 18px;
-    background: linear-gradient(135deg, var(--accent-deep), var(--accent));
-    color:#fff; font-weight:800; font-size:1.35rem; letter-spacing:-0.02em;
-    display:flex; align-items:center; justify-content:center;
-  }
-  h1{ font-size:1.3rem; margin:0 0 6px; letter-spacing:-0.01em; }
-  .sub{ color: var(--muted); font-size:.92rem; margin: 0 0 26px; }
-  button.fb-btn{
-    width:100%; display:flex; align-items:center; justify-content:center; gap:10px;
-    background: var(--fb); color:#fff; border:none; border-radius:8px;
-    padding: 13px 16px; font-size:.98rem; font-weight:600; cursor:pointer;
-    transition: background .15s ease;
-  }
-  button.fb-btn:hover{ background: var(--fb-dark); }
-  button.fb-btn:disabled{ opacity:.6; cursor:default; }
-  button.fb-btn svg{ width:20px; height:20px; flex:none; }
-  .status{
-    margin-top:16px; font-size:.88rem; padding:10px 12px; border-radius:8px; display:none;
-  }
-  .status.show{ display:block; }
-  .status.error{ background:#FDECEC; color:#9A2C2C; }
-  .status.info{ background: var(--accent-soft); color: var(--accent-deep); }
-  .profile{ display:none; margin-top:20px; text-align:left; }
-  .profile.show{ display:flex; align-items:center; gap:12px; }
-  .profile img{ width:48px; height:48px; border-radius:50%; }
-  .profile .name{ font-weight:700; font-size:.96rem; }
-  .profile .email{ color: var(--muted); font-size:.84rem; }
-  .profile-actions{ display:none; margin-top:16px; gap:10px; flex-wrap:wrap; }
-  .profile-actions.show{ display:flex; }
-  .logout-btn{ flex:1; border:1px solid var(--border); border-radius:8px; background:#fff; color:var(--accent-deep); padding:10px 14px; font:inherit; font-weight:650; cursor:pointer; }
-  .logout-btn:hover{ background:var(--accent-soft); }
-  .disconnect-link{ width:100%; color:var(--muted); font-size:.78rem; text-decoration:none; }
-  .disconnect-link:hover{ color:var(--accent); text-decoration:underline; }
-  .fineprint{ margin-top: 24px; font-size:.78rem; color: var(--faint); line-height:1.6; }
-  .fineprint a{ color: var(--accent); text-decoration:none; }
-  .fineprint a:hover{ text-decoration:underline; }
-</style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HY9255GJYE');
-</script>
-<!-- End Google tag (gtag.js) -->
+<!--
+  There were two sign-in pages and they used different Meta flows.
 
-    <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
-<!-- End Google Tag Manager -->
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://sayadbayezid.com/client-login.html" />
-  <meta property="og:title" content="Client Login" />
-  <meta property="og:description" content="Client Login" />
-  <meta property="og:url" content="https://sayadbayezid.com/client-login.html" />
-  <meta property="og:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Client Login" />
-  <meta name="twitter:description" content="Client Login" />
-  <meta name="twitter:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
+  This one used the Facebook JavaScript SDK (FB.login) against
+  /api/facebook/connect. That flow needs "Login with the JavaScript SDK"
+  switched on in the App Dashboard along with an Allowed Domains list, and we
+  deliberately leave it off: the SDK hands an access token to the browser,
+  where the server-side code flow never does.
+
+  facebook-business-login.html is the flow we keep. It uses response_type=code
+  and the Worker exchanges that code with the App Secret, so no token ever
+  reaches the page. Its URL is also the one registered in the Worker's redirect
+  allowlist and in the App Dashboard, so it is the URL that must not move.
+
+  Every link on the site now points straight at that page. This file stays
+  only so older links and bookmarks land somewhere rather than 404, and it
+  redirects immediately. Nothing here talks to Meta.
+-->
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://sayadbayezid.com/facebook-business-login.html">
+<meta http-equiv="refresh" content="0; url=/facebook-business-login.html">
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:24px 16px;background:#f7f8fb;color:#171b24;line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  .note{max-width:34rem;text-align:center}
+  h1{font-size:1.25rem;margin:0 0 8px}
+  p{color:#606a7b;margin:0 0 16px}
+  a{color:#1d4ed8}
+</style>
 </head>
 <body>
-<header class="site-header legacy-site-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/blog/">Blog</a><a href="/contact.html">Contact</a></nav></header>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<div class="card">
-    <div class="logo-mark">CB</div>
-    <h1>Client Login</h1>
-    <p class="sub">Connect your Facebook, Instagram, or WhatsApp Business account so our team at Connect with Bayezid can get to work.</p>
-
-    <button class="fb-btn" id="fbLoginBtn" onclick="loginWithFacebook()">
-      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.89h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z"/></svg>
-      Continue with Facebook
-    </button>
-
-    <div class="status" id="status"></div>
-    <div class="profile" id="profile">
-      <img id="profilePic" src="" alt="">
-      <div>
-        <div class="name" id="profileName"></div>
-        <div class="email" id="profileEmail"></div>
-      </div>
-    </div>
-    <div class="profile-actions" id="profileActions">
-      <button class="logout-btn" type="button" onclick="logoutFromFacebook()">Log out</button>
-      <a class="disconnect-link" href="https://www.facebook.com/settings?tab=applications" target="_blank" rel="noopener">Remove app access in Facebook settings</a>
-    </div>
-
-    <p class="fineprint">
-      By continuing, you agree to our
-      <a href="https://sayadbayezid.com/terms-of-service.html">Terms of Service</a> and
-      <a href="https://sayadbayezid.com/privacy-policy.html">Privacy Policy</a>.
-      We only request the permissions needed to connect your business account.
-      <br><a href="https://developers.facebook.com/documentation/facebook-login/security#appsecret" target="_blank" rel="noopener">Read Meta Login Security guidance</a>.
-    </p>
-  </div>
-
-<script>
-  // ---- Facebook JavaScript SDK setup ----
-  // App: connect with Bayezid — App ID 1781926689123888
-  window.fbAsyncInit = function () {
-    FB.init({
-      appId: '1781926689123888',
-      cookie: true,
-      xfbml: false,
-      version: 'v26.0'   // current Graph API version used by Meta's Login documentation
-    });
-
-    // Ties into the App Events product already added to this app
-    FB.AppEvents.logPageView();
-
-    // Per Meta's official Facebook Login for Web guide: on every page load,
-    // first check whether this person is already logged into Facebook AND
-    // has already authorized this app, instead of always showing the button.
-    FB.getLoginStatus(function (response) {
-      statusChangeCallback(response);
-    });
-  };
-  (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) { return; }
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/en_US/sdk.js';
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));
-
-  var BACKEND_BASE = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev';
-
-  function showStatus(message, isError) {
-    var el = document.getElementById('status');
-    el.textContent = message;
-    el.className = 'status show ' + (isError ? 'error' : 'info');
-  }
-
-  // response.status is one of:
-  //   'connected'      — logged into Facebook AND this app: go straight to the profile
-  //   'not_authorized' — logged into Facebook but hasn't approved this app yet
-  //   'unknown'        — not logged into Facebook, or logged out: just show the button
-  function statusChangeCallback(response) {
-    if (response.status === 'connected') {
-      fetchAndShowProfile(response.authResponse);
-    } else if (response.status === 'not_authorized') {
-      resetSignedInState();
-      showStatus("You're logged into Facebook — tap below to connect your account.", false);
-    } else {
-      resetSignedInState();
-    }
-  }
-
-  function resetSignedInState() {
-    document.getElementById('profile').className = 'profile';
-    document.getElementById('profileActions').className = 'profile-actions';
-    document.getElementById('profileName').textContent = '';
-    document.getElementById('profileEmail').textContent = '';
-    document.getElementById('profilePic').removeAttribute('src');
-    var btn = document.getElementById('fbLoginBtn');
-    btn.style.display = '';
-    btn.disabled = false;
-  }
-
-  function logoutFromFacebook() {
-    if (!window.FB) {
-      resetSignedInState();
-      showStatus('You have been logged out of this page.', false);
-      return;
-    }
-    var confirmed = window.confirm('Log out of Facebook Login on this page? To remove the app permission completely, use the Facebook settings link below.');
-    if (!confirmed) return;
-    showStatus('Logging out…', false);
-    FB.logout(function () {
-      resetSignedInState();
-      showStatus('You have been logged out of this page.', false);
-    });
-  }
-
-  function loginWithFacebook() {
-    var btn = document.getElementById('fbLoginBtn');
-    btn.disabled = true;
-    showStatus('Connecting to Facebook…', false);
-
-    // Start with permissions that need no App Review (public_profile, email).
-    // Add more scopes here once Meta approves them for this app, e.g.:
-    // scope: 'public_profile,email,pages_show_list,business_management,ads_management,whatsapp_business_management'
-    FB.login(function (response) {
-      btn.disabled = false;
-      if (response.authResponse) {
-        fetchAndShowProfile(response.authResponse);
-      } else {
-        showStatus('Login was cancelled or not fully authorized.', true);
-      }
-    }, { scope: 'public_profile,email' });
-  }
-
-  function fetchAndShowProfile(authResponse) {
-    FB.api('/me', { fields: 'name,email,picture' }, function (user) {
-      showStatus('Signed in — welcome, ' + user.name + '.', false);
-
-      var profile = document.getElementById('profile');
-      document.getElementById('profileName').textContent = user.name || '';
-      document.getElementById('profileEmail').textContent = user.email || '';
-      if (user.picture && user.picture.data && user.picture.data.url) {
-        document.getElementById('profilePic').src = user.picture.data.url;
-      }
-      profile.className = 'profile show';
-      document.getElementById('profileActions').className = 'profile-actions show';
-      document.getElementById('fbLoginBtn').style.display = 'none';
-
-      // authResponse.accessToken here is a short-lived client-side token
-      // (valid a couple of hours). Send it — and authResponse.userID — to
-      // the backend so it can exchange it for a long-lived token
-      // (fb_exchange_token grant, ~60 days) using the App Secret, server-side
-      // only. This page's own JS never sees or handles the App Secret.
-      fetch(BACKEND_BASE + '/api/facebook/connect', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          userID: authResponse.userID,
-          shortLivedToken: authResponse.accessToken,
-          name: user.name,
-          email: user.email
-        })
-      }).catch(function () {
-        // Not fatal to the person's login experience — they're still
-        // signed in and see their profile either way. Ask me to check
-        // client_fb_connections in D1 if a connection seems to be missing.
-      });
-    });
-  }
-</script>
-<footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/blog/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Blog</a></div>
-<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
-</footer>
+<main class="note">
+  <h1>Client login has moved</h1>
+  <p>Taking you to the secure business login page.</p>
+  <p><a href="/facebook-business-login.html">Continue to business login</a></p>
+</main>
+<script>window.location.replace('/facebook-business-login.html');</script>
 </body>
 </html>
