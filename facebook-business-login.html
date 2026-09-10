@@ -6,11 +6,92 @@
 <title>Business Login — Connect with Bayezid</title>
 <meta name="description" content="Secure Facebook Login for Business connections managed by Connect with Bayezid.">
 <style>
-  :root{--ink:#171b24;--muted:#606a7b;--blue:#1d4ed8;--deep:#14275f;--soft:#eef3ff;--line:#dfe4ec;--panel:#fff;}
-  *{box-sizing:border-box} body{margin:0;min-height:100vh;background:#f7f8fb;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.6;display:flex;align-items:center;justify-content:center;padding:28px 16px}
-  .shell{width:min(100%,760px)} .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(20,39,95,.1);overflow:hidden}
-  .hero{padding:34px 34px 30px;background:linear-gradient(135deg,var(--deep),#2d55b8);color:#fff}.eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.7rem;font-weight:800;opacity:.75;margin:0 0 12px}.hero h1{font-size:clamp(1.75rem,4vw,2.45rem);line-height:1.1;margin:0 0 12px}.hero p{max-width:58ch;margin:0;color:rgba(255,255,255,.88)}
-  .body{padding:30px 34px 28px}.body h2{font-size:1.2rem;margin:0 0 8px}.body p{color:var(--muted);margin:0 0 18px}.button{appearance:none;border:0;border-radius:10px;background:#1877f2;color:#fff;padding:14px 18px;font:inherit;font-weight:750;cursor:pointer;width:100%;transition:transform .15s ease,background .15s ease}.button:hover{background:#0e65d7;transform:translateY(-1px)}.button:disabled{opacity:.6;cursor:wait;transform:none}.status{display:none;margin-top:16px;border-radius:10px;padding:12px 14px;font-size:.92rem}.status.show{display:block}.status.info{background:var(--soft);color:var(--deep)}.status.error{background:#fff0f0;color:#9b2c2c}.status.success{background:#edf9f0;color:#176235}.details{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0}.detail{border:1px solid var(--line);border-radius:10px;padding:12px;font-size:.82rem;color:var(--muted)}.detail strong{display:block;color:var(--ink);font-size:.9rem;margin-bottom:3px}.fine{font-size:.8rem;color:#7a8493;margin:20px 0 0!important}.fine a{color:var(--blue)}.footer{padding:16px 34px;border-top:1px solid var(--line);font-size:.82rem;color:#7a8493}.footer a{color:var(--blue);margin-right:16px}@media(max-width:560px){.hero,.body{padding:26px 22px}.footer{padding:16px 22px}.details{grid-template-columns:1fr}}
+  /* Layout note, because this page rendered as two squeezed columns on a
+     phone and the cause was not obvious:
+
+     body used to be `display:flex; align-items:center; justify-content:center`
+     back when it contained nothing but the login card. A site header was
+     added to the page later, which made the header and the card two flex
+     ITEMS OF THE SAME ROW — so the nav stacked into a narrow left column and
+     the card was crushed into a narrow right one.
+
+     The page is a normal top-to-bottom document now. The card is centred by
+     `margin:auto` on the main element, which cannot capture the header. */
+  :root{
+    --ink:#171b24; --muted:#606a7b; --blue:#1d4ed8; --deep:#14275f;
+    --soft:#eef3ff; --line:#dfe4ec; --panel:#fff; --bar:#0f1115; --accent:#00D084;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; min-height:100vh; background:#f7f8fb; color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    line-height:1.6;
+    display:flex; flex-direction:column;      /* header, main, nothing side by side */
+  }
+
+  /* Site header. Its own colours, so nav links are never browser-default
+     blue and visited-purple on top of the light page. */
+  .site-header{
+    display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:12px 20px;
+    padding:14px 20px; background:var(--bar); color:#edefec;
+  }
+  .site-header .brand{color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em}
+  .site-header .brand em{font-style:normal;color:var(--accent)}
+  .site-header nav{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;font-size:.78rem}
+  .site-header nav a{color:rgba(237,239,236,.82);text-decoration:none}
+  .site-header nav a:hover,.site-header nav a:focus-visible{color:#fff;text-decoration:underline}
+
+  main{width:100%;max-width:760px;margin:auto;padding:24px 16px 40px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;box-shadow:0 18px 50px rgba(20,39,95,.1);overflow:hidden}
+
+  .hero{padding:30px 28px 26px;background:linear-gradient(135deg,var(--deep),#2d55b8);color:#fff}
+  .eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.68rem;font-weight:800;opacity:.75;margin:0 0 10px}
+  .hero h1{font-size:clamp(1.5rem,5vw,2.25rem);line-height:1.15;margin:0 0 10px}
+  .hero p{max-width:58ch;margin:0;color:rgba(255,255,255,.88);font-size:.95rem}
+
+  .body{padding:26px 28px 24px}
+  .body h2{font-size:1.15rem;margin:0 0 6px}
+  .body>p{color:var(--muted);margin:0 0 18px}
+
+  .button{
+    appearance:none;border:0;border-radius:10px;background:#1877f2;color:#fff;
+    padding:15px 18px;font:inherit;font-weight:700;cursor:pointer;width:100%;
+    min-height:48px;                          /* a real tap target on a phone */
+    transition:background .15s ease,transform .15s ease;
+  }
+  .button:hover{background:#0e65d7}
+  .button:active{transform:translateY(1px)}
+  .button:disabled{opacity:.6;cursor:wait;transform:none}
+
+  .status{display:none;margin-top:16px;border-radius:10px;padding:12px 14px;font-size:.92rem}
+  .status.show{display:block}
+  .status.info{background:var(--soft);color:var(--deep)}
+  .status.error{background:#fff0f0;color:#9b2c2c}
+  .status.success{background:#edf9f0;color:#176235}
+
+  /* Three reassurances. One per row on a phone, three across from 620px —
+     the old breakpoint was 560px, which left three columns of about 100px. */
+  .details{display:grid;grid-template-columns:1fr;gap:10px;margin:22px 0 0}
+  .detail{border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.84rem;color:var(--muted)}
+  .detail strong{display:block;color:var(--ink);font-size:.9rem;margin-bottom:2px}
+
+  .fine{font-size:.82rem;color:#7a8493;margin:20px 0 0}
+  .fine a{color:var(--blue)}
+
+  .card-footer{padding:16px 28px;border-top:1px solid var(--line);font-size:.82rem}
+  .card-footer ul{list-style:none;display:flex;flex-wrap:wrap;gap:8px 18px;margin:0;padding:0}
+  .card-footer a{color:var(--blue);text-decoration:none}
+  .card-footer a:hover{text-decoration:underline}
+
+  @media(min-width:620px){
+    .details{grid-template-columns:repeat(3,1fr)}
+    .hero{padding:34px 34px 30px}
+    .body{padding:30px 34px 28px}
+    .card-footer{padding:16px 34px}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
@@ -19,40 +100,72 @@
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
 <!-- Meta Pixel -->
 <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1612338809888151');fbq('track','PageView');</script>
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://sayadbayezid.com/facebook-business-login.html" />
-  <meta property="og:title" content="Business Login" />
-  <meta property="og:description" content="Connect your business account securely." />
-  <meta property="og:url" content="https://sayadbayezid.com/facebook-business-login.html" />
-  <meta property="og:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Business Login" />
-  <meta name="twitter:description" content="Connect your business account securely." />
-  <meta name="twitter:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://sayadbayezid.com/facebook-business-login.html" />
+<meta property="og:title" content="Business Login" />
+<meta property="og:description" content="Connect your business account securely." />
+<meta property="og:url" content="https://sayadbayezid.com/facebook-business-login.html" />
+<meta property="og:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Business Login" />
+<meta name="twitter:description" content="Connect your business account securely." />
+<meta name="twitter:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
 </head>
 <body>
-<header class="site-header legacy-site-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/blog/">Blog</a><a href="/contact.html">Contact</a></nav></header>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
-<main class="shell">
+
+<header class="site-header">
+  <a class="brand" href="/">Connect <em>with</em> Bayezid</a>
+  <nav aria-label="Primary navigation">
+    <a href="/services.html">Services</a>
+    <a href="/products.html">Products</a>
+    <a href="/work.html">Work</a>
+    <a href="/case-studies/">Case Studies</a>
+    <a href="/about.html">About</a>
+    <a href="/blog/">Blog</a>
+    <a href="/contact.html">Contact</a>
+  </nav>
+</header>
+
+<main>
   <section class="card" aria-labelledby="title">
-    <header class="hero"><p class="eyebrow">Connect with Bayezid · Meta Business Integration</p><h1 id="title">Connect your business account securely.</h1><p>Use Facebook Login for Business to authorize the specific Meta assets and permissions configured for your integration. Your access token is exchanged server-side and is never displayed in this page.</p></header>
+    <div class="hero">
+      <p class="eyebrow">Connect with Bayezid · Meta Business Integration</p>
+      <h1 id="title">Connect your business account securely.</h1>
+      <p>Use Facebook Login for Business to authorize the specific Meta assets and permissions configured for your integration. Your access token is exchanged server-side and is never displayed in this page.</p>
+    </div>
+
     <div class="body">
       <h2>Continue to Meta</h2>
       <p>When you continue, Meta will show the permissions and business assets requested by this app. Review them before approving.</p>
+
       <button id="businessLogin" class="button" type="button">Continue with Facebook</button>
       <div id="status" class="status" role="status" aria-live="polite"></div>
-      <div class="details"><div class="detail"><strong>Secure redirect</strong>HTTPS-only OAuth flow</div><div class="detail"><strong>Server exchange</strong>Code handled by our Worker</div><div class="detail"><strong>Your control</strong>Disconnect anytime in Facebook</div></div>
-      <p class="fine">By continuing, you agree to the <a href="/business-integration-policy.html">Business Integration &amp; Data Policy</a>, <a href="/terms-of-service.html">Terms of Service</a>, and <a href="/privacy-policy-meta-product.html">Meta Privacy Policy</a>.</p>
+
+      <div class="details">
+        <div class="detail"><strong>Secure redirect</strong>HTTPS-only OAuth flow</div>
+        <div class="detail"><strong>Server exchange</strong>Code handled by our Worker</div>
+        <div class="detail"><strong>Your control</strong>Disconnect anytime in Facebook</div>
+      </div>
+
+      <p class="fine">By continuing, you agree to the <a href="/business-integration-policy.html">Business Integration &amp; Data Policy</a>, <a href="/terms-of-service.html">Terms of Service</a>, and <a href="/privacy-policy-meta-product.html">Meta Platform Products Privacy Policy</a>.</p>
     </div>
-    <footer class="footer"><a href="/">Home</a><a href="/client-login.html">Client Login</a><a href="/business-integration-policy.html">Integration Policy</a><a href="mailto:info@sayadbayezid.com">Privacy support</a>
-<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/case-studies/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Case Studies</a></div><div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/blog/" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Blog</a></div>
-<div class="footer-case-studies-link" style="padding:16px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"><a href="/proofline-atlas.html" style="color:#00D084;font-family:'JetBrains Mono',monospace;font-size:.74rem;letter-spacing:.04em;text-decoration:none">Proofline Atlas</a></div>
-</footer>
+
+    <div class="card-footer">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/business-integration-policy.html">Integration Policy</a></li>
+        <li><a href="/privacy-policy.html">Privacy</a></li>
+        <li><a href="/data-deletion-status.html">Delete my data</a></li>
+        <li><a href="mailto:info@sayadbayezid.com">Contact support</a></li>
+      </ul>
+    </div>
   </section>
 </main>
+
 <script>
 (function(){
   const APP_ID='1781926689123888';
