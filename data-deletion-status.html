@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data deletion request status — Connect with Bayezid</title>
+<meta name="description" content="Check the status of a Facebook data deletion request using the confirmation code you were given.">
+<!-- Nobody should find this page in a search result; it is only useful to
+     someone holding a confirmation code. -->
+<meta name="robots" content="noindex, follow">
+<style>
+  :root {
+    --void: #0A0F0D; --surface: #101613; --surface-raised: #161F1A;
+    --line: rgba(237,239,236,.09); --emerald: #00D084; --amber: #E5A23F;
+    --paper: #EDEFEC; --text-soft: #93A199; --text-dim: #5C6A62;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 20px; background: var(--void); color: var(--paper);
+    font: 16px/1.7 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex; justify-content: center;
+  }
+  main { width: 100%; max-width: 620px; }
+  h1 { font-size: clamp(26px, 5vw, 34px); line-height: 1.2; margin: 0 0 10px; letter-spacing: -.02em; }
+  .lede { color: var(--text-soft); margin: 0 0 28px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 14px; padding: 22px;
+  }
+  label { display: block; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; }
+  input {
+    flex: 1 1 240px; min-width: 0; padding: 12px 14px; border-radius: 9px;
+    border: 1px solid var(--line); background: var(--surface-raised); color: var(--paper);
+    font: inherit; font-family: ui-monospace, "JetBrains Mono", monospace;
+  }
+  input:focus-visible { outline: 2px solid var(--emerald); outline-offset: 1px; }
+  button {
+    flex: 0 0 auto; padding: 12px 22px; border: 0; border-radius: 9px;
+    background: var(--emerald); color: var(--void); font: inherit; font-weight: 600; cursor: pointer;
+  }
+  #result { margin-top: 20px; }
+  .state { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--text-dim); }
+  .is-done .dot { background: var(--emerald); }
+  .is-none .dot { background: var(--amber); }
+  .is-error .dot { background: #E5533F; }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; margin: 16px 0 0; font-size: .9rem; }
+  dt { color: var(--text-dim); }
+  dd { margin: 0; font-family: ui-monospace, "JetBrains Mono", monospace; overflow-wrap: anywhere; }
+  .note { margin-top: 22px; font-size: .86rem; color: var(--text-soft); }
+  a { color: var(--emerald); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Data deletion request</h1>
+  <p class="lede">
+    Enter the confirmation code you were given when you asked us to delete your data.
+  </p>
+
+  <div class="card">
+    <form id="lookup">
+      <label for="code">Confirmation code</label>
+      <div class="row">
+        <input id="code" name="code" placeholder="DEL-XXXXXXXXXXXX" autocomplete="off"
+               spellcheck="false" required>
+        <button type="submit">Check status</button>
+      </div>
+    </form>
+    <div id="result" role="status" aria-live="polite"></div>
+  </div>
+
+  <p class="note">
+    We delete the data straight away, when the request reaches us — the code is
+    so you can confirm it happened. Nothing on this page identifies you: the
+    record we keep is the code, the outcome, and how many stored records were
+    removed. If your code is not recognised, or you want to reach a person about
+    it, email <a href="mailto:support@sayadbayezid.com">support@sayadbayezid.com</a>.
+  </p>
+  <p class="note"><a href="/privacy-policy.html">Privacy policy</a> · <a href="/">Connect with Bayezid</a></p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var API = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev';
+  var form = document.getElementById('lookup');
+  var input = document.getElementById('code');
+  var result = document.getElementById('result');
+
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    // Everything on this page is built as text: the code comes from the URL,
+    // and the rest from an API reply. Neither may become markup.
+    if (text !== undefined) node.textContent = String(text);
+    return node;
+  }
+
+  function show(stateClass, headline, rows) {
+    result.textContent = '';
+    var line = el('div', 'state ' + stateClass);
+    line.appendChild(el('i', 'dot'));
+    line.appendChild(el('span', null, headline));
+    result.appendChild(line);
+    if (!rows) return;
+    var list = el('dl');
+    rows.forEach(function (row) {
+      list.appendChild(el('dt', null, row[0]));
+      list.appendChild(el('dd', null, row[1]));
+    });
+    result.appendChild(list);
+  }
+
+  function when(value) {
+    if (!value) return '—';
+    var date = new Date(String(value).replace(' ', 'T') + 'Z');
+    return isNaN(date.getTime()) ? String(value) : date.toLocaleString();
+  }
+
+  function lookup(code) {
+    show('', 'Checking…');
+    fetch(API + '/api/facebook/data-deletion/status?code=' + encodeURIComponent(code))
+      .then(function (response) {
+        return response.json().then(function (data) { return { ok: response.ok, data: data }; });
+      })
+      .then(function (out) {
+        if (!out.ok) {
+          // A code that is not recognised is a real answer, not a failure —
+          // say what to do next rather than only that something went wrong.
+          show('is-error', out.data && out.data.error ? out.data.error : 'That code could not be checked.');
+          return;
+        }
+        var request = out.data.request || {};
+        var done = request.status === 'completed';
+        show(
+          done ? 'is-done' : 'is-none',
+          done ? 'Your data has been deleted.' : 'Nothing was stored about you to delete.',
+          [
+            ['Code', request.code || code],
+            ['Requested', when(request.requested_at)],
+            ['Completed', when(request.completed_at)],
+            ['Records removed', typeof request.removed === 'number' ? request.removed : '—']
+          ]
+        );
+      })
+      .catch(function () {
+        show('is-error', 'We could not reach the service just now. Please try again shortly.');
+      });
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var code = input.value.trim().toUpperCase();
+    if (code) lookup(code);
+  });
+
+  // Meta hands the person a link with the code already in it, so the answer
+  // should be on screen before they do anything.
+  var fromUrl = new URLSearchParams(location.search).get('code');
+  if (fromUrl) {
+    input.value = fromUrl.trim().toUpperCase();
+    lookup(input.value);
+  }
+})();
+</script>
+</body>
+</html>
