@@ -463,6 +463,21 @@ table.data td.actions .btn { margin-left: 6px; }
 .incident-more { font-size: 0.75rem; color: var(--text-dim); margin-top: 6px; }
 .unmeasured { color: var(--text-dim); font-style: italic; }
 
+/* Ads hub — one row per thing that had to be true for Meta to work. */
+.meta-step { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.meta-step:last-child { border-bottom: 0; }
+.meta-step-head { display: flex; gap: 10px; align-items: center; }
+.meta-step-name {
+  font-size: 0.78rem; letter-spacing: 0.04em; text-transform: capitalize; color: var(--text);
+}
+.meta-step-detail { margin-top: 6px; font-size: 0.78rem; color: var(--text-soft); overflow-wrap: anywhere; }
+/* Long, and only ever read when something is wrong — so it wraps rather than
+   forcing the card to scroll sideways on a phone. */
+.meta-scopes {
+  margin-top: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.64rem; color: var(--text-dim); overflow-wrap: anywhere;
+}
+
 /* ============================================================ publish form
  *
  * Writing a post is the one place in this console where the form is the

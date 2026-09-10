@@ -150,8 +150,12 @@
     // misconfigured is amber, not red: the service answered, so nothing is
     // broken out there — the health URL in this console is wrong. Showing it
     // as down sends someone to check their servers for no reason.
+    // accepted/rejected/unreachable are the Conversions API's three outcomes.
+    // unreachable is amber like misconfigured: Meta never answered, so nothing
+    // is known to be wrong with the pixel itself.
     var known = { up: 'up', down: 'down', sent: 'up', failed: 'down',
-                  not_configured: 'warn', misconfigured: 'warn' };
+                  not_configured: 'warn', misconfigured: 'warn',
+                  accepted: 'up', rejected: 'down', unreachable: 'warn' };
     var node = el('span', 'pill ' + (known[status] || 'unknown'));
     node.appendChild(el('i', 'dot'));
     node.appendChild(el('span', null, String(status || 'unknown').replace(/_/g, ' ')));
@@ -322,6 +326,7 @@
     enquiries: { title: 'Enquiries', crumb: 'Pipeline', load: loadEnquiries },
     leads: { title: 'Newsletter leads', crumb: 'Pipeline', load: loadLeads },
     analytics: { title: 'Analytics', crumb: 'Insight', load: loadAnalytics },
+    adshub: { title: 'Ads hub', crumb: 'Insight', load: loadAdsHub },
     settings: { title: 'System status', crumb: 'Insight', load: loadSettings }
   };
 
@@ -2147,6 +2152,114 @@
       container.appendChild(head.root);
     }).catch(function (error) {
       emptyState(container, 'Could not run the diagnosis.', error.message);
+    });
+  }
+
+  // --- ads hub -------------------------------------------------------------
+  //
+  // Everything here is read-only. The screen exists because a Meta token that
+  // does not work is indistinguishable from one that does until something asks
+  // Meta directly — and when it went wrong, the answer used to be a curl
+  // command and a support thread.
+
+  function metaStepRow(step) {
+    var row = el('div', 'meta-step');
+    var head = el('div', 'meta-step-head');
+    head.appendChild(pill(step.ok ? 'up' : 'down'));
+    head.appendChild(el('span', 'meta-step-name', step.name));
+    row.appendChild(head);
+    row.appendChild(el('div', 'meta-step-detail', step.detail || ''));
+
+    // Meta's own sentence, when there is one. This is the whole point: the
+    // difference between an expired token and a missing permission is a
+    // sentence Meta already wrote and the console used to throw away.
+    if (step.metaError && step.metaError.message) {
+      var err = el('pre', 'incident-body', step.metaError.message
+        + (step.metaError.code ? '\n\ncode ' + step.metaError.code : '')
+        + (step.metaError.type ? '  ·  ' + step.metaError.type : ''));
+      row.appendChild(err);
+    }
+
+    var data = step.data || {};
+    if (data.missingScopes && data.missingScopes.length) {
+      row.appendChild(el('div', 'incident-note',
+        'Missing permission' + (data.missingScopes.length > 1 ? 's' : '') + ': '
+        + data.missingScopes.join(', ')
+        + ' — add them to the system user in Business Settings, then generate a new token.'));
+    }
+    if (data.scopes && data.scopes.length) {
+      row.appendChild(el('div', 'meta-scopes', data.scopes.join('  ·  ')));
+    }
+    if (data.expiresAt) {
+      row.appendChild(el('div', 'field-hint', 'Expires ' + fmtDate(data.expiresAt)
+        + ' — a system user token normally does not expire, so this one will stop working.'));
+    }
+    return row;
+  }
+
+  function loadAdsHub() {
+    var box = document.querySelector('[data-meta-diagnose]');
+    skeleton(box, 4);
+    api('/api/admin/meta/diagnose').then(function (data) {
+      clear(box);
+      if (data.firstProblem) {
+        var lead = el('div', 'incident-note');
+        lead.textContent = 'Fix this first — ' + data.firstProblem.step + ': ' + data.firstProblem.detail;
+        box.appendChild(lead);
+      }
+      (data.steps || []).forEach(function (step) { box.appendChild(metaStepRow(step)); });
+      if (!(data.steps || []).length) emptyState(box, 'Nothing was checked.', 'The Worker returned no steps.');
+    }).catch(function (error) {
+      // api() rejects with the server's message on a non-2xx, and the Worker
+      // sends a real one now: META_NOT_CONFIGURED names the command to run.
+      emptyState(box, 'Could not check the Meta connection.', error.message);
+    });
+
+    var log = document.querySelector('[data-capi-log]');
+    skeleton(log, 3);
+    api('/api/admin/meta/capi-log?limit=25').then(function (data) {
+      clear(log);
+      var counts = data.last7Days || {};
+      // table() clears whatever container it is given, so the tally and the
+      // list each get their own box. Sharing one silently erased the tally.
+      var tally = el('div');
+      var tableBox = el('div');
+      log.appendChild(tally);
+      log.appendChild(tableBox);
+      var grid = el('div', 'stat-grid');
+      [['Accepted', counts.accepted], ['Rejected', counts.rejected],
+       ['Unreachable', counts.unreachable]].forEach(function (pair) {
+        var cell = el('div', 'stat');
+        cell.appendChild(el('div', 'stat-label', pair[0]));
+        cell.appendChild(el('div', 'stat-value', num(pair[1] || 0)));
+        grid.appendChild(cell);
+      });
+      tally.appendChild(grid);
+
+      var events = data.events || [];
+      if (!events.length) {
+        // No rows is genuinely ambiguous, and saying "all good" here would be
+        // a guess: an unapplied migration and a site with no traffic look the
+        // same from this end.
+        emptyState(tableBox, 'No events recorded yet.',
+          'Either no tracked event has fired since the log was added, or schema/007_capi_log.sql has not been applied.');
+        return;
+      }
+      table(tableBox, ['Event', 'Result', 'Received', 'When'], events, function (row) {
+        var tr = el('tr');
+        tr.appendChild(el('td', null, row.event_name));
+        var result = el('td');
+        result.appendChild(pill(row.status));
+        if (row.error_message) {
+          result.appendChild(el('div', 'field-hint', String(row.error_message).slice(0, 160)));
+        }
+        tr.appendChild(result);
+        tr.appendChild(el('td', 'mono', row.events_received === null || row.events_received === undefined ? '—' : String(row.events_received)));
+        tr.appendChild(el('td', null, fmtDate(row.created_at)));
+        return tr;
+      });
+    }).catch(function (error) {
+      emptyState(log, 'Could not read the Conversions API log.', error.message);
     });
   }
 
