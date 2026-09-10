@@ -40,15 +40,18 @@ check('the launcher is labelled',
   (await page.locator('.support-launcher').getAttribute('aria-label') || '').length > 0);
 
 console.log('== no half-configured channel ever ships ==');
-// MESSENGER_HANDLE is empty, so this button must be absent — not present and
-// broken, not present and disabled.
-check('the Messenger button is absent while unconfigured',
-  await page.locator('[data-support-channel="messenger"]').count() === 0,
-  String(await page.locator('[data-support-channel="messenger"]').count()));
-check('and no m.me link is anywhere on the page',
-  !/m\.me/.test(await page.content()));
+// A channel is only offered when it has somewhere real to go. An m.me link
+// built from a wrong or empty handle opens Messenger on an error screen, which
+// is worse than no button — so the list is filtered on a truthy href, and this
+// asserts the filter rather than the current configuration.
+const guard = await page.evaluate(async () => {
+  const source = await (await fetch('/assets/js/support.js')).text();
+  return /\.filter\(function \(channel\) \{ return channel\.href; \}\)/.test(source);
+});
+check('channels without a destination are filtered out', guard);
 
 console.log('== clicking opens it ==');
+
 await page.locator('.support-launcher').click();
 await page.waitForSelector('.support-channels:visible', { timeout:5000 });
 check('the channels appear', await page.locator('.support-channels').isVisible());
@@ -58,6 +61,15 @@ check('WhatsApp is offered', await wa.count() === 1);
 check('pointing at the real link',
   (await wa.getAttribute('href')) === 'https://wa.me/message/TDYG575YENF6F1',
   await wa.getAttribute('href'));
+
+console.log('== Messenger is offered too ==');
+const fb = page.locator('[data-support-channel="messenger"]');
+check('the Messenger button is there', await fb.count() === 1);
+check('pointing at the configured Page',
+  (await fb.getAttribute('href')) === 'https://m.me/bayezidDME', await fb.getAttribute('href'));
+check('and it is labelled', (await fb.innerText()).trim() === 'Messenger', await fb.innerText());
+check('both channels are offered', await page.locator('[data-support-channel]').count() === 2,
+  String(await page.locator('[data-support-channel]').count()));
 
 console.log('== an external link is opened safely ==');
 check('it opens in a new tab', await wa.getAttribute('target') === '_blank');

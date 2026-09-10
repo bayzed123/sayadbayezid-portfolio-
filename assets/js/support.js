@@ -20,11 +20,14 @@
   //   https://wa.me/8801XXXXXXXXX?text=Hello
   var WHATSAPP_URL = 'https://wa.me/message/TDYG575YENF6F1';
 
-  // Facebook Page username or numeric id, e.g. 'connectwithbayezid'.
-  // Left empty on purpose: an m.me link built from a guess is a link that
-  // opens Messenger on an error screen, which is worse than no button at all.
-  // Fill this in and the Messenger button appears — nothing else to change.
-  var MESSENGER_HANDLE = '';
+  // Facebook Page username. m.me resolves this to the Page, and the Page's
+  // automated replies answer exactly as they would inside Messenger itself —
+  // which is the whole reason this is a link and not Meta's chat SDK.
+  //
+  // Empty disables the button rather than shipping a guess: an m.me link built
+  // from the wrong handle opens Messenger on an error screen, which is worse
+  // than no button at all.
+  var MESSENGER_HANDLE = 'bayezidDME';
 
   var CHANNELS = [
     {
