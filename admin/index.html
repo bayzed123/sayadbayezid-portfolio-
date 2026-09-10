@@ -103,6 +103,10 @@
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20h18M6 20v-6M11 20V8M16 20v-9M21 20V5"/></svg>
         Analytics
       </button>
+      <button class="side-link" data-view="adshub">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-6-6 18-2.5-7.5L3 11z"/></svg>
+        Ads hub
+      </button>
       <button class="side-link" data-view="settings">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7.5 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 15H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 8.5l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
         System status
@@ -444,6 +448,26 @@
     <!-- Analytics -------------------------------------------------------- -->
     <section class="view" data-view-panel="analytics" hidden>
       <div data-analytics></div>
+    </section>
+
+    <!-- Ads hub ------------------------------------------------------------
+         What the Meta setup can and cannot do, from the running Worker.
+         Read-only: nothing on this screen spends money or changes a campaign. -->
+    <section class="view" data-view-panel="adshub" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Meta connection</h2>
+          <span class="meta">read-only</span>
+        </div>
+        <div data-meta-diagnose></div>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Conversions API</h2>
+          <span class="meta">last 7 days</span>
+        </div>
+        <div data-capi-log></div>
+      </div>
     </section>
 
     <!-- System status ---------------------------------------------------- -->
