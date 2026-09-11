@@ -1,4 +1,4 @@
-# Running Meta ads to the fullstack landing page
+# Running Meta ads to the ecommerce landing page
 
 The page: **https://sayadbayezid.com/ads/fullstack/**
 
@@ -6,6 +6,10 @@ This is the operating manual for that one URL — what to point at it, what to
 optimise for, how to check it is working before you spend, and how to read the
 numbers afterwards. It is written for the person running the ad account, not
 for a developer.
+
+The offer on it: an ecommerce website from **$100**, customisable, built to
+whatever the client's requirement is — with four live demos they can click
+through before ordering.
 
 > **Why this file is Markdown and `meta-integration.html` is HTML.** This file
 > is read on GitHub, which renders Markdown into headings, tables and links.
@@ -69,11 +73,19 @@ twice, and Meta's own reporting stops matching yours.
 | Conversion event | **Lead** | |
 | Attribution | **7-day click, 1-day view** | A decision at this price is not made in the first hour. |
 
+The offer now starts at **$100** (Starter Shop), with Growth at $250 and
+Complete Commerce at $450 — and every one of them customisable. That lowers the
+barrier a long way: at $100 people will enquire from an ad on impulse, which
+means more leads, cheaper leads, and a larger share of them unqualified. Put
+the starting price in the ad copy anyway. It costs you the clicks from people
+who were never going to pay anything, and you pay for those clicks either way.
+
 ### While the pixel is still cold
 
 Meta needs roughly **50 conversions per week per ad set** to leave the learning
-phase. A fullstack build will not produce 50 leads a week — that is not a
-failure, it is the price point. Two ways through it, in order:
+phase. At a $100 entry price that is now reachable, but not on day one and not
+on a small budget — so do not read a slow start as a broken campaign. Two ways
+through it, in order:
 
 1. **Start on `ViewContent`** for the first week or two. It fires far more
    often, so delivery learns something, and on this page it means
@@ -85,14 +97,27 @@ failure, it is the price point. Two ways through it, in order:
 
 ---
 
-## 3. What the page actually reports, and what it deliberately does not
+## 3. What the funnel reports, and what it deliberately does not
+
+Tracking is not on the landing page alone. Every page an ad click can reach
+loads the same script, `/ads/assets/ads-track.js` — the landing page, the
+privacy policy, the terms, and every page of the demo hub at
+`demu.sayadbayezid.com`. The middle of a funnel that reports nothing is a hole
+in it: whoever browsed the demos and left is the warmest audience the whole
+campaign produces, and they are worthless to you if they are invisible.
 
 | Event | When it fires | Sent to the Conversions API? |
 |---|---|---|
-| `PageView` | On load | Yes (browser only — standard pixel) |
-| `ViewContent` | The pricing box has been on screen for 1.2 continuous seconds | Yes |
-| `ContactIntent` *(custom)* | Any "Order this build" button is clicked | No — browser only |
+| `PageView` | On load, on every page in the funnel | Yes (browser only — standard pixel) |
+| `ViewContent` | The packages have been on screen for 1.2 continuous seconds | Yes |
+| `ViewContent` *(Demo)* | A live demo is opened, from the landing page or the hub | Yes |
+| `ContactIntent` *(custom)* | Any "Order Now" button is clicked, anywhere | No — browser only |
+| `GalleryCompleted` *(custom)* | Someone scrolls the 12-screen gallery to the end | No — browser only |
 | `Lead` | A submission the server **accepted** | Yes |
+
+Every `ContactIntent` names which button was pressed (`hero`, `sticky-bar`,
+`tier-starter`, `viewer-bar`, and so on). That tells you which part of the page
+is doing the selling, which is not something you can guess.
 
 Three things worth understanding about that table.
 
@@ -141,6 +166,10 @@ discovering on day four that nothing was being recorded.
 2. You should see **`PageView`, `ViewContent`, `ContactIntent`, `Lead`** —
    each appearing **once**, not twice. Two copies of the same event means
    deduplication is broken; one copy is correct and is what you want to see.
+2b. **Then open a demo and come back.** You should see a further `ViewContent`
+   in the `Demo` category, and a `PageView` from `demu.sayadbayezid.com`. If
+   the hub reports nothing, its copy of the tracking script is not loading and
+   the middle of your funnel is dark.
 3. Open the `Lead` row. It should show **Browser and Server** on the same
    event, and a match-quality score that mentions email, phone and click ID.
 4. **Check the enquiry arrived.** It goes to the same inbox as every
@@ -197,6 +226,10 @@ ad has to open on the same thing, or the click bounces on arrival.
 1. **The dashboard screenshot** — revenue, gross profit, margin. It is the
    single most arresting image in the whole set because it answers the
    question the buyer actually has. Use the same one the page uses.
+1b. **"Open a real one"** — the demos are the strongest asset in this funnel
+   and most ads never mention them. An ad whose promise is *click through a
+   working shop before you pay anything* is a much easier click than one that
+   promises a service.
 2. **A carousel**: storefront → dashboard → courier panel → Bangla guide. Each
    card is one line of copy. Every card links to the same URL.
 3. **A 15–20 second screen recording**: place an order on the storefront, then
