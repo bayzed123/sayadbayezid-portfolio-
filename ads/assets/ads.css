@@ -1,0 +1,165 @@
+/* ===========================================================================
+   The ad funnel's own look.
+
+   Deliberately not the site's emerald-on-black. That palette is right for a
+   portfolio — calm, restrained, it lets the work speak. It is the wrong
+   palette for paid traffic, where you have about eight seconds and the page
+   has to feel like an offer, not a brochure.
+
+   So: deep aubergine ground, warm white type, and one hot gradient —
+   flame orange into coral — used for exactly one thing, the order button.
+   Nothing else on any page in this funnel is allowed that gradient. That is
+   what makes it read as "press this" on a page the visitor has never seen
+   before, without a single instruction.
+   =========================================================================== */
+:root {
+  --ink: #0E0916;
+  --surface: #17102A;
+  --raised: #1F1636;
+  --raised-2: #291C44;
+  --line: rgba(255, 240, 245, 0.11);
+  --line-strong: rgba(255, 240, 245, 0.2);
+
+  --flame: #FF6A2B;
+  --flame-2: #FF3D6E;
+  --flame-grad: linear-gradient(100deg, #FF6A2B 0%, #FF3D6E 100%);
+  --flame-soft: rgba(255, 106, 43, 0.14);
+  --gold: #FFC24B;
+  --mint: #4ADE9B; /* success only — never a call to action */
+
+  --paper: #FFF4EE;
+  --soft: #C9B8D4;
+  --dim: #8E7C9E;
+
+  --radius: 20px;
+  --radius-sm: 13px;
+  --shadow-cta: 0 10px 34px rgba(255, 61, 110, 0.34);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.62;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin: 0;
+  color: var(--paper);
+}
+p { margin: 0; color: var(--soft); }
+a { color: var(--gold); }
+img { max-width: 100%; height: auto; display: block; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+.skip {
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  background: var(--flame); color: #fff; padding: 12px 22px; font-weight: 700;
+}
+.skip:focus { left: 0; }
+
+.wrap { width: min(1120px, 100% - 40px); margin-inline: auto; }
+.wrap-narrow { width: min(720px, 100% - 40px); margin-inline: auto; }
+section { padding-block: 80px; }
+@media (max-width: 700px) {
+  section { padding-block: 54px; }
+  .wrap, .wrap-narrow { width: min(1120px, 100% - 32px); }
+}
+
+.eyebrow {
+  display: inline-block; font-size: .72rem; font-weight: 700;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 16px;
+}
+.section-head { max-width: 62ch; margin-bottom: 46px; }
+.section-head h2 { font-size: clamp(1.7rem, 4.2vw, 2.5rem); line-height: 1.15; margin-bottom: 14px; }
+.center { text-align: center; margin-inline: auto; }
+
+/* ------------------------------------------------------------------ buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 17px 34px; border-radius: 999px; font: inherit; font-weight: 700;
+  font-size: 1.02rem; text-decoration: none; border: 1px solid transparent;
+  cursor: pointer; transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  /* Deliberately NOT white-space:nowrap. A label like "Order Now — tell me
+     your requirement" is wider than a 390px phone, and nowrap makes its text
+     overflow the button's own box — which grows the document, not the button,
+     so the whole page scrolls sideways. Wrapping is the correct behaviour;
+     a two-line centred button looks fine, a sideways-scrolling page does not. */
+  text-align: center; line-height: 1.3;
+}
+/* The one gradient, reserved for the one action. */
+.btn-order {
+  background: var(--flame-grad); color: #fff; box-shadow: var(--shadow-cta);
+}
+.btn-order:hover { transform: translateY(-2px); box-shadow: 0 14px 42px rgba(255, 61, 110, .46); }
+.btn-order:active { transform: translateY(0); }
+.btn-ghost { border-color: var(--line-strong); color: var(--paper); background: rgba(255,255,255,.03); }
+.btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+.btn-lg { padding: 20px 44px; font-size: 1.1rem; }
+.btn-block { width: 100%; }
+.btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.btn-row.center { justify-content: center; }
+
+.cta-note { margin-top: 14px; font-size: .85rem; color: var(--dim); }
+
+/* ------------------------------------------------------------------ badges */
+.badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 7px 15px; border-radius: 999px; font-size: .78rem; font-weight: 600;
+  background: var(--flame-soft); color: var(--gold);
+  border: 1px solid rgba(255, 194, 75, .28);
+}
+.badge-dot::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--mint); box-shadow: 0 0 0 3px rgba(74, 222, 155, .22);
+}
+
+/* ------------------------------------------------------------------ panels */
+.panel {
+  background: var(--raised); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 32px;
+}
+@media (max-width: 640px) { .panel { padding: 22px; } }
+.panel-hot { border-color: rgba(255, 106, 43, .42); background: linear-gradient(160deg, var(--raised-2), var(--raised)); }
+
+/* ------------------------------------------------------------------ footer */
+.ads-footer { border-top: 1px solid var(--line); padding-block: 34px; font-size: .86rem; color: var(--dim); }
+.ads-footer .links { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; }
+.ads-footer a { color: var(--soft); text-decoration: none; }
+.ads-footer a:hover { color: var(--gold); }
+
+/* --------------------------------------------------- sticky order bar
+   The order button has to be reachable from anywhere on the page, not only
+   where the layout happens to put one. On a phone this bar is always there;
+   on desktop it appears once the hero has scrolled away, so it never covers
+   the headline it is trying to sell. */
+.order-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(14, 9, 22, .93); backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line-strong);
+  display: flex; align-items: center; gap: 14px;
+  transform: translateY(110%); transition: transform .3s ease;
+}
+.order-bar.is-up { transform: translateY(0); }
+.order-bar .bar-text { flex: 1; min-width: 0; font-size: .84rem; color: var(--soft); }
+.order-bar .bar-text b { display: block; color: var(--paper); font-size: .96rem; }
+@media (max-width: 640px) {
+  .order-bar .bar-text { display: none; }
+  .order-bar .btn { width: 100%; }
+}
