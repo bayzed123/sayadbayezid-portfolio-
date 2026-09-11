@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Fullstack build — storefront, dashboard and tracking, from one person | Connect with Bayezid</title>
+<meta name="description" content="A complete commerce build: storefront, admin dashboard, POS and barcode, courier booking, and Meta tracking wired properly. One accountable person, from $450." />
+
+<!-- ===================================================================
+     WHY THIS PAGE IS NOT index.html WITH A DIFFERENT HEADLINE.
+
+     This is a paid-traffic landing page. Someone arrives from one ad,
+     with one question, and leaves in about eight seconds if it is not
+     answered. So the page has: no site nav (nothing to click away
+     with), no blog links, one offer, and one action repeated down the
+     page. The main site sells six services; this page sells one.
+
+     It is deliberately self-contained — its own CSS in this file, no
+     /assets/style.css (32 KB, ~90% of it unused here), no main.js.
+     One HTML request plus fonts plus five images. Landing-page speed
+     is not a nicety on Meta: a slow page loses the people who already
+     clicked, and you pay for those clicks either way.
+
+     ROBOTS: noindex, follow. This page and services.html sell the same
+     thing; letting both compete in organic search splits the ranking
+     signal and Google picks the winner, not you. "follow" so the links
+     out of it still count.
+     =================================================================== -->
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href="https://sayadbayezid.com/ads/fullstack/" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/hero-storefront.webp" type="image/webp" fetchpriority="high" />
+
+<meta property="og:title" content="Fullstack build — storefront, dashboard and tracking, from one person" />
+<meta property="og:description" content="Storefront, admin dashboard, POS and barcode, courier booking, and Meta tracking wired properly. From $450." />
+<meta property="og:url" content="https://sayadbayezid.com/ads/fullstack/" />
+<meta property="og:image" content="https://sayadbayezid.com/ads/fullstack/img/hero-storefront.webp" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<!-- Meta Pixel — same pixel as the rest of the site on purpose. A separate
+     pixel per landing page would split the conversion history that ad
+     delivery learns from, and the learning phase would restart from zero. -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1612338809888151');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1" alt="" /></noscript>
+<!-- End Meta Pixel -->
+
+<style>
+:root {
+  --void: #0A0F0D;
+  --surface: #101613;
+  --surface-raised: #161F1A;
+  --line: rgba(237, 239, 236, 0.09);
+  --emerald: #00D084;
+  --emerald-soft: rgba(0, 208, 132, 0.14);
+  --emerald-deep: #00A868;
+  --gold: #D4AF6A;
+  --paper: #EDEFEC;
+  --text-soft: #93A199;
+  --text-dim: #5C6A62;
+  --radius: 18px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+body {
+  margin: 0; background: var(--void); color: var(--paper);
+  font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; line-height: 1.6;
+}
+h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; letter-spacing: -.01em; margin: 0; }
+p { margin: 0; color: var(--text-soft); }
+a { color: var(--emerald); }
+img { max-width: 100%; height: auto; display: block; }
+:focus-visible { outline: 2px solid var(--emerald); outline-offset: 3px; }
+.skip { position: absolute; left: -999px; background: var(--emerald); color: var(--void); padding: 12px 20px; z-index: 99; font-weight: 600; }
+.skip:focus { left: 0; }
+
+.wrap { width: min(1080px, 100% - 40px); margin-inline: auto; }
+section { padding-block: 72px; }
+@media (max-width: 640px) { section { padding-block: 52px; } .wrap { width: min(1080px, 100% - 32px); } }
+
+.eyebrow {
+  font-size: .72rem; letter-spacing: .16em; text-transform: uppercase;
+  color: var(--emerald); font-weight: 600; display: block; margin-bottom: 14px;
+}
+
+/* ------------------------------------------------------------ buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 30px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+  text-decoration: none; border: 1px solid transparent; cursor: pointer;
+  font-family: inherit; transition: transform .2s, background .2s, border-color .2s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--emerald); color: var(--void); }
+.btn-primary:hover { background: #14e295; }
+.btn-ghost { border-color: var(--line); color: var(--paper); background: transparent; }
+.btn-ghost:hover { border-color: var(--emerald); }
+.btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+
+/* ------------------------------------------------------------ hero */
+.hero { padding-top: 64px; padding-bottom: 40px; }
+.hero h1 { font-size: clamp(2.1rem, 6vw, 3.5rem); line-height: 1.08; margin-bottom: 20px; }
+.hero h1 em { font-style: italic; color: var(--emerald); }
+.hero .lede { font-size: clamp(1.02rem, 2.2vw, 1.2rem); max-width: 62ch; }
+.hero-shot {
+  margin-top: 44px; border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden; background: var(--surface);
+}
+.hero-shot img { width: 100%; }
+.hero-shot figcaption {
+  padding: 14px 18px; font-size: .85rem; color: var(--text-dim);
+  border-top: 1px solid var(--line);
+}
+
+/* ------------------------------------------------------------ proof */
+.proof { background: var(--surface); border-block: 1px solid var(--line); padding-block: 40px; }
+.proof-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 28px; }
+.proof-grid b { display: block; font-family: 'Fraunces', serif; font-size: 1.55rem; color: var(--paper); margin-bottom: 6px; }
+.proof-grid span { font-size: .88rem; color: var(--text-soft); }
+
+/* ------------------------------------------------------------ cards */
+.section-head { max-width: 60ch; margin-bottom: 44px; }
+.section-head h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin-bottom: 14px; }
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 900px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+.card {
+  background: var(--surface-raised); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
+}
+.card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top center; }
+.card-body { padding: 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.card h3 { font-size: 1.12rem; }
+.card p { font-size: .92rem; }
+.card img.shot-phone {
+  aspect-ratio: 5 / 4; object-fit: contain; padding: 12px 0;
+  background: linear-gradient(160deg, #1d2a23, #0f1512);
+}
+.card .card-cta { margin-top: auto; padding-top: 14px; font-size: .88rem; font-weight: 600; color: var(--emerald); }
+
+/* ------------------------------------------------------------ design map */
+.map { background: var(--surface); border-block: 1px solid var(--line); }
+.map-steps { display: grid; gap: 26px 18px; grid-template-columns: repeat(3, minmax(0, 1fr)); counter-reset: step; }
+@media (max-width: 860px) { .map-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .map-steps { grid-template-columns: 1fr; } }
+.map-step {
+  position: relative; background: var(--void); border: 1px solid var(--line);
+  border-radius: 14px; padding: 24px 20px 20px;
+}
+.map-step::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; top: -15px; left: 20px;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--emerald); color: var(--void);
+  display: grid; place-items: center; font-weight: 700; font-size: .88rem;
+}
+.map-step h3 { font-size: 1rem; margin-bottom: 8px; }
+.map-step p { font-size: .87rem; }
+.map-step .who { display: block; margin-top: 12px; font-size: .74rem; letter-spacing: .1em; text-transform: uppercase; color: var(--text-dim); }
+.map-note {
+  margin-top: 28px; padding: 18px 20px; border-left: 2px solid var(--emerald);
+  background: var(--emerald-soft); border-radius: 0 12px 12px 0; font-size: .92rem;
+}
+
+/* ------------------------------------------------------------ price */
+.price-box {
+  background: var(--surface-raised); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 36px; display: grid; gap: 30px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+@media (max-width: 760px) { .price-box { grid-template-columns: 1fr; padding: 26px; } }
+.price-tag { font-family: 'Fraunces', serif; font-size: 3rem; color: var(--paper); line-height: 1; }
+.price-tag small { display: block; font-family: 'Inter', sans-serif; font-size: .82rem; color: var(--text-dim); margin-top: 10px; letter-spacing: .04em; }
+.included { list-style: none; margin: 0; padding: 0; display: grid; gap: 11px; }
+.included li { position: relative; padding-left: 26px; font-size: .93rem; color: var(--text-soft); }
+.included li::before { content: "✓"; position: absolute; left: 0; color: var(--emerald); font-weight: 700; }
+
+/* ------------------------------------------------------------ form */
+.form-card {
+  background: var(--surface-raised); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 32px;
+}
+@media (max-width: 640px) { .form-card { padding: 22px; } }
+.field { display: grid; gap: 7px; margin-bottom: 18px; }
+.field label { font-size: .84rem; font-weight: 600; color: var(--paper); }
+.field label span { color: var(--text-dim); font-weight: 400; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 13px 15px; border-radius: 11px;
+  border: 1px solid var(--line); background: var(--void); color: var(--paper);
+  font-family: inherit; font-size: .95rem;
+}
+.field textarea { min-height: 108px; resize: vertical; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--emerald); outline: none; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+@media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; gap: 0; } }
+.consent { display: flex; gap: 11px; align-items: flex-start; font-size: .84rem; color: var(--text-soft); margin-bottom: 20px; }
+.consent input { margin-top: 3px; width: 17px; height: 17px; accent-color: var(--emerald); flex-shrink: 0; }
+.banner { padding: 13px 16px; border-radius: 11px; font-size: .9rem; margin-bottom: 18px; }
+.banner-ok { background: var(--emerald-soft); color: var(--emerald); border: 1px solid rgba(0,208,132,.3); }
+.banner-warn { background: rgba(212,175,106,.12); color: var(--gold); border: 1px solid rgba(212,175,106,.3); }
+
+/* ------------------------------------------------------------ faq */
+.faq-item { border-bottom: 1px solid var(--line); padding: 20px 0; }
+.faq-item summary { cursor: pointer; font-weight: 600; font-size: 1rem; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; color: var(--emerald); font-size: 1.3rem; line-height: 1; flex-shrink: 0; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-item p { margin-top: 12px; font-size: .93rem; }
+
+/* ------------------------------------------------------------ footer */
+footer { border-top: 1px solid var(--line); padding-block: 34px; font-size: .85rem; color: var(--text-dim); }
+footer .links { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; }
+footer a { color: var(--text-soft); text-decoration: none; }
+footer a:hover { color: var(--emerald); }
+
+/* ------------------------------------------------------------ sticky mobile CTA */
+.sticky-cta {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(10, 15, 13, .94); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line); display: none;
+}
+.sticky-cta .btn { width: 100%; }
+@media (max-width: 760px) { .sticky-cta { display: block; } body { padding-bottom: 84px; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#order">Skip to the order form</a>
+
+<!-- ============================= HERO ============================= -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Fullstack build · one accountable person</span>
+    <h1>A shop that takes money, books the courier, and tells you <em>what it earned</em>.</h1>
+    <p class="lede">Storefront, admin dashboard, POS and barcode, courier booking, stock and profit tracking, and Meta tracking wired properly — designed, built and handed over by the same person who is writing this. No hand-off between a designer, a developer and a marketer who have never spoken.</p>
+    <div class="btn-row">
+      <a href="#order" class="btn btn-primary" data-cta="hero">Order this build</a>
+      <a href="#what" class="btn btn-ghost">See what you get</a>
+    </div>
+
+    <figure class="hero-shot">
+      <img src="img/hero-storefront.webp" width="1280" height="800" alt="Storefront home page of Arif Gadgets, showing the welcome banner, trust row and category tiles" fetchpriority="high" decoding="async" />
+      <figcaption>Live work — Arif Gadgets, a gadget retailer in Savar, Dhaka. Storefront, dashboard and API all built on one stack.</figcaption>
+    </figure>
+  </div>
+</header>
+
+<!-- ============================= PROOF ============================= -->
+<section class="proof">
+  <div class="wrap proof-grid">
+    <div><b>Live</b><span>Running in production at <a href="https://arifgadget.store" rel="noopener">arifgadget.store</a> — not a mockup</span></div>
+    <div><b>~0 ৳/month</b><span>Runs inside free tiers at this shop's volume. You pay for a domain</span></div>
+    <div><b>17 ms</b><span>Cold start on the deploy log — the whole API is one edge Worker</span></div>
+    <div><b>One person</b><span>Architecture, backend, frontend, design, DevOps and the Bangla staff guide</span></div>
+  </div>
+</section>
+
+<!-- ============================= WHAT YOU GET ============================= -->
+<section id="what">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What is in the build</span>
+      <h2>Six things, built as one system</h2>
+      <p>Every screenshot below is from work that is live and being used by staff every day — not a template demo.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card">
+        <img src="img/product.webp" width="900" height="562" loading="lazy" decoding="async" alt="Product detail page with photo gallery, price, specifications and delivery information" />
+        <div class="card-body">
+          <h3>A storefront that closes the sale</h3>
+          <p>Catalogue, filters, product pages with real photographs, a bag drawer and checkout — with cash on delivery as the default, because that is how your customers actually pay. Order tracking without forcing anyone to make an account.</p>
+          <span class="card-cta">Customer side</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/dashboard.webp" width="900" height="562" loading="lazy" decoding="async" alt="Admin dashboard showing revenue, gross profit, orders, stock on hand and the order pipeline" />
+        <div class="card-body">
+          <h3>A dashboard that answers &ldquo;did I make money&rdquo;</h3>
+          <p>Revenue, gross profit, average order value, stock at cost and the order pipeline on one screen — every figure computed live from the order and stock ledgers, never typed in by hand.</p>
+          <span class="card-cta">Owner side</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/margins.webp" width="900" height="562" loading="lazy" decoding="async" alt="Product list in the admin panel with cost price, sale price and margin shown per product" />
+        <div class="card-body">
+          <h3>Every product knows its own margin</h3>
+          <p>Cost price is stored alongside sale price, so margin is calculated per product and rolled up across the shop. You stop discovering at the end of the month that your best seller was your worst earner.</p>
+          <span class="card-cta">Money side</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/courier.webp" width="900" height="562" loading="lazy" decoding="async" alt="Courier panel showing parcels booked, delivered, returned and cash-on-delivery collected" />
+        <div class="card-body">
+          <h3>Courier booked from the same screen</h3>
+          <p>Parcels are booked with the courier straight from the order, and what came back — delivered, returned, COD collected, COD still outstanding — lands on the same panel. No second dashboard, no spreadsheet.</p>
+          <span class="card-cta">Fulfilment</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/mobile.webp" width="520" height="885" loading="lazy" decoding="async" alt="The same storefront running on a phone screen" class="shot-phone" />
+        <div class="card-body">
+          <h3>Built phone-first, not phone-tolerated</h3>
+          <p>Most of your buyers arrive from a Facebook ad, on a mid-range Android, over mobile data. The phone layout is the one designed first — the desktop layout follows from it, not the other way round.</p>
+          <span class="card-cta">Every screen</span>
+        </div>
+      </article>
+
+      <article class="card">
+        <img src="img/bangla-guide.webp" width="900" height="562" loading="lazy" decoding="async" alt="A staff guide written in Bangla, built into the admin panel" />
+        <div class="card-body">
+          <h3>The part most builds skip</h3>
+          <p>A staff guide written in Bangla, inside the dashboard itself — so the shop keeps running on a day you are not the one at the keyboard. It is the difference between a system you own and a system only you can operate.</p>
+          <span class="card-cta">Handover</span>
+        </div>
+      </article>
+    </div>
+
+    <p style="margin-top:26px;font-size:.83rem;color:var(--text-dim);max-width:75ch">
+      About the figures in these screenshots: they were produced by placing real orders through the live pricing engine on a demonstration dataset and letting the database do its work. They are the system&rsquo;s own calculations, captured from a running browser &mdash; not a client&rsquo;s private trading figures.
+    </p>
+
+    <div class="btn-row" style="justify-content:center;margin-top:34px">
+      <a href="#order" class="btn btn-primary" data-cta="cards">Order this build</a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= DESIGN MAP ============================= -->
+<section class="map" id="how">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">The design map</span>
+      <h2>How it actually works, start to finish</h2>
+      <p>Six stages. You are involved in three of them and free during the other three. Nothing is invoiced before the scope is agreed in writing.</p>
+    </div>
+
+    <ol class="map-steps" style="list-style:none;margin:0;padding:0">
+      <li class="map-step">
+        <h3>Brief and scope</h3>
+        <p>A 20-minute call: what you sell, who buys it, how they pay, who will run the dashboard. It ends with a written scope and a fixed price — no open-ended hourly billing.</p>
+        <span class="who">You + me · day 1</span>
+      </li>
+      <li class="map-step">
+        <h3>Design system first</h3>
+        <p>Colour tokens, type scale, spacing, one signature interaction — decided before any screen is laid out. That is why new pages stay consistent later without re-briefing anyone.</p>
+        <span class="who">Me · days 2–4</span>
+      </li>
+      <li class="map-step">
+        <h3>Build on the edge</h3>
+        <p>Storefront, dashboard and API in one TypeScript repository on Cloudflare. One type describes a product, and all three import it — so a change cannot silently break one of them.</p>
+        <span class="who">Me · the main stretch</span>
+      </li>
+      <li class="map-step">
+        <h3>Tracking and courier wired</h3>
+        <p>Pixel plus Conversions API with shared event IDs, courier API for booking, payment instructions, order tracking. Tested with Meta's own Test Events tool before launch, not after.</p>
+        <span class="who">Me · before handover</span>
+      </li>
+      <li class="map-step">
+        <h3>Your review, on real data</h3>
+        <p>You place a real order, your staff ring up a real walk-in sale, and we fix what feels wrong while it is cheap to fix. Revisions in this stage are included.</p>
+        <span class="who">You + me · launch week</span>
+      </li>
+      <li class="map-step">
+        <h3>Handover in your name</h3>
+        <p>Domain, Cloudflare, repository and every account transferred to you, plus the Bangla staff guide. You are never locked out of your own shop, and you are not locked to me.</p>
+        <span class="who">Yours · from then on</span>
+      </li>
+    </ol>
+
+    <p class="map-note"><strong>Why the order matters.</strong> Tracking is stage four, not an afterthought. Most shops bolt a Pixel on after launch, discover the events are wrong two ad campaigns later, and have already paid for the data they cannot trust. Here the events are defined while the checkout is being built, which is the only time it is free to get right.</p>
+  </div>
+</section>
+
+<!-- ============================= PRICE ============================= -->
+<section id="price">
+  <div class="wrap">
+    <div class="price-box">
+      <div>
+        <span class="eyebrow">Fullstack customization</span>
+        <div class="price-tag">from $450
+          <small>fixed scope, agreed in writing before anything starts</small>
+        </div>
+        <p style="margin-top:22px;font-size:.92rem">The exact quote depends on catalogue size, how many staff roles you need, and whether courier and payment integrations are in scope. You get the number before you commit, not after.</p>
+        <div class="btn-row">
+          <a href="#order" class="btn btn-primary" data-cta="price">Get my exact quote</a>
+        </div>
+      </div>
+      <div>
+        <ul class="included">
+          <li>Storefront, checkout and order tracking</li>
+          <li>Admin dashboard with revenue, profit and margin</li>
+          <li>POS and barcode generation</li>
+          <li>Stock ledger with low-stock alerts</li>
+          <li>Courier booking integration</li>
+          <li>Meta Pixel + Conversions API, deduplicated</li>
+          <li>SEO structure, sitemap and analytics</li>
+          <li>Staff guide written in Bangla</li>
+          <li>Full handover — code, domain and accounts in your name</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= ORDER ============================= -->
+<section id="order">
+  <div class="wrap" style="max-width:680px">
+    <div class="section-head">
+      <span class="eyebrow">Start here</span>
+      <h2>Tell me what you sell</h2>
+      <p>Answer these and you get back a scope and a fixed price — usually within one working day. No call required first, and nothing is charged for the quote.</p>
+    </div>
+
+    <div class="form-card">
+      <div id="orderBanner" aria-live="polite"></div>
+      <form id="orderForm" novalidate>
+        <div class="grid-2">
+          <div class="field">
+            <label for="oName">Your name</label>
+            <input type="text" id="oName" name="name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="oPhone">Phone / WhatsApp</label>
+            <input type="tel" id="oPhone" name="phone" autocomplete="tel" inputmode="tel" placeholder="01XXXXXXXXX" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="oEmail">Email</label>
+          <input type="email" id="oEmail" name="email" autocomplete="email" inputmode="email" required />
+        </div>
+        <div class="field">
+          <label for="oWebsite">Current website <span>(optional — leave blank if you are starting fresh)</span></label>
+          <input type="url" id="oWebsite" name="website" placeholder="https://" />
+        </div>
+        <div class="field">
+          <label for="oScope">What do you need built?</label>
+          <select id="oScope" name="scope">
+            <option value="Full commerce build">Full commerce build — storefront + dashboard + POS</option>
+            <option value="Storefront only">Storefront and checkout only</option>
+            <option value="Dashboard only">Admin dashboard for an existing shop</option>
+            <option value="Tracking and ads setup">Tracking and ads setup on an existing site</option>
+            <option value="Not sure yet">Not sure yet — advise me</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="oMessage">Anything I should know <span>(what you sell, roughly how many products)</span></label>
+          <textarea id="oMessage" name="message"></textarea>
+        </div>
+
+        <label class="consent">
+          <input type="checkbox" id="oConsent" />
+          <span>I agree that my details are stored so Bayezid can reply to this enquiry, as described in the <a href="/privacy-policy.html" target="_blank" rel="noopener">privacy policy</a>. I can ask for them to be deleted at any time.</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary" id="orderSubmit" style="width:100%">Send and get my quote</button>
+      </form>
+      <p style="margin-top:16px;font-size:.82rem;color:var(--text-dim)">Your details go to one inbox — mine. They are not sold, not shared with a third party, and not added to any mailing list.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= FAQ ============================= -->
+<section style="padding-top:0">
+  <div class="wrap" style="max-width:760px">
+    <div class="section-head"><span class="eyebrow">Before you send</span><h2>The four questions I always get</h2></div>
+
+    <details class="faq-item">
+      <summary>How long does a full build take?</summary>
+      <p>Three to six weeks for a standard catalogue, depending on how fast product photos and cost prices come back from your side. That dependency is named in the scope, so nobody is surprised by it halfway through.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What does it cost to run every month?</summary>
+      <p>At the volume of a shop like the one in the screenshots above, effectively nothing — everything sits inside Cloudflare's free tiers. The real bill is the domain, roughly ৳1,200 a year. If you outgrow the free tiers, that is a good problem and I will tell you before it happens.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can my staff actually use the dashboard?</summary>
+      <p>That is what the Bangla guide is for, and why staff roles exist — a salesperson sees orders and stock, not your profit margins. The dashboard in the screenshot is run daily by people who had never used an admin panel before this one.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What if I want to leave later?</summary>
+      <p>Then you leave with everything. The code is in your repository, the domain and Cloudflare account are in your name, and the stack is standard TypeScript that any competent developer can pick up. There is no proprietary layer holding you here.</p>
+    </details>
+
+    <div class="btn-row" style="justify-content:center;margin-top:36px">
+      <a href="#order" class="btn btn-primary" data-cta="faq">Order this build</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="/">Connect with Bayezid</a>
+      <a href="/services.html">All services</a>
+      <a href="/case-studies/arif-gadgets.html">Read the full case study</a>
+      <a href="/privacy-policy.html">Privacy</a>
+      <a href="/terms-of-service.html">Terms</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <p style="font-size:.82rem">Sayad Md Bayezid Hosan · Tangail, Bangladesh · <span id="year"></span></p>
+  </div>
+</footer>
+
+<div class="sticky-cta"><a href="#order" class="btn btn-primary" data-cta="sticky">Order this build</a></div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+/* ===================================================================
+   TRACKING
+
+   Every event fires twice on purpose: once in the browser via fbq(),
+   once server-side through the Conversions API worker — both carrying
+   the SAME event_id, so Meta collapses them into one event instead of
+   counting two. That is Meta's own recommended setup. The browser copy
+   is what ad-blockers and Safari's tracking prevention remove; the
+   server copy is the one that survives them.
+
+   What fires here, and nothing else:
+     ViewContent  once, when the price box is genuinely on screen
+     ContactIntent (custom) when an order button is clicked
+     Lead         only on a submission the server accepted
+
+   There is deliberately no InitiateCheckout or Purchase. This page has
+   no cart and takes no payment, so those events would be fiction — and
+   Meta optimises delivery toward whatever you report, which means a
+   fictional event buys you fictional buyers.
+   =================================================================== */
+const CAPI_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/track';
+
+function readCookie(name) {
+  const hit = document.cookie.split('; ').find((row) => row.startsWith(name + '='));
+  return hit ? decodeURIComponent(hit.slice(name.length + 1)) : null;
+}
+
+/* fbc is the click identifier Meta uses to tie a conversion back to the
+   exact ad click. The Pixel writes it to a cookie, but only after it has
+   loaded — if someone converts fast, or the Pixel was blocked, the cookie
+   is not there. So build it from the fbclid in the URL ourselves, in
+   Meta's documented "fb.1.<timestamp>.<fbclid>" shape. This is the single
+   biggest match-quality win available on a paid landing page. */
+function resolveFbc() {
+  const cookie = readCookie('_fbc');
+  if (cookie) return cookie;
+  const fbclid = new URLSearchParams(location.search).get('fbclid');
+  return fbclid ? 'fb.1.' + Date.now() + '.' + fbclid : null;
+}
+
+function fireEvent(eventName, { custom = false, customData = {}, contact = null } = {}) {
+  const eventId = crypto.randomUUID();
+
+  if (typeof fbq === 'function') {
+    if (custom) fbq('trackCustom', eventName, customData);
+    else fbq('track', eventName, customData, { eventID: eventId });
+  }
+  if (custom) return; // exploratory events don't need the server copy
+
+  const fbp = readCookie('_fbp');
+  const fbc = resolveFbc();
+  const user_data = {};
+  if (fbp) user_data.fbp = fbp;
+  if (fbc) user_data.fbc = fbc;
+  /* Email and phone travel in plain text over HTTPS to my own worker,
+     which normalises and SHA-256 hashes them before they go anywhere
+     near Meta. Meta never receives, and cannot receive, the raw value. */
+  if (contact && contact.em) user_data.em = contact.em;
+  if (contact && contact.ph) user_data.ph = contact.ph;
+
+  fetch(CAPI_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      event_name: eventName,
+      event_id: eventId,
+      event_source_url: window.location.href,
+      custom_data: customData,
+      user_data,
+    }),
+    keepalive: true,
+  }).catch(() => {}); // a failed echo must never break the page
+}
+
+/* --- campaign attribution ----------------------------------------
+   Captured once on arrival and kept for the session, because the
+   visitor may scroll, open the case study in a new tab, come back and
+   only then submit — by which point the URL parameters are long gone.
+   These ride along in the enquiry text so a lead in the inbox names
+   the ad that paid for it. */
+const ATTRIBUTION_KEYS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid'];
+function captureAttribution() {
+  const params = new URLSearchParams(location.search);
+  const found = {};
+  ATTRIBUTION_KEYS.forEach((k) => { const v = params.get(k); if (v) found[k] = v.slice(0, 120); });
+  if (Object.keys(found).length) {
+    try { sessionStorage.setItem('lp_attribution', JSON.stringify(found)); } catch {}
+    return found;
+  }
+  try { return JSON.parse(sessionStorage.getItem('lp_attribution') || '{}'); } catch { return {}; }
+}
+const attribution = captureAttribution();
+
+/* --- ViewContent, once, and only when really seen ------------------
+   "Really seen" is a dwell, not a percentage. An earlier version asked
+   for 50% of the pricing section to be on screen, which quietly never
+   happens on a phone: one column makes that section taller than a
+   844px viewport, so half of it can never be visible at once and the
+   event never fires — on exactly the devices most of the ad traffic
+   arrives on. Any visibility plus 1.2 seconds of staying put works at
+   every viewport height, and still ignores someone flicking past. */
+const priceBox = document.querySelector('#price .price-box') || document.getElementById('price');
+if (priceBox && 'IntersectionObserver' in window) {
+  let dwell = null;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (dwell === null) dwell = setTimeout(() => {
+          io.disconnect();
+          fireEvent('ViewContent', { customData: { content_name: 'Fullstack build — pricing', content_category: 'Fullstack' } });
+        }, 1200);
+      } else if (dwell !== null) {
+        clearTimeout(dwell);
+        dwell = null;
+      }
+    });
+  }, { threshold: 0 });
+  io.observe(priceBox);
+}
+
+/* --- order button clicks ------------------------------------------ */
+document.querySelectorAll('[data-cta]').forEach((el) => {
+  el.addEventListener('click', () => {
+    fireEvent('ContactIntent', { custom: true, customData: { content_name: 'Fullstack build', placement: el.dataset.cta } });
+  });
+});
+
+/* --- the form ------------------------------------------------------ */
+const form = document.getElementById('orderForm');
+const submitBtn = document.getElementById('orderSubmit');
+const banner = document.getElementById('orderBanner');
+
+function say(kind, text) {
+  banner.innerHTML = '<div class="banner banner-' + kind + '"></div>';
+  banner.firstChild.textContent = text; // textContent, so a server message can never inject markup
+}
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('oName').value.trim();
+  const phone = document.getElementById('oPhone').value.trim();
+  const email = document.getElementById('oEmail').value.trim();
+  const website = document.getElementById('oWebsite').value.trim();
+  const scope = document.getElementById('oScope').value;
+  const note = document.getElementById('oMessage').value.trim();
+
+  if (!name || !phone || !email) return say('warn', 'Name, phone and email are all needed before I can send you a quote.');
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) return say('warn', "That email address doesn't look right — check it once more.");
+  if (!document.getElementById('oConsent').checked) return say('warn', 'Please tick the consent box so I am allowed to store your details and reply.');
+
+  /* /api/contact takes name, email and message. Everything else is
+     packed into the message rather than dropped, so the enquiry that
+     lands in the inbox is complete on its own. */
+  const message = [
+    'LANDING PAGE ENQUIRY — Fullstack build',
+    'Scope: ' + scope,
+    'Phone: ' + phone,
+    website ? 'Website: ' + website : 'Website: none yet',
+    note ? '\nWhat they said:\n' + note : '\n(No extra note.)',
+    Object.keys(attribution).length
+      ? '\nCame from: ' + Object.entries(attribution).map(([k, v]) => k + '=' + v).join(' · ')
+      : '\nCame from: direct / no campaign parameters',
+  ].join('\n');
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  try {
+    const resp = await fetch('https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message }),
+    });
+    if (resp.ok) {
+      fireEvent('Lead', {
+        customData: { content_name: 'Fullstack build', content_category: scope },
+        contact: { em: email, ph: phone },
+      });
+      form.hidden = true;
+      say('ok', 'Got it — your enquiry is with me. Expect a scope and a fixed price within one working day.');
+    } else {
+      const data = await resp.json().catch(() => ({}));
+      say('warn', data.error || 'Something went wrong at my end. Try again, or message me on WhatsApp.');
+    }
+  } catch {
+    say('warn', "Couldn't reach the server. Check your connection and try once more.");
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Send and get my quote';
+  }
+});
+</script>
+</body>
+</html>

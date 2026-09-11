@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Meta Platform Integration — Connect with Bayezid</title>
+<meta name="description" content="How Connect with Bayezid uses the Meta Platform: callback URLs, webhook fields, permissions requested and why, and how customer data is handled and deleted.">
+<link rel="canonical" href="https://sayadbayezid.com/meta-integration.html">
+<meta name="robots" content="index, follow">
+<!--
+  WHY THIS PAGE IS HTML AND NOT MARKDOWN.
+
+  A reviewer opens this in a browser. GitHub Pages serves a .md file as
+  text/plain — no headings, no tables, no links, just the raw asterisks — so a
+  markdown file read through a URL looks worse than no documentation at all.
+  Markdown is right for a file read on GitHub, which renders it; HTML is right
+  for anything a person opens by URL.
+
+  WHAT IS DELIBERATELY NOT ON THIS PAGE.
+
+  No secret, no token, no App Secret, no key of any kind — not even masked.
+  No admin endpoint: the dashboard routes are not Meta's business and listing
+  them only tells a stranger where to knock. Every URL below is one Meta
+  itself calls, and every one of them verifies a signature before it acts.
+-->
+<style>
+  :root{--ink:#0b1220;--muted:#5b6779;--brand:#1877f2;--line:#e1e8ef;--bg:#f7f9fb;
+    --code:#f3f6f9;--good:#0f7b52;--good-soft:#e6f5ee}
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.65;
+    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Noto Sans Bengali',sans-serif}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px}
+  header.top{background:#0c1625;color:#fff;padding:34px 0 30px}
+  header.top h1{font-size:clamp(1.5rem,4.6vw,2.1rem);margin:0 0 8px;letter-spacing:-.02em}
+  header.top p{margin:0;color:#b9c9da;max-width:62ch}
+  .meta-row{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:.83rem;color:#9fb3c8}
+  .meta-row b{color:#fff;font-weight:600}
+  nav.toc{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+  nav.toc ul{list-style:none;display:flex;gap:4px;overflow-x:auto;margin:0;padding:10px 0;font-size:.84rem}
+  nav.toc a{display:block;white-space:nowrap;padding:6px 11px;border-radius:8px;text-decoration:none;color:var(--muted)}
+  nav.toc a:hover{background:var(--code);color:var(--ink)}
+  main{padding:28px 0 60px}
+  section{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:16px}
+  h2{font-size:1.15rem;margin:0 0 10px;scroll-margin-top:60px}
+  h3{font-size:.98rem;margin:18px 0 6px}
+  p{margin:0 0 12px}
+  ul{margin:0 0 12px;padding-left:20px}
+  li{margin-bottom:5px}
+  code{background:var(--code);border:1px solid var(--line);border-radius:5px;padding:1px 5px;
+    font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:.86em;
+    overflow-wrap:anywhere;word-break:normal}
+  /* A callback URL broken mid-word ("/api/messenger/webho ok") is a URL a
+     reviewer has to reassemble by eye before they can paste it. Keep every
+     path in a table on one line; the wrapper scrolls if the screen is narrow. */
+  td code,th code{white-space:nowrap}
+  .table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;margin:0 0 12px}
+  table{border-collapse:collapse;width:100%;min-width:600px;font-size:.88rem}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{background:var(--code);font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+  tbody tr:last-child td{border-bottom:0}
+  .note{background:var(--good-soft);border:1px solid #bfe3d1;border-radius:10px;padding:12px 14px;
+    font-size:.9rem;color:#14543c;margin:0 0 12px}
+  .warn{background:#fdf3e2;border:1px solid #f0d9ae;border-radius:10px;padding:12px 14px;
+    font-size:.9rem;color:#7a4a08;margin:0 0 12px}
+  footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:.86rem}
+  a{color:var(--brand)}
+  @media(min-width:760px){nav.toc ul{gap:6px}}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <h1>Meta Platform integration</h1>
+  <p>How this application uses the Meta Platform — every callback Meta calls, every webhook field it subscribes to, every permission it asks for and what each one is actually used for, and what happens to a person's data when they ask for it to be removed.</p>
+  <div class="meta-row">
+    <span><b>Business:</b> Connect with Bayezid</span>
+    <span><b>Website:</b> sayadbayezid.com</span>
+    <span><b>Region:</b> Bangladesh</span>
+    <span><b>Last updated:</b> 11 September 2026</span>
+  </div>
+</div></header>
+
+<nav class="toc"><div class="wrap"><ul>
+  <li><a href="#what">What it does</a></li>
+  <li><a href="#callbacks">Callback URLs</a></li>
+  <li><a href="#webhooks">Webhook fields</a></li>
+  <li><a href="#permissions">Permissions</a></li>
+  <li><a href="#data">Data handling</a></li>
+  <li><a href="#deletion">Deletion</a></li>
+  <li><a href="#security">Security</a></li>
+  <li><a href="#test">How to test</a></li>
+</ul></div></nav>
+
+<main class="wrap">
+
+<section id="what">
+  <h2>What this application does</h2>
+  <p>Connect with Bayezid is a web development and digital marketing studio in Bangladesh. This application supports three things, and nothing else:</p>
+  <ul>
+    <li><b>Messenger support for our own Facebook Page.</b> Someone messages the Page with a question about our services and receives an answer — most of them written in advance, in Bangla and English.</li>
+    <li><b>Conversions API for our own website.</b> Website events already reported by the Meta Pixel are also sent server-side, so a blocked browser event is not a lost conversion. Both copies carry the same event ID, so Meta counts one sale once.</li>
+    <li><b>Business Login for clients.</b> A client who has hired us to manage their advertising connects their own Meta business assets so we can work on them, and disconnects whenever they choose.</li>
+  </ul>
+  <p>It is not a consumer product, it has no app store listing, and it does not publish content on anyone's behalf.</p>
+</section>
+
+<section id="callbacks">
+  <h2>Callback URLs</h2>
+  <p>All four are served by a single Cloudflare Worker on <code>bayezid-agency-api.sayadmdbayezidhosan.workers.dev</code>. Every one verifies a Meta signature before it reads the request.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Purpose</th><th>URL</th><th>Verification</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Webhook verification</b><br><span style="color:var(--muted)">GET</span></td>
+        <td><code>/api/messenger/webhook</code></td>
+        <td>Answers <code>hub.challenge</code> only when <code>hub.verify_token</code> matches the configured value; 403 otherwise.</td>
+      </tr>
+      <tr>
+        <td><b>Webhook events</b><br><span style="color:var(--muted)">POST</span></td>
+        <td><code>/api/messenger/webhook</code></td>
+        <td><code>X-Hub-Signature-256</code>, HMAC-SHA256 over the raw request body, compared in constant time.</td>
+      </tr>
+      <tr>
+        <td><b>Deauthorize callback</b></td>
+        <td><code>/api/facebook/deauthorize</code></td>
+        <td><code>signed_request</code>, HMAC-SHA256 over the encoded payload. An unsigned request changes nothing.</td>
+      </tr>
+      <tr>
+        <td><b>Data deletion request</b></td>
+        <td><code>/api/facebook/data-deletion</code></td>
+        <td><code>signed_request</code>, as above. Returns a confirmation code and a status URL.</td>
+      </tr>
+    </tbody>
+  </table></div>
+  <h3>Related public URLs</h3>
+  <ul>
+    <li><b>Deletion status page</b> — <a href="/data-deletion-status.html">sayadbayezid.com/data-deletion-status.html</a>, the address the deletion callback hands out with a confirmation code.</li>
+    <li><b>Client login</b> — <a href="/facebook-business-login.html">sayadbayezid.com/facebook-business-login.html</a>, the only redirect URI this app uses.</li>
+    <li><b>Privacy policy</b> — <a href="/privacy-policy.html">sayadbayezid.com/privacy-policy.html</a> · <a href="/privacy-policy-meta-product.html">Meta-specific policy</a></li>
+    <li><b>Terms</b> — <a href="/terms-of-service.html">sayadbayezid.com/terms-of-service.html</a> · <a href="/business-integration-policy.html">Business integration &amp; data policy</a></li>
+  </ul>
+  <div class="note"><b>Why the API is on a workers.dev address.</b> The API and the website are in separate Cloudflare accounts, and Cloudflare only permits a Worker custom domain when the zone and the Worker share an account. The Worker therefore answers on its own origin. It is the same business and the same operator; the website links to it throughout.</div>
+</section>
+
+<section id="webhooks">
+  <h2>Webhook fields, and what each is used for</h2>
+  <p>Subscribed on the <b>Page</b> object for our own Facebook Page. Nothing is subscribed that is not used.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Field</th><th>What we do with it</th></tr></thead>
+    <tbody>
+      <tr><td><code>messages</code></td><td>Read the customer's question so the assistant can answer it.</td></tr>
+      <tr><td><code>messaging_postbacks</code></td><td>The Get Started button and menu taps, so a person can choose a service instead of typing.</td></tr>
+      <tr><td><code>messaging_referrals</code></td><td>Records which advertisement or link a conversation came from, so an ad's real cost per enquiry can be measured.</td></tr>
+      <tr><td><code>messaging_optins</code></td><td>Opt-ins through a plugin, recorded so consent is on file.</td></tr>
+      <tr><td><code>message_echoes</code></td><td><b>Stops the assistant talking over a person.</b> When a human on our team answers from the Page inbox, the echo tells the application to stay out of that conversation.</td></tr>
+      <tr><td><code>message_deliveries</code> · <code>message_reads</code></td><td>Confirms a reply reached the customer, so a broken integration is visible rather than silent.</td></tr>
+      <tr><td><code>message_reactions</code></td><td>Recorded; never replied to.</td></tr>
+      <tr><td><code>messaging_policy_enforcement</code></td><td>How Meta tells us the Page is restricted. Recorded so it is not missed.</td></tr>
+    </tbody>
+  </table></div>
+  <p>Events are stored as a small operational log: the message identifier, the Page identifier, the event type and whether a reply succeeded. <b>Message text is not stored.</b></p>
+</section>
+
+<section id="permissions">
+  <h2>Permissions, and why each is needed</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Permission</th><th>Why it is required</th></tr></thead>
+    <tbody>
+      <tr><td><code>pages_messaging</code></td><td>To receive a message sent to our Page and to send the reply. Without it there is no Messenger support.</td></tr>
+      <tr><td><code>pages_manage_metadata</code></td><td>To subscribe the Page to the webhook fields above.</td></tr>
+      <tr><td><code>pages_read_engagement</code></td><td>To read the Page's own profile details used in replies.</td></tr>
+      <tr><td><code>public_profile</code></td><td>Business Login: to show a connecting client which account they signed in with.</td></tr>
+      <tr><td><code>email</code></td><td>Business Login: to contact the client about the work they hired us for.</td></tr>
+      <tr><td><code>ads_management</code> · <code>ads_read</code></td><td>Advertising clients only, on accounts they have granted us. Reading performance, and creating or adjusting campaigns we have been engaged to manage.</td></tr>
+      <tr><td><code>business_management</code></td><td>To see which assets a client has shared with us, so we work only on those.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="warn"><b>Advertising work is scoped to accounts a client has explicitly shared.</b> Nothing here reads or changes an advertising account that has not been granted to us through Meta Business Manager, and a client removes that access themselves at any time without asking us.</div>
+</section>
+
+<section id="data">
+  <h2>What is stored, and for how long</h2>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Data</th><th>Why</th><th>Kept</th></tr></thead>
+    <tbody>
+      <tr><td>Page-scoped ID of someone who messages the Page</td><td>To reply to the right conversation and to know whether a colleague already answered.</td><td>Until deletion is requested</td></tr>
+      <tr><td>Name, phone, email and website — <b>only when a person types them into the enquiry form and agrees</b></td><td>So we can call back about the work they asked about.</td><td>Until deletion is requested</td></tr>
+      <tr><td>Which advertisement a conversation came from</td><td>To measure which campaigns produce enquiries.</td><td>Until deletion is requested</td></tr>
+      <tr><td>Client access token, from Business Login</td><td>To manage the assets that client engaged us to manage.</td><td>Encrypted at rest; removed on deauthorisation</td></tr>
+      <tr><td>Website conversion events</td><td>Conversions API delivery, deduplicated against the browser Pixel.</td><td>Sent to Meta; a delivery receipt without personal data is retained</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Message content is not stored.</b> Contact details are never taken without the person being shown what will be kept and agreeing to it. Nothing collected here is sold, rented, or shared with any third party.</p>
+</section>
+
+<section id="deletion">
+  <h2>Deleting a person's data</h2>
+  <p>Three routes, all of which work:</p>
+  <ul>
+    <li><b>Through Facebook.</b> Removing this app from a Facebook account sends a signed deletion request to <code>/api/facebook/data-deletion</code>. Everything held for that person is removed and a confirmation code is returned with a status URL.</li>
+    <li><b>By checking a code.</b> <a href="/data-deletion-status.html">sayadbayezid.com/data-deletion-status.html</a> answers for a confirmation code. It is public on purpose: the person asking has just deleted their account and has nothing left to authenticate with.</li>
+    <li><b>By asking.</b> <a href="mailto:info@sayadbayezid.com">info@sayadbayezid.com</a> — say what to remove and it is removed.</li>
+  </ul>
+  <div class="note"><b>Deletion covers every table that holds anything about that person</b> — the stored connection, any enquiry they submitted, a half-finished form, and the conversation log. Each is cleared independently, so a problem with one cannot leave the others behind.</div>
+</section>
+
+<section id="security">
+  <h2>Security</h2>
+  <ul>
+    <li>Every Meta callback verifies its signature before acting. A forged request cannot delete, disconnect, or trigger anything.</li>
+    <li>Signature comparison is constant-time; a near-miss reveals nothing through timing.</li>
+    <li>Only <code>HMAC-SHA256</code> is accepted. A request naming a weaker algorithm is refused rather than trusted.</li>
+    <li>Tokens and keys are stored as platform secrets, never in the code repository, never written to the database in plain text, and never returned by any endpoint or included in any error message.</li>
+    <li>Client access tokens are encrypted at rest.</li>
+    <li>The Conversions API token stays server-side and is never sent to a browser.</li>
+    <li>Contact details are returned only to an authenticated administrator, never in bulk, and never by a public endpoint.</li>
+  </ul>
+</section>
+
+<section id="test">
+  <h2>How to verify this integration</h2>
+  <ol>
+    <li><b>Webhook verification</b> — a <code>GET</code> to the webhook URL with the correct <code>hub.verify_token</code> returns the challenge; a wrong one returns 403.</li>
+    <li><b>Webhook events</b> — a <code>POST</code> with a valid <code>X-Hub-Signature-256</code> is accepted; without it, or with a wrong signature, it is refused and nothing is written.</li>
+    <li><b>Messenger</b> — message the Page and a reply arrives. Reply from the Page inbox and the assistant stops for that conversation.</li>
+    <li><b>Deletion</b> — remove the app from a Facebook account; the callback returns a confirmation code, and the status page confirms the removal for that code.</li>
+  </ol>
+  <p>For anything not covered here, write to <a href="mailto:info@sayadbayezid.com">info@sayadbayezid.com</a> and we will answer with whatever detail is needed.</p>
+</section>
+
+</main>
+
+<footer><div class="wrap">
+  <p>Connect with Bayezid · <a href="/">sayadbayezid.com</a> · <a href="/privacy-policy.html">Privacy</a> · <a href="/terms-of-service.html">Terms</a> · <a href="/business-integration-policy.html">Business integration policy</a></p>
+</div></footer>
+
+</body>
+</html>
