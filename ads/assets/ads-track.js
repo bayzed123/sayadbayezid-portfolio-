@@ -175,11 +175,19 @@
   }
 
   // --- auto-wiring, so a new page needs no new JavaScript ------------------
+  var WIRED = 'data-ads-wired';
+
   function wire() {
+    /* Callable again after content arrives from the dashboard, which adds
+       links and buttons long after this script first ran. Each element is
+       marked once — wiring the same node twice would report every click
+       twice, and a doubled ContactIntent is a doubled funnel. */
     /* Every order button on every page: <a data-order="hero">. The name is
        whatever you want to read in reporting later — it identifies which
        button on which page people actually press. */
     document.querySelectorAll('[data-order]').forEach(function (el) {
+      if (el.hasAttribute(WIRED)) return;
+      el.setAttribute(WIRED, '');
       el.addEventListener('click', function () {
         fire('ContactIntent', {
           custom: true,
@@ -195,6 +203,8 @@
     /* <section data-view-content="Pricing"> reports itself once the visitor
        has genuinely stopped on it. */
     document.querySelectorAll('[data-view-content]').forEach(function (el) {
+      if (el.hasAttribute(WIRED)) return;
+      el.setAttribute(WIRED, '');
       watchDwell(el, 1200, function () {
         fire('ViewContent', {
           customData: {
@@ -208,6 +218,8 @@
     /* <a data-demo="Fashion store"> — opening a demo is a real interest
        signal, and it is the thing the retargeting audience is built from. */
     document.querySelectorAll('[data-demo]').forEach(function (el) {
+      if (el.hasAttribute(WIRED)) return;
+      el.setAttribute(WIRED, '');
       el.addEventListener('click', function () {
         fire('ViewContent', {
           customData: { content_name: el.getAttribute('data-demo'), content_category: 'Demo' },
@@ -222,6 +234,9 @@
   // --- what pages may use --------------------------------------------------
   window.AdsTrack = {
     fire: fire,
+    /* Re-run after injecting content, so links that did not exist at load
+       are tracked like the ones that did. Safe to call repeatedly. */
+    wire: wire,
     attribution: attribution,
     attributionLine: attributionLine,
     watchDwell: watchDwell,

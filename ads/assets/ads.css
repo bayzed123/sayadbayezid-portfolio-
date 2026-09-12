@@ -36,6 +36,14 @@
   --shadow-cta: 0 10px 34px rgba(255, 61, 110, 0.34);
 }
 
+/* The `hidden` attribute is only `display:none` in the browser's own
+   stylesheet, so ANY author rule that sets display beats it. A .video-modal
+   with `display:grid` is therefore visible while carrying hidden="" — the
+   popup sat open over the page from the moment it loaded, and Escape
+   "closed" it by setting an attribute that changed nothing.
+   This one line is what makes hidden actually mean hidden. */
+[hidden] { display: none !important; }
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {

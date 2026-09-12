@@ -321,6 +321,7 @@
     projects: { title: 'Project health', crumb: 'Clients', load: loadProjects },
     report: { title: 'Developer report', crumb: 'Clients', load: loadReport },
     content: { title: 'Case studies & blog', crumb: 'Portfolio', load: loadContent },
+    landing: { title: 'Landing page', crumb: 'Portfolio', load: loadLanding },
     reviews: { title: 'Reviews', crumb: 'Portfolio', load: loadReviews },
     comments: { title: 'Comments', crumb: 'Portfolio', load: loadComments },
     enquiries: { title: 'Enquiries', crumb: 'Pipeline', load: loadEnquiries },
@@ -2464,6 +2465,384 @@
       notice.setAttribute('data-kind', 'error');
     });
   });
+
+
+  // ===========================================================================
+  // LANDING PAGE
+  //
+  // Edits the ad landing page's video, links and extra gallery images without
+  // a deploy. The bytes go to R2 through the Worker; the arrangement goes to
+  // D1 as one JSON document.
+  // ===========================================================================
+  var landing = { content: { video: null, links: [], images: [] }, assets: [], loaded: false, wired: false };
+
+  function landingBanner(kind, text) {
+    var box = document.querySelector('[data-landing-banner]');
+    clear(box);
+    if (!text) return;
+    var note = el('div', 'notice', text);
+    note.setAttribute('data-kind', kind);
+    box.appendChild(note);
+  }
+
+  /**
+   * Uploads.
+   *
+   * XMLHttpRequest rather than fetch, for one reason: upload progress. fetch()
+   * still cannot report how much of a request body has been sent, and a
+   * 200 MB video over a Bangladeshi mobile connection with no progress bar is
+   * indistinguishable from a page that has frozen — so it gets cancelled and
+   * retried, which is worse than slow.
+   *
+   * The body is the raw file. Base64 would inflate it by a third and force
+   * both ends to hold the whole thing in memory as a string.
+   */
+  function uploadMedia(file, onProgress) {
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('PUT', API + '/api/admin/media/object');
+      var token = readToken();
+      if (token) xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+      xhr.setRequestHeader('X-Filename', file.name);
+      xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+      xhr.upload.onprogress = function (e) {
+        if (e.lengthComputable && onProgress) onProgress(e.loaded / e.total);
+      };
+      xhr.onload = function () {
+        var payload = {};
+        try { payload = JSON.parse(xhr.responseText); } catch (e) {}
+        if (xhr.status === 401) { signOut(); reject(new Error('Session expired. Sign in again.')); return; }
+        if (xhr.status >= 200 && xhr.status < 300) resolve(payload);
+        else reject(new Error(payload.error || ('Upload failed (' + xhr.status + ')')));
+      };
+      xhr.onerror = function () { reject(new Error('The upload could not reach the server.')); };
+      xhr.send(file);
+    });
+  }
+
+  function withProgress(file, label) {
+    var box = document.querySelector('[data-landing-progress]');
+    clear(box);
+    var wrap = el('div', 'lp-bar');
+    var bar = el('i');
+    wrap.appendChild(bar);
+    var caption = el('p', 'field-hint', label + ' — ' + (file.size / 1024 / 1024).toFixed(1) + ' MB');
+    box.appendChild(caption);
+    box.appendChild(wrap);
+    return uploadMedia(file, function (ratio) {
+      bar.style.width = Math.round(ratio * 100) + '%';
+      caption.textContent = label + ' — ' + Math.round(ratio * 100) + '%';
+    }).then(function (result) {
+      caption.textContent = label + ' — uploaded.';
+      bar.style.width = '100%';
+      return result;
+    }).catch(function (error) {
+      clear(box);
+      throw error;
+    });
+  }
+
+  function renderLandingCurrent() {
+    var box = document.querySelector('[data-landing-current]');
+    clear(box);
+    if (!landing.content.video || !landing.content.video.src) return;
+    var fig = el('figure', 'lp-preview');
+    var video = document.createElement('video');
+    video.src = API + landing.content.video.src;
+    video.controls = true;
+    video.preload = 'metadata';
+    if (landing.content.video.poster) video.poster = API + landing.content.video.poster;
+    fig.appendChild(video);
+    fig.appendChild(el('figcaption', null, 'Currently live: ' + landing.content.video.src));
+    box.appendChild(fig);
+
+    var remove = el('button', 'btn btn-ghost', 'Remove this video from the page');
+    remove.type = 'button';
+    remove.addEventListener('click', function () {
+      landing.content.video = null;
+      renderLandingCurrent();
+      landingBanner('info', 'Removed here — press Save and publish to take it off the page.');
+    });
+    box.appendChild(remove);
+  }
+
+  function renderLandingLinks() {
+    var box = document.querySelector('[data-landing-links]');
+    clear(box);
+    landing.content.links.forEach(function (link, index) {
+      var row = el('div', 'lp-row');
+
+      var labelField = el('div', 'field');
+      var labelInput = document.createElement('input');
+      labelInput.type = 'text';
+      labelInput.maxLength = 80;
+      labelInput.value = link.label || '';
+      labelInput.placeholder = 'Fashion store demo';
+      labelField.appendChild(el('label', null, 'Label'));
+      labelField.appendChild(labelInput);
+      labelInput.addEventListener('input', function () { link.label = labelInput.value; });
+
+      var hrefField = el('div', 'field');
+      var hrefInput = document.createElement('input');
+      hrefInput.type = 'url';
+      hrefInput.value = link.href || '';
+      hrefInput.placeholder = 'https://demu.sayadbayezid.com/d/...';
+      hrefField.appendChild(el('label', null, 'Link'));
+      hrefField.appendChild(hrefInput);
+      hrefInput.addEventListener('input', function () { link.href = hrefInput.value; });
+
+      var remove = el('button', 'btn btn-ghost', 'Remove');
+      remove.type = 'button';
+      remove.addEventListener('click', function () {
+        landing.content.links.splice(index, 1);
+        renderLandingLinks();
+      });
+
+      row.appendChild(labelField);
+      row.appendChild(hrefField);
+      row.appendChild(remove);
+      box.appendChild(row);
+
+      var noteField = el('div', 'field');
+      var noteInput = document.createElement('input');
+      noteInput.type = 'text';
+      noteInput.maxLength = 160;
+      noteInput.value = link.note || '';
+      noteInput.placeholder = 'One line about what they will see';
+      noteField.appendChild(el('label', null, 'Note under the label'));
+      noteField.appendChild(noteInput);
+      noteInput.addEventListener('input', function () { link.note = noteInput.value; });
+      box.appendChild(noteField);
+    });
+    if (!landing.content.links.length) {
+      box.appendChild(el('p', 'field-hint', 'No extra links. The page still shows the four built-in demo cards.'));
+    }
+  }
+
+  function renderLandingImages() {
+    var box = document.querySelector('[data-landing-images]');
+    clear(box);
+    landing.content.images.forEach(function (image, index) {
+      var row = el('div', 'lp-row');
+
+      var thumb = document.createElement('img');
+      thumb.className = 'lp-thumb';
+      thumb.src = API + image.src;
+      thumb.alt = '';
+
+      var altField = el('div', 'field');
+      var altInput = document.createElement('input');
+      altInput.type = 'text';
+      altInput.maxLength = 160;
+      altInput.value = image.alt || '';
+      altInput.placeholder = 'What is in the picture';
+      altField.appendChild(el('label', null, 'Description'));
+      altField.appendChild(altInput);
+      altInput.addEventListener('input', function () { image.alt = altInput.value; });
+
+      var capField = el('div', 'field');
+      var capInput = document.createElement('input');
+      capInput.type = 'text';
+      capInput.maxLength = 200;
+      capInput.value = image.caption || '';
+      capInput.placeholder = 'Caption shown under it';
+      capField.appendChild(el('label', null, 'Caption'));
+      capField.appendChild(capInput);
+      capInput.addEventListener('input', function () { image.caption = capInput.value; });
+
+      var remove = el('button', 'btn btn-ghost', 'Remove');
+      remove.type = 'button';
+      remove.addEventListener('click', function () {
+        landing.content.images.splice(index, 1);
+        renderLandingImages();
+      });
+
+      row.appendChild(thumb);
+      row.appendChild(altField);
+      row.appendChild(remove);
+      box.appendChild(row);
+      box.appendChild(capField);
+    });
+    if (!landing.content.images.length) {
+      box.appendChild(el('p', 'field-hint', 'No extra images. The gallery shows the twelve built into the page.'));
+    }
+  }
+
+  function renderLandingAssets() {
+    var box = document.querySelector('[data-landing-media]');
+    clear(box);
+    document.querySelector('[data-count="landing-media"]').textContent =
+      landing.assets.length ? landing.assets.length + ' file' + (landing.assets.length === 1 ? '' : 's') : '';
+    if (!landing.assets.length) {
+      box.appendChild(el('p', 'field-hint', 'Nothing uploaded yet.'));
+      return;
+    }
+    var table = el('table');
+    var head = el('tr');
+    ['', 'File', 'Type', 'Size', 'Uploaded', ''].forEach(function (title) { head.appendChild(el('th', null, title)); });
+    table.appendChild(head);
+
+    landing.assets.forEach(function (asset) {
+      var row = el('tr');
+      var thumbCell = el('td');
+      if (asset.kind === 'image') {
+        var img = document.createElement('img');
+        img.className = 'lp-thumb';
+        img.src = API + '/api/media/' + asset.key;
+        img.alt = '';
+        thumbCell.appendChild(img);
+      } else {
+        thumbCell.appendChild(el('span', null, '🎬'));
+      }
+      row.appendChild(thumbCell);
+      row.appendChild(el('td', null, asset.filename));
+      row.appendChild(el('td', null, asset.kind));
+      row.appendChild(el('td', null, (asset.bytes / 1024 / 1024).toFixed(1) + ' MB'));
+      row.appendChild(el('td', null, fmtDate(asset.created_at)));
+
+      var actions = el('td');
+      var remove = el('button', 'btn btn-ghost', 'Delete');
+      remove.type = 'button';
+      remove.addEventListener('click', function () {
+        // A file still used by the page would leave a broken player behind.
+        var used = (landing.content.video && (landing.content.video.src === '/api/media/' + asset.key ||
+                    landing.content.video.poster === '/api/media/' + asset.key)) ||
+                   landing.content.images.some(function (i) { return i.src === '/api/media/' + asset.key; });
+        if (used && !window.confirm('That file is used on the page right now. Delete it anyway and leave a gap?')) return;
+        api('/api/admin/media/object?key=' + encodeURIComponent(asset.key), { method: 'DELETE' })
+          .then(loadLanding)
+          .catch(function (error) { landingBanner('error', error.message); });
+      });
+      actions.appendChild(remove);
+      row.appendChild(actions);
+      table.appendChild(row);
+    });
+    box.appendChild(table);
+  }
+
+  function renderLanding() {
+    var video = landing.content.video || {};
+    document.getElementById('landingVideoTitle').value = video.title || '';
+    document.getElementById('landingVideoCaption').value = video.caption || '';
+    document.getElementById('landingAutoPopup').checked = video.autoPopup !== false;
+    renderLandingCurrent();
+    renderLandingLinks();
+    renderLandingImages();
+    renderLandingAssets();
+  }
+
+  function loadLanding() {
+    if (!landing.wired) { landing.wired = true; wireLanding(); }
+    return Promise.all([
+      fetch(API + '/api/landing/fullstack').then(function (r) { return r.json(); }).catch(function () { return {}; }),
+      api('/api/admin/media/objects').catch(function (error) {
+        // A missing migration disables the panel with an explanation rather
+        // than leaving an empty screen that looks like a bug.
+        landingBanner('error', error.message);
+        return { assets: [] };
+      })
+    ]).then(function (results) {
+      var content = (results[0] && results[0].content) || {};
+      landing.content = {
+        video: content.video || null,
+        links: content.links || [],
+        images: content.images || []
+      };
+      landing.assets = results[1].assets || [];
+      landing.loaded = true;
+      renderLanding();
+    });
+  }
+
+  function saveLanding() {
+    var title = document.getElementById('landingVideoTitle').value.trim();
+    var caption = document.getElementById('landingVideoCaption').value.trim();
+    var autoPopup = document.getElementById('landingAutoPopup').checked;
+    if (landing.content.video) {
+      landing.content.video.title = title;
+      landing.content.video.caption = caption;
+      landing.content.video.autoPopup = autoPopup;
+    }
+    var payload = {
+      video: landing.content.video || undefined,
+      links: landing.content.links.filter(function (l) { return l.label && l.href; }),
+      images: landing.content.images
+    };
+    return api('/api/admin/landing/fullstack', { method: 'PUT', body: { content: payload } })
+      .then(function (result) {
+        // Render back what the SERVER stored, not what was sent. A link the
+        // server refused (a javascript: URL, say) must visibly disappear here
+        // rather than sit on screen looking saved.
+        landing.content = {
+          video: result.content.video || null,
+          links: result.content.links || [],
+          images: result.content.images || []
+        };
+        renderLanding();
+        var dropped = payload.links.length - landing.content.links.length;
+        document.querySelector('[data-landing-saved]').textContent = 'Saved ' + new Date().toLocaleTimeString();
+        landingBanner(dropped > 0 ? 'error' : 'ok',
+          dropped > 0
+            ? dropped + ' link' + (dropped === 1 ? ' was' : 's were') + ' rejected — links must start with https://'
+            : 'Published. The landing page picks this up on its next load.');
+      })
+      .catch(function (error) { landingBanner('error', error.message); });
+  }
+
+  function wireLanding() {
+    document.getElementById('landingVideoFile').addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      landingBanner('', '');
+      withProgress(file, 'Uploading video')
+        .then(function (result) {
+          landing.content.video = Object.assign({}, landing.content.video || {}, {
+            src: result.url,
+            title: document.getElementById('landingVideoTitle').value.trim(),
+            caption: document.getElementById('landingVideoCaption').value.trim(),
+            autoPopup: document.getElementById('landingAutoPopup').checked
+          });
+          e.target.value = '';
+          return loadLanding();
+        })
+        .then(function () { landingBanner('ok', 'Video uploaded. Press Save and publish to put it on the page.'); })
+        .catch(function (error) { landingBanner('error', error.message); });
+    });
+
+    document.getElementById('landingPosterFile').addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      withProgress(file, 'Uploading poster')
+        .then(function (result) {
+          if (!landing.content.video) landing.content.video = { src: '' };
+          landing.content.video.poster = result.url;
+          e.target.value = '';
+          return loadLanding();
+        })
+        .then(function () { landingBanner('ok', 'Poster uploaded. Press Save and publish.'); })
+        .catch(function (error) { landingBanner('error', error.message); });
+    });
+
+    document.getElementById('landingImageFile').addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (!file) return;
+      withProgress(file, 'Uploading image')
+        .then(function (result) {
+          landing.content.images.push({ src: result.url, alt: '', caption: '' });
+          e.target.value = '';
+          return loadLanding();
+        })
+        .then(function () { landingBanner('ok', 'Image added. Describe it, then Save and publish.'); })
+        .catch(function (error) { landingBanner('error', error.message); });
+    });
+
+    document.getElementById('landingAddLink').addEventListener('click', function () {
+      landing.content.links.push({ label: '', href: '', note: '' });
+      renderLandingLinks();
+    });
+
+    document.getElementById('landingSave').addEventListener('click', saveLanding);
+  }
 
   // --- start ---------------------------------------------------------------
   if (readToken()) {

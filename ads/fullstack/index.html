@@ -220,6 +220,98 @@
 .faq-item[open] summary::after { content: "−"; }
 .faq-item p { margin-top: 12px; font-size: .92rem; }
 
+/* ------------------------------------------------------------------ video */
+.video-frame {
+  margin: 0; border: 1px solid var(--line-strong); border-radius: var(--radius);
+  overflow: hidden; background: #000; position: relative; aspect-ratio: 16 / 9;
+}
+.video-frame video { width: 100%; height: 100%; display: block; object-fit: contain; background: #000; }
+.video-cover {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0; padding: 0;
+  cursor: pointer; background: linear-gradient(160deg, #2A1C42, #140D22);
+  display: grid; place-items: center; gap: 14px; align-content: center;
+  color: var(--paper); font: inherit;
+}
+.video-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .5; }
+/* White, not the flame gradient — even though this is a button and the
+   gradient is what buttons wear here. There are thirteen order buttons on this
+   page, and the gradient is what makes them findable at a glance. A play
+   button in the same colour costs someone a misclick: they reach for orange
+   meaning "order" and get a video. White on dark is the universal play
+   affordance anyway, so it reads faster AND leaves the gradient unambiguous. */
+.video-play {
+  position: relative; width: 78px; height: 78px; border-radius: 50%;
+  background: rgba(255, 244, 238, .95); color: #17102A; display: grid; place-items: center;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, .45); padding-left: 4px;
+}
+.video-cover-text { position: relative; font-weight: 700; letter-spacing: .04em; }
+.video-cover:hover .video-play { transform: scale(1.06); }
+.video-play { transition: transform .2s ease; }
+
+.video-missing {
+  display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+  background: var(--raised); border: 1px dashed var(--line-strong);
+  border-radius: var(--radius); padding: 26px 28px;
+}
+@media (max-width: 560px) { .video-missing { grid-template-columns: 1fr; padding: 20px; } }
+.video-missing .ico { font-size: 1.7rem; line-height: 1; }
+.video-missing p { font-size: .92rem; }
+.video-missing p + p { margin-top: 8px; color: var(--dim); font-size: .86rem; }
+.video-missing b { color: var(--paper); }
+.video-missing em { color: var(--gold); font-style: normal; }
+
+.extra-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 30px; }
+.extra-link {
+  display: block; text-decoration: none; padding: 18px 20px;
+  background: var(--raised); border: 1px solid var(--line); border-radius: var(--radius-sm);
+  transition: border-color .2s, transform .2s;
+}
+.extra-link:hover { border-color: rgba(255,106,43,.5); transform: translateY(-2px); }
+.extra-link b { display: block; color: var(--paper); font-family: 'Fraunces', serif; font-size: 1rem; margin-bottom: 5px; }
+.extra-link span { font-size: .85rem; color: var(--soft); }
+
+/* ------------------------------------------------------- the scroll-in player
+   A popup that plays on scroll is one small step from the thing everybody
+   hates. What keeps it on the right side of that line:
+     - it opens once per visit, never again;
+     - it never opens if the visitor already started the video themselves;
+     - it never opens for someone who asked for reduced motion;
+     - it never opens on top of the order form;
+     - it starts muted, because an unmuted autoplay is blocked by every
+       browser anyway and startles the ones where it is not;
+     - Escape, the backdrop and the close button all shut it, and closing it
+       is remembered for the session. */
+.video-modal { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 20px; }
+.video-modal-backdrop { position: absolute; inset: 0; background: rgba(6, 3, 12, .82); backdrop-filter: blur(6px); }
+.video-modal-body {
+  position: relative; width: min(880px, 100%); background: var(--raised);
+  border: 1px solid var(--line-strong); border-radius: var(--radius); overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  animation: videoPopIn .32s cubic-bezier(.2, .9, .3, 1.2) both;
+}
+@keyframes videoPopIn { from { opacity: 0; transform: translateY(24px) scale(.97); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .video-modal-body { animation: none; } }
+.video-modal-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 18px; border-bottom: 1px solid var(--line);
+  font-family: 'Fraunces', serif; font-size: 1rem; color: var(--paper);
+}
+.video-modal-close {
+  border: 1px solid var(--line-strong); background: transparent; color: var(--soft);
+  width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: .95rem; flex-shrink: 0;
+}
+.video-modal-close:hover { border-color: var(--gold); color: var(--gold); }
+.video-modal-body video { width: 100%; display: block; background: #000; aspect-ratio: 16 / 9; }
+.video-modal-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+  padding: 16px 18px; border-top: 1px solid var(--line);
+}
+.video-modal-foot span { font-size: .85rem; color: var(--dim); }
+@media (max-width: 560px) {
+  .video-modal { padding: 12px; }
+  .video-modal-foot .btn { width: 100%; }
+}
+
 body { padding-bottom: 0; }
 @media (max-width: 640px) { body { padding-bottom: 78px; } }
 </style>
@@ -378,6 +470,68 @@ body { padding-bottom: 0; }
     </div>
   </div>
 </section>
+
+<!-- ================================ VIDEO ================================
+     The middle of the page, between "here is what it looks like" and "here is
+     what is in it". Someone who has scrolled this far is interested and is
+     about to hit the packages — a two-minute video is the cheapest way to
+     answer the questions the screenshots cannot.
+
+     The content of this block is editable from the admin dashboard. What is
+     written here is the fallback, and it is a real fallback: if the content
+     API is slow or down, this is what a visitor sees, and it is complete.
+     Paid traffic never gets a blank space where a video should be.
+     ======================================================================= -->
+<section id="video" data-view-content="Offer video" data-view-category="Ecommerce build">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" data-lp="video-eyebrow">Watch it work</span>
+      <h2 data-lp="video-title">Two minutes, and you will know if this is for you</h2>
+      <p data-lp="video-caption">An order placed on the storefront, appearing in the dashboard with the profit already calculated. No narration needed — watch what happens after someone presses Buy.</p>
+    </div>
+
+    <figure class="video-frame" id="videoFrame" hidden>
+      <button class="video-cover" id="videoCover" type="button" aria-label="Play the video">
+        <img id="videoPoster" alt="" decoding="async" hidden />
+        <span class="video-play" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5.5v13l11-6.5z"/></svg>
+        </span>
+        <span class="video-cover-text" id="videoCoverText">Play</span>
+      </button>
+      <video id="videoPlayer" playsinline preload="none" controls hidden></video>
+    </figure>
+
+    <div class="video-missing" id="videoMissing">
+      <span class="ico" aria-hidden="true">🎬</span>
+      <div>
+        <p><b>No video uploaded yet.</b> Upload one from the admin dashboard — <em>Landing page → Offer video</em> — and it appears here, with the scroll-in player, without touching any code.</p>
+        <p>Until then this section shows the text above, which is why the page never has a hole in it.</p>
+      </div>
+    </div>
+
+    <div class="btn-row center" style="margin-top:34px">
+      <a href="#order" class="btn btn-order" data-order="after-video" data-order-item="Ecommerce build">Order Now — from $100</a>
+    </div>
+
+    <div class="extra-links" id="extraLinks" hidden></div>
+  </div>
+</section>
+
+<!-- The scroll-in player. Hidden until it is genuinely wanted; see the script. -->
+<div class="video-modal" id="videoModal" hidden role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+  <div class="video-modal-backdrop" data-close-video></div>
+  <div class="video-modal-body">
+    <div class="video-modal-bar">
+      <span id="videoModalTitle">How it works</span>
+      <button type="button" class="video-modal-close" data-close-video aria-label="Close the video">✕</button>
+    </div>
+    <video id="videoModalPlayer" playsinline controls preload="none"></video>
+    <div class="video-modal-foot">
+      <span id="videoModalNote">Tap the speaker to turn sound on.</span>
+      <a href="#order" class="btn btn-order" data-order="video-modal" data-order-item="Ecommerce build">Order Now</a>
+    </div>
+  </div>
+</div>
 
 <!-- =============================== INCLUDED =============================== -->
 <section id="included">
@@ -738,6 +892,196 @@ document.getElementById('year').textContent = new Date().getFullYear();
     reported = true;
     window.AdsTrack.fire('GalleryCompleted', { custom: true, customData: { content_name: 'Build gallery' } });
   }, { passive: true });
+})();
+
+
+/* --- landing content, loaded from the admin dashboard --------------------
+   Everything this fills in already has a real value in the HTML. This only
+   ever REPLACES content, never creates the page — so a slow, rate-limited or
+   dead API leaves a complete page rather than a hole. That matters more here
+   than anywhere else on the site: every visitor arrived from an ad you paid
+   for, and a broken page spends that money for nothing. */
+(function () {
+  var API = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev';
+
+  var frame = document.getElementById('videoFrame');
+  var missing = document.getElementById('videoMissing');
+  var cover = document.getElementById('videoCover');
+  var poster = document.getElementById('videoPoster');
+  var player = document.getElementById('videoPlayer');
+  var modal = document.getElementById('videoModal');
+  var modalPlayer = document.getElementById('videoModalPlayer');
+  var modalTitle = document.getElementById('videoModalTitle');
+  var modalNote = document.getElementById('videoModalNote');
+
+  var state = { src: '', title: '', autoPopup: true, opened: false, startedByHand: false };
+
+  function absolute(url) {
+    return /^https?:\/\//i.test(url) ? url : API + url;
+  }
+  function setText(selector, value) {
+    if (!value) return;
+    var node = document.querySelector('[data-lp="' + selector + '"]');
+    if (node) node.textContent = value; // textContent — content from the API is never markup
+  }
+
+  function applyVideo(video) {
+    if (!video || !video.src) return;
+    state.src = absolute(video.src);
+    state.title = video.title || 'How it works';
+    state.autoPopup = video.autoPopup !== false;
+
+    setText('video-title', video.title);
+    setText('video-caption', video.caption);
+
+    player.src = state.src;
+    modalPlayer.src = state.src;
+    modalTitle.textContent = state.title;
+    if (video.poster) { poster.src = absolute(video.poster); poster.hidden = false; }
+
+    frame.hidden = false;
+    missing.hidden = true;
+  }
+
+  function applyLinks(links) {
+    if (!links || !links.length) return;
+    var box = document.getElementById('extraLinks');
+    links.forEach(function (item) {
+      var a = document.createElement('a');
+      a.className = 'extra-link';
+      a.href = item.href;                       // already validated server-side to http(s) only
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.setAttribute('data-demo', item.label);  // so opening one is tracked like any other demo
+      var b = document.createElement('b');
+      b.textContent = item.label;
+      var note = document.createElement('span');
+      note.textContent = item.note || '';
+      a.appendChild(b);
+      a.appendChild(note);
+      box.appendChild(a);
+    });
+    box.hidden = false;
+    // These links did not exist when the tracking script wired the page, so
+    // they are wired now rather than being silently untracked.
+    if (window.AdsTrack && window.AdsTrack.wire) window.AdsTrack.wire();
+  }
+
+  function applyImages(images) {
+    if (!images || !images.length) return;
+    var rail = document.getElementById('rail');
+    if (!rail) return;
+    images.forEach(function (item) {
+      var fig = document.createElement('figure');
+      fig.className = 'shot';
+      var img = document.createElement('img');
+      img.src = absolute(item.src);
+      img.alt = item.alt || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      var cap = document.createElement('figcaption');
+      if (item.caption) {
+        var b = document.createElement('b');
+        b.textContent = item.caption;
+        cap.appendChild(b);
+      }
+      fig.appendChild(img);
+      fig.appendChild(cap);
+      rail.appendChild(fig);
+    });
+  }
+
+  fetch(API + '/api/landing/fullstack', { headers: { Accept: 'application/json' } })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (payload) {
+      if (!payload || !payload.content) return;   // nothing set yet — the HTML stands
+      applyVideo(payload.content.video);
+      applyLinks(payload.content.links);
+      applyImages(payload.content.images);
+    })
+    .catch(function () { /* the page is already complete without this */ });
+
+  // --- playing it --------------------------------------------------------
+  function openModal(auto) {
+    if (!state.src || modal.hidden === false) return;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    modalPlayer.muted = !!auto;                  // a scroll-triggered open starts silent
+    modalNote.textContent = auto
+      ? 'Playing muted — tap the speaker for sound.'
+      : 'Tap the speaker if you cannot hear it.';
+    var started = modalPlayer.play();
+    if (started && started.catch) started.catch(function () { /* blocked; controls are there */ });
+    if (window.AdsTrack) {
+      window.AdsTrack.fire('VideoOpened', {
+        custom: true,
+        customData: { content_name: state.title, trigger: auto ? 'scroll' : 'click' },
+      });
+    }
+  }
+
+  function closeModal() {
+    if (modal.hidden) return;
+    modalPlayer.pause();
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    try { sessionStorage.setItem('lp_video_dismissed', '1'); } catch (e) {}
+  }
+
+  modal.querySelectorAll('[data-close-video]').forEach(function (el) {
+    el.addEventListener('click', closeModal);
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+  // Clicking the cover plays in place, full size, with sound — someone who
+  // pressed play asked for it, so nothing is muted and nothing pops up.
+  cover.addEventListener('click', function () {
+    state.startedByHand = true;
+    cover.hidden = true;
+    player.hidden = false;
+    player.controls = true;
+    var started = player.play();
+    if (started && started.catch) started.catch(function () {});
+    if (window.AdsTrack) {
+      window.AdsTrack.fire('VideoOpened', { custom: true, customData: { content_name: state.title, trigger: 'inline' } });
+    }
+  });
+
+  // Watching most of it is a strong signal, and a different one from opening it.
+  [player, modalPlayer].forEach(function (v) {
+    var reported = false;
+    v.addEventListener('timeupdate', function () {
+      if (reported || !v.duration || v.currentTime / v.duration < 0.5) return;
+      reported = true;
+      if (window.AdsTrack) {
+        window.AdsTrack.fire('VideoHalfWatched', { custom: true, customData: { content_name: state.title } });
+      }
+    });
+  });
+
+  // --- the scroll trigger ------------------------------------------------
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dismissed = false;
+  try { dismissed = sessionStorage.getItem('lp_video_dismissed') === '1'; } catch (e) {}
+
+  if (!reduceMotion && !dismissed && 'IntersectionObserver' in window) {
+    var section = document.getElementById('video');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.disconnect();
+        // Every one of these is a reason NOT to interrupt someone:
+        if (state.opened) return;            // once a visit
+        if (!state.src) return;              // no video uploaded
+        if (!state.autoPopup) return;        // switched off in the dashboard
+        if (state.startedByHand) return;     // they are already watching it
+        if (location.hash === '#order') return; // they came straight for the form
+        state.opened = true;
+        openModal(true);
+      });
+    }, { threshold: 0.55 });
+    io.observe(section);
+  }
 })();
 
 /* --- the order form ------------------------------------------------------ */

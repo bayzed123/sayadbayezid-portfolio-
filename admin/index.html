@@ -75,6 +75,10 @@
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v6h6M7 14h9M7 17h6"/></svg>
         Case studies &amp; blog
       </button>
+      <button class="side-link" data-view="landing">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="4" width="19" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z"/></svg>
+        Landing page
+      </button>
       <button class="side-link" data-view="reviews">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/></svg>
         Reviews<span class="side-badge" data-badge="reviewsPending"></span>
@@ -387,6 +391,76 @@
           <div class="card-head"><h2>Case studies</h2><span class="meta" data-count="cases"></span></div>
           <div data-case-list></div>
         </div>
+      </div>
+    </section>
+
+
+    <!-- Landing page ------------------------------------------------------ -->
+    <section class="view" data-view-panel="landing" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Offer video</h2>
+          <span class="meta">shows mid-page on <a href="/ads/fullstack/" target="_blank" rel="noopener">the ad landing page</a></span>
+        </div>
+        <div data-landing-banner></div>
+        <p class="field-hint">MP4, MOV or WebM up to 200&nbsp;MB. Stored in Cloudflare R2 and served from there &mdash; it never enters the website repository.</p>
+
+        <div class="lp-grid">
+          <div class="field">
+            <label for="landingVideoFile">Video file</label>
+            <input type="file" id="landingVideoFile" accept="video/mp4,video/quicktime,video/webm" />
+          </div>
+          <div class="field">
+            <label for="landingPosterFile">Poster image <span class="lp-dim">(optional &mdash; the still shown before play)</span></label>
+            <input type="file" id="landingPosterFile" accept="image/png,image/jpeg,image/webp" />
+          </div>
+        </div>
+        <div data-landing-progress></div>
+
+        <div class="lp-grid">
+          <div class="field">
+            <label for="landingVideoTitle">Heading above the video</label>
+            <input type="text" id="landingVideoTitle" maxlength="120" placeholder="Two minutes, and you will know if this is for you" />
+          </div>
+          <div class="field">
+            <label for="landingVideoCaption">Caption under the heading</label>
+            <input type="text" id="landingVideoCaption" maxlength="300" placeholder="An order placed, appearing in the dashboard with the profit calculated." />
+          </div>
+        </div>
+
+        <label class="lp-check">
+          <input type="checkbox" id="landingAutoPopup" checked />
+          <span>Pop the video up when a visitor scrolls to it <span class="lp-dim">&mdash; muted, once per visit, and never if they already pressed play</span></span>
+        </label>
+
+        <div data-landing-current></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Extra links</h2><span class="meta">cards under the video</span></div>
+        <p class="field-hint">A new demo, a price list, a WhatsApp catalogue &mdash; anything you want on the page without a code change. Must start with <code>https://</code>.</p>
+        <div data-landing-links></div>
+        <button class="btn btn-ghost" type="button" id="landingAddLink">Add a link</button>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Extra gallery images</h2><span class="meta">appended to the twelve already there</span></div>
+        <p class="field-hint">PNG, JPEG or WebP up to 8&nbsp;MB. Describe every one &mdash; that text is what a screen reader reads and what shows if the image fails.</p>
+        <div class="field">
+          <label for="landingImageFile">Add an image</label>
+          <input type="file" id="landingImageFile" accept="image/png,image/jpeg,image/webp" />
+        </div>
+        <div data-landing-images></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Uploaded media</h2><span class="meta" data-count="landing-media"></span></div>
+        <div class="table-wrap" data-landing-media></div>
+      </div>
+
+      <div class="lp-save">
+        <button class="btn btn-primary" type="button" id="landingSave">Save and publish</button>
+        <span class="meta" data-landing-saved></span>
       </div>
     </section>
 
