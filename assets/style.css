@@ -23,7 +23,11 @@
   --gold: #D4AF6A;
   --paper: #EDEFEC;
   --text-soft: #93A199;
-  --text-dim: #5C6A62;
+  /* Was #5C6A62, which is ~3.2:1 on --surface — under the 4.5:1 WCAG AA
+     minimum for body text, and Lighthouse flagged it on the footer headings
+     and the newsletter note. This still reads as the quietest text on the
+     page, it is just legible now. */
+  --text-dim: #8A9A91;
   --radius: 18px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -163,11 +167,20 @@ a { color: inherit; }
 .avatar-placeholder span { font-family: 'Fraunces', serif; font-size: 3rem; color: var(--text-soft); }
 .avatar-placeholder small { font-size: 0.7rem; }
 .avatar-scan {
-  position: absolute; left: 0; right: 0; height: 40%; z-index: 2; pointer-events: none;
+  /* `top` is a layout property: animating it re-lays-out the hero on every
+     frame, and Lighthouse attributed the page's entire 0.181 CLS to this one
+     element. `transform` does the identical thing on the compositor and
+     touches no layout, so the shift goes to zero and the animation gets
+     cheaper at the same time. `top` is fixed; only the transform moves. */
+  position: absolute; left: 0; right: 0; top: 0; height: 40%; z-index: 2; pointer-events: none;
   background: linear-gradient(180deg, transparent, var(--emerald-soft) 45%, transparent 100%);
   animation: scan-sweep 3.4s ease-in-out infinite;
+  will-change: transform;
 }
-@keyframes scan-sweep { 0%, 100% { top: -40%; } 50% { top: 100%; } }
+@keyframes scan-sweep {
+  0%, 100% { transform: translateY(-100%); }
+  50%      { transform: translateY(250%); }
+}
 .avatar-badge {
   display: flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', monospace;
   font-size: 0.76rem; color: var(--text-soft); letter-spacing: 0.02em;
@@ -545,13 +558,22 @@ a { color: inherit; }
 .pill-live { color: var(--emerald); border-color: rgba(0, 208, 132, .35); }
 .pill-live::before {
   content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--emerald);
-  box-shadow: 0 0 0 0 rgba(0, 208, 132, .55); animation: live-dot 2.4s ease-out infinite;
+  position: relative;
+}
+/* The pulse was an animated box-shadow spread, which cannot be composited and
+   so repainted every frame. A ring that scales and fades is the same picture,
+   done entirely on the compositor. */
+.pill-live { position: relative; }
+.pill-live::after {
+  content: ""; position: absolute; left: 11px; top: 50%; width: 6px; height: 6px;
+  margin-top: -3px; border-radius: 50%; border: 1px solid rgba(0, 208, 132, .5);
+  animation: live-dot 2.4s ease-out infinite; pointer-events: none;
 }
 .pill-soon { color: var(--gold); border-color: rgba(212, 175, 106, .35); }
 @keyframes live-dot {
-  0% { box-shadow: 0 0 0 0 rgba(0, 208, 132, .5); }
-  70% { box-shadow: 0 0 0 7px rgba(0, 208, 132, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(0, 208, 132, 0); }
+  0%   { transform: scale(1);   opacity: .55; }
+  70%  { transform: scale(3.2); opacity: 0; }
+  100% { transform: scale(3.2); opacity: 0; }
 }
 
 .section-head-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; margin-bottom: 44px; flex-wrap: wrap; }
@@ -810,11 +832,20 @@ a { color: inherit; }
    Worker responds — the marquee used to render into an empty box, which is
    what made this area feel like the slowest thing on the page. */
 .review-card.is-skeleton { pointer-events: none; }
-.skeleton-line { height: 11px; border-radius: 6px; background: linear-gradient(90deg, var(--surface-raised) 25%, rgba(255,255,255,.06) 37%, var(--surface-raised) 63%); background-size: 400% 100%; animation: skeleton-sheen 1.4s ease-in-out infinite; }
+/* Eighteen of these animated `background-position`, which is a paint property:
+   eighteen elements repainting continuously was the largest source of
+   non-composited work on the page. The sheen is now a child that slides
+   across on the compositor, and the line itself never repaints. */
+.skeleton-line { height: 11px; border-radius: 6px; background: var(--surface-raised); position: relative; overflow: hidden; }
+.skeleton-line::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.08), transparent);
+  animation: skeleton-sheen 1.4s ease-in-out infinite;
+}
 .skeleton-line.w-40 { width: 40%; }
 .skeleton-line.w-70 { width: 70%; }
 .skeleton-line.w-90 { width: 90%; }
-@keyframes skeleton-sheen { 0% { background-position: 100% 50%; } 100% { background-position: 0 50%; } }
+@keyframes skeleton-sheen { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
 /* ----------------------------------------------------- Premium case-study grid */
 .case-study-index-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 24px; }
@@ -1156,3 +1187,71 @@ a { color: inherit; }
 @media print {
   .support-dock { display: none !important; }
 }
+
+/* ---------------------------------------------------------------- newsletter
+   The inline section and the popup share their banner and field styling; the
+   popup adds only the overlay on top. */
+.newsletter { background: var(--surface); border-block: 1px solid var(--line); }
+.news-inner { display: grid; grid-template-columns: 1.15fr 1fr; gap: 44px; align-items: center; }
+@media (max-width: 860px) { .news-inner { grid-template-columns: 1fr; gap: 28px; } }
+.news-copy h2 { font-size: clamp(1.5rem, 3.6vw, 2.1rem); line-height: 1.2; margin-bottom: 14px; }
+.news-points { list-style: none; margin: 20px 0 0; padding: 0; display: grid; gap: 9px; }
+.news-points li { position: relative; padding-left: 24px; font-size: .9rem; color: var(--text-soft); }
+.news-points li::before { content: "✓"; position: absolute; left: 0; color: var(--emerald); font-weight: 700; }
+.news-form { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px; }
+.news-label { display: block; font-size: .78rem; color: var(--text-soft); margin-bottom: 8px; }
+.news-row { display: flex; gap: 10px; }
+@media (max-width: 460px) { .news-row { flex-direction: column; } }
+.news-row input {
+  flex: 1; min-width: 0; padding: 13px 15px; border-radius: 12px; font: inherit; font-size: .93rem;
+  background: var(--void); color: var(--paper); border: 1px solid var(--line);
+}
+.news-row input:focus { outline: none; border-color: var(--emerald); }
+.news-note { margin-top: 12px; font-size: .78rem; color: var(--text-dim); }
+.news-note a { color: var(--text-soft); }
+
+.nl-banner { margin-top: 14px; padding: 11px 14px; border-radius: 10px; font-size: .86rem; }
+.nl-banner-ok { background: var(--emerald-soft); color: var(--emerald); border: 1px solid rgba(0,208,132,.3); }
+.nl-banner-warn { background: rgba(212,175,106,.12); color: var(--gold); border: 1px solid rgba(212,175,106,.3); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ------------------------------------------------------------------- popup
+   `hidden` is only display:none in the browser's own stylesheet, so any author
+   rule setting display beats it — which would leave this box sitting open over
+   the page from load. This is what makes hidden mean hidden. */
+.np[hidden] { display: none !important; }
+.np { position: fixed; inset: 0; z-index: 140; display: grid; place-items: center; padding: 20px; }
+.np-backdrop { position: absolute; inset: 0; background: rgba(4, 8, 6, .78); backdrop-filter: blur(5px); }
+.np-card {
+  position: relative; width: min(460px, 100%); background: var(--surface-raised);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 34px 30px 26px;
+  box-shadow: 0 28px 70px rgba(0,0,0,.55); text-align: center;
+  animation: np-in .28s cubic-bezier(.2,.9,.3,1.15) both;
+}
+@keyframes np-in { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .np-card { animation: none; } }
+.np-close {
+  position: absolute; top: 12px; right: 12px; width: 32px; height: 32px; border-radius: 50%;
+  background: transparent; border: 1px solid var(--line); color: var(--text-soft); cursor: pointer; font-size: .8rem;
+}
+.np-close:hover { border-color: var(--emerald); color: var(--emerald); }
+.np-kicker { display: block; font-size: .72rem; letter-spacing: .16em; text-transform: uppercase; color: var(--emerald); font-weight: 600; margin-bottom: 12px; }
+.np-title { font-size: 1.4rem; line-height: 1.25; margin-bottom: 12px; }
+.np-body { font-size: .92rem; margin-bottom: 20px; }
+.np-form { display: flex; flex-direction: column; gap: 10px; }
+.np-form input {
+  width: 100%; padding: 13px 15px; border-radius: 12px; font: inherit; font-size: .93rem;
+  background: var(--void); color: var(--paper); border: 1px solid var(--line);
+}
+.np-form input:focus { outline: none; border-color: var(--emerald); }
+.np-dismiss { margin-top: 14px; background: none; border: 0; color: var(--text-dim); font: inherit; font-size: .82rem; cursor: pointer; text-decoration: underline; }
+.np-dismiss:hover { color: var(--text-soft); }
+
+
+/* Footer policy links were under the 24px minimum touch target — too small to
+   hit reliably on a phone. Padding grows the target without changing the type. */
+.footer-cols a, .footer-legal a { display: inline-block; padding-block: 5px; }

@@ -2,11 +2,13 @@
   "name": "sayadbayezid-portfolio",
   "version": "1.0.0",
   "private": true,
-  "description": "Sayad Md Bayezid Hosan — portfolio site with blog, case studies, and news generators",
+  "description": "Sayad Md Bayezid Hosan \u2014 portfolio site with blog, case studies, and news generators",
   "scripts": {
     "build:blog": "node scripts/build-blog.js",
     "build:content": "node scripts/build-content.js",
-    "build": "npm run build:blog && npm run build:content"
+    "build": "npm run build:blog && npm run build:content && npm run build:assets",
+    "build:assets": "node scripts/build-assets.mjs",
+    "build:critical": "node scripts/build-critical-css.mjs"
   },
   "dependencies": {
     "front-matter": "^4.0.2",
