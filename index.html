@@ -8,46 +8,193 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.css" />
-<link rel="preload" as="image" href="/assets/bayezid-portrait-800.webp" type="image/webp" fetchpriority="high" />
-<!-- Meta Pixel Code — base + PageView. Repeat this exact block in the
-     <head> of every future page (services.html, products.html, etc.) so
-     PageView fires site-wide, not just here. -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1612338809888151');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1" alt=""
-/></noscript>
-<!-- End Meta Pixel Code -->
-<!-- Google Tag Manager. NOTE: the gtag.js snippet below appeared twice in this
-     head — the same measurement library fetched and initialised two extra
-     times on every page load, for no extra measurement. One copy is kept. -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
-<!-- End Google Tag Manager -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HY9255GJYE');
-</script>
-<!-- End Google tag (gtag.js) -->
+<!-- The first screen's CSS, inline. The full sheet and the fonts were two
+     render-blocking requests costing 380 ms and 750 ms — 2,380 ms of blocked
+     rendering between them. These rules are extracted by
+     scripts/build-critical-css.mjs, which loads the page and keeps every rule
+     matching an element on the first screen, so nothing here is guesswork.
+     RE-RUN THAT SCRIPT AFTER CHANGING assets/style.css or the hero markup. -->
+<style>:root { --void: #0A0F0D; --surface: #101613; --surface-raised: #161F1A; --line: rgba(237, 239, 236, 0.09); --emerald: #00D084; --emerald-soft: rgba(0, 208, 132, 0.14); --emerald-deep: #00A868; --gold: #D4AF6A; --paper: #EDEFEC; --text-soft: #93A199; --text-dim: #5C6A62; --radius: 18px; --ease: cubic-bezier(0.16, 1, 0.3, 1); }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){html { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }}
+body { margin: 0px; background: var(--void); color: var(--paper); font-family: Inter, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+h1, h2, h3 { font-family: Fraunces, serif; font-weight: 600; letter-spacing: -0.01em; margin: 0px; color: var(--paper); }
+em { font-style: italic; color: var(--emerald); font-family: Fraunces, serif; }
+p { margin: 0px; line-height: 1.6; color: var(--text-soft); }
+a { color: inherit; }
+.skip-link { position: absolute; left: -999px; top: 0px; background: var(--emerald); color: var(--void); padding: 12px 20px; z-index: 200; font-weight: 600; border-radius: 0px 0px 8px; }
+.site-header { position: fixed; top: 0px; left: 0px; right: 0px; z-index: 100; background: rgba(10, 15, 13, 0.72); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); }
+.header-inner { max-width: 1200px; margin: 0px auto; padding: 18px 28px; display: flex; align-items: center; justify-content: space-between; }
+.brand-mark { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-logo { display: block; width: 172px; height: auto; }
+@keyframes pulse-ring { 
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+.nav-toggle span { width: 22px; height: 2px; background: var(--paper); border-radius: 2px; }
+@media (max-width: 900px){.nav-toggle { display: flex; }}
+.hero { position: relative; padding: 190px 28px 120px; max-width: 1200px; margin: 0px auto; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 40px; align-items: center; }
+.hero-grid { position: absolute; inset: 0px; z-index: -1; opacity: 0.5; background-image: linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(80% 60% at 30% 20%, black 10%, transparent 75%); }
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: "JetBrains Mono", monospace; font-size: 0.78rem; color: var(--emerald); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 26px; }
+.eyebrow-mark { width: 6px; height: 6px; background: var(--emerald); border-radius: 1px; }
+.hero-title { font-size: clamp(2.6rem, 5.4vw, 4.6rem); line-height: 1.04; margin-bottom: 26px; }
+.hero-title span { display: block; }
+.hero-avatar { position: relative; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.avatar-frame { position: relative; width: min(340px, 100%); aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--surface-raised); }
+.avatar-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.avatar-placeholder { position: absolute; inset: 0px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; color: var(--text-dim); font-family: "JetBrains Mono", monospace; }
+.avatar-placeholder span { font-family: Fraunces, serif; font-size: 3rem; color: var(--text-soft); }
+.avatar-placeholder small { font-size: 0.7rem; }
+.avatar-scan { position: absolute; left: 0px; right: 0px; top: 0px; height: 40%; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent, var(--emerald-soft) 45%, transparent 100%); animation: 3.4s ease-in-out 0s infinite normal none running scan-sweep; will-change: transform; }
+@keyframes scan-sweep { 
+  0%, 100% { transform: translateY(-100%); }
+  50% { transform: translateY(250%); }
+}
+.avatar-badge { display: flex; align-items: center; gap: 8px; font-family: "JetBrains Mono", monospace; font-size: 0.76rem; color: var(--text-soft); letter-spacing: 0.02em; }
+.badge-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 3px var(--emerald-soft); }
+@keyframes marquee-scroll { 
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(-50%); }
+}
+[data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+[data-reveal].is-visible { opacity: 1; transform: translateY(0px); }
+@media (max-width: 900px){.hero { grid-template-columns: 1fr; padding-top: 150px; }.hero-avatar { order: -1; }}
+@media (max-width: 560px){.header-inner { padding: 16px 20px; }}
+@keyframes live-dot { 
+  0% { transform: scale(1); opacity: 0.55; }
+  70% { transform: scale(3.2); opacity: 0; }
+  100% { transform: scale(3.2); opacity: 0; }
+}
+@keyframes card-in { 
+  0% { opacity: 0; transform: translateY(18px) scale(0.985); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes skeleton-sheen { 
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.support-dock { position: fixed; z-index: 90; right: 20px; bottom: max(20px, env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.support-launcher { width: 54px; height: 54px; border-radius: 50%; border: 0px; background: var(--emerald); color: var(--void); display: grid; place-items: center; cursor: pointer; box-shadow: rgba(0, 208, 132, 0.34) 0px 12px 32px; transition: transform 160ms, box-shadow 160ms; }
+.support-launcher svg { width: 26px; height: 26px; }
+@keyframes support-rise { 
+  0% { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce){.support-launcher { transition: none; }}
+@media (max-width: 480px){.support-dock { right: 14px; bottom: max(14px, env(safe-area-inset-bottom, 0px)); }.support-launcher { width: 50px; height: 50px; }}
+@media (prefers-reduced-motion: reduce){html { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }}
+@media (max-width: 900px){.nav-toggle { display: flex; }}
+@media (max-width: 900px){.hero { grid-template-columns: 1fr; padding-top: 150px; }.hero-avatar { order: -1; }}
+@media (max-width: 560px){.header-inner { padding: 16px 20px; }}
+@media (prefers-reduced-motion: reduce){.support-launcher { transition: none; }}
+@media (max-width: 480px){.support-dock { right: 14px; bottom: max(14px, env(safe-area-inset-bottom, 0px)); }.support-launcher { width: 50px; height: 50px; }}
+@media (prefers-reduced-motion: reduce){html { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }}
+@media (max-width: 900px){.nav-toggle { display: flex; }}
+@media (max-width: 900px){.hero { grid-template-columns: 1fr; padding-top: 150px; }.hero-avatar { order: -1; }}
+@media (max-width: 560px){.header-inner { padding: 16px 20px; }}
+@media (prefers-reduced-motion: reduce){.support-launcher { transition: none; }}
+@media (max-width: 480px){.support-dock { right: 14px; bottom: max(14px, env(safe-area-inset-bottom, 0px)); }.support-launcher { width: 50px; height: 50px; }}
+:root { --void: #0A0F0D; --surface: #101613; --surface-raised: #161F1A; --line: rgba(237, 239, 236, .09); --emerald: #00D084; --emerald-soft: rgba(0, 208, 132, .14); --emerald-deep: #00A868; --gold: #D4AF6A; --paper: #EDEFEC; --text-soft: #93A199; --text-dim: #5C6A62; --radius: 18px; --ease: cubic-bezier(.16, 1, .3, 1); }
+@media (prefers-reduced-motion: reduce){html { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }}
+@media (max-width: 900px){.nav-toggle { display: flex; }}
+.hero-grid { position: absolute; inset: 0px; z-index: -1; opacity: 0.5; background-image: linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(80% 60% at 30% 20%, black 10%, transparent 75%); }
+.avatar-scan { position: absolute; left: 0px; right: 0px; top: 0px; height: 40%; z-index: 2; pointer-events: none; background: linear-gradient(180deg,transparent,var(--emerald-soft) 45%,transparent 100%); animation: 3.4s ease-in-out 0s infinite normal none running scan-sweep; will-change: transform; }
+@keyframes marquee-scroll { 
+  0% { transform: translate(0px); }
+  100% { transform: translate(-50%); }
+}
+[data-reveal] { opacity: 0; transform: translateY(22px); transition: opacity .7s var(--ease),transform .7s var(--ease); }
+@media (max-width: 900px){.hero { grid-template-columns: 1fr; padding-top: 150px; }.hero-avatar { order: -1; }}
+@media (max-width: 560px){.header-inner { padding: 16px 20px; }}
+@keyframes skeleton-sheen { 
+  0% { transform: translate(-100%); }
+  100% { transform: translate(100%); }
+}
+.support-dock { position: fixed; z-index: 90; right: 20px; bottom: max(20px,env(safe-area-inset-bottom,0px)); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.support-launcher { width: 54px; height: 54px; border-radius: 50%; border: 0px; background: var(--emerald); color: var(--void); display: grid; place-items: center; cursor: pointer; box-shadow: rgba(0, 208, 132, 0.34) 0px 12px 32px; transition: transform 0.16s, box-shadow 0.16s; }
+@media (prefers-reduced-motion: reduce){.support-launcher { transition: none; }}
+@media (max-width: 480px){.support-dock { right: 14px; bottom: max(14px,env(safe-area-inset-bottom,0px)); }.support-launcher { width: 50px; height: 50px; }}
+@keyframes np-in { 
+  0% { opacity: 0; transform: translateY(18px) scale(0.97); }
+  100% { opacity: 1; transform: none; }
+}
+:root { --void: #0A0F0D; --surface: #101613; --surface-raised: #161F1A; --line: rgba(237, 239, 236, .09); --emerald: #00D084; --emerald-soft: rgba(0, 208, 132, .14); --emerald-deep: #00A868; --gold: #D4AF6A; --paper: #EDEFEC; --text-soft: #93A199; --text-dim: #8A9A91; --radius: 18px; --ease: cubic-bezier(.16, 1, .3, 1); }
+@media (prefers-reduced-motion: reduce){html { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }}
+@media (max-width: 900px){.nav-toggle { display: flex; }}
+@media (max-width: 900px){.hero { grid-template-columns: 1fr; padding-top: 150px; }.hero-avatar { order: -1; }}
+@media (max-width: 560px){.header-inner { padding: 16px 20px; }}
+@media (prefers-reduced-motion: reduce){.support-launcher { transition: none; }}
+@media (max-width: 480px){.support-dock { right: 14px; bottom: max(14px,env(safe-area-inset-bottom,0px)); }.support-launcher { width: 50px; height: 50px; }}
+@media (prefers-reduced-motion: reduce){html { scroll-behavior: auto; }*, ::before, ::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }}
+@media (max-width: 900px){.nav-toggle { display: flex; }}
+@media (max-width: 900px){.hero { grid-template-columns: 1fr; padding-top: 150px; }.hero-avatar { order: -1; }}
+@media (max-width: 560px){.header-inner { padding: 16px 20px; }}
+@media (prefers-reduced-motion: reduce){.support-launcher { transition: none; }}
+@media (max-width: 480px){.support-dock { right: 14px; bottom: max(14px,env(safe-area-inset-bottom,0px)); }.support-launcher { width: 50px; height: 50px; }}
+.support-dock{
+  position: fixed;
+  z-index: 90;
+  right: 20px;
+  /* env() keeps it clear of the iPhone home indicator; the max() is the
+     fallback for every browser that does not know env(). */
+  bottom: max(20px, env(safe-area-inset-bottom, 0px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+.support-channels{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.support-launcher{
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  border: 0;
+  background: var(--emerald);
+  color: var(--void);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(0, 208, 132, 0.34);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.support-channel{
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 15px 10px 12px;
+  border-radius: 999px;
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  color: var(--paper);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  transform-origin: right center;
+  animation: support-rise 180ms ease-out both;
+}</style>
+
+<!-- Everything else, without blocking the paint. media="print" makes the
+     browser fetch it at low priority and not block on it; onload flips it to
+     "all" and it applies. The <noscript> copy keeps the page styled for a
+     browser with JavaScript off, which would otherwise never run that onload. -->
+<link rel="preload" as="style" href="/assets/style.min.css" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/assets/style.min.css"></noscript>
+
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+<link rel="preload" as="image" href="/assets/bayezid-portrait-480.webp"
+      imagesrcset="/assets/bayezid-portrait-480.webp 480w, /assets/bayezid-portrait-800.webp 800w"
+      imagesizes="(max-width: 700px) 46vw, 340px" type="image/webp" fetchpriority="high" />
   <meta name="robots" content="index, follow, max-image-preview:large" />
   <link rel="canonical" href="https://sayadbayezid.com/" />
   <meta property="og:title" content="Connect with Bayezid — Digital systems for brands that verify their work" />
@@ -69,6 +216,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     ]
   }
   </script>
+<!-- Analytics and the Meta Pixel, loaded after the page paints.
+     See /assets/tags.js — they used to be three inline blocks here, and
+     between them they were the performance score. -->
+<script src="/assets/tags.min.js" defer></script>
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
@@ -132,7 +283,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="avatar-scan" aria-hidden="true"></div>
           <picture>
             <source type="image/webp" srcset="/assets/bayezid-portrait-480.webp 480w, /assets/bayezid-portrait-800.webp 800w" sizes="(max-width: 900px) 60vw, 420px" />
-            <img src="/assets/bayezid-portrait-800.webp" alt="Sayad Md Bayezid Hosan" class="avatar-img" id="avatarImg" width="800" height="1200" fetchpriority="high" decoding="async" />
+            <!-- The LCP element. srcset lets the browser pick by device pixel ratio
+                 instead of every phone downloading the 800px file for a ~340px box;
+                 `sizes` tells it the box size before layout has happened, which is
+                 the only way the choice can be made in time to matter. -->
+            <img src="/assets/bayezid-portrait-480.webp"
+                 srcset="/assets/bayezid-portrait-480.webp 480w,
+                         /assets/bayezid-portrait-800.webp 800w"
+                 sizes="(max-width: 700px) 46vw, 340px"
+                 alt="Sayad Md Bayezid Hosan" class="avatar-img" id="avatarImg"
+                 width="800" height="1200" fetchpriority="high" decoding="async" />
           </picture>
           <div class="avatar-placeholder" id="avatarPlaceholder" aria-hidden="true">
             <span>SB</span>
@@ -606,6 +766,33 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </main>
 
   <!-- ============================= FOOTER ============================= -->
+
+    <!-- ============================= NEWSLETTER ============================= -->
+    <section class="section newsletter" id="newsletter" aria-labelledby="newsletterHeading">
+      <div class="news-inner">
+        <div class="news-copy">
+          <span class="section-eyebrow">The list</span>
+          <h2 id="newsletterHeading">What I learn building these, before it is a blog post</h2>
+          <p>One email when there is something worth sending — a build broken down, a pricing lesson, a tool that turned out to be worth the money. No schedule, because a schedule is how newsletters become filler.</p>
+          <ul class="news-points">
+            <li>Real numbers from real builds, not case-study gloss</li>
+            <li>The mistakes too, which is the half nobody publishes</li>
+            <li>Unsubscribe in one click, and I do not sell the list</li>
+          </ul>
+        </div>
+        <form class="news-form" id="newsForm" novalidate>
+          <label class="news-label" for="newsEmail">Your email</label>
+          <div class="news-row">
+            <input type="email" id="newsEmail" name="email" placeholder="you@company.com"
+                   autocomplete="email" inputmode="email" required />
+            <button class="btn btn-primary" type="submit" id="newsSubmit">Join<span class="btn-arrow">&rarr;</span></button>
+          </div>
+          <p class="news-note">No spam, and nothing shared with anyone. <a href="/privacy-policy.html">Privacy policy</a>.</p>
+          <div id="newsBanner" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+
   <footer class="site-footer">
     <div class="footer-cta">
       <span class="section-eyebrow">Ready when you are</span>
@@ -623,11 +810,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Founder-led digital systems — web, SEO, marketing, product.</p>
         <address class="footer-address">Aulibad, Kalihati, Tangail — 1970<br />Parkhi Union, Kalihati Upazila, Tangail District, Bangladesh</address>
         <div class="social-row">
-          <a class="social-link" href="https://github.com/Sayadbayezid" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
-          <a class="social-link" href="https://sayadbayezid.com/verified-profiles/" aria-label="Verified profiles">ID</a>
-          <a class="social-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" aria-label="SmartGen Docs">DC</a>
-          <a class="social-link" href="https://www.genzfrontir.com" target="_blank" rel="noopener" aria-label="GenZ Frontier">GF</a>
-          <a class="social-link" href="mailto:cwb.agency@outlook.com" aria-label="Email">@</a>
+          <a class="social-link" href="https://github.com/Sayadbayezid" target="_blank" rel="noopener" aria-label="GH — GitHub">GH</a>
+          <a class="social-link" href="https://sayadbayezid.com/verified-profiles/" aria-label="ID — Verified profiles">ID</a>
+          <a class="social-link" href="https://docs.smartgentools.com/" target="_blank" rel="noopener" aria-label="DC — SmartGen Docs">DC</a>
+          <a class="social-link" href="https://www.genzfrontir.com" target="_blank" rel="noopener" aria-label="GF — GenZ Frontier">GF</a>
+          <a class="social-link" href="mailto:cwb.agency@outlook.com" aria-label="@ — Email">@</a>
         </div>
         <button class="share-btn" id="shareBtn" type="button" style="margin-top:14px">Share this page</button>
       </div>
@@ -670,7 +857,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </footer>
 
-  <script src="/assets/main.js" defer></script>
-  <script src="/assets/js/support.js" defer></script>
+  <script src="/assets/main.min.js" defer></script>
+  <script src="/assets/js/support.min.js" defer></script>
+
+  <!-- ============================= MARKETING POPUP =============================
+       Deliberately last in the document and `hidden` from the start: it must
+       cost nothing until it is wanted. No layout, no paint, no request. What
+       decides whether it ever shows is in assets/newsletter.js. -->
+  <div class="np" id="newsPop" hidden role="dialog" aria-modal="true" aria-labelledby="npTitle">
+    <div class="np-backdrop" data-np-close></div>
+    <div class="np-card">
+      <button class="np-close" type="button" data-np-close aria-label="Close">&#10005;</button>
+      <span class="np-kicker">Before you go</span>
+      <h2 class="np-title" id="npTitle">One email, when there is something worth sending</h2>
+      <p class="np-body">A build broken down, a pricing lesson, a mistake worth not repeating. No schedule &mdash; a schedule is how newsletters turn into filler.</p>
+      <form class="np-form" id="npForm" novalidate>
+        <label class="sr-only" for="npEmail">Your email</label>
+        <input type="email" id="npEmail" placeholder="you@company.com" autocomplete="email" inputmode="email" required />
+        <button class="btn btn-primary" type="submit" id="npSubmit">Join the list<span class="btn-arrow">&rarr;</span></button>
+      </form>
+      <div id="npBanner" aria-live="polite"></div>
+      <button class="np-dismiss" type="button" data-np-close>No thanks</button>
+    </div>
+  </div>
+
+  <script src="/assets/newsletter.min.js" defer></script>
 </body>
 </html>
