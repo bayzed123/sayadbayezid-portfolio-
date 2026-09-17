@@ -87,6 +87,7 @@
   <li><a href="#webhooks">Webhook fields</a></li>
   <li><a href="#permissions">Permissions</a></li>
   <li><a href="#data">Data handling</a></li>
+  <li><a href="#external">External services</a></li>
   <li><a href="#deletion">Deletion</a></li>
   <li><a href="#security">Security</a></li>
   <li><a href="#test">How to test</a></li>
@@ -192,6 +193,99 @@
     </tbody>
   </table></div>
   <p><b>Message content is not stored.</b> Contact details are never taken without the person being shown what will be kept and agreeing to it. Nothing collected here is sold, rented, or shared with any third party.</p>
+</section>
+
+<section id="external">
+  <h2>External services</h2>
+  <p>
+    Measurement on this website connects to Meta at three addresses, and to
+    nothing else. Each is listed below with what is sent to it, when, and how
+    it is authenticated. No data goes anywhere until a Pixel ID and a
+    Conversions API access token are configured; with neither set, every route
+    here is inert.
+  </p>
+
+  <h3>1. The Pixel library — <code>connect.facebook.net</code></h3>
+  <p>
+    The browser loads Meta's tracking library, <code>fbevents.js</code>. It is
+    a JavaScript file request: <b>no data about the visitor is sent to this
+    address in order to fetch it.</b>
+  </p>
+  <p>
+    On this site the file is normally fetched <i>server-side</i>, cached at the
+    edge, and served from <code>/api/pixel.js</code> on our own backend
+    instead. The reason is practical rather than evasive: every mainstream
+    content blocker carries a rule for <code>connect.facebook.net</code>, and
+    when it matches, the library never loads and the browser half of every
+    event disappears with no error anywhere. Serving the identical file from
+    our own address means that particular rule does not match it.
+  </p>
+  <div class="note">
+    <b>What that does not do.</b> It stops the <i>script</i> being blocked. It
+    does not stop what the script then does — the library posts to
+    <code>www.facebook.com/tr</code>, and a blocker filtering that request
+    still filters it. That is precisely why the Conversions API below exists
+    as well: the two halves fail independently, and neither is a substitute for
+    the other. If our proxy is unavailable the page falls back to Meta's own
+    copy, which is the position every site is in by default.
+  </div>
+
+  <h3>2. The Conversions API — <code>graph.facebook.com</code></h3>
+  <p>
+    Website events are also sent server-to-server, to
+    <code>graph.facebook.com/v26.0/{pixel_id}/events</code>.
+  </p>
+  <p><b>What is sent:</b> the event name, the time, a deduplication event ID,
+  the action source, the page URL, the visitor's IP address and user agent, the
+  Meta browser and click cookies (<code>_fbp</code>, <code>_fbc</code>), and —
+  only where the person has actually given them, such as a newsletter signup —
+  their email address and phone number <b>hashed with SHA-256 before the
+  request is built</b>. The plain address never leaves this backend. Where an
+  event has a monetary value, the value and currency are included.</p>
+  <p><b>When:</b> on page view, on the events configured for a URL path, and on
+  a completed registration.</p>
+  <p><b>Authentication:</b> an access token held as a platform secret. It is
+  not in the code repository, not in the database, never rendered into a page,
+  and never returned by any endpoint or error message.</p>
+
+  <h3>3. The noscript fallback — <code>www.facebook.com/tr</code></h3>
+  <p>
+    <b>Not implemented here, deliberately.</b> The usual arrangement is a 1×1
+    image inside a <code>&lt;noscript&gt;</code> block, which reports a page
+    view for a visitor whose JavaScript is switched off. This site does not
+    have one: the measurement loader is itself JavaScript, so a visitor in that
+    position was never being counted anyway, and adding an image beacon would
+    be the only thing on the page tracking someone who cannot use the features
+    it would be measuring. It is listed here because its absence is a choice,
+    not an oversight.
+  </p>
+
+  <h3>Deduplication, and why both halves exist</h3>
+  <p>
+    Each event is sent twice on purpose — once by the browser Pixel, once by
+    the Conversions API — carrying the <b>same event ID</b>, so Meta collapses
+    the pair into a single conversion. Without that, one sale is counted twice,
+    the reported cost per purchase is half the real figure, and every bidding
+    decision made from it is wrong in the direction that costs money.
+  </p>
+  <p>
+    The backend records whether the browser half actually fired for each event,
+    so a Pixel that is being blocked shows up as a number rather than as
+    silence. A delivery receipt is kept for each event — event name, ID, page,
+    and what Meta replied — with the contact fields replaced by a count before
+    the row is written. A hash of a known address still confirms that person is
+    in the log, so no hash is stored either.
+  </p>
+
+  <h3>Service provider and terms</h3>
+  <p>Meta Platforms, Inc. Processing at these three addresses happens on Meta's
+  servers under Meta's terms:</p>
+  <ul>
+    <li><a href="https://www.facebook.com/legal/terms" rel="noopener nofollow" target="_blank">Terms of Service</a></li>
+    <li><a href="https://www.facebook.com/about/privacy" rel="noopener nofollow" target="_blank">Privacy Policy</a></li>
+    <li><a href="https://www.facebook.com/legal/developer_terms" rel="noopener nofollow" target="_blank">Conversions API Terms</a></li>
+    <li><a href="https://developers.facebook.com/terms/" rel="noopener nofollow" target="_blank">Platform Terms</a></li>
+  </ul>
 </section>
 
 <section id="deletion">

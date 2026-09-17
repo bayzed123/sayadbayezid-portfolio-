@@ -91,6 +91,18 @@
   footer.page-footer{ text-align:center; color: var(--faint); font-size: .82rem; padding: 30px 20px 60px; }
   ::selection{ background: var(--accent-soft); color: var(--accent-deep); }
   @media (max-width: 600px){ nav.toc ol{ columns: 1; } header.hero{ padding: 40px 16px 32px; } }
+  /* The cookie table. This page had no table styling at all, because until
+     the cookies section named the cookies it had no tables — a bare <table>
+     here would have rendered as unstyled browser default in the middle of a
+     typeset document. */
+  .table-wrap{ overflow-x: auto; margin: 18px 0; border: 1px solid var(--border); border-radius: var(--radius); }
+  .table-wrap table{ border-collapse: collapse; width: 100%; min-width: 560px; font-size: 0.94rem; }
+  .table-wrap th, .table-wrap td{ text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .table-wrap thead th{ background: var(--accent-soft); color: var(--accent-deep); font-size: 0.82rem;
+    letter-spacing: 0.02em; text-transform: uppercase; }
+  .table-wrap tbody tr:last-child td{ border-bottom: 0; }
+  .table-wrap code{ white-space: nowrap; }
+
   @media print{
     header.hero{ background:none; color:#000; padding: 0 0 20px; }
     .dek, .eyebrow, .meta-row{ color:#000 !important; }
@@ -196,7 +208,50 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section id="cookies" aria-labelledby="cookies-heading">
     <h2 id="cookies-heading"><span class="num">4.</span>Cookies &amp; Tracking Technologies</h2>
-    <p>Our site may use cookies or similar technologies for basic analytics. You can control cookies through your browser settings; blocking them may limit some features.</p>
+    <p>This site sets a small number of cookies. Naming them is more useful than the usual sentence about "cookies or similar technologies", so here they are.</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Cookie</th><th>Set by</th><th>What it is for</th><th>How long</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>_fbp</code></td>
+          <td>Meta's Pixel, and <b>also by our own server</b></td>
+          <td>Identifies this browser to Meta so an advertisement can be connected to what happened afterwards. It is not a name, an email address, or an account.</td>
+          <td>Up to 2 years</td>
+        </tr>
+        <tr>
+          <td><code>_fbc</code></td>
+          <td>Meta's Pixel, and <b>also by our own server</b></td>
+          <td>Records the advertisement click that brought you here, when you arrived from one. Set only if there was a click to record.</td>
+          <td>Up to 2 years</td>
+        </tr>
+        <tr>
+          <td><code>_ga</code>, <code>_ga_*</code></td>
+          <td>Google Analytics 4</td>
+          <td>Counts visits and pages so we can see which pages are worth keeping.</td>
+          <td>Up to 2 years</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <p>
+      <b>Why our server writes two of these itself.</b> When a browser's own
+      JavaScript writes <code>_fbp</code>, Safari limits it to seven days. A
+      cookie written by the server is not limited that way, so we write it from
+      the server and it lasts longer. We are saying so plainly because that is
+      the honest description of what it does: it makes the measurement last
+      longer than your browser would otherwise allow.
+    </p>
+    <p>
+      <b>Turning them off.</b> Your browser's settings control all of these,
+      and blocking them does not break anything on this site — nothing here
+      needs a cookie to work. Browser-level tracking protection, an ad blocker,
+      or "Do Not Track" will each stop some or all of the measurement described
+      above.
+    </p>
+    <p>
+      The full detail of what reaches Meta, and at which addresses, is set out
+      in <a href="/meta-integration.html#external">External services</a> on our
+      Meta integration page.
+    </p>
   </section>
 
   <section id="sharing" aria-labelledby="sharing-heading">
