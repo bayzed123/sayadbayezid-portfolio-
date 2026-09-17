@@ -111,6 +111,10 @@
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-6-6 18-2.5-7.5L3 11z"/></svg>
         Ads hub
       </button>
+      <button class="side-link" data-view="tracking">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v3m0 12v3m9-9h-3M6 12H3"/><circle cx="12" cy="12" r="4.2"/></svg>
+        Event tracking
+      </button>
       <button class="side-link" data-view="settings">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7.5 19.4l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 15H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 8.5l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 4.6V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 2.7 1.1l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0 1.1 2.7H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg>
         System status
@@ -541,6 +545,90 @@
           <span class="meta">last 7 days</span>
         </div>
         <div data-capi-log></div>
+      </div>
+    </section>
+
+    <!-- Event tracking ----------------------------------------------------
+         Whether the Pixel and the Conversions API agree, what was actually
+         sent, and the two things that can be changed from here: a URL rule
+         and a test event. Everything else on this screen is a read. -->
+    <section class="view" data-view-panel="tracking" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Browser and server</h2>
+          <span class="meta">last 7 days</span>
+        </div>
+        <div data-dedup></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Send a test event</h2>
+          <span class="meta">goes to Meta</span>
+        </div>
+        <form id="testEventForm" class="inline-form">
+          <div class="field">
+            <label for="te-event">Event</label>
+            <select id="te-event" name="event_name">
+              <option>PageView</option>
+              <option selected>Lead</option>
+              <option>CompleteRegistration</option>
+              <option>Contact</option>
+              <option>Purchase</option>
+              <option>Subscribe</option>
+              <option>ViewContent</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="te-code">Test event code</label>
+            <input type="text" id="te-code" name="test_event_code" placeholder="TEST12345" autocomplete="off" spellcheck="false">
+            <p class="field-hint">
+              From Events Manager → Test Events. <strong>Leave it empty and the
+              event counts as real data</strong> in the dataset your campaigns
+              optimise against.
+            </p>
+          </div>
+          <button class="btn" type="submit">Send</button>
+        </form>
+        <div data-test-result></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>Fire an event on a URL</h2>
+          <span class="meta">no deploy needed</span>
+        </div>
+        <form id="ruleForm" class="inline-form">
+          <div class="field">
+            <label for="rule-path">Path</label>
+            <input type="text" id="rule-path" name="path_pattern" placeholder="/services" required autocomplete="off" spellcheck="false">
+          </div>
+          <div class="field">
+            <label for="rule-match">Matches</label>
+            <select id="rule-match" name="match_type">
+              <option value="prefix">this path and below</option>
+              <option value="exact">exactly this path</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="rule-event">Event</label>
+            <select id="rule-event" name="event_name"></select>
+          </div>
+          <div class="field">
+            <label for="rule-note">Why (optional)</label>
+            <input type="text" id="rule-note" name="note" placeholder="services enquiry" autocomplete="off">
+          </div>
+          <button class="btn" type="submit">Add rule</button>
+        </form>
+        <div data-rules></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <h2>What was sent</h2>
+          <span class="meta">newest first</span>
+        </div>
+        <div data-audit-log></div>
       </div>
     </section>
 

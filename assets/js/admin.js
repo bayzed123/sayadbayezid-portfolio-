@@ -328,6 +328,7 @@
     leads: { title: 'Newsletter leads', crumb: 'Pipeline', load: loadLeads },
     analytics: { title: 'Analytics', crumb: 'Insight', load: loadAnalytics },
     adshub: { title: 'Ads hub', crumb: 'Insight', load: loadAdsHub },
+    tracking: { title: 'Event tracking', crumb: 'Insight', load: loadTracking },
     settings: { title: 'System status', crumb: 'Insight', load: loadSettings }
   };
 
@@ -2261,6 +2262,263 @@
       });
     }).catch(function (error) {
       emptyState(log, 'Could not read the Conversions API log.', error.message);
+    });
+  }
+
+  // --- event tracking ------------------------------------------------------
+
+  /**
+   * A message under the form that produced it.
+   *
+   * Deliberately not alert(): this screen can report a rule that was refused
+   * for a reason worth reading carefully — "Purchased is not a standard Meta
+   * event" — and a modal that has to be dismissed before you can look at the
+   * field you typed it into is the wrong shape for that.
+   */
+  function formNotice(form, message, kind) {
+    var existing = form.querySelector('[data-notice]');
+    if (existing) existing.remove();
+    var node = el('div', kind === 'warn' ? 'incident-note' : 'field-hint', message);
+    node.setAttribute('data-notice', '');
+    form.appendChild(node);
+  }
+
+  /**
+   * The screen that answers "are the Pixel and the Conversions API telling Meta
+   * the same story", which no other screen can.
+   *
+   * Everything else reports on the server half alone, and the server half
+   * succeeds whether or not the browser half ever ran. That is the failure this
+   * view exists to make visible: a large `missing` means the Pixel is being
+   * blocked, Meta is matching on less, and every other number here still looks
+   * healthy while it happens.
+   */
+  function loadTracking() {
+    loadDedup();
+    loadRules();
+  }
+
+  function loadDedup() {
+    var box = document.querySelector('[data-dedup]');
+    var log = document.querySelector('[data-audit-log]');
+    skeleton(box, 2);
+    skeleton(log, 4);
+
+    api('/api/admin/meta/capi-log?limit=50').then(function (data) {
+      clear(box);
+
+      if (!data.configured) {
+        var warn = el('div', 'incident-note');
+        warn.textContent = 'The Conversions API is not configured, so the server half of every event is missing. Set META_PIXEL_ID and the META_CONVERSIONS_API_TOKEN secret.';
+        box.appendChild(warn);
+      }
+
+      var d = data.deduplication;
+      if (!d) {
+        // audited === false means 014 has not been applied. Saying so beats
+        // rendering three zeroes, which reads as "nothing was sent" — the
+        // opposite of the truth, and the kind of wrong that gets acted on.
+        emptyState(box, 'The pairing report needs one more migration.',
+          'Apply schema/014_capi_audit.sql in the Worker repository. Until then the events are still sent and still logged; only the browser-versus-server comparison is unavailable.');
+      } else {
+        var grid = el('div', 'stat-grid');
+        [['Paired', d.paired, 'browser and server both sent it'],
+         ['Browser missing', d.missing, 'the Pixel did not fire — blocked, or a JS error'],
+         ['Not reported', d.unreported, 'sent by something that does not say either way']
+        ].forEach(function (row) {
+          var cell = el('div', 'stat');
+          cell.appendChild(el('div', 'stat-label', row[0]));
+          cell.appendChild(el('div', 'stat-value', num(row[1])));
+          cell.appendChild(el('div', 'field-hint', row[2]));
+          grid.appendChild(cell);
+        });
+        box.appendChild(grid);
+
+        var total = d.paired + d.missing;
+        if (total >= 20) {
+          var share = Math.round((d.missing / total) * 100);
+          var note = el('div', share >= 30 ? 'incident-note' : 'field-hint');
+          note.textContent = share >= 30
+            ? share + '% of events reached Meta from the server only. That is high enough to be an ad-blocker, not noise — match quality on those events is whatever the server could send without the browser.'
+            : share + '% of events were server-only, which is normal.';
+          box.appendChild(note);
+        }
+      }
+
+      // --- the audit log itself ---
+      var events = data.events || [];
+      clear(log);
+      if (!events.length) {
+        emptyState(log, 'No events recorded yet.',
+          'Either nothing tracked has fired since the log was added, or schema/007_capi_log.sql has not been applied.');
+        return;
+      }
+
+      table(log, ['Event', 'Result', 'Browser', 'From', 'When', ''], events, function (row) {
+        var tr = el('tr');
+        tr.appendChild(el('td', null, row.event_name));
+
+        var result = el('td');
+        result.appendChild(pill(row.status));
+        // A 200 with events_received: 0 is a silent drop and looks exactly
+        // like success everywhere else. Name it here.
+        if (row.status === 'accepted' && row.events_received === 0) {
+          result.appendChild(el('div', 'field-hint', 'accepted but 0 received — Meta took the request and kept none of it'));
+        }
+        if (row.error_message) {
+          result.appendChild(el('div', 'field-hint', String(row.error_message).slice(0, 160)));
+        }
+        tr.appendChild(result);
+
+        var browser = el('td');
+        browser.textContent = row.browser_fired === 1 ? 'fired'
+          : row.browser_fired === 0 ? 'blocked'
+          : '—';
+        if (row.browser_fired === 0) browser.className = 'warn-text';
+        tr.appendChild(browser);
+
+        tr.appendChild(el('td', null, row.source || 'browser'));
+        tr.appendChild(el('td', null, fmtDate(row.created_at)));
+
+        var actions = el('td');
+        if (row.payload) {
+          var toggle = el('button', 'btn-ghost', 'Payload');
+          var pre = el('pre', 'mono payload-dump');
+          pre.hidden = true;
+          pre.textContent = prettyJson(row.payload);
+          toggle.addEventListener('click', function () { pre.hidden = !pre.hidden; });
+          actions.appendChild(toggle);
+          actions.appendChild(pre);
+        }
+        tr.appendChild(actions);
+        return tr;
+      });
+    }).catch(function (error) {
+      emptyState(box, 'Could not read the tracking log.', error.message);
+      clear(log);
+    });
+  }
+
+  /** Pretty-prints if it parses, shows it raw if it does not. A payload we
+   *  cannot parse is still the most useful thing on the screen. */
+  function prettyJson(value) {
+    try { return JSON.stringify(JSON.parse(value), null, 2); }
+    catch (e) { return String(value); }
+  }
+
+  function loadRules() {
+    var box = document.querySelector('[data-rules]');
+    var select = document.getElementById('rule-event');
+    skeleton(box, 2);
+
+    api('/api/admin/meta/rules').then(function (data) {
+      // Populate from the server's own list rather than a copy kept here.
+      // Two lists of standard event names drift, and the one that drifts is
+      // always the one in the UI — where a typo is accepted by Meta as a
+      // custom event and then reported nowhere.
+      if (select && !select.options.length) {
+        (data.standardEvents || []).forEach(function (name) {
+          select.appendChild(el('option', null, name));
+        });
+        select.value = 'Lead';
+      }
+
+      var rules = data.rules || [];
+      clear(box);
+      if (!rules.length) {
+        emptyState(box, 'No rules yet.',
+          'A rule fires a standard Meta event on a path, without a deploy. PageView already fires everywhere, so it does not need one.');
+        return;
+      }
+      table(box, ['Path', 'Matches', 'Event', 'Why', ''], rules, function (row) {
+        var tr = el('tr');
+        tr.appendChild(el('td', 'mono', row.path_pattern));
+        tr.appendChild(el('td', null, row.match_type === 'exact' ? 'exactly' : 'and below'));
+        tr.appendChild(el('td', null, row.event_name));
+        tr.appendChild(el('td', null, row.note || '—'));
+        var actions = el('td');
+        var del = el('button', 'btn-ghost', 'Remove');
+        del.addEventListener('click', function () {
+          del.disabled = true;
+          api('/api/admin/meta/rules/' + encodeURIComponent(row.id), { method: 'DELETE' })
+            .then(loadRules)
+            .catch(function (error) {
+              del.disabled = false;
+              formNotice(ruleForm, error.message, 'warn');
+            });
+        });
+        actions.appendChild(del);
+        tr.appendChild(actions);
+        return tr;
+      });
+    }).catch(function (error) {
+      emptyState(box, 'Could not read the rules.', error.message);
+    });
+  }
+
+  var ruleForm = document.getElementById('ruleForm');
+  if (ruleForm) {
+    ruleForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var button = ruleForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      api('/api/admin/meta/rules', {
+        method: 'POST',
+        body: {
+          path_pattern: document.getElementById('rule-path').value,
+          match_type: document.getElementById('rule-match').value,
+          event_name: document.getElementById('rule-event').value,
+          note: document.getElementById('rule-note').value
+        }
+      }).then(function () {
+        ruleForm.reset();
+        formNotice(ruleForm, 'Rule added. It takes effect within five minutes — pages cache the rule list.', 'ok');
+        loadRules();
+      }).catch(function (error) {
+        formNotice(ruleForm, error.message, 'warn');
+      }).then(function () { button.disabled = false; });
+    });
+  }
+
+  var testForm = document.getElementById('testEventForm');
+  if (testForm) {
+    testForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      var out = document.querySelector('[data-test-result]');
+      var button = testForm.querySelector('button[type="submit"]');
+      button.disabled = true;
+      skeleton(out, 1);
+
+      api('/api/admin/meta/test-event', {
+        method: 'POST',
+        body: {
+          event_name: document.getElementById('te-event').value,
+          test_event_code: document.getElementById('te-code').value
+        }
+      }).then(function (data) {
+        clear(out);
+        // `live` says the event went into real data because no test code was
+        // given. That is occasionally what you want and never what you want by
+        // accident, so it is the first thing on screen, not a footnote.
+        var note = el('div', data.live ? 'incident-note' : 'field-hint');
+        note.textContent = data.note;
+        out.appendChild(note);
+
+        var line = el('div', 'stat-row');
+        line.appendChild(pill(data.status));
+        line.appendChild(el('span', 'mono', ' HTTP ' + (data.httpStatus === null ? '—' : data.httpStatus)));
+        out.appendChild(line);
+
+        // Meta's raw reply. This screen is admin-only, and the person reading
+        // it is the person who can act on an error code.
+        var pre = el('pre', 'mono payload-dump');
+        pre.textContent = JSON.stringify(data.meta, null, 2);
+        out.appendChild(pre);
+
+        loadDedup();
+      }).catch(function (error) {
+        emptyState(out, 'The test event did not go.', error.message);
+      }).then(function () { button.disabled = false; });
     });
   }
 

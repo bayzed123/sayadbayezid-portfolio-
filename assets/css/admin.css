@@ -777,3 +777,56 @@ table.data td.actions .btn { margin-left: 6px; }
 .lp-thumb { width: 62px; height: 42px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
 .lp-bar { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; margin: 10px 0 14px; }
 .lp-bar i { display: block; height: 100%; background: var(--emerald); width: 0; transition: width 0.2s linear; }
+
+/* --- Event tracking ------------------------------------------------------
+   The tracking screen adds two shapes the console did not have: a form laid
+   out in a row rather than a drawer column, and a raw JSON dump.
+   ------------------------------------------------------------------------ */
+
+/* Fields side by side on a desktop, stacked on a phone. auto-fit rather than a
+   fixed column count so the row reflows instead of overflowing — this console
+   is used from a phone often enough that a horizontal scrollbar on a form is a
+   real problem, not a theoretical one. */
+.inline-form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0 16px;
+  align-items: start;
+}
+/* The button sits on the same baseline as the inputs, but sized to its label
+   rather than stretched across a whole grid column — a Send button as wide as
+   a text field reads as the most important thing on the screen, and on this
+   screen it is the one action that writes to live data. */
+.inline-form .btn {
+  align-self: end;
+  justify-self: start;
+  margin-bottom: 15px;
+  min-width: 118px;
+}
+/* Hints and notices span the whole row: they are about the form, not a field. */
+.inline-form .field-hint,
+.inline-form [data-notice] { grid-column: 1 / -1; }
+
+/* Meta's own reply, and the payload we sent it. Pre-wrapped rather than
+   scrolled sideways — the interesting part of an error is usually the end of
+   the line, and a horizontal scrollbar hides exactly that. */
+.payload-dump {
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 340px;
+  overflow-y: auto;
+  margin: 10px 0 0;
+  padding: 12px 14px;
+  font-size: 0.72rem;
+  line-height: 1.55;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--text-soft);
+}
+
+.stat-row { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+
+/* A browser half that never fired. Amber, not red: the event still reached
+   Meta through the server, so nothing was lost — it was matched on less. */
+.warn-text { color: var(--amber); }
