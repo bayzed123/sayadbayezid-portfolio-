@@ -61,17 +61,43 @@
     var original = button.innerHTML;
     button.disabled = true;
     button.textContent = 'Joining…';
+
+    /* The id both halves of CompleteRegistration will carry.
+       Generated BEFORE the request, because the server fires its half from
+       inside /api/subscribe — where the address is known to be valid and
+       stored — and the two must agree or Meta counts one registration twice.
+       Whether the browser half really fires is reported alongside it: fbq is
+       always defined (tags.js installs a stub), so only callMethod tells the
+       truth about whether the library is running. */
+    var regId = (window.crypto && crypto.randomUUID)
+      ? crypto.randomUUID()
+      : 'reg' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+    var pixelLive = typeof window.fbq === 'function' && typeof window.fbq.callMethod === 'function';
+
     return fetch(API + '/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email, source: source }),
+      body: JSON.stringify({
+        email: email,
+        source: source,
+        event_id: regId,
+        event_source_url: location.href,
+        browser_fired: pixelLive,
+      }),
     })
       .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; }); })
       .then(function (res) {
         if (!res.ok) { banner(bannerNode, 'warn', res.d.error || 'That did not go through. Try again shortly.'); return false; }
         store('set', KEY_DONE, '1');
         banner(bannerNode, 'ok', "You're on the list. Nothing will arrive until it is worth sending.");
-        if (window.fbq) window.fbq('track', 'Lead', { content_name: 'Newsletter · ' + source });
+        if (window.fbq) {
+          window.fbq('track', 'Lead', { content_name: 'Newsletter · ' + source });
+          /* The browser half of the registration, under the id the server
+             already used. Lead above is the marketing event and stays as it
+             was; CompleteRegistration is the one Meta reports as a signup. */
+          window.fbq('track', 'CompleteRegistration',
+            { content_name: source }, { eventID: regId });
+        }
         return true;
       })
       .catch(function () {
