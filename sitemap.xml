@@ -76,8 +76,14 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://sayadbayezid.com/meta-integration.html</loc>
+    <lastmod>2026-09-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://sayadbayezid.com/blog/</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -116,11 +122,5 @@
       <image:loc>https://i.ibb.co/qMqwVFWv/IMG-5260.jpg</image:loc>
       <image:title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</image:title>
     </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/meta-integration.html</loc>
-    <lastmod>2026-09-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
 </urlset>
