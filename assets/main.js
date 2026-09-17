@@ -31,6 +31,27 @@ if (footerYearEl) footerYearEl.textContent = new Date().getFullYear();
 // ---------------------------------------------------------------------------
 const CAPI_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/track';
 
+/**
+ * Is the real Pixel running, or is it still our stub?
+ *
+ * `typeof fbq === 'function'` was the old test and it is always true:
+ * /assets/tags.js installs a stub named fbq at page load precisely so events
+ * fired before the library arrives are queued rather than lost. So the old
+ * test answered "yes, the browser half fired" even when an ad-blocker had
+ * stopped fbevents.js from ever loading — which is the exact case the
+ * server-side copy exists to cover, reported as if it had not happened.
+ *
+ * The real library defines callMethod; the stub deliberately does not.
+ */
+function pixelIsLive() {
+  return typeof fbq === 'function' && typeof fbq.callMethod === 'function';
+}
+
+function readCookie(name) {
+  const parts = `; ${document.cookie}`.split(`; ${name}=`);
+  return parts.length === 2 ? parts.pop().split(';').shift() : null;
+}
+
 function firePixelEvent(eventName, { custom = false, contentName, sendToServer = true } = {}) {
   const eventId = crypto.randomUUID();
   const customData = contentName ? { content_name: contentName } : {};
@@ -50,6 +71,14 @@ function firePixelEvent(eventName, { custom = false, contentName, sendToServer =
       event_id: eventId,
       event_source_url: window.location.href,
       custom_data: customData,
+      // The click identifiers, so Meta can attribute this event to the ad that
+      // produced the visit. Read from this domain's own cookies: they are what
+      // fbevents.js wrote, and the Worker cannot see them across origins.
+      user_data: { fbp: readCookie('_fbp'), fbc: readCookie('_fbc') },
+      // Whether the browser half really went. This is what makes the
+      // dashboard's paired/missing count mean something.
+      browser_fired: pixelIsLive(),
+      source: 'browser',
     }),
     keepalive: true, // lets this finish even if a click also navigates away
   }).catch(() => {}); // best-effort — a failed server echo shouldn't break the page

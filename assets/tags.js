@@ -41,6 +41,16 @@
   var PIXEL_ID = '1612338809888151';
   var MAX_WAIT_MS = 3000;
 
+  var API = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev';
+  /* The Pixel library, served from our own backend rather than
+     connect.facebook.net — see /api/pixel.js. Every mainstream blocklist has
+     an entry for that hostname, and when it matches, fbq() stays a stub and
+     the browser half of every event is gone with no error anywhere. */
+  var PIXEL_SRC = API + '/api/pixel.js';
+  /* If our proxy is down, Meta's own copy is better than no Pixel at all.
+     A blocked fallback is the situation we were already in. */
+  var PIXEL_FALLBACK = 'https://connect.facebook.net/en_US/fbevents.js';
+
   // Stubs first, so anything firing an event before the libraries land is
   // queued instead of throwing or vanishing.
   window.dataLayer = window.dataLayer || [];
@@ -59,21 +69,134 @@
     window._fbq = stub;
   }
 
+  /* ----------------------------------------------------------------------
+     Deduplication.
+
+     Every Meta event is sent twice on purpose: once here by fbq(), once by the
+     Worker through the Conversions API. Both carry the SAME event_id, which is
+     the whole mechanism — Meta collapses the pair into one conversion. Without
+     it each purchase is counted twice, the reported cost per purchase is half
+     the real number, and every bid decision made from it is wrong in the
+     direction that costs money.
+
+     The reason for sending twice at all is that the two halves fail
+     independently: an ad-blocker stops fbq(), a Meta outage stops the server
+     call, and a visitor who leaves in two seconds stops neither if the server
+     half has already gone.
+     ---------------------------------------------------------------------- */
+
+  function newEventId() {
+    if (window.crypto && typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+    // Not a UUID and it does not need to be. The only requirement is that the
+    // browser and server halves of ONE event agree, and that two events do not
+    // collide — which would make Meta drop the second as a duplicate.
+    return 'e' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 12);
+  }
+
+  function readCookie(name) {
+    var parts = ('; ' + document.cookie).split('; ' + name + '=');
+    return parts.length === 2 ? parts.pop().split(';').shift() : null;
+  }
+
+  /* Whether fbevents.js is actually running, as opposed to our stub pretending
+     to be it. The real library defines callMethod; the stub deliberately does
+     not, so that events fired before it arrives are queued instead of lost.
+     That difference is what makes this a usable signal. */
+  function pixelIsLive() {
+    return typeof window.fbq === 'function' && typeof window.fbq.callMethod === 'function';
+  }
+
+  /* The server half. Never throws into the page: a measurement failure must
+     not be visible to a visitor, and must not break the page it is measuring. */
+  function sendServerCopy(eventName, eventId, customData) {
+    try {
+      fetch(API + '/api/track', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        /* The request may outlive the page — a click on an outbound link is
+           exactly when an event matters most. keepalive lets it finish. */
+        keepalive: true,
+        body: JSON.stringify({
+          event_name: eventName,
+          event_id: eventId,
+          event_source_url: location.href,
+          custom_data: customData || {},
+          user_data: { fbp: readCookie('_fbp'), fbc: readCookie('_fbc') },
+          browser_fired: pixelIsLive(),
+          source: 'browser'
+        })
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        /* If fbevents.js never loaded there is no _fbp on this domain, and
+           every event this visit would otherwise look like a different person.
+           The Worker hands back the identifier it used; keeping it means the
+           rest of the visit is at least internally consistent.
+           Safari will cap this at seven days because JavaScript wrote it —
+           which is precisely what the Worker's own Set-Cookie avoids, once the
+           Worker answers on this domain. */
+        if (data && data.fbp && !readCookie('_fbp')) {
+          document.cookie = '_fbp=' + data.fbp + ';path=/;max-age=63072000;samesite=lax;secure';
+        }
+      }).catch(function () {});
+    } catch (e) { /* no fetch, or a CSP that blocks it */ }
+  }
+
+  /* Both halves of one event, with one id. The only function that should be
+     used to send anything from this file. */
+  function track(eventName, customData) {
+    var eventId = newEventId();
+    try { window.fbq('track', eventName, customData || {}, { eventID: eventId }); } catch (e) {}
+    sendServerCopy(eventName, eventId, customData);
+  }
+
   // Queue the events themselves now, at real page-load time, so the timestamps
   // and ordering are right even though the libraries arrive later.
   window.gtag('js', new Date());
   window.gtag('config', GA4_ID);
   window.fbq('init', PIXEL_ID);
-  window.fbq('track', 'PageView');
+
+  /* The browser half of PageView is queued at once — real page-load time, and
+     it survives in the stub's queue until the library lands. The SERVER half
+     waits, because browser_fired cannot be answered until the library has
+     either loaded or failed, and reporting "unknown" for every page view would
+     make the mismatch report useless on the one event that matters most. */
+  var pageViewId = newEventId();
+  window.fbq('track', 'PageView', {}, { eventID: pageViewId });
 
   var started = false;
+  var pageViewSent = false;
 
-  function inject(src, attrs) {
+  function sendPageView() {
+    if (pageViewSent) return;
+    pageViewSent = true;
+    sendServerCopy('PageView', pageViewId, {});
+  }
+
+  function inject(src, attrs, onload, onerror) {
     var s = document.createElement('script');
     s.src = src;
     s.async = true;
     if (attrs) Object.keys(attrs).forEach(function (k) { s.setAttribute(k, attrs[k]); });
+    if (onload) s.onload = onload;
+    if (onerror) s.onerror = onerror;
     document.head.appendChild(s);
+  }
+
+  /* Events configured in the dashboard for this path, rather than written
+     here. Asked for once per page load, after the tags are already loading, so
+     it never competes with the page itself. */
+  function fireConfiguredEvents() {
+    try {
+      fetch(API + '/api/meta/rules?path=' + encodeURIComponent(location.pathname))
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          (data && data.events ? data.events : []).forEach(function (name) {
+            // PageView is already sent above. A rule that repeats it would
+            // double it, and Meta would count two page views for one page.
+            if (name !== 'PageView') track(name, {});
+          });
+        })
+        .catch(function () {});
+    } catch (e) {}
   }
 
   function load() {
@@ -85,8 +208,37 @@
     window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
     inject('https://www.googletagmanager.com/gtm.js?id=' + GTM_ID);
     inject('https://www.googletagmanager.com/gtag/js?id=' + GA4_ID);
-    inject('https://connect.facebook.net/en_US/fbevents.js');
+
+    inject(PIXEL_SRC, null, function () {
+      // Loaded from our own origin. fbq() is real; the queued PageView drains.
+      sendPageView();
+      fireConfiguredEvents();
+    }, function () {
+      // Our proxy failed. Try Meta's own copy before giving up on the browser
+      // half — and either way, send the server half, which is the one that
+      // survives a blocker.
+      inject(PIXEL_FALLBACK, null, function () {
+        sendPageView();
+        fireConfiguredEvents();
+      }, function () {
+        sendPageView();
+        fireConfiguredEvents();
+      });
+    });
   }
+
+  /* The safety net, and the reason the coverage is better than it was.
+     If the visitor leaves before the tags load — a bounce, a back button, two
+     seconds on a phone — nothing above has fired yet. This sends the server
+     half on the way out, with browser_fired reporting the truth: false,
+     because the Pixel never got the chance.
+
+     pagehide rather than unload: unload is ignored by browsers that keep the
+     page in the back/forward cache, which is most of them now. */
+  window.addEventListener('pagehide', sendPageView);
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden') sendPageView();
+  });
 
   var EVENTS = ['pointerdown', 'touchstart', 'keydown', 'scroll', 'mousemove'];
   function teardown() {

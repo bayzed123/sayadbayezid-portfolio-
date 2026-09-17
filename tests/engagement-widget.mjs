@@ -78,7 +78,18 @@ async function newPage(viewport = { width: 1440, height: 900 }) {
   // ad and font hosts are unreachable from the sandbox, and counting those as
   // failures would drown the signal — but a broken local asset or a dead API
   // call still has to fail the run.
-  const mine = (url) => url.startsWith(SITE) || url.startsWith(API_HOST);
+  // /api/pixel.js is the Meta Pixel library, proxied through our own backend
+  // so a blocklist entry for connect.facebook.net does not match it. It is a
+  // pass-through to Meta, and Meta is not reachable from this sandbox, so it
+  // answers 502 here — by design, rather than by failing silently with an
+  // empty 200 that would leave fbq() a stub forever with no sign of why.
+  // The page treats that as the blocked-Pixel case it already handles: it
+  // falls back to Meta's own copy and the server-side event goes regardless.
+  // So it is excluded here, and covered properly in tests/deferred-tags.mjs,
+  // which aborts the request the way a real blocker does and then asserts the
+  // fallback and browser_fired: false.
+  const isPixelLibrary = (url) => url.includes('/api/pixel.js') || url.includes('fbevents.js');
+  const mine = (url) => (url.startsWith(SITE) || url.startsWith(API_HOST)) && !isPixelLibrary(url);
   page.on('requestfailed', (r) => {
     if (mine(r.url())) failed.push(`${r.url()} ${r.failure()?.errorText}`);
   });
