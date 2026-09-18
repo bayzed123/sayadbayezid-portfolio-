@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Measurement.
+     NOT the inline Google Tag Manager and gtag blocks that used to be here.
+     Those loaded gtm.js and gtag.js synchronously in the head of every
+     generated page, which cost the page's own paint — between them they WERE
+     the performance score — and they ran before /assets/tags.js could do
+     anything, so they bypassed both the deferred loader and the visitor's
+     opt-out. A page regenerated from this script silently undid all three.
+     One loader instead; it handles GTM, GA4 and the Meta Pixel. -->
+<script src="/assets/tags.min.js" defer></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Arif Gadgets — a real shop for Savar, built to run itself — Connect with Bayezid</title>
@@ -18,17 +27,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/style.min.css" />
-<!-- Analytics and the Meta Pixel, loaded after the page paints.
-     See /assets/tags.js — they used to be three inline blocks here, and
-     between them they were the performance score. -->
-<script src="/assets/tags.min.js" defer></script>
+<link rel="stylesheet" href="/assets/style.css" />
 </head>
 <body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
+
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
@@ -454,7 +456,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
     </div>
   </footer>
-  <script src="/assets/main.min.js"></script>
-  <script src="/assets/js/engagement.min.js" defer></script>
+  <script src="/assets/main.js"></script>
+  <script src="/assets/js/engagement.js" defer></script>
 </body>
 </html>

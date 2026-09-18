@@ -51,26 +51,16 @@ const { marked } = require("marked");
 marked.setOptions({ gfm: true, breaks: false });
 
 const ROOT = path.join(__dirname, "..");
-const GTM_HEAD = `<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WN9DK67S');</script>
-<!-- End Google Tag Manager -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HY9255GJYE"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-HY9255GJYE');
-</script>
-<!-- End Google tag (gtag.js) -->`;
-const GTM_NOSCRIPT = `<!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->`;
+const GTM_HEAD = `<!-- Measurement.
+     NOT the inline Google Tag Manager and gtag blocks that used to be here.
+     Those loaded gtm.js and gtag.js synchronously in the head of every
+     generated page, which cost the page's own paint — between them they WERE
+     the performance score — and they ran before /assets/tags.js could do
+     anything, so they bypassed both the deferred loader and the visitor's
+     opt-out. A page regenerated from this script silently undid all three.
+     One loader instead; it handles GTM, GA4 and the Meta Pixel. -->
+<script src="/assets/tags.min.js" defer></script>`;
+const GTM_NOSCRIPT = ``;
 const CONTENT_TYPES = [
   { dir: "case-studies", label: "Case study", indexTitle: "Case Studies", indexPage: "case-studies.html" },
   { dir: "news", label: "News", indexTitle: "News", indexPage: "news.html" },
@@ -109,21 +99,6 @@ ${GTM_HEAD}
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,650&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css" />
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1612338809888151');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
-/></noscript>
 </head>
 <body>
   ${GTM_NOSCRIPT}
@@ -141,7 +116,7 @@ src="https://www.facebook.com/tr?id=1612338809888151&ev=PageView&noscript=1"
         <a href="/work.html">Work</a>
         <a href="/case-studies/">Case Studies</a>
         <a href="/about.html">About</a>
-        <a href="/client-login.html" class="nav-login-link">Client Login</a>
+        <a href="/facebook-business-login.html" class="nav-login-link">Client Login</a>
         <a href="/contact.html" class="nav-cta" data-pixel-event="ContactIntent" data-pixel-custom="true">Start a project</a>
       </nav>
       <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
