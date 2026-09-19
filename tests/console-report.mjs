@@ -68,7 +68,11 @@ await page.waitForFunction(() =>
 check('Developer report opens as the only visible panel', (await page.locator('.view:visible').count()) === 1);
 
 const summary = await page.locator('[data-report-summary]').innerText();
-check('summary counts both projects', /Projects tracked\s*\n?\s*2/i.test(summary), summary);
+// "Client projects", not "Projects tracked": the agency's own backend is
+// registered here too and used to be averaged into this figure, which made it
+// a number that could not be shown to a client without explaining it first.
+// Both fixtures above are clients, so the count is still 2.
+check('summary counts both client projects', /Client projects\s*\n?\s*2/i.test(summary), summary);
 check('"Never checked" is called out separately from up/down', /Never checked\s*\n?\s*2/i.test(summary), summary);
 
 const tbl = await page.locator('[data-report-table]').innerText();

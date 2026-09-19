@@ -320,6 +320,7 @@
     overview: { title: 'Dashboard', crumb: 'Console', load: loadOverview },
     projects: { title: 'Project health', crumb: 'Clients', load: loadProjects },
     report: { title: 'Developer report', crumb: 'Clients', load: loadReport },
+    pipelines: { title: 'Build pipelines', crumb: 'Clients', load: loadPipelines },
     content: { title: 'Case studies & blog', crumb: 'Portfolio', load: loadContent },
     landing: { title: 'Landing page', crumb: 'Portfolio', load: loadLanding },
     reviews: { title: 'Reviews', crumb: 'Portfolio', load: loadReviews },
@@ -394,6 +395,7 @@
 
       if (!items.length) { emptyState(attention, 'Nothing needs you.', 'Everything is approved, delivered and up.'); return; }
       var list = el('div');
+      list.setAttribute('data-attention-list', '');
       items.forEach(function (item) {
         var row = el('button', 'side-link');
         row.style.marginBottom = '4px';
@@ -418,7 +420,72 @@
         if (bucket) bucket.value++;
       });
       lineChart(document.querySelector('[data-chart="enquiries"]'), days);
+
+      // The same response already carries read state, so the unread badge
+      // costs nothing extra here — and this is the request that runs on every
+      // visit to the console, which is what makes the badge appear before
+      // anyone has thought to open Enquiries.
+      var unread = countUnread(data);
+      paintUnread(unread);
+      if (unread) {
+        addAttention(unread + ' enquiry' + (unread === 1 ? '' : ' enquiries') + ' not read yet', 'enquiries');
+      }
     }).catch(function () {});
+
+    // Whether Meta is receiving anything, asked from the front page.
+    //
+    // The alarm itself lives on the tracking screen, and that is the screen
+    // nobody opens — which is precisely how a dead pixel survived five days.
+    // limit=1 because only the verdict is wanted here; the log stays where it
+    // belongs.
+    api('/api/admin/meta/capi-log?limit=1').then(function (data) {
+      if (!data.delivery) return;
+      if (data.delivery.state === 'down') {
+        addAttention(data.delivery.credentialProblem
+          ? 'Meta is rejecting every event — the Conversions API token is dead'
+          : 'Meta is accepting no events — tracking is down', 'tracking');
+      } else if (data.delivery.state === 'degraded') {
+        addAttention(data.delivery.headline, 'tracking');
+      }
+    }).catch(function () {});
+  }
+
+  /**
+   * Adds one row to "Needs attention" after that panel has already rendered.
+   *
+   * The panel is built from the overview response, but two of the things that
+   * most need attention — unread enquiries and a dead tracking pixel — are
+   * known only from later requests. Without this they would each have to wait
+   * for the overview endpoint to learn about them, which is a Worker change
+   * per signal. Appending is cheaper and keeps every warning in the one place
+   * a person actually looks.
+   *
+   * Clearing the "Nothing needs you" empty state is the fiddly part: it is a
+   * real element, so appending beside it produces a panel that says nothing is
+   * wrong directly above the thing that is wrong.
+   */
+  function addAttention(text, view) {
+    var attention = document.querySelector('[data-attention]');
+    if (!attention) return;
+    var empty = attention.querySelector('.empty');
+    if (empty) clear(attention);
+    var list = attention.querySelector('[data-attention-list]');
+    if (!list) {
+      list = attention.querySelector('div') || el('div');
+      list.setAttribute('data-attention-list', '');
+      if (!list.parentNode) attention.appendChild(list);
+    }
+    // Same warning twice — a re-render, or two sources reporting it — is one
+    // warning. Matched on the text because that is what makes them the same.
+    var already = Array.prototype.some.call(list.children, function (child) {
+      return child.textContent === text;
+    });
+    if (already) return;
+    var row = el('button', 'side-link');
+    row.style.marginBottom = '4px';
+    row.appendChild(el('span', null, text));
+    row.addEventListener('click', function () { show(view); });
+    list.appendChild(row);
   }
 
   function updateBadges(data) {
@@ -524,26 +591,32 @@
         'Generated ' + fmtDate(data.generatedAt);
 
       clear(summary);
+      // Client figures, not estate figures. The agency's own backend sits in
+      // the same table and used to be averaged into this number, which made it
+      // a number that could not be shown to a client without a paragraph of
+      // explanation first. clientSummary is the Worker's answer; data.summary
+      // is kept as the fallback for a Worker that predates it.
+      var client = data.clientSummary || data.summary;
       [
-        { label: 'Projects tracked', value: num(data.summary.total),
-          sub: num(data.summary.up) + ' up, ' + num(data.summary.down) + ' down', accent: '#5AA9E6' },
+        { label: 'Client projects', value: num(client.total),
+          sub: num(client.up) + ' up, ' + num(client.down) + ' down', accent: '#5AA9E6' },
         // Its own card for the same reason "Never checked" has one: a project
         // whose health URL is wrong is neither healthy nor broken, and the fix
         // is a field here rather than anything on the server.
-        { label: 'Wrong health URL', value: num(data.summary.misconfigured),
-          sub: data.summary.misconfigured
+        { label: 'Wrong health URL', value: num(client.misconfigured),
+          sub: client.misconfigured
             ? 'the server answered — edit the URL'
             : 'every health URL resolves',
-          accent: data.summary.misconfigured ? '#D4AF6A' : '#00A868' },
+          accent: client.misconfigured ? '#D4AF6A' : '#00A868' },
         // Called out on its own card rather than folded into "up": a project
         // nobody has checked is not a healthy one, and the old Google report
         // could not tell the two apart either.
-        { label: 'Never checked', value: num(data.summary.unmeasured),
-          sub: data.summary.unmeasured ? 'press Check to measure these' : 'every project has been measured',
-          accent: data.summary.unmeasured ? '#D4AF6A' : '#00A868' },
-        { label: 'Incidents', value: num(data.summary.incidents),
+        { label: 'Never checked', value: num(client.unmeasured),
+          sub: client.unmeasured ? 'press Check to measure these' : 'every project has been measured',
+          accent: client.unmeasured ? '#D4AF6A' : '#00A868' },
+        { label: 'Incidents', value: num(client.incidents),
           sub: 'failed checks in the last ' + data.days + ' days',
-          accent: data.summary.incidents ? '#E5735F' : '#00D084' },
+          accent: client.incidents ? '#E5735F' : '#00D084' },
         { label: 'Window', value: data.days + 'd', sub: 'health polls are on demand', accent: '#00A868' }
       ].forEach(function (stat) {
         var card = el('div', 'stat');
@@ -554,9 +627,17 @@
         summary.appendChild(card);
       });
 
+      // Two tables, because they answer to two different people. The client
+      // table is what a client is shown; the infrastructure table is the
+      // agency's own backend, which is checked from the inside rather than
+      // over HTTP and therefore has no status code to report.
+      var clientRows = data.projects.filter(function (row) { return !row.isOwn; });
+      var ownRows = data.projects.filter(function (row) { return row.isOwn; });
+      renderOwnInfra(ownRows);
+
       table(tableBox,
         ['Project', 'Status', 'Uptime', 'Checks', 'Avg latency', 'Worst', 'Last checked'],
-        data.projects,
+        clientRows,
         function (row) {
           var tr = el('tr');
           tr.appendChild(el('td', null, row.name));
@@ -580,13 +661,13 @@
           tr.appendChild(el('td', null, fmtDate(row.lastCheckedAt)));
           return tr;
         });
-      if (!data.projects.length) {
+      if (!clientRows.length) {
         emptyState(tableBox, 'No client projects yet.', 'Add one on the Project health page.');
       }
 
       clear(incidents);
       var any = false;
-      data.projects.forEach(function (row) {
+      clientRows.forEach(function (row) {
         if (!row.incidents.length) return;
         any = true;
         var block = el('div', 'incident-block');
@@ -1814,35 +1895,340 @@
       document.getElementById('commentFilter').value, 'comments');
   }
 
+  /**
+   * Copy text, and say so on the button that was pressed.
+   *
+   * The confirmation is the point, not a flourish. Copying produces no visible
+   * change anywhere on screen, so without it the honest question "did that
+   * work?" can only be answered by pasting somewhere and looking — and on a
+   * phone that means leaving this page.
+   *
+   * The fallback matters more than it looks. navigator.clipboard is undefined
+   * in any non-secure context and was late to older iOS Safari, and this
+   * console is mostly read on a phone. When it is missing, the text is put in
+   * a textarea and selected, so the OS copy menu is one long-press away rather
+   * than the button silently doing nothing.
+   */
+  function copyText(text, button) {
+    var original = button.getAttribute('data-label') || button.textContent;
+    button.setAttribute('data-label', original);
+
+    function settle(label, ok) {
+      button.textContent = label;
+      button.classList.toggle('copied', ok === true);
+      setTimeout(function () {
+        button.textContent = button.getAttribute('data-label') || original;
+        button.classList.remove('copied');
+      }, 1700);
+    }
+
+    function manual() {
+      var pad = el('textarea');
+      pad.value = text;
+      // Off-screen rather than hidden: a display:none textarea cannot be
+      // selected, and an unselected one cannot be copied.
+      pad.setAttribute('readonly', '');
+      pad.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0';
+      document.body.appendChild(pad);
+      pad.select();
+      pad.setSelectionRange(0, text.length);
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(pad);
+      settle(ok ? 'Copied' : 'Select and copy', ok);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { settle('Copied', true); }, manual);
+    } else {
+      manual();
+    }
+  }
+
+  function copyButton(label, getText) {
+    var button = el('button', 'btn btn-ghost btn-sm copy-btn', label);
+    button.type = 'button';
+    button.addEventListener('click', function () { copyText(getText(), button); });
+    return button;
+  }
+
+  /**
+   * Enquiries, as cards rather than a table.
+   *
+   * A table put the message in a 380px cell with the rest of the row's columns
+   * competing for the same width, which on a phone is a paragraph rendered four
+   * words wide. These are the messages the business runs on; they are worth the
+   * full width of the screen, and the actions that belong to each one — copy
+   * it, mark it read — belong next to it rather than in a toolbar somewhere.
+   */
   function loadEnquiries() {
     var container = document.querySelector('[data-enquiries]');
     skeleton(container, 4);
     api('/api/admin/contact').then(function (data) {
-      table(container, ['From', 'Email', 'Message', 'Received', 'Notified'], data.submissions, function (s) {
-        var tr = el('tr');
-        tr.appendChild(el('td', null, s.name));
-        var mail = el('td');
-        var link = el('a', null, s.email);
-        link.href = 'mailto:' + s.email;
-        link.style.color = 'var(--emerald)';
-        mail.appendChild(link);
-        tr.appendChild(mail);
-        var body = el('td', null, s.message);
-        body.style.maxWidth = '380px';
-        tr.appendChild(body);
-        tr.appendChild(el('td', null, fmtDate(s.created_at)));
-        var st = el('td');
-        st.appendChild(pill(s.notification_status));
-        if (s.notification_detail) {
-          var detail = el('div', 'mono', s.notification_detail);
-          detail.style.cssText = 'font-size:0.7rem;color:var(--text-dim);margin-top:4px;max-width:280px';
-          st.appendChild(detail);
-        }
-        tr.appendChild(st);
-        return tr;
-      });
-      if (!data.submissions.length) emptyState(container, 'No enquiries yet.');
+      renderEnquiries(container, data);
     }).catch(function (e) { emptyState(container, 'Could not load enquiries.', e.message); });
+  }
+
+  function renderEnquiries(container, data) {
+    clear(container);
+    var rows = data.submissions || [];
+    if (!rows.length) { emptyState(container, 'No enquiries yet.'); return; }
+
+    if (data.readTracking === false) {
+      var note = el('div', 'incident-note',
+        'Read marking is off until schema/016_own_infra_and_read_state.sql is applied. ' +
+        'Everything below still works; nothing can be marked read yet.');
+      container.appendChild(note);
+    }
+
+    rows.forEach(function (submission) {
+      container.appendChild(enquiryCard(submission, data));
+    });
+    paintUnread(countUnread(data));
+  }
+
+  function countUnread(data) {
+    return (data.submissions || []).filter(function (row) { return !row.read_at; }).length;
+  }
+
+  function enquiryCard(submission, data) {
+    var read = Boolean(submission.read_at);
+    var root = el('article', 'enq' + (read ? ' is-read' : ''));
+
+    var head = el('div', 'enq-head');
+    var who = el('div', 'enq-who');
+    var name = el('strong', null, submission.name || 'Someone');
+    who.appendChild(name);
+    var mail = el('a', 'enq-mail', submission.email);
+    mail.href = 'mailto:' + submission.email;
+    who.appendChild(mail);
+    head.appendChild(who);
+
+    var when = el('div', 'enq-when');
+    // The unread marker is a word as well as a colour. A green dot alone is
+    // exactly the signal somebody who cannot distinguish it from the amber one
+    // will miss, and this is the screen where missing it costs a customer.
+    if (!read) when.appendChild(el('span', 'enq-flag', 'UNREAD'));
+    when.appendChild(el('span', null, fmtDate(submission.created_at)));
+    head.appendChild(when);
+    root.appendChild(head);
+
+    var body = el('div', 'enq-body', submission.message);
+    root.appendChild(body);
+
+    var actions = el('div', 'enq-actions');
+    actions.appendChild(copyButton('Copy message', function () { return submission.message || ''; }));
+    actions.appendChild(copyButton('Copy email', function () { return submission.email || ''; }));
+    // The whole record, formatted for pasting into a quote, a CRM or a reply.
+    actions.appendChild(copyButton('Copy all', function () {
+      return [
+        'Name:     ' + (submission.name || ''),
+        'Email:    ' + (submission.email || ''),
+        'Received: ' + fmtDate(submission.created_at),
+        '',
+        submission.message || ''
+      ].join('\n');
+    }));
+
+    if (data.readTracking !== false) {
+      var toggle = el('button', 'btn btn-sm read-btn' + (read ? ' btn-ghost' : ' btn-primary'),
+        read ? '✓ Read' : 'Mark read');
+      toggle.type = 'button';
+      toggle.addEventListener('click', function () {
+        toggle.disabled = true;
+        api('/api/admin/contact/' + encodeURIComponent(submission.id) + '/read', {
+          method: 'POST',
+          body: { read: !read }
+        }).then(function (result) {
+          // Re-fetch rather than patch the node in place: the unread badge,
+          // the sidebar count and the overview all read from the same list,
+          // and three places updated by hand is three places to get wrong.
+          submission.read_at = result.read ? new Date().toISOString() : null;
+          return api('/api/admin/contact');
+        }).then(function (fresh) {
+          renderEnquiries(document.querySelector('[data-enquiries]'), fresh);
+        }).catch(function (e) {
+          toggle.disabled = false;
+          toggle.textContent = e.message.slice(0, 40);
+        });
+      });
+      actions.appendChild(toggle);
+    }
+    root.appendChild(actions);
+
+    var foot = el('div', 'enq-foot');
+    foot.appendChild(el('span', 'enq-foot-label', 'Email notification'));
+    foot.appendChild(pill(submission.notification_status));
+    if (submission.notification_detail) {
+      var detail = el('div', 'mono enq-detail', submission.notification_detail);
+      foot.appendChild(detail);
+    }
+    root.appendChild(foot);
+    return root;
+  }
+
+  /**
+   * The unread count, everywhere it needs to be.
+   *
+   * On the sidebar link, so it is visible from every other screen — an alert
+   * that only appears once you are already looking at enquiries is not an
+   * alert. Zero removes the badge rather than showing "0": a permanent marker
+   * is one the eye stops reporting within a week.
+   */
+  function paintUnread(count) {
+    var link = document.querySelector('.side-link[data-view="enquiries"]');
+    if (link) {
+      var badge = link.querySelector('[data-unread]');
+      if (!count) {
+        if (badge) badge.remove();
+      } else {
+        if (!badge) {
+          badge = el('span', 'nav-badge');
+          badge.setAttribute('data-unread', '');
+          link.appendChild(badge);
+        }
+        badge.textContent = String(count);
+        badge.setAttribute('aria-label', count + ' unread enquiries');
+      }
+    }
+    var counter = document.querySelector('[data-count="enquiries-unread"]');
+    if (counter) counter.textContent = count ? count + ' unread' : 'all read';
+  }
+
+  /**
+   * Whether each repository's last build passed.
+   *
+   * The blind spot this covers: every other panel here reports on running
+   * services, and a running service is the state you are left in when a deploy
+   * fails. The old build carries on answering, health stays green, and the
+   * change simply never arrived — a failure whose entire symptom is that
+   * nothing happened. GitHub emails about it, to an address that is not open
+   * on the phone this console is read on.
+   *
+   * One row per repository, expandable to the individual workflows, because
+   * the question asked ninety-nine times out of a hundred is "is anything
+   * broken" and that answer should not need scrolling.
+   */
+  /**
+   * The agency's own backend, reported separately and honestly.
+   *
+   * It is not checked the way a client project is checked and pretending
+   * otherwise would be the easy lie here: a Worker cannot fetch its own
+   * hostname, so there is no HTTP status code and no latency figure that means
+   * anything. What there is instead is better — the database was read, the
+   * bucket was listed, the secrets were counted — and the panel says which of
+   * those it did rather than showing an empty Uptime column.
+   */
+  function renderOwnInfra(rows) {
+    var host = document.querySelector('[data-own-infra]');
+    if (!host) return;
+    clear(host);
+    if (!rows.length) { host.parentNode.hidden = true; return; }
+    host.parentNode.hidden = false;
+
+    rows.forEach(function (row) {
+      var item = el('div', 'own-infra');
+      var head = el('div', 'own-infra-head');
+      head.appendChild(el('strong', null, row.name));
+      head.appendChild(pill(row.status));
+      item.appendChild(head);
+
+      var line = el('div', 'field-hint',
+        'Checked from inside the Worker — this host cannot fetch itself, so there is no ' +
+        'status code. Last checked ' + fmtDate(row.lastCheckedAt) + '.');
+      item.appendChild(line);
+
+      if (row.incidents && row.incidents.length && row.incidents[0].detail) {
+        item.appendChild(el('div', 'incident-note', row.incidents[0].detail));
+      }
+      host.appendChild(item);
+    });
+  }
+
+  function loadPipelines() {
+    var container = document.querySelector('[data-pipelines]');
+    var stamp = document.querySelector('[data-pipelines-checked]');
+    skeleton(container, 3);
+
+    api('/api/admin/pipelines').then(function (data) {
+      clear(container);
+      if (stamp) stamp.textContent = data.checkedAt ? 'checked ' + fmtDate(data.checkedAt) : '';
+
+      if (!data.configured) {
+        emptyState(container, 'Build status is not connected.', data.error || '');
+        return;
+      }
+      if (!data.repos.length) {
+        emptyState(container, 'No repositories configured.',
+          'Set PIPELINE_REPOS on the Worker to a comma-separated list of owner/repo.');
+        return;
+      }
+
+      var failing = data.summary ? data.summary.failing : 0;
+      var badge = document.querySelector('[data-badge="pipelinesFailing"]');
+      if (badge) badge.textContent = failing ? String(failing) : '';
+      if (failing) {
+        addAttention(failing + ' repository build' + (failing === 1 ? '' : 's') + ' failing', 'pipelines');
+      }
+
+      data.repos.forEach(function (repo) { container.appendChild(pipelineRow(repo)); });
+    }).catch(function (e) {
+      emptyState(container, 'Could not read build status.', e.message);
+    });
+  }
+
+  function pipelineRow(repo) {
+    var root = el('article', 'pipe pipe-' + (repo.ok ? repo.state : 'error'));
+
+    var head = el('div', 'pipe-head');
+    var left = el('div', 'pipe-name');
+    left.appendChild(el('strong', null, repo.repo));
+    head.appendChild(left);
+
+    var tag = el('span', 'pipe-tag');
+    tag.textContent = !repo.ok ? 'unreachable'
+      : repo.state === 'failing' ? (repo.failingCount + ' failing')
+      : repo.state === 'running' ? 'running'
+      : repo.state === 'none' ? 'no runs'
+      : 'passing';
+    head.appendChild(tag);
+    root.appendChild(head);
+
+    if (!repo.ok) {
+      root.appendChild(el('div', 'field-hint', repo.error || 'GitHub did not answer.'));
+      return root;
+    }
+
+    repo.workflows.forEach(function (workflow) {
+      var line = el('div', 'pipe-flow');
+
+      var state = workflow.status !== 'completed' ? 'running' : (workflow.conclusion || 'unknown');
+      var dot = el('span', 'pipe-dot pipe-dot-' +
+        (state === 'success' ? 'ok'
+          : state === 'running' ? 'run'
+          : ['skipped', 'neutral', 'cancelled'].indexOf(state) >= 0 ? 'idle'
+          : 'bad'));
+      line.appendChild(dot);
+
+      var text = el('div', 'pipe-flow-text');
+      text.appendChild(el('span', 'pipe-flow-name', workflow.name));
+      var meta = el('span', 'pipe-flow-meta',
+        state + (workflow.branch ? ' · ' + workflow.branch : '') +
+        (workflow.sha ? ' · ' + workflow.sha : '') +
+        (workflow.at ? ' · ' + fmtDate(workflow.at) : ''));
+      text.appendChild(meta);
+      line.appendChild(text);
+
+      if (workflow.url) {
+        var open = el('a', 'btn btn-ghost btn-sm', 'Open');
+        open.href = workflow.url;
+        open.target = '_blank';
+        open.rel = 'noopener';
+        line.appendChild(open);
+      }
+      root.appendChild(line);
+    });
+    return root;
   }
 
   function loadLeads() {
@@ -2298,6 +2684,61 @@
     loadRules();
   }
 
+  /**
+   * The verdict on whether Meta is receiving anything, stated as a verdict.
+   *
+   * This panel used to show ACCEPTED 0 beside REJECTED 133 in identical boxes,
+   * in identical type — two numbers offered as equals, leaving the reader to
+   * notice that one of them being zero means the pixel is dead. Nobody did,
+   * for five days, through a live campaign. The counts were correct the entire
+   * time; presenting them as peers was the bug.
+   *
+   * So the state is named in words, the fix is printed underneath, and a total
+   * failure is the loudest thing on the screen. Healthy stays quiet — a banner
+   * that is always there is furniture, and furniture is not read.
+   */
+  function renderDeliveryAlarm(box, delivery) {
+    if (!delivery) return;
+    if (delivery.state === 'healthy') {
+      var fine = el('div', 'field-hint', '✓ ' + delivery.headline);
+      box.appendChild(fine);
+      return;
+    }
+
+    var alarm = el('div', 'alarm alarm-' + delivery.state);
+    var head = el('div', 'alarm-head');
+    head.appendChild(el('span', 'alarm-tag',
+      delivery.state === 'down' ? 'TRACKING DOWN'
+        : delivery.state === 'degraded' ? 'DEGRADED'
+        : 'NOTHING SENT'));
+    head.appendChild(el('strong', null, delivery.headline));
+    alarm.appendChild(head);
+
+    if (delivery.state === 'down' && delivery.failingSince) {
+      var since = el('div', 'alarm-line',
+        'Failing since ' + fmtDate(delivery.failingSince) +
+        (delivery.lastAccepted
+          ? '. Last event Meta accepted: ' + fmtDate(delivery.lastAccepted) + '.'
+          : '. No event has ever been accepted.'));
+      alarm.appendChild(since);
+    }
+
+    if (delivery.worstError && delivery.worstError.message) {
+      var quote = el('div', 'mono alarm-quote',
+        'Meta says: ' + String(delivery.worstError.message).slice(0, 220));
+      alarm.appendChild(quote);
+    }
+
+    if (delivery.fix) alarm.appendChild(el('div', 'alarm-fix', delivery.fix));
+    box.appendChild(alarm);
+
+    // Carried to the front page, because the screen that shows this one is not
+    // the screen anybody opens first.
+    if (delivery.state === 'down') {
+      addAttention('Meta is accepting no events — tracking is down', 'tracking');
+    }
+  }
+
   function loadDedup() {
     var box = document.querySelector('[data-dedup]');
     var log = document.querySelector('[data-audit-log]');
@@ -2313,13 +2754,15 @@
         box.appendChild(warn);
       }
 
+      renderDeliveryAlarm(box, data.delivery);
+
       var d = data.deduplication;
       if (!d) {
         // audited === false means 014 has not been applied. Saying so beats
         // rendering three zeroes, which reads as "nothing was sent" — the
         // opposite of the truth, and the kind of wrong that gets acted on.
         emptyState(box, 'The pairing report needs one more migration.',
-          'Apply schema/014_capi_audit.sql in the Worker repository. Until then the events are still sent and still logged; only the browser-versus-server comparison is unavailable.');
+          'Apply schema/015_capi_audit.sql in the Worker repository. Until then the events are still sent and still logged; only the browser-versus-server comparison is unavailable.');
       } else {
         var grid = el('div', 'stat-grid');
         [['Paired', d.paired, 'browser and server both sent it'],

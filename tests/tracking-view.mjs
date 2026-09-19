@@ -15,7 +15,7 @@
  * email address and for its SHA-256.
  *
  *   # the API, from the bayezid-agency-worker checkout
- *   npx wrangler d1 execute bayezid-agency --local --file schema/014_capi_audit.sql
+ *   npx wrangler d1 execute bayezid-agency --local --file schema/015_capi_audit.sql
  *   npx wrangler dev --local --port 8787 &
  *
  *   # this site

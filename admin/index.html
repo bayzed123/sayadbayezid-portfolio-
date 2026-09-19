@@ -67,6 +67,10 @@
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M8 15v-3M12 15V9M16 15v-5"/></svg>
         Developer report
       </button>
+      <button class="side-link" data-view="pipelines">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="12" r="2.5"/><path d="M6 8.5v7M8.5 6h4a3 3 0 0 1 3 3v1M8.5 18h4a3 3 0 0 0 3-3v-1"/></svg>
+        Build pipelines<span class="side-badge" data-badge="pipelinesFailing"></span>
+      </button>
     </div>
 
     <div class="side-group">
@@ -191,13 +195,35 @@
         <div data-report-range></div>
         <div class="stat-grid" data-report-summary></div>
       </div>
+      <div class="card" hidden>
+        <div class="card-head">
+          <h2>Our own infrastructure</h2>
+          <span class="meta">not a client — checked from the inside</span>
+        </div>
+        <div data-own-infra></div>
+      </div>
       <div class="card">
-        <div class="card-head"><h2>Per project</h2></div>
+        <div class="card-head"><h2>Per client project</h2></div>
         <div class="table-wrap" data-report-table></div>
       </div>
       <div class="card">
         <div class="card-head"><h2>Incidents</h2><span class="meta">What actually failed, newest first</span></div>
         <div data-report-incidents></div>
+      </div>
+    </section>
+
+    <!-- Build pipelines --------------------------------------------------- -->
+    <section class="view" data-view-panel="pipelines" hidden>
+      <div class="callout">
+        <svg class="ico" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <p><strong>A green service is not a shipped change.</strong> Project health says each site is answering; this says whether the last attempt to change one succeeded. A failed deploy leaves the previous build serving happily, so nothing here goes red on its own.</p>
+      </div>
+      <div class="card">
+        <div class="card-head">
+          <h2>Build pipelines</h2>
+          <span class="meta" data-pipelines-checked></span>
+        </div>
+        <div data-pipelines></div>
       </div>
     </section>
 
@@ -509,9 +535,9 @@
       <div class="card">
         <div class="card-head">
           <h2>Contact enquiries</h2>
-          <span class="meta">delivery status shown per row</span>
+          <span class="meta" data-count="enquiries-unread"></span>
         </div>
-        <div class="table-wrap" data-enquiries></div>
+        <div data-enquiries></div>
       </div>
     </section>
 

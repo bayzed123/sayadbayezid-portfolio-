@@ -830,3 +830,256 @@ table.data td.actions .btn { margin-left: 6px; }
 /* A browser half that never fired. Amber, not red: the event still reached
    Meta through the server, so nothing was lost — it was matched on less. */
 .warn-text { color: var(--amber); }
+
+/* ===================================================================
+   Enquiries, as cards.
+   A table gave the message a 380px cell competing with five other
+   columns, which on a phone is a paragraph four words wide. These are
+   the messages the business runs on.
+   =================================================================== */
+.enq {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  /* The unread marker. A left edge rather than a background tint: it
+     survives being read at an angle in sunlight, which is where this
+     screen is actually read. */
+  border-left: 3px solid var(--emerald);
+}
+.enq.is-read {
+  border-left-color: var(--line);
+  background: var(--surface);
+}
+.enq-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: baseline;
+  justify-content: space-between;
+}
+.enq-who { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.enq-who strong { color: var(--paper); font-size: 0.95rem; }
+.enq-mail {
+  color: var(--emerald);
+  text-decoration: none;
+  font-size: 0.82rem;
+  word-break: break-all;
+}
+.enq-mail:hover { text-decoration: underline; }
+.enq-when {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  flex: none;
+}
+.enq-flag {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--emerald);
+  background: var(--emerald-soft);
+  border: 1px solid rgba(0, 208, 132, 0.32);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+.enq-body {
+  margin: 12px 0 14px;
+  padding: 12px 14px;
+  background: var(--void);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--paper);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  /* Whitespace is content in a message somebody typed: the line breaks
+     they used are how they meant it to read. */
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.enq-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.enq-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+.enq-foot-label { font-size: 0.72rem; color: var(--text-dim); }
+.enq-detail {
+  flex-basis: 100%;
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+/* Copy confirmed. The button is the only thing on screen that can
+   report it — copying changes nothing else visible. */
+.copy-btn.copied {
+  color: var(--emerald);
+  border-color: rgba(0, 208, 132, 0.4);
+  background: var(--emerald-soft);
+}
+.read-btn { flex: none; }
+
+/* Unread count on the sidebar link, so it is visible from every other
+   screen. An alert you only see once you are already looking at the
+   thing is not an alert. */
+.nav-badge {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--emerald);
+  color: var(--void);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* ===================================================================
+   The tracking alarm.
+   Built because ACCEPTED 0 and REJECTED 133 sat side by side in
+   identical boxes for five days and nobody read the conclusion out of
+   them. Healthy renders nothing: a banner that is always there is
+   furniture.
+   =================================================================== */
+.alarm {
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-raised);
+}
+.alarm-down {
+  border-color: rgba(229, 115, 95, 0.45);
+  background: rgba(229, 115, 95, 0.1);
+}
+.alarm-degraded, .alarm-idle {
+  border-color: rgba(229, 162, 63, 0.4);
+  background: rgba(229, 162, 63, 0.09);
+}
+.alarm-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.alarm-head strong { color: var(--paper); font-size: 0.95rem; }
+.alarm-tag {
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 3px 9px;
+  border-radius: 999px;
+  flex: none;
+}
+.alarm-down .alarm-tag { background: var(--rose); color: var(--void); }
+.alarm-degraded .alarm-tag, .alarm-idle .alarm-tag { background: var(--amber); color: var(--void); }
+.alarm-line { margin-top: 8px; font-size: 0.82rem; color: var(--text-soft); }
+.alarm-quote {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  background: var(--void);
+  border: 1px solid var(--line);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+  word-break: break-word;
+}
+.alarm-fix {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--paper);
+}
+
+/* ===================================================================
+   Build pipelines.
+   A green service is not a shipped change: a failed deploy leaves the
+   previous build answering happily, so this is the one panel that can
+   go red while everything else stays green.
+   =================================================================== */
+.pipe {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.pipe-passing { border-left-color: var(--emerald); }
+.pipe-failing { border-left-color: var(--rose); }
+.pipe-running { border-left-color: var(--sky); }
+.pipe-error, .pipe-none { border-left-color: var(--amber); }
+.pipe-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.pipe-name strong {
+  color: var(--paper);
+  font-size: 0.88rem;
+  word-break: break-all;
+}
+.pipe-tag {
+  flex: none;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-soft);
+}
+.pipe-failing .pipe-tag {
+  color: var(--rose);
+  border-color: rgba(229, 115, 95, 0.4);
+  background: rgba(229, 115, 95, 0.1);
+}
+.pipe-passing .pipe-tag {
+  color: var(--emerald);
+  border-color: rgba(0, 208, 132, 0.32);
+  background: var(--emerald-soft);
+}
+.pipe-flow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-top: 1px solid var(--line);
+}
+.pipe-dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+.pipe-dot-ok { background: var(--emerald); }
+.pipe-dot-bad { background: var(--rose); }
+.pipe-dot-run { background: var(--sky); }
+.pipe-dot-idle { background: var(--text-dim); }
+.pipe-flow-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; flex: 1; }
+.pipe-flow-name { font-size: 0.82rem; color: var(--paper); }
+.pipe-flow-meta { font-size: 0.68rem; color: var(--text-dim); word-break: break-word; }
+
+/* Our own backend, reported apart from the clients'. It is checked from
+   inside the Worker, so it has no status code and no latency — and an
+   empty Uptime column would read as a measurement that failed. */
+.own-infra {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  background: var(--surface);
+}
+.own-infra + .own-infra { margin-top: 10px; }
+.own-infra-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.own-infra-head strong { color: var(--paper); font-size: 0.88rem; }
