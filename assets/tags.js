@@ -51,6 +51,91 @@
      A blocked fallback is the situation we were already in. */
   var PIXEL_FALLBACK = 'https://connect.facebook.net/en_US/fbevents.js';
 
+  /* ----------------------------------------------------------------------
+     The way out.
+
+     Measurement on this site runs on arrival — there is no banner gating it,
+     and there never has been. That is only defensible with a real way to stop
+     it, so this is it: any URL on this site ending #stop-tracking, a link with
+     that href anywhere (the privacy policy has one), or bzTags.optOut().
+
+     It is checked FIRST, before a single stub is installed, because a visitor
+     who has opted out should get a page with no tracking apparatus on it at
+     all — not one where the apparatus exists and is politely asked not to
+     fire.
+
+     Remembered with no expiry. Asking again in six months is how a refusal
+     gets worn down.
+     ---------------------------------------------------------------------- */
+  var OPTOUT_KEY = 'cwb.optout.v1';
+
+  function optedOut() {
+    try { return localStorage.getItem(OPTOUT_KEY) === '1'; } catch (e) { return false; }
+  }
+
+  function confirmOptOut() {
+    var note = document.createElement('div');
+    note.setAttribute('role', 'status');
+    note.id = 'cwb-optout-note';
+    note.textContent = 'Measurement is off for this browser. Nothing more is sent.';
+    note.style.cssText =
+      'position:fixed;left:50%;bottom:22px;transform:translateX(-50%);z-index:9999;' +
+      'background:#111;color:#fff;border-radius:10px;padding:11px 18px;' +
+      'font:500 14px/1.4 system-ui,-apple-system,Segoe UI,sans-serif;' +
+      'box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:calc(100% - 32px);text-align:center';
+    document.body.appendChild(note);
+    setTimeout(function () { if (note.parentNode) note.parentNode.removeChild(note); }, 6000);
+  }
+
+  function optOut() {
+    try { localStorage.setItem(OPTOUT_KEY, '1'); } catch (e) { /* nothing to remember it with */ }
+    try {
+      // Remove the libraries, not just the flag: a script element left in the
+      // page means the next fbq() or gtag() call from anywhere still reaches
+      // out, and the flag would be a promise this file cannot keep.
+      var scripts = document.querySelectorAll(
+        'script[src*="fbevents.js"],script[src*="/api/pixel.js"],script[src*="googletagmanager.com"]');
+      for (var i = 0; i < scripts.length; i++) {
+        if (scripts[i].parentNode) scripts[i].parentNode.removeChild(scripts[i]);
+      }
+      // Left callable so unrelated code does not throw; they simply do nothing.
+      window.fbq = function () {}; window.fbq.queue = [];
+      window.gtag = function () {};
+    } catch (e) { /* a page that will not let us tidy up is still opted out */ }
+    return true;
+  }
+
+  /** Wired even when opted out, so the link still works and still confirms. */
+  function wireOptOut() {
+    function viaHash() {
+      if (location.hash !== '#stop-tracking') return;
+      optOut();
+      confirmOptOut();
+      if (window.history && history.replaceState) {
+        // So a shared link does not silently opt out whoever opens it.
+        history.replaceState(null, '', location.pathname + location.search);
+      }
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', viaHash);
+    } else { viaHash(); }
+    window.addEventListener('hashchange', viaHash);
+    document.addEventListener('click', function (event) {
+      var link = event.target.closest ? event.target.closest('a[href$="#stop-tracking"]') : null;
+      if (!link) return;
+      event.preventDefault();
+      optOut();
+      confirmOptOut();
+    }, true);
+  }
+
+  window.bzTags = { optOut: optOut, optedOut: optedOut };
+  wireOptOut();
+
+  // Nothing below this line runs for someone who asked not to be measured: no
+  // stub, no queued event, no library, no server call.
+  if (optedOut()) return;
+
   // Stubs first, so anything firing an event before the libraries land is
   // queued instead of throwing or vanishing.
   window.dataLayer = window.dataLayer || [];

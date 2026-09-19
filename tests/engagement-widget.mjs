@@ -78,18 +78,33 @@ async function newPage(viewport = { width: 1440, height: 900 }) {
   // ad and font hosts are unreachable from the sandbox, and counting those as
   // failures would drown the signal — but a broken local asset or a dead API
   // call still has to fail the run.
-  // /api/pixel.js is the Meta Pixel library, proxied through our own backend
-  // so a blocklist entry for connect.facebook.net does not match it. It is a
-  // pass-through to Meta, and Meta is not reachable from this sandbox, so it
-  // answers 502 here — by design, rather than by failing silently with an
-  // empty 200 that would leave fbq() a stub forever with no sign of why.
-  // The page treats that as the blocked-Pixel case it already handles: it
-  // falls back to Meta's own copy and the server-side event goes regardless.
-  // So it is excluded here, and covered properly in tests/deferred-tags.mjs,
-  // which aborts the request the way a real blocker does and then asserts the
-  // fallback and browser_fired: false.
-  const isPixelLibrary = (url) => url.includes('/api/pixel.js') || url.includes('fbevents.js');
-  const mine = (url) => (url.startsWith(SITE) || url.startsWith(API_HOST)) && !isPixelLibrary(url);
+  /**
+   * Measurement traffic, which is not what this suite is about.
+   *
+   * Three of these, each for its own reason:
+   *
+   *   /api/pixel.js  the Meta Pixel library, proxied through our own backend
+   *                  so a blocklist entry for connect.facebook.net does not
+   *                  match it. Meta is unreachable from this sandbox, so it
+   *                  answers 502 — by design, rather than failing silently
+   *                  with an empty 200 that would leave fbq() a stub forever.
+   *                  The page handles it as the blocked-Pixel case: it falls
+   *                  back to Meta's own copy and the server event goes anyway.
+   *   /api/track     the server half of every event. Sent with keepalive and
+   *                  deliberately not awaited, so closing the page mid-flight
+   *                  aborts it. That abort is the test tearing down, not the
+   *                  page failing.
+   *   /api/meta/rules the URL-to-event lookup, same shape, same reason.
+   *
+   * The widget's own calls — /api/engagement, /api/ratings, /api/comments —
+   * are NOT excluded, and a failure in any of them still fails the run. That
+   * distinction is the whole point: this check exists to catch a broken local
+   * asset or a dead API call, and widening it to "ignore the backend" would
+   * throw that away.
+   */
+  const isMeasurement = (url) =>
+    /\/api\/pixel\.js|fbevents\.js|\/api\/track|\/api\/meta\/rules/.test(url);
+  const mine = (url) => (url.startsWith(SITE) || url.startsWith(API_HOST)) && !isMeasurement(url);
   page.on('requestfailed', (r) => {
     if (mine(r.url())) failed.push(`${r.url()} ${r.failure()?.errorText}`);
   });

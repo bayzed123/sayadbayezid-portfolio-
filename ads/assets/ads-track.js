@@ -27,6 +27,20 @@
 (function () {
   'use strict';
 
+  /* The opt-out, honoured here as well as in /assets/tags.js.
+     THIS FILE IS THE REASON THE CHECK HAS TO BE IN TWO PLACES. The landing
+     page, the privacy policy and the terms page load this script INSTEAD of
+     tags.js, and it bootstraps its own Pixel. So an opt-out that only tags.js
+     obeyed would be honoured on most of the site and silently ignored on the
+     privacy policy — the one page where someone goes to find the switch. The
+     key is deliberately the same string, set by whichever file the visitor
+     happened to click it on. */
+  try {
+    if (localStorage.getItem('cwb.optout.v1') === '1') return;
+  } catch (err) {
+    /* storage unavailable: carry on, there is nothing to have opted out with */
+  }
+
   var PIXEL_ID = '1612338809888151';
   var CAPI_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/track';
   var CONTACT_ENDPOINT = 'https://bayezid-agency-api.sayadmdbayezidhosan.workers.dev/api/contact';
