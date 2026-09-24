@@ -104,17 +104,62 @@ const POLICY = [
   './privacy-policy.html', './terms-of-service.html',
   './business-integration-policy.html', './privacy-policy-meta-product.html',
   './amader-tangail/privacy-policy.html', './amader-tangail/user-account-data-delete.html',
+  './amader-tangail/delete-account.html',
   './facebook-business-login.html', './data-deletion-status.html',
 ];
 const broken = [];
+const absent = [];
 for (const page of POLICY) {
+  // A policy page that has been deleted is reported, not thrown on. Reading it
+  // unguarded ends the whole run with an ENOENT stack trace, so the one real
+  // problem takes every later check in this file down with it and the output
+  // says nothing about any of them.
+  if (!existsSync(page)) { absent.push(page); continue; }
   const html = readFileSync(page, 'utf8');
   for (const [, href] of html.matchAll(/href="(\/[^"#?]*)"/g)) {
     const target = href.endsWith('/') ? `.${href}index.html` : `.${href}`;
     if (!existsSync(target)) broken.push(`${page} → ${href}`);
   }
 }
+check('every policy page on the list still exists', absent.length === 0, absent.join(', '));
 check('no policy page links to a missing file', broken.length === 0, broken.join('\n       '));
+
+console.log('== the URLs Google Play was given still resolve ==');
+// An app listing names a privacy policy and, where there are accounts, a page
+// explaining how to delete one. If either 404s, the consequence is not a broken
+// page -- it is a listing that can be pulled, and nothing else here would
+// notice: they are plain documents no other test touches and no user reports.
+//
+// delete-account.html is on this list because it was published as a URL before
+// it was a page. The Amader Tangail deploy checks it after every release
+// (DELETE_ACCOUNT_URL) and it 404'd from the day that variable was set. Both
+// spellings must resolve, because which one the live listing holds is not
+// something this repository can see.
+const PLAY_URLS = [
+  './amader-tangail/privacy-policy.html',
+  './amader-tangail/user-account-data-delete.html',
+  './amader-tangail/delete-account.html',
+];
+check('every page named in the Play listing exists',
+  PLAY_URLS.every(p => existsSync(p)),
+  PLAY_URLS.filter(p => !existsSync(p)).join(', '));
+
+// A redirect whose target has been renamed is a 404 with extra steps, and it
+// would keep passing the check above.
+{
+  // Guarded: if the file is gone, the check above already says so, and reading
+  // it anyway would throw and take every later check in this file down with it
+  // -- turning one honest failure into a run that reports nothing at all.
+  const path = './amader-tangail/delete-account.html';
+  const stub = existsSync(path) ? readFileSync(path, 'utf8') : '';
+  const targets = [...stub.matchAll(/(?:href|location\.replace\(')["']?([\w.-]+\.html)/g)]
+    .map(m => m[1]);
+  const dead = [...new Set(targets)].filter(t => !existsSync(`./amader-tangail/${t}`));
+  check('and the redirect points at a page that is really there',
+    targets.length > 0 && dead.length === 0,
+    stub ? (targets.length ? dead.join(', ') : 'no redirect target found at all')
+         : 'the redirect page itself is missing');
+}
 
 console.log('== the hub indexes every policy page that exists ==');
 // The point of the hub is that a person who lands on it can reach whichever
