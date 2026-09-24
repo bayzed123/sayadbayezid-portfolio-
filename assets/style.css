@@ -1255,3 +1255,59 @@ a { color: inherit; }
 /* Footer policy links were under the 24px minimum touch target — too small to
    hit reliably on a phone. Padding grows the target without changing the type. */
 .footer-cols a, .footer-legal a { display: inline-block; padding-block: 5px; }
+
+/* ------------------------------------------------- Specialities page
+   The whole point of this page is that it is NOT a tag cloud: every
+   speciality carries a sentence explaining it. These styles exist to
+   keep that readable at 44 items without the page turning into a wall.
+   ------------------------------------------------------------------ */
+
+/* Jump strip. Links to sections, not decoration — the chips on the
+   pricing strip set the precedent and this matches them. */
+.spec-jump { display: flex; flex-wrap: wrap; gap: 10px; }
+.spec-jump-chip {
+  font-family: 'JetBrains Mono', monospace; font-size: .74rem; text-decoration: none;
+  color: var(--text-soft); border: 1px solid var(--line); border-radius: 100px;
+  padding: 8px 16px; transition: color .25s var(--ease), border-color .25s var(--ease), background .25s var(--ease);
+}
+.spec-jump-chip:hover, .spec-jump-chip:focus-visible {
+  color: var(--emerald); border-color: rgba(0, 208, 132, .4); background: var(--emerald-soft);
+}
+
+/* One card per speciality. auto-fit so seven items in a row-group wrap
+   sensibly instead of needing a breakpoint per section. */
+.spec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(275px, 1fr)); gap: 18px; }
+.spec-card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 26px 24px; transition: border-color .3s var(--ease), transform .3s var(--ease);
+}
+.spec-card:hover { border-color: rgba(0, 208, 132, .28); transform: translateY(-3px); }
+.spec-card h3 { font-size: 1.12rem; margin: 0 0 10px; color: var(--paper); }
+.spec-card p { margin: 0; font-size: .92rem; line-height: 1.65; color: var(--text-soft); }
+
+/* Focuses & technologies: four themed groups rather than 27 loose chips.
+   minmax(320px) because these hold lists, not one paragraph. */
+.spec-group-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.spec-group {
+  background: linear-gradient(150deg, var(--surface-raised), var(--surface));
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 26px;
+}
+.spec-group h3 { font-size: 1.18rem; margin: 0 0 6px; color: var(--paper); }
+.spec-group-note {
+  margin: 0 0 18px; font-family: 'JetBrains Mono', monospace;
+  font-size: .72rem; color: var(--emerald); letter-spacing: .02em;
+}
+.spec-list { list-style: none; margin: 0; padding: 0; }
+.spec-list li {
+  font-size: .88rem; line-height: 1.6; color: var(--text-soft);
+  padding: 11px 0; border-top: 1px solid var(--line);
+}
+.spec-list li:first-child { border-top: 0; padding-top: 0; }
+/* The term itself stays the loudest thing in the row — it is what someone
+   scanning for "Laravel" is actually looking for. */
+.spec-list b { color: var(--paper); font-weight: 600; }
+
+@media (max-width: 720px) {
+  .spec-grid, .spec-group-grid { grid-template-columns: 1fr; }
+  .spec-group { padding: 24px 20px; }
+}
