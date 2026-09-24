@@ -440,6 +440,10 @@
     // belongs.
     api('/api/admin/meta/capi-log?limit=1').then(function (data) {
       if (!data.delivery) return;
+      // paused and recovered are deliberately absent from this list. A pause
+      // is a decision, not a fault, and "recovered" means it is working now —
+      // raising either on the front page would be an alert with no action
+      // behind it, which is how the ones that matter stop being read.
       if (data.delivery.state === 'down') {
         addAttention(data.delivery.credentialProblem
           ? 'Meta is rejecting every event — the Conversions API token is dead'
@@ -2680,8 +2684,46 @@
    * healthy while it happens.
    */
   function loadTracking() {
+    loadReadiness();
     loadDedup();
     loadRules();
+  }
+
+  /**
+   * Every prerequisite for server-side Meta tracking, ticked or not.
+   *
+   * Written for one moment: the ad restriction lifts, the token goes in, and
+   * the honest question is "will that be enough, or have I forgotten
+   * something?" Without this, answering it means reading the Worker source.
+   * With it, the answer is a list where the token is the only empty box.
+   */
+  function loadReadiness() {
+    var box = document.querySelector('[data-meta-readiness]');
+    if (!box) return;
+    skeleton(box, 3);
+    api('/api/admin/meta/readiness').then(function (data) {
+      clear(box);
+
+      var banner = el('div', 'readiness-summary readiness-' +
+        (data.live ? 'live' : data.readyForToken ? 'ready' : 'blocked'));
+      banner.appendChild(el('strong', null, data.summary));
+      box.appendChild(banner);
+
+      var list = el('div', 'readiness-list');
+      data.items.forEach(function (item) {
+        var row = el('div', 'readiness-row' + (item.ok ? ' is-ok' : item.blocking ? ' is-missing' : ''));
+        var mark = el('span', 'readiness-mark', item.ok ? '✓' : '○');
+        row.appendChild(mark);
+        var text = el('div', 'readiness-text');
+        text.appendChild(el('span', 'readiness-label', item.label));
+        if (item.detail) text.appendChild(el('span', 'readiness-detail', item.detail));
+        row.appendChild(text);
+        list.appendChild(row);
+      });
+      box.appendChild(list);
+    }).catch(function (e) {
+      emptyState(box, 'Could not read the Meta readiness check.', e.message);
+    });
   }
 
   /**
@@ -2702,6 +2744,23 @@
     if (delivery.state === 'healthy') {
       var fine = el('div', 'field-hint', '✓ ' + delivery.headline);
       box.appendChild(fine);
+      return;
+    }
+
+    /* PAUSED IS NOT AN ALARM, AND MUST NOT LOOK LIKE ONE.
+       While the ad account is restricted there is no Conversions API token, so
+       nothing is sent and nothing fails. Painting that red for the length of
+       the restriction would put a permanent warning on screen that nobody can
+       clear — and the cost of a warning that cannot be cleared is that the next
+       real one gets scrolled past with it. Calm, and it names the one step. */
+    if (delivery.state === 'paused' || delivery.state === 'recovered') {
+      var calm = el('div', 'alarm alarm-' + delivery.state);
+      var calmHead = el('div', 'alarm-head');
+      calmHead.appendChild(el('span', 'alarm-tag', delivery.state === 'paused' ? 'PAUSED' : 'WORKING'));
+      calmHead.appendChild(el('strong', null, delivery.headline));
+      calm.appendChild(calmHead);
+      if (delivery.fix) calm.appendChild(el('div', 'alarm-fix', delivery.fix));
+      box.appendChild(calm);
       return;
     }
 

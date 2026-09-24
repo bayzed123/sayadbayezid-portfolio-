@@ -1083,3 +1083,51 @@ table.data td.actions .btn { margin-left: 6px; }
   margin-bottom: 8px;
 }
 .own-infra-head strong { color: var(--paper); font-size: 0.88rem; }
+
+/* Paused: a decision, not a fault. Blue rather than amber, because the
+   restriction can last weeks and an amber banner that cannot be cleared
+   teaches the eye to skip the row — taking the real warnings with it. */
+.alarm-paused {
+  border-color: rgba(90, 169, 230, 0.4);
+  background: rgba(90, 169, 230, 0.09);
+}
+.alarm-paused .alarm-tag { background: var(--sky); color: var(--void); }
+
+/* Recovered: working now, with older failures still inside the window. */
+.alarm-recovered {
+  border-color: rgba(0, 208, 132, 0.4);
+  background: var(--emerald-soft);
+}
+.alarm-recovered .alarm-tag { background: var(--emerald); color: var(--void); }
+
+/* The readiness checklist. Its job is to be readable at a glance from a
+   phone: one line per prerequisite, the unticked one obvious. */
+.readiness-summary {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  margin-bottom: 14px;
+  font-size: 0.88rem;
+  color: var(--paper);
+}
+.readiness-live { border-color: rgba(0, 208, 132, 0.4); background: var(--emerald-soft); }
+.readiness-ready { border-color: rgba(90, 169, 230, 0.4); background: rgba(90, 169, 230, 0.09); }
+.readiness-blocked { border-color: rgba(229, 162, 63, 0.4); background: rgba(229, 162, 63, 0.09); }
+
+.readiness-list { display: flex; flex-direction: column; }
+.readiness-row {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-top: 1px solid var(--line);
+}
+.readiness-row:first-child { border-top: 0; }
+.readiness-mark { flex: none; width: 16px; color: var(--text-dim); font-size: 0.9rem; line-height: 1.5; }
+.readiness-row.is-ok .readiness-mark { color: var(--emerald); }
+/* The one box still open. Amber, and only when it actually blocks. */
+.readiness-row.is-missing .readiness-mark { color: var(--amber); }
+.readiness-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.readiness-label { font-size: 0.86rem; color: var(--paper); }
+.readiness-row.is-missing .readiness-label { color: var(--amber); }
+.readiness-detail { font-size: 0.71rem; color: var(--text-dim); word-break: break-word; }
