@@ -3,77 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delete Your Account & Data — Amader Tangail</title>
+<title>Delete Your Account &amp; Data — Amader Tangail</title>
+
+<!-- This URL is the one filed with Google Play as the account-deletion page,
+     so it has to do the deleting, not describe it. The form below talks to the
+     Amader Tangail API; see the comment above API_BASE. -->
+
+<meta name="description" content="Delete your Amader Tangail account and data, and check the status of a request you already made. No app and no sign-in needed." />
+<meta name="robots" content="index, follow, max-image-preview:large" />
+<link rel="canonical" href="https://sayadbayezid.com/amader-tangail/user-account-data-delete.html" />
+<meta property="og:title" content="Delete Your Account &amp; Data — Amader Tangail" />
+<meta property="og:description" content="Delete your Amader Tangail account and data, and check the status of a request you already made." />
+<meta property="og:url" content="https://sayadbayezid.com/amader-tangail/user-account-data-delete.html" />
+<meta property="og:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Delete Your Account &amp; Data — Amader Tangail" />
+<meta name="twitter:description" content="Delete your Amader Tangail account and data, and check the status of a request you already made." />
+<meta name="twitter:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
+
+<!-- No analytics and no advertising pixel on this page, deliberately, and the
+     same on privacy-policy.html next door.
+
+     Every other page on this site loads /assets/tags.min.js. This one must not:
+     the people who reach it are here to stop us holding data about them, and
+     measuring that visit — then shipping it to an advertising network — is the
+     exact thing they came to put an end to. It would also contradict the Data
+     Safety form filed for the app. Please do not add the tag block back when
+     sweeping the site; the omission is the feature. -->
+
 <style>
-  body { font-family: -apple-system, Segoe UI, Roboto, Arial, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 760px; margin: 0 auto; padding: 24px 20px 80px; background: #fafafa; }
-  h1 { color: #006A4E; border-bottom: 3px solid #F42A41; padding-bottom: 12px; }
-  h2 { color: #006A4E; margin-top: 32px; }
-  .steps { background: white; border: 1px solid #ddd; border-radius: 10px; padding: 20px 24px; }
+  :root {
+    --green:#006A4E; --red:#F42A41; --ink:#1a1a1a; --soft:#5a6660;
+    --paper:#fafafa; --surface:#fff; --line:#ddd;
+  }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6;
+         color: var(--ink); max-width: 760px; margin: 0 auto; padding: 24px 20px 80px; background: var(--paper); }
+  h1 { color: var(--green); border-bottom: 3px solid var(--red); padding-bottom: 12px; }
+  h2 { color: var(--green); margin-top: 32px; }
+  h3 { font-size: 1rem; margin: 0 0 10px; }
+  .bn { font-size: .95em; color: var(--soft); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 24px; margin-bottom: 16px; }
+  .card[hidden] { display: none; }
   .steps ol { padding-left: 20px; }
   .steps li { margin-bottom: 12px; }
   table { border-collapse: collapse; width: 100%; margin: 16px 0; }
-  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; font-size: 0.95em; }
-  th { background: #006A4E; color: white; }
-  a.button { display: inline-block; background: #F42A41; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 12px; }
-  .meta { color: #555; font-size: 0.9em; }
+  th, td { border: 1px solid var(--line); padding: 8px 12px; text-align: left; font-size: 0.95em; }
+  th { background: var(--green); color: white; }
+  label { display:block; font-size:.78rem; font-weight:700; letter-spacing:.02em; text-transform:uppercase;
+          color: var(--soft); margin-bottom: 5px; }
+  input { width:100%; font:inherit; padding:12px; border:1px solid var(--line); border-radius:9px; background:#fff; color:var(--ink); }
+  input:focus { outline:2px solid var(--green); outline-offset:1px; border-color:transparent; }
+  button { font:inherit; font-weight:700; min-height:48px; width:100%; margin-top:12px; border:0;
+           border-radius:9px; background:var(--green); color:#fff; cursor:pointer; }
+  button.danger { background: var(--red); }
+  button.quiet { background:#eceee9; color:var(--ink); }
+  button:disabled { opacity:.55; cursor:default; }
+  a.button { display:inline-block; background:var(--red); color:white; padding:12px 24px;
+             border-radius:8px; text-decoration:none; font-weight:bold; margin-top:12px; }
+  .note { padding:11px 14px; border-radius:9px; font-size:.95em; margin-bottom:14px; }
+  .note.ok  { background:#ECF4F0; color:#04593F; }
+  .note.err { background:#FDF2F4; color:#B00C27; }
+  .meta { color: var(--soft); font-size: 0.9em; }
+  .ref { display:flex; gap:8px; align-items:stretch; margin-top:8px; }
+  .ref input { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size:.85rem; }
+  .ref button { width:auto; margin-top:0; padding:0 16px; min-height:0; }
+  .pill { display:inline-block; padding:3px 10px; border-radius:999px; font-size:.8rem; font-weight:700; }
+  .pill.wait { background:#FFF4E0; color:#8A5A00; }
+  .pill.done { background:#E6F4EC; color:#04593F; }
+  .pill.no   { background:#FDF2F4; color:#B00C27; }
+  .outcome { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size:.85rem;
+             background:#f4f6f3; border-radius:8px; padding:10px 12px; word-break:break-word; }
+  /* Spelled exactly as on every other stamped page: tests/policy-pages.mjs
+     looks for this selector to confirm the injected header's links are not
+     left browser-default blue on a page that is nothing like that. */
+  .legacy-site-header a{color:inherit;text-decoration:none}
+  .legacy-site-header a:hover{text-decoration:underline}
 </style>
-
-    
-  <meta name="description" content="Delete Your Account &amp; Data — Amader Tangail" />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
-  <link rel="canonical" href="https://sayadbayezid.com/amader-tangail/user-account-data-delete.html" />
-  <meta property="og:title" content="Delete Your Account &amp; Data — Amader Tangail" />
-  <meta property="og:description" content="Delete Your Account &amp; Data — Amader Tangail" />
-  <meta property="og:url" content="https://sayadbayezid.com/amader-tangail/user-account-data-delete.html" />
-  <meta property="og:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Delete Your Account &amp; Data — Amader Tangail" />
-  <meta name="twitter:description" content="Delete Your Account &amp; Data — Amader Tangail" />
-  <meta name="twitter:image" content="https://sayadbayezid.com/assets/social-preview.svg" />
-<!-- Analytics and the Meta Pixel, loaded after the page paints.
-     See /assets/tags.js — they used to be three inline blocks here, and
-     between them they were the performance score. -->
-<script src="/assets/tags.min.js" defer></script>
 </head>
 <body>
-<style>.legacy-site-header a{color:inherit;text-decoration:none}.legacy-site-header a:hover{text-decoration:underline}</style>
-<header class="site-header legacy-site-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(237,239,236,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00D084">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
-    <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WN9DK67S"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-<h1>Delete Your Account & Data — Amader Tangail</h1>
+
+<header class="site-header legacy-site-header" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;border-bottom:1px solid rgba(26,26,26,.12);position:relative;z-index:10"><a href="/" style="color:inherit;text-decoration:none;font-weight:700;letter-spacing:-.02em">Connect <em style="font-style:normal;color:#00A06B">with</em> Bayezid</a><nav aria-label="Primary navigation" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:.78rem"><a href="/services.html">Services</a><a href="/products.html">Products</a><a href="/work.html">Work</a><a href="/case-studies/">Case Studies</a><a href="/about.html">About</a><a href="/contact.html">Contact</a></nav></header>
+
+<h1>Delete Your Account &amp; Data — Amader Tangail</h1>
 <p class="meta"><strong>App:</strong> Amader Tangail (আমাদের টাঙ্গাইল) &nbsp;|&nbsp; <strong>Developer:</strong> Sayad Bayezid &amp; Team</p>
 
-<p>If you'd like your Amader Tangail account and the data associated with it removed, follow the steps below. This applies whether or not you still have the app installed.</p>
+<p>You can delete your Amader Tangail account and everything stored with it, right here. You do not need the app installed and you do not need to sign in — we email you a six-digit code to check the address is yours.</p>
+<p class="bn">অ্যাপ আনইনস্টল করে ফেললেও এখান থেকেই আপনার অ্যাকাউন্ট ও সব তথ্য মুছে ফেলার অনুরোধ করতে পারবেন। সাইন ইন করার দরকার নেই — আপনার ইমেইলে একটি ছয় ডিজিটের কোড পাঠানো হবে।</p>
 
-<div class="steps">
-<h2>How to request deletion</h2>
-<ol>
-<li>Send an email to <strong><a href="mailto:support@sayadbayezid.com?subject=Account%20Deletion%20Request">support@sayadbayezid.com</a></strong> with the subject line "<strong>Account Deletion Request</strong>."</li>
-<li>Include the phone number or Google account email you registered with, so we can locate your record.</li>
-<li>We will confirm your identity matches the account on file, then delete your account and associated data within <strong>30 days</strong>, and reply to confirm once it's done.</li>
-</ol>
-<a class="button" href="mailto:support@sayadbayezid.com?subject=Account%20Deletion%20Request">Request Deletion by Email</a>
+<div id="msg" role="status" aria-live="polite"></div>
+
+<!-- ================================================================== -->
+<!-- The flow                                                            -->
+<!-- ================================================================== -->
+
+<div class="card" id="step1">
+  <h3>1. Your email address <span class="bn">/ আপনার ইমেইল</span></h3>
+  <p class="meta">The address you used in Amader Tangail.</p>
+  <form id="f1">
+    <label for="email">Email</label>
+    <input id="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" required>
+    <button type="submit" id="b1">Send me a code</button>
+  </form>
 </div>
+
+<div class="card" id="step2" hidden>
+  <h3>2. The code we sent you <span class="bn">/ কোড</span></h3>
+  <p class="meta">Six digits. It expires in 15 minutes.</p>
+  <form id="f2">
+    <label for="code">Code</label>
+    <input id="code" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" required>
+    <button type="submit" id="b2">Check the code</button>
+  </form>
+</div>
+
+<div class="card" id="step3" hidden>
+  <h3>3. What we hold <span class="bn">/ আপনার যে তথ্য আছে</span></h3>
+  <div id="holds"></div>
+  <p class="meta">Deleting this cannot be undone. A person reviews the request before anything is removed.</p>
+  <button class="danger" id="b3">Delete all of it</button>
+</div>
+
+<div class="card" id="step4" hidden>
+  <h3>Request submitted <span class="bn">/ অনুরোধ জমা হয়েছে</span></h3>
+  <p id="submittedMsg"></p>
+  <p><strong>Save this reference.</strong> With your email address it is how you check what happened.</p>
+  <p class="bn">এই রেফারেন্সটি সংরক্ষণ করুন। ইমেইলসহ এটি দিয়েই পরে অবস্থা দেখতে পারবেন।</p>
+  <div class="ref">
+    <input id="refOut" readonly aria-label="Your reference">
+    <button type="button" class="quiet" id="copyRef">Copy</button>
+  </div>
+</div>
+
+<!-- ================================================================== -->
+<!-- Checking back later                                                 -->
+<!-- ================================================================== -->
+
+<h2 id="status">Check a request you already made</h2>
+<p class="bn">আগে করা অনুরোধের অবস্থা দেখুন</p>
+<div class="card">
+  <p class="meta">Enter the reference you were given, together with the same email address.
+     Lost the reference? Start the flow above again — once you enter the code, any request already
+     submitted for that address is shown to you.</p>
+  <form id="fs">
+    <label for="sEmail">Email</label>
+    <input id="sEmail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" required>
+    <label for="sRef" style="margin-top:12px">Reference</label>
+    <input id="sRef" type="text" autocapitalize="none" spellcheck="false" required>
+    <button type="submit" id="bs">Check status</button>
+  </form>
+  <div id="statusOut"></div>
+</div>
+
+<!-- ================================================================== -->
+<!-- The policy, unchanged                                               -->
+<!-- ================================================================== -->
 
 <h2>What gets deleted</h2>
 <table>
 <tr><th>Data type</th><th>Deleted?</th></tr>
 <tr><td>Google Sign-In profile link (name, email, photo)</td><td>Deleted</td></tr>
 <tr><td>Blood donor registration (name, phone, blood group, location)</td><td>Deleted</td></tr>
-<tr><td>Your posted classified ads</td><td>Deleted</td></tr>
+<tr><td>Your posted classified ads, and their photographs</td><td>Deleted</td></tr>
 <tr><td>Your posted blood requests</td><td>Deleted</td></tr>
+<tr><td>Messages you sent us through the app</td><td>Deleted</td></tr>
 <tr><td>Aggregated, anonymous usage analytics</td><td>Not linked to you individually — retained in aggregate form only</td></tr>
+<tr><td>The record that you asked for deletion, and that it was carried out</td><td>Kept — it is the only evidence the deletion happened, and it is what we would show you if you ever asked</td></tr>
 </table>
+
+<h2>How long it takes</h2>
+<p>A person reviews every request before anything is removed, because deletion is permanent and a mistake cannot be undone. Requests are completed <strong>within 30 days</strong>, and normally far sooner. The status page above tells you the moment it is done.</p>
 
 <h2>Retention after deletion</h2>
 <p>We do not keep a copy of deleted personal data beyond what's required for fraud prevention or legal compliance, which we retain for up to 90 days before permanent removal.</p>
 
+<h2>Still have the app?</h2>
+<p>You can delete your account from inside Amader Tangail, under your profile, without any of this.</p>
+
+<h2>If the form does not work for you</h2>
+<div class="steps">
+<p>Email <strong><a href="mailto:support@sayadbayezid.com?subject=Account%20Deletion%20Request">support@sayadbayezid.com</a></strong> with the subject "<strong>Account Deletion Request</strong>", from the address you registered with or quoting the phone number you used. It is handled by hand, on the same 30-day commitment.</p>
+<a class="button" href="mailto:support@sayadbayezid.com?subject=Account%20Deletion%20Request">Request Deletion by Email</a>
+</div>
+
 <h2>Questions</h2>
 <p>Contact <a href="mailto:support@sayadbayezid.com">support@sayadbayezid.com</a> for anything not covered here, or see our full <a href="privacy-policy.html">Privacy Policy</a>.</p>
 
-<footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(237,239,236,.09)"></footer>
+<footer class="legacy-footer" aria-label="Portfolio navigation" style="padding:24px 20px;text-align:center;border-top:1px solid rgba(26,26,26,.09)"></footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /**
+   * The Amader Tangail API. This page is served from sayadbayezid.com and the
+   * API lives on a Worker, so every call below is cross-origin: the Worker's
+   * ALLOWED_ORIGINS must list this site or the browser blocks the response
+   * before this script ever sees it. If the form starts failing with a network
+   * error and nothing else changed, that list is the first place to look.
+   */
+  var API_BASE = 'https://amader-tangail-api.sayadmdbayezidhosan.workers.dev';
+
+  var $ = function (s) { return document.querySelector(s); };
+  var ticket = null;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  function say(text, kind) {
+    $('#msg').innerHTML = '<div class="note ' + kind + '">' + esc(text) + '</div>';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /** dd Mon yyyy, or nothing at all rather than "Invalid Date". */
+  function when(iso) {
+    if (!iso) return '';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function call(path, body) {
+    return fetch(API_BASE + '/api/v1/deletion/' + path, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (data) {
+        if (!res.ok) {
+          throw new Error((data.error && data.error.message) || 'Something went wrong. Please try again.');
+        }
+        return data;
+      });
+    }, function () {
+      /**
+       * A rejected fetch here is the network or a blocked origin, never an
+       * answer from the API — those arrive as an ok:false above. Saying
+       * "try again" alone would send someone round the same loop forever,
+       * so the email route is named in the message itself.
+       */
+      throw new Error('Could not reach the server. Check your connection, or email support@sayadbayezid.com and we will do it by hand.');
+    });
+  }
+
+  /** Every submit disables its button: a second tap spends a rate-limit slot. */
+  function wire(formId, buttonId, run) {
+    $(formId).addEventListener('submit', function (ev) {
+      ev.preventDefault();
+      var b = $(buttonId);
+      if (b.disabled) return;
+      var label = b.textContent;
+      b.disabled = true;
+      b.textContent = 'Working…';
+      Promise.resolve()
+        .then(run)
+        .catch(function (e) { say(e.message, 'err'); })
+        .then(function () { b.disabled = false; b.textContent = label; });
+    });
+  }
+
+  /* -------------------------------------------------- 1. ask for a code - */
+
+  wire('#f1', '#b1', function () {
+    return call('request', { email: $('#email').value }).then(function (out) {
+      say(out.message, 'ok');
+      $('#step2').hidden = false;
+      $('#code').focus();
+    });
+  });
+
+  /* ------------------------------------------------- 2. answer the code - */
+
+  wire('#f2', '#b2', function () {
+    return call('verify', { email: $('#email').value, code: $('#code').value }).then(function (out) {
+      ticket = out.ticket;
+      var h = out.holds || {};
+      $('#holds').innerHTML = h.account
+        ? '<ul>' +
+            '<li>Your account' + (h.name ? ' (' + esc(h.name) + ')' : '') + '</li>' +
+            (h.donors   ? '<li>' + h.donors   + ' blood donor listing(s)</li>' : '') +
+            (h.requests ? '<li>' + h.requests + ' blood request(s)</li>'       : '') +
+            (h.ads      ? '<li>' + h.ads      + ' classified ad(s)</li>'       : '') +
+            (h.messages ? '<li>' + h.messages + ' message(s) you sent us</li>' : '') +
+          '</ul>'
+        : '<p>Only the messages you sent us. There is no account for this address.</p>';
+      $('#step3').hidden = false;
+
+      /**
+       * If this address already has a request in the queue, show it here
+       * rather than letting them raise a second one and wonder which is
+       * which. This is also the way back for someone who lost their
+       * reference — answering the code proves the address just as well.
+       */
+      if (out.existing) {
+        renderStatus(out.existing, '#statusOut');
+        $('#sEmail').value = $('#email').value;
+        $('#sRef').value = out.existing.reference;
+        say('Code accepted. You already have a request for this address — see "Check a request you already made" below.', 'ok');
+      } else {
+        say('Code accepted.', 'ok');
+      }
+    });
+  });
+
+  /* --------------------------------------------------- 3. confirm it - */
+
+  $('#b3').addEventListener('click', function () {
+    if (!window.confirm('Delete everything held for ' + $('#email').value + '?\n\nThis cannot be undone.')) return;
+    var b = $('#b3');
+    b.disabled = true;
+    b.textContent = 'Working…';
+    call('confirm', { ticket: ticket }).then(function (out) {
+      $('#step1').hidden = $('#step2').hidden = $('#step3').hidden = true;
+      $('#step4').hidden = false;
+      $('#submittedMsg').textContent = out.message;
+      $('#refOut').value = out.reference || '';
+      $('#sEmail').value = $('#email').value;
+      $('#sRef').value = out.reference || '';
+      say(out.message, 'ok');
+    }).catch(function (e) {
+      say(e.message, 'err');
+      b.disabled = false;
+      b.textContent = 'Delete all of it';
+    });
+  });
+
+  $('#copyRef').addEventListener('click', function () {
+    var field = $('#refOut');
+    var done = function () {
+      var b = $('#copyRef');
+      b.textContent = 'Copied';
+      setTimeout(function () { b.textContent = 'Copy'; }, 1800);
+    };
+    // navigator.clipboard is absent over plain http and in some in-app
+    // browsers, which is exactly where someone leaving an Android app lands.
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(field.value).then(done, function () { field.select(); });
+      return;
+    }
+    field.select();
+    try { document.execCommand('copy'); done(); } catch (e) { /* the text is selected; they can copy it */ }
+  });
+
+  /* ----------------------------------------------- 4. check back later - */
+
+  function renderStatus(out, target) {
+    var cls = out.status === 'completed' ? 'done' : out.status === 'rejected' ? 'no' : 'wait';
+    var submitted = when(out.submittedAt);
+    var decided = when(out.decidedAt);
+
+    var html = '<div class="note ok" style="margin-top:16px">' +
+      '<p style="margin:0 0 8px"><span class="pill ' + cls + '">' + esc(out.label) + '</span> ' +
+      '<span class="bn">' + esc(out.labelBn) + '</span></p>' +
+      '<p style="margin:0 0 8px">' + esc(out.detail) + '</p>';
+
+    if (submitted) html += '<p class="meta" style="margin:0">Submitted ' + esc(submitted) + '</p>';
+    if (decided)   html += '<p class="meta" style="margin:0">Decided ' + esc(decided) + '</p>';
+    if (out.outcome) html += '<p class="outcome" style="margin:10px 0 0">' + esc(out.outcome) + '</p>';
+
+    html += '</div>';
+    $(target).innerHTML = html;
+  }
+
+  wire('#fs', '#bs', function () {
+    $('#statusOut').innerHTML = '';
+    return call('status', { email: $('#sEmail').value, reference: $('#sRef').value })
+      .then(function (out) { renderStatus(out, '#statusOut'); });
+  });
+
+  // Arriving at #status from the privacy policy should land on the form, not
+  // halfway up the page, once the browser has laid everything out.
+  if (location.hash === '#status') {
+    setTimeout(function () { $('#sEmail').focus({ preventScroll: true }); }, 60);
+  }
+})();
+</script>
 </body>
 </html>
