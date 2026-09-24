@@ -44,10 +44,32 @@ const PROBE_SHA = createHash('sha256').update(PROBE_EMAIL).digest('hex');
    stale. The site's public pages are the opposite case — they load .min.js —
    which is why that suite refuses to run against an old build. */
 
-let pass = 0, fail = 0;
+let pass = 0, fail = 0, skipped = 0;
 const check = (label, cond, detail = '') => {
   if (cond) { pass++; console.log(`  ok   ${label}`); }
   else { fail++; console.log(`  FAIL ${label}${detail ? `\n       ${detail}` : ''}`); }
+};
+
+/* THIS SUITE READS THE EVENT LOG, WHICH ONLY FILLS WHEN TRACKING IS LIVE.
+   A Worker with no META_CONVERSIONS_API_TOKEN is paused: it sends nothing and
+   records nothing, deliberately, so that a restricted ad account does not
+   produce a rejected row per visitor. Checks that need a logged event are
+   therefore gated on a token being configured, and say so when they skip —
+   silence here would hide a real regression behind a fixture. */
+let MODE = 'unknown';
+try {
+  MODE = (await (await fetch(`${LOCAL_API}/api/admin/meta/capi-log?limit=1`, {
+    headers: { 'X-Admin-Secret': process.env.ADMIN_SECRET || 'local-admin-secret' },
+  })).json()).mode ?? 'unknown';
+} catch { /* the first real check reports it */ }
+const LIVE = MODE === 'live';
+const liveOnly = (label, cond, detail = '') => {
+  if (!LIVE) {
+    skipped++;
+    console.log(`  skip ${label}\n       needs META_CONVERSIONS_API_TOKEN on the local Worker (mode=${MODE})`);
+    return;
+  }
+  check(label, cond, detail);
 };
 
 const browser = await chromium.launch(
@@ -127,6 +149,18 @@ async function seed() {
 }
 
 resetLog();
+/* WAIT FOR THE WORKER TO COME BACK BEFORE SEEDING.
+   resetLog() opens the same sqlite file `wrangler dev` is holding, and the
+   dev server drops connections for a moment afterwards. seed() posts
+   immediately and swallows errors with .catch(() => {}), so a POST landing in
+   that window vanished silently — the log then had one event instead of two,
+   and the check for the paired one failed with no clue why. It only surfaced
+   once a configured token made these rows real; before that the assertion was
+   matching the empty-state text instead. */
+for (let attempt = 0; attempt < 40; attempt++) {
+  try { if ((await fetch(`${LOCAL_API}/health`)).ok) break; } catch { /* restarting */ }
+  await new Promise((r) => setTimeout(r, 250));
+}
 await seed();
 
 const { ctx, page, errors } = await newPage();
@@ -155,17 +189,24 @@ console.log('\n== browser against server ==');
 const dedup = await page.locator('[data-dedup]').innerText();
 check('it counts the paired events', /Paired/i.test(dedup), dedup.slice(0, 200));
 check('and the ones the browser never sent', /Browser missing/i.test(dedup), dedup.slice(0, 200));
-check('with real numbers, not placeholders', /\b1\b/.test(dedup), dedup.slice(0, 200));
+liveOnly('with real numbers, not placeholders', /\b1\b/.test(dedup), dedup.slice(0, 200));
 
 console.log('\n== the audit log shows what was sent ==');
 const log = await page.locator('[data-audit-log]').innerText();
-check('the blocked event is listed', /Purchase/.test(log), log.slice(0, 300));
-check('and marked as blocked, not as fired', /blocked/i.test(log), log.slice(0, 300));
-check('the paired one is marked fired', /fired/i.test(log), log.slice(0, 300));
+liveOnly('the blocked event is listed', /Purchase/.test(log), log.slice(0, 300));
+liveOnly('and marked as blocked, not as fired', /blocked/i.test(log), log.slice(0, 300));
+/* Was `/fired/i` against the whole panel, which matched the EMPTY STATE —
+   "nothing tracked has fired since the log was added" contains the word. So
+   with an empty log this reported success for the absence of the very thing
+   it was checking. Anchored to the table cell now, and gated on a live token
+   like the rest of the log checks. */
+liveOnly('the paired one is marked fired',
+  (await page.locator('[data-audit-log] td', { hasText: /^fired$/ }).count()) > 0,
+  log.slice(0, 300));
 
 // Open the payload viewer on the first row that has one.
 const payloadButton = page.locator('[data-audit-log] button', { hasText: 'Payload' }).first();
-check('a payload can be opened', await payloadButton.count() > 0);
+liveOnly('a payload can be opened', await payloadButton.count() > 0);
 if (await payloadButton.count()) {
   await payloadButton.click();
   await page.waitForTimeout(200);
@@ -232,5 +273,6 @@ check('no page errors', errors.length === 0, errors.join('\n       '));
 
 await ctx.close();
 await browser.close();
-console.log(`\n${pass} passed, ${fail} failed`);
+console.log(`
+${pass} passed, ${fail} failed${skipped ? `, ${skipped} skipped` : ''}`);
 process.exitCode = fail ? 1 : 0;

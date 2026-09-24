@@ -37,6 +37,11 @@
  *   python3 -m http.server 8080 --bind 127.0.0.1 &
  *
  *   CHROMIUM_PATH=... node tests/ops-console.mjs
+ *
+ * TWO WORLDS. The alarm checks here describe a token Meta REFUSES. A Worker
+ * with no token at all reports "paused" instead — correctly — so those checks
+ * need META_CONVERSIONS_API_TOKEN set locally and skip loudly without it.
+ * The paused world has its own suite: tests/meta-paused.mjs.
  */
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
@@ -50,6 +55,27 @@ const PASS = process.env.ADMIN_PASS || 'correct-horse-battery';
 const WORKER_DIR = process.env.WORKER_DIR || '../bayezid-agency-worker';
 
 const H = { 'content-type': 'application/json', 'X-Admin-Secret': ADMIN };
+
+/* WHICH WORLD IS THIS WORKER IN?
+   A Worker with no META_CONVERSIONS_API_TOKEN reports every delivery state as
+   "paused" — correctly, because nothing is being sent. The alarm checks below
+   are about a token that Meta REFUSES, which cannot happen without a token, so
+   they need a live one and are skipped (loudly) otherwise. Paused-world
+   behaviour has its own suite: tests/meta-paused.mjs. */
+let MODE = 'unknown';
+try {
+  MODE = (await (await fetch(`${LOCAL_API}/api/admin/meta/capi-log?limit=1`, { headers: H })).json()).mode ?? 'unknown';
+} catch { /* reported by the first real check */ }
+const LIVE = MODE === 'live';
+let skipped = 0;
+const liveOnly = (label, cond, detail) => {
+  if (!LIVE) {
+    skipped++;
+    console.log(`  skip ${label}\n       needs META_CONVERSIONS_API_TOKEN set on the local Worker (mode=${MODE}); see tests/meta-paused.mjs`);
+    return;
+  }
+  check(label, cond, detail);
+};
 
 let pass = 0, fail = 0;
 const check = (label, cond, detail = '') => {
@@ -133,13 +159,13 @@ check('the client-facing total excludes our own backend',
 
 console.log('\nthe delivery verdict');
 const log = await (await fetch(`${LOCAL_API}/api/admin/meta/capi-log?limit=5`, { headers: H })).json();
-check('all-rejected is reported as down, not as a number to interpret',
+liveOnly('all-rejected is reported as down, not as a number to interpret',
   log.delivery?.state === 'down', JSON.stringify(log.delivery));
-check('an auth error code is identified as a credential problem',
+liveOnly('an auth error code is identified as a credential problem',
   log.delivery?.credentialProblem === true, JSON.stringify(log.delivery));
-check('the fix names the secret to rotate',
+liveOnly('the fix names the secret to rotate',
   /META_CONVERSIONS_API_TOKEN/.test(log.delivery?.fix || ''), log.delivery?.fix);
-check('it says when delivery stopped',
+liveOnly('it says when delivery stopped',
   Boolean(log.delivery?.failingSince), JSON.stringify(log.delivery));
 
 // A data error must NOT be reported as a credential problem: that would send
@@ -148,7 +174,7 @@ sql(`DELETE FROM meta_capi_events; INSERT INTO meta_capi_events (id,event_name,e
      VALUES ('d1','Purchase','e9','rejected',400,'100','Invalid parameter: currency',datetime('now','-1 days'));`);
 await settle();
 const dataErr = await (await fetch(`${LOCAL_API}/api/admin/meta/capi-log?limit=1`, { headers: H })).json();
-check('a data error is down but NOT blamed on the token',
+liveOnly('a data error is down but NOT blamed on the token',
   dataErr.delivery?.state === 'down' && dataErr.delivery?.credentialProblem === false,
   JSON.stringify(dataErr.delivery));
 
@@ -235,7 +261,7 @@ await page.waitForFunction(
 );
 await page.waitForTimeout(1200);
 const attention = await page.locator('[data-attention]').innerText();
-check('a dead pixel is raised on the dashboard, not only on the tracking screen',
+liveOnly('a dead pixel is raised on the dashboard, not only on the tracking screen',
   /token is dead|accepting no events/i.test(attention), attention);
 check('an unread enquiry is raised on the dashboard',
   /not read yet/i.test(attention), attention);
@@ -249,10 +275,10 @@ console.log('\nthe tracking alarm');
 await go('tracking');
 await page.waitForSelector('.alarm', { timeout: 15000 });
 const alarm = await page.locator('.alarm').innerText();
-check('the state is stated in words, not left to be inferred from a zero',
+liveOnly('the state is stated in words, not left to be inferred from a zero',
   /TRACKING DOWN/.test(alarm), alarm);
-check('Meta\'s own words are quoted', /session has been invalidated/i.test(alarm), alarm);
-check('the fix is printed where the problem is', /wrangler secret put/i.test(alarm), alarm);
+liveOnly('Meta\'s own words are quoted', /session has been invalidated/i.test(alarm), alarm);
+liveOnly('the fix is printed where the problem is', /wrangler secret put/i.test(alarm), alarm);
 
 console.log('\nenquiries: copy and read state');
 await go('enquiries');
@@ -337,5 +363,5 @@ check('with no GitHub token it says it is not connected rather than showing noth
 check('no uncaught page errors', errors.length === 0, errors.join('\n'));
 
 await browser.close();
-console.log(`\n${pass} passed, ${fail} failed`);
+console.log(`\n${pass} passed, ${fail} failed${skipped ? `, ${skipped} skipped` : ''}`);
 process.exit(fail ? 1 : 0);
