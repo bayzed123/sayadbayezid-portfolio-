@@ -427,10 +427,83 @@
 
     <!-- Landing page ------------------------------------------------------ -->
     <section class="view" data-view-panel="landing" hidden>
+
+      <!-- Which page is being edited.
+           Until now the panel edited exactly one page, because the Worker's
+           list of editable pages was a hardcoded set of one and the only page
+           that rendered was the static file at /ads/fullstack/. There was no
+           way to add a landing page without a code change, so "create a landing
+           page" was not a broken feature — it was a missing one. -->
+      <div class="card">
+        <div class="card-head">
+          <h2>Landing pages</h2>
+          <span class="meta" data-count="landing-pages"></span>
+        </div>
+        <div data-landing-pages-banner></div>
+        <div class="lp-grid">
+          <div class="field">
+            <label for="landingPageSelect">Page being edited</label>
+            <select id="landingPageSelect"></select>
+          </div>
+          <div class="field">
+            <label>Its address</label>
+            <p class="field-hint" data-landing-page-url>&mdash;</p>
+          </div>
+        </div>
+        <div class="lp-grid">
+          <div class="field">
+            <label for="landingPageStatus">Visible to the public</label>
+            <select id="landingPageStatus">
+              <option value="draft">Draft &mdash; the address answers 404</option>
+              <option value="published">Published &mdash; anyone with the link can open it</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>&nbsp;</label>
+            <button class="btn btn-ghost" type="button" id="landingPageDelete">Delete this page</button>
+          </div>
+        </div>
+
+        <details class="lp-new">
+          <summary>Create a new landing page</summary>
+          <p class="field-hint">A new page is created as a draft and served from this dashboard's API &mdash;
+            no deploy, no file to add. Publish it when the wording is right, then paste its address into Meta Ads Manager.</p>
+          <div class="lp-grid">
+            <div class="field">
+              <label for="newLandingTitle">Name <span class="lp-dim">(yours &mdash; also the browser tab title)</span></label>
+              <input type="text" id="newLandingTitle" maxlength="120" placeholder="Eid Offer 2026" />
+            </div>
+            <div class="field">
+              <label for="newLandingSlug">Web address <span class="lp-dim">(optional &mdash; made from the name)</span></label>
+              <input type="text" id="newLandingSlug" maxlength="48" placeholder="eid-offer-2026" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="newLandingHeadline">Headline <span class="lp-dim">(the first thing a visitor reads)</span></label>
+            <input type="text" id="newLandingHeadline" maxlength="160" placeholder="A store that takes orders on Eid night" />
+          </div>
+          <div class="field">
+            <label for="newLandingSubhead">Sub-heading</label>
+            <input type="text" id="newLandingSubhead" maxlength="300" placeholder="Ad click to paid order — no cart, no checkout." />
+          </div>
+          <div class="lp-grid">
+            <div class="field">
+              <label for="newLandingCtaLabel">Button text</label>
+              <input type="text" id="newLandingCtaLabel" maxlength="60" placeholder="Get a quote" />
+            </div>
+            <div class="field">
+              <label for="newLandingCtaHref">Button link</label>
+              <input type="url" id="newLandingCtaHref" placeholder="https://sayadbayezid.com/contact.html" />
+            </div>
+          </div>
+          <button class="btn btn-primary" type="button" id="newLandingCreate">Create the page</button>
+        </details>
+      </div>
+
       <div class="card">
         <div class="card-head">
           <h2>Offer video</h2>
-          <span class="meta">shows mid-page on <a href="/ads/fullstack/" target="_blank" rel="noopener">the ad landing page</a></span>
+          <span class="meta">shows mid-page on <a href="/ads/fullstack/" target="_blank" rel="noopener" data-landing-page-link>the ad landing page</a></span>
         </div>
         <div data-landing-banner></div>
         <p class="field-hint">MP4, MOV or WebM up to 200&nbsp;MB. Stored in Cloudflare R2 and served from there &mdash; it never enters the website repository.</p>
