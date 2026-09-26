@@ -100,48 +100,6 @@
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://sayadbayezid.com/blog/</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/blog/google-maps-lead-generation-google-sheets/</loc>
-    <lastmod>2026-09-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/blog/smart-ai-open-source-case-study-and-project-journal/</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/blog-posts/images/marketing-banner.png</image:loc>
-      <image:title>smartflow-ai-case-study-and-project-journal</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/blog-posts/images/workflow-diagram.png</image:loc>
-      <image:title>WhatsApp Cloud API Setup Guide and Integration Costs</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/</loc>
-    <lastmod>2026-06-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://i.ibb.co/qMqwVFWv/IMG-5260.jpg</image:loc>
-      <image:title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</image:title>
-    </image:image>
-  </url>
-  <url>
     <loc>https://sayadbayezid.com/showcase.html</loc>
     <lastmod>2026-09-26</lastmod>
     <changefreq>monthly</changefreq>
@@ -301,6 +259,48 @@
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/users.webp</image:loc>
       <image:title>Northstar Admin</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/google-maps-lead-generation-google-sheets/</loc>
+    <lastmod>2026-09-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/smart-ai-open-source-case-study-and-project-journal/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/marketing-banner.png</image:loc>
+      <image:title>smartflow-ai-case-study-and-project-journal</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/workflow-diagram.png</image:loc>
+      <image:title>WhatsApp Cloud API Setup Guide and Integration Costs</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/</loc>
+    <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://i.ibb.co/qMqwVFWv/IMG-5260.jpg</image:loc>
+      <image:title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</image:title>
     </image:image>
   </url>
 </urlset>
