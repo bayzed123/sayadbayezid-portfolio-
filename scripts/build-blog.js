@@ -738,6 +738,7 @@ ${buildStructuredData(post)}
         <nav class="main-nav" id="mainNav">
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
+          <a href="/showcase.html">Showcase</a>
           <a href="/projects.html">Projects</a>
           <a href="/case-studies/">Case Studies</a>
           <a href="/blog/" aria-current="page">Blog</a>
@@ -827,6 +828,7 @@ ${buildRelatedHTML(post, allPosts)}
             <span class="footer-heading">Work</span>
             <a href="/services.html">Services</a>
             <a href="/products.html">Products</a>
+            <a href="/showcase.html">Showcase</a>
             <a href="/projects.html">All projects</a>
             <a href="/case-studies/">Case studies</a>
             <a href="/proofline-atlas.html">Proofline Atlas</a>
@@ -1041,6 +1043,7 @@ function generateArchiveHTML() {
         <nav class="main-nav" id="mainNav">
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
+          <a href="/showcase.html">Showcase</a>
           <a href="/projects.html">Projects</a>
           <a href="/case-studies/">Case Studies</a>
           <a href="/blog/" aria-current="page">Blog</a>
@@ -1106,6 +1109,7 @@ function generateArchiveHTML() {
             <span class="footer-heading">Work</span>
             <a href="/services.html">Services</a>
             <a href="/products.html">Products</a>
+            <a href="/showcase.html">Showcase</a>
             <a href="/projects.html">All projects</a>
             <a href="/case-studies/">Case studies</a>
             <a href="/proofline-atlas.html">Proofline Atlas</a>

@@ -112,6 +112,7 @@ ${GTM_HEAD}
       <nav class="main-nav" id="mainNav">
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
+        <a href="/showcase.html">Showcase</a>
         <a href="/projects.html">Projects</a>
         <a href="/work.html">Work</a>
         <a href="/case-studies/">Case Studies</a>
@@ -142,6 +143,7 @@ function readFooter(extraScripts = "") {
           <span class="footer-heading">Work</span>
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
+          <a href="/showcase.html">Showcase</a>
           <a href="/projects.html">All projects</a>
           <a href="/case-studies/">Case studies</a>
           <a href="/proofline-atlas.html">Proofline Atlas</a>
