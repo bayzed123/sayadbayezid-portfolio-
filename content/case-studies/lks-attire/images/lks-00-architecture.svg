@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" role="img" aria-label="Lk's Attire system architecture">
+  <defs>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#141013"/><stop offset="1" stop-color="#D6246E"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#94a3b8"/>
+    </marker>
+    <style>
+      .t   { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+      .ttl { font-size: 26px; font-weight: 800; fill: #0b1220; }
+      .sub { font-size: 14px; fill: #64748b; }
+      .box { fill: #ffffff; stroke: #e3e8ef; stroke-width: 2; }
+      .hot { fill: #ffffff; stroke: #D6246E; stroke-width: 2.5; }
+      .gold{ fill: #fffaf0; stroke: #D4AF45; stroke-width: 2; }
+      .h   { font-size: 16px; font-weight: 700; fill: #0b1220; }
+      .b   { font-size: 12.5px; fill: #475569; }
+      .cap { font-size: 11px; font-weight: 700; letter-spacing: 1.6px; fill: #94a3b8; }
+      .ln  { stroke: #cbd5e1; stroke-width: 2; fill: none; marker-end: url(#arrow); }
+      .lbl { font-size: 11.5px; fill: #7c8ba1; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="760" fill="#f7f9fc"/>
+  <rect x="0" y="0" width="1200" height="6" fill="url(#brand)"/>
+  <text class="t ttl" x="48" y="58">Lk's Attire — system architecture</text>
+  <text class="t sub" x="48" y="84">One Cloudflare Worker serves the shop, the admin and the API. One brand file drives the look. One pipeline provisions everything.</text>
+
+  <!-- people -->
+  <text class="t cap" x="48" y="132">WHO USES IT</text>
+  <rect class="box" x="48" y="146" width="250" height="92" rx="14"/>
+  <text class="t h" x="68" y="176">Shoppers</text>
+  <text class="t b" x="68" y="198">Phones first, Bangla or English</text>
+  <text class="t b" x="68" y="218">Browse · cart · checkout · track</text>
+  <rect class="box" x="48" y="258" width="250" height="92" rx="14"/>
+  <text class="t h" x="68" y="288">Owner and staff</text>
+  <text class="t b" x="68" y="310">Admin dashboard, role-based</text>
+  <text class="t b" x="68" y="330">Orders · stock · offers · settings</text>
+
+  <!-- worker -->
+  <text class="t cap" x="380" y="132">CLOUDFLARE EDGE</text>
+  <rect class="hot" x="380" y="146" width="420" height="330" rx="16"/>
+  <text class="t h" x="402" y="178">One Worker · Hono + TypeScript</text>
+  <text class="t b" x="402" y="200">Static assets: storefront + /admin/ (vanilla ES modules)</text>
+  <text class="t b" x="402" y="220">~110 API endpoints under /api, zod-validated</text>
+  <rect class="box" x="402" y="238" width="182" height="102" rx="10"/>
+  <text class="t h" x="416" y="262" style="font-size:14px">Commerce core</text>
+  <text class="t b" x="416" y="282">Server-side pricing</text>
+  <text class="t b" x="416" y="300">Zones · coupons · offers</text>
+  <text class="t b" x="416" y="318">Stock-safe D1 batches</text>
+  <rect class="box" x="598" y="238" width="182" height="102" rx="10"/>
+  <text class="t h" x="612" y="262" style="font-size:14px">Operations</text>
+  <text class="t b" x="612" y="282">Order pipeline + invoice</text>
+  <text class="t b" x="612" y="300">RBAC · audit log</text>
+  <text class="t b" x="612" y="318">Reports · CSV</text>
+  <rect class="box" x="402" y="354" width="378" height="100" rx="10"/>
+  <text class="t h" x="416" y="378" style="font-size:14px">SEO + security at the edge</text>
+  <text class="t b" x="416" y="398">HTMLRewriter JSON-LD per product · sitemap · CSP · HSTS</text>
+  <text class="t b" x="416" y="416">PBKDF2 passwords · KV sessions · CSRF · rate limits</text>
+  <text class="t b" x="416" y="434">Bilingual error messages for every validation</text>
+
+  <!-- storage -->
+  <text class="t cap" x="880" y="132">DATA</text>
+  <rect class="box" x="880" y="146" width="272" height="96" rx="14"/>
+  <text class="t h" x="900" y="176">D1 (SQLite)</text>
+  <text class="t b" x="900" y="198">Catalogue, orders, customers, zones</text>
+  <text class="t b" x="900" y="218">CHECK (stock ≥ 0) stops overselling</text>
+  <rect class="box" x="880" y="258" width="272" height="96" rx="14"/>
+  <text class="t h" x="900" y="288">KV</text>
+  <text class="t b" x="900" y="310">Sessions, OTP, rate limits, cache</text>
+  <text class="t b" x="900" y="330">Photo fallback when R2 is off</text>
+  <rect class="box" x="880" y="370" width="272" height="96" rx="14"/>
+  <text class="t h" x="900" y="400">R2</text>
+  <text class="t b" x="900" y="422">Product photos, served at /media/</text>
+  <text class="t b" x="900" y="442">Resized in the browser before upload</text>
+
+  <path class="ln" d="M298 192 L376 222"/>
+  <path class="ln" d="M298 304 L376 280"/>
+  <path class="ln" d="M800 196 L876 194"/>
+  <path class="ln" d="M800 300 L876 304"/>
+  <path class="ln" d="M800 410 L876 418"/>
+
+  <!-- integrations -->
+  <text class="t cap" x="48" y="520">INTEGRATIONS · ON WITH KEYS</text>
+  <rect class="box" x="48" y="534" width="352" height="96" rx="14"/>
+  <text class="t h" x="68" y="564">Payments</text>
+  <text class="t b" x="68" y="586">COD · bKash/Nagad/Rocket with TrxID</text>
+  <text class="t b" x="68" y="606">bKash Tokenized · SSLCommerz cards</text>
+  <rect class="box" x="424" y="534" width="352" height="96" rx="14"/>
+  <text class="t h" x="444" y="564">Delivery and messages</text>
+  <text class="t b" x="444" y="586">Steadfast booking + webhook · Pathao · RedX</text>
+  <text class="t b" x="444" y="606">SMS · WhatsApp · email at every order stage</text>
+  <rect class="gold" x="800" y="534" width="352" height="96" rx="14"/>
+  <text class="t h" x="820" y="564">Brand pipeline</text>
+  <text class="t b" x="820" y="586">brand.json → theme, SEO, seed data</text>
+  <text class="t b" x="820" y="606">Same code, a new client in ~30 minutes</text>
+  <path class="ln" d="M450 478 L340 530"/>
+  <path class="ln" d="M590 480 L600 530"/>
+
+  <!-- pipeline -->
+  <rect class="box" x="48" y="652" width="1104" height="88" rx="14"/>
+  <text class="t h" x="68" y="682">GitHub Actions</text>
+  <text class="t b" x="68" y="704">Every change: tsc · 73 Vitest tests in the Workers runtime · Playwright on desktop and phone</text>
+  <text class="t b" x="68" y="724">On main: create D1/KV/R2 if missing → migrate → seed on first run → create the first admin → deploy → sync secrets → smoke test</text>
+</svg>
