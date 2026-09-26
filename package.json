@@ -6,9 +6,12 @@
   "scripts": {
     "build:blog": "node scripts/build-blog.js",
     "build:content": "node scripts/build-content.js",
-    "build": "npm run build:blog && npm run build:content && npm run build:assets",
+    "build": "npm run build:blog && npm run build:content && npm run build:showcase && npm run build:assets",
     "build:assets": "node scripts/build-assets.mjs",
-    "build:critical": "node scripts/build-critical-css.mjs"
+    "build:critical": "node scripts/build-critical-css.mjs",
+    "build:showcase": "node scripts/build-showcase.mjs",
+    "showcase:shots": "node scripts/capture-showcase-shots.mjs ../websites-tamplate/site",
+    "test:showcase": "node tests/showcase.mjs"
   },
   "dependencies": {
     "front-matter": "^4.0.2",

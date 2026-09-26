@@ -22,6 +22,7 @@ const JOBS = [
   ['assets/js/support.js', 'assets/js/support.min.js'],
   ['assets/js/engagement.js', 'assets/js/engagement.min.js'],
   ['assets/newsletter.js', 'assets/newsletter.min.js'],
+  ['assets/showcase.css', 'assets/showcase.min.css'],
 ];
 
 let before = 0, after = 0;

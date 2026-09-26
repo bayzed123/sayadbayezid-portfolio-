@@ -135,4 +135,166 @@
       <image:title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/smartgadget-demo.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/smartgadget-demo/storefront-mobile.webp</image:loc>
+      <image:title>SmartGadget</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/smartgadget-demo/storefront.webp</image:loc>
+      <image:title>SmartGadget</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/sidra-noor-fashion.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-noor-fashion/storefront-mobile.webp</image:loc>
+      <image:title>Sidra Noor Fashion</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-noor-fashion/storefront.webp</image:loc>
+      <image:title>Sidra Noor Fashion</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/sidra-clothing.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-clothing/catalogue-mobile.webp</image:loc>
+      <image:title>Sidra Clothing &amp; Shoes</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-clothing/catalogue.webp</image:loc>
+      <image:title>Sidra Clothing &amp; Shoes</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/veloura-atelier-demo.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/admin.webp</image:loc>
+      <image:title>Veloura Atelier</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/checkout.webp</image:loc>
+      <image:title>Veloura Atelier</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/product.webp</image:loc>
+      <image:title>Veloura Atelier</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/storefront-mobile.webp</image:loc>
+      <image:title>Veloura Atelier</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/storefront.webp</image:loc>
+      <image:title>Veloura Atelier</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/tracking.webp</image:loc>
+      <image:title>Veloura Atelier</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/bootstrap-fashion.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/admin-orders.webp</image:loc>
+      <image:title>Bootstrap Fashion</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/category.webp</image:loc>
+      <image:title>Bootstrap Fashion</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/checkout.webp</image:loc>
+      <image:title>Bootstrap Fashion</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/product.webp</image:loc>
+      <image:title>Bootstrap Fashion</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/storefront-mobile.webp</image:loc>
+      <image:title>Bootstrap Fashion</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/storefront.webp</image:loc>
+      <image:title>Bootstrap Fashion</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/rinova-admin-demo.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/dashboard.webp</image:loc>
+      <image:title>Rinova BD — Admin Dashboard</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/guide.webp</image:loc>
+      <image:title>Rinova BD — Admin Dashboard</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/demosmartgen.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/analytics.webp</image:loc>
+      <image:title>SmartGen Commerce OS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/campaigns.webp</image:loc>
+      <image:title>SmartGen Commerce OS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/catalogue.webp</image:loc>
+      <image:title>SmartGen Commerce OS</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/overview.webp</image:loc>
+      <image:title>SmartGen Commerce OS</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/demu-admin.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/console.webp</image:loc>
+      <image:title>Northstar Admin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/orders.webp</image:loc>
+      <image:title>Northstar Admin</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/users.webp</image:loc>
+      <image:title>Northstar Admin</image:title>
+    </image:image>
+  </url>
 </urlset>
