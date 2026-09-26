@@ -1,0 +1,205 @@
+{
+  "_comment": [
+    "The product showcase — what a prospective client is shown before they open a demo.",
+    "",
+    "WHERE THE WORDS COME FROM. `title`, `summary`, `category` and `tags` are the demo's",
+    "own demo.json in the websites-tamplate repo, copied rather than rewritten so the",
+    "showcase and the demo hub cannot describe the same build differently. `features`,",
+    "`whyChoose` and `audience` are written here, and every line in them names something",
+    "the demo actually contains — a screen you can open, a flow you can complete. Nothing",
+    "in this file may claim a capability the demo does not demonstrate: a prospect who",
+    "clicks through and cannot find what was promised has learned something worse about",
+    "the studio than a shorter list would have told them.",
+    "",
+    "`shots` are paths inside the built demo (websites-tamplate/site/demos/<slug>/), NOT",
+    "the /d/<slug>/ wrapper — the wrapper is a review frame with its own chrome, and a",
+    "showcase wants the product. `href` is the wrapper, because that is the page a client",
+    "should land on.",
+    "",
+    "Regenerate the pages after editing:  node scripts/build-showcase.mjs",
+    "Recapture the screenshots:          node scripts/capture-showcase-shots.mjs <demo-hub-site-dir>"
+  ],
+
+  "hub": "https://demu.sayadbayezid.com",
+
+  "products": [
+    {
+      "slug": "smartgadget-demo",
+      "title": "SmartGadget",
+      "category": "E-commerce",
+      "tagline": "A wholesale electronics shop, and the dashboard its owner runs it from.",
+      "summary": "A complete wholesale electronics storefront for the Bangladeshi market — catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking — plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics.",
+      "audience": "Importers and wholesalers who sell the same item at different prices depending on quantity, and need one screen that shows what is in stock and what is owed.",
+      "tags": ["Storefront", "Admin dashboard", "Wholesale pricing", "GA4 + Meta Pixel"],
+      "features": [
+        { "title": "Tiered wholesale pricing", "body": "The price changes with the quantity, and the server decides it — the browser cannot claim a price it has not earned." },
+        { "title": "Catalogue to paid order", "body": "Browse, product page, cart, checkout and order tracking all work end to end. Nothing in the flow is a dead link." },
+        { "title": "The admin the owner lives in", "body": "Products, stock, orders, customers, reviews, site content and analytics — the screens a shop is actually run from, not a KPI wall." },
+        { "title": "Tracking that reports once", "body": "GA4 and the Meta Pixel share one event ID, so a sale is counted a single time instead of twice." },
+        { "title": "Opens with no sign-in", "body": "The dashboard is unlocked on purpose so you can look straight through it. Every product, order, customer and figure in it is generated." }
+      ],
+      "shots": [
+        { "page": "index.html", "label": "storefront", "caption": "The storefront a customer lands on." },
+        { "page": "index.html", "label": "storefront-mobile", "caption": "The same page on a phone — where most of the traffic is.", "viewport": "mobile" }
+      ]
+    },
+    {
+      "slug": "sidra-noor-fashion",
+      "title": "Sidra Noor Fashion",
+      "category": "E-commerce",
+      "tagline": "A Vue 3 fashion storefront with eight admin screens behind it.",
+      "summary": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens — dashboard, products, orders, customers, messages, staff, profile and a single-product editor.",
+      "audience": "Clothing shops that already sell on Facebook and want a real storefront without giving up the way they handle orders.",
+      "tags": ["Storefront", "Admin dashboard", "Vue 3", "Vuex", "From $100"],
+      "features": [
+        { "title": "Eight admin screens", "body": "Dashboard, products, orders, customers, messages, staff, profile and a product editor — enough to run the shop, not a demo shell." },
+        { "title": "Shop side complete", "body": "Category pages, product pages, cart and checkout, all reachable and all working." },
+        { "title": "Staff, not just an owner", "body": "A staff screen, because a shop that grows stops being one person with one password." },
+        { "title": "Messages where the orders are", "body": "Customer messages sit in the same dashboard as the orders they are about." },
+        { "title": "Invented data, said out loud", "body": "Every product, order, customer and message is made up. The dashboard opens without a sign-in so you can check that for yourself." }
+      ],
+      "shots": [
+        { "page": "index.html", "label": "storefront", "caption": "The shop front." },
+        { "page": "index.html", "label": "storefront-mobile", "caption": "Phone width.", "viewport": "mobile" }
+      ]
+    },
+    {
+      "slug": "sidra-clothing",
+      "title": "Sidra Clothing & Shoes",
+      "category": "E-commerce",
+      "tagline": "132 products, real filters, accounts that remember you.",
+      "summary": "A working fashion storefront built in React: a catalogue of 132 products with brand, category, gender and price filters, sorting, search with pagination, product pages with size picker and customer reviews, wishlist, cart, checkout and order history. Accounts work too — register, sign in, and your wishlist and orders follow you.",
+      "audience": "Shops with a catalogue big enough that browsing without filters stops working — which is most of them past a hundred items.",
+      "tags": ["Storefront", "Admin dashboard", "React", "Redux", "Tailwind", "From $100"],
+      "features": [
+        { "title": "Filters on a real catalogue", "body": "Brand, category, gender and price across 132 products, with sorting and paginated search. Filters are cheap to demo on ten items and only prove themselves on a hundred." },
+        { "title": "Accounts that persist", "body": "Register, sign in, and the wishlist and order history follow the account rather than the browser tab." },
+        { "title": "Size picker and reviews", "body": "The two things a clothing product page is judged on, on the product page." },
+        { "title": "Wishlist to checkout", "body": "Wishlist, cart, checkout and order history are one continuous path." },
+        { "title": "React, Redux, Tailwind", "body": "A stack most teams can pick up and extend without a handover document." }
+      ],
+      "shots": [
+        { "page": "index.html", "label": "catalogue", "caption": "The catalogue with its filter rail." },
+        { "page": "index.html", "label": "catalogue-mobile", "caption": "On a phone, filters collapse rather than disappear.", "viewport": "mobile" }
+      ]
+    },
+    {
+      "slug": "veloura-atelier-demo",
+      "title": "Veloura Atelier",
+      "category": "E-commerce",
+      "tagline": "Beauty and skincare, from browsing to a printable invoice.",
+      "summary": "A complete beauty and skincare shop for the Bangladeshi market: browse, product detail, cart, checkout, order tracking, customer accounts, printable invoices and a journal — plus the admin dashboard the owner actually runs it from.",
+      "audience": "Skincare and cosmetics sellers whose customers ask for an invoice and want to know where the parcel is.",
+      "tags": ["Storefront", "Admin dashboard", "Checkout", "Cloudflare Workers"],
+      "features": [
+        { "title": "Twelve screens, all reachable", "body": "Storefront, product, cart, checkout, account, order tracking, invoice, journal, sitemap, a real 404, and the admin behind them." },
+        { "title": "Printable invoices", "body": "An invoice page built to be printed, because a customer asking for one is not going to accept a screenshot." },
+        { "title": "Order tracking", "body": "A tracking page, so \"where is my parcel\" stops arriving in the inbox." },
+        { "title": "A journal that helps search", "body": "A blog attached to the shop rather than bolted to a different domain." },
+        { "title": "Runs on Cloudflare Workers", "body": "No server to patch, and it stays fast from Bangladesh because it is served at the edge." }
+      ],
+      "shots": [
+        { "page": "web/index.html", "label": "storefront", "caption": "The shop front." },
+        { "page": "web/product.html", "label": "product", "caption": "A product page." },
+        { "page": "web/checkout.html", "label": "checkout", "caption": "Checkout — one page, not a funnel." },
+        { "page": "web/track.html", "label": "tracking", "caption": "Order tracking." },
+        { "page": "web/admin/index.html", "label": "admin", "caption": "The admin dashboard." },
+        { "page": "web/index.html", "label": "storefront-mobile", "caption": "Phone width.", "viewport": "mobile" }
+      ]
+    },
+    {
+      "slug": "bootstrap-fashion",
+      "title": "Bootstrap Fashion",
+      "category": "E-commerce",
+      "tagline": "A fashion front end that drops onto the backend you already have.",
+      "summary": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything.",
+      "audience": "Businesses that already have a commerce backend — or a developer who will build one — and need the shop front without a rewrite.",
+      "tags": ["Storefront", "Admin dashboard", "Bootstrap 5", "Responsive", "Checkout flow", "From $100"],
+      "features": [
+        { "title": "Fourteen screens", "body": "Home, category, product, cart, a three-step checkout, login, register, password reset, and four admin screens." },
+        { "title": "Live filters and a price slider", "body": "Filtering happens as you move the slider, with no page reload." },
+        { "title": "Three-step checkout", "body": "Details, shipping and payment as separate steps — the shape most customers already recognise." },
+        { "title": "Rebrandable, not rewritable", "body": "Bootstrap 5 means your colours, type and logo are variables. Nothing needs restructuring to look like your business." },
+        { "title": "Front end only, deliberately", "body": "It drops onto whatever backend you already use, or we wire one up. Said plainly here so nobody buys it expecting a database." }
+      ],
+      "shots": [
+        { "page": "index.html", "label": "storefront", "caption": "The homepage." },
+        { "page": "category.html", "label": "category", "caption": "Category listing with live filters and the price slider." },
+        { "page": "product.html", "label": "product", "caption": "Product page with gallery and reviews." },
+        { "page": "checkout.html", "label": "checkout", "caption": "Step one of the three-step checkout." },
+        { "page": "admin-orders.html", "label": "admin-orders", "caption": "The orders screen." },
+        { "page": "index.html", "label": "storefront-mobile", "caption": "Phone width.", "viewport": "mobile" }
+      ]
+    },
+    {
+      "slug": "rinova-admin-demo",
+      "title": "Rinova BD — Admin Dashboard",
+      "category": "Admin dashboard",
+      "tagline": "The screens a real shop is run from, including POS and barcode printing.",
+      "summary": "The admin dashboard behind Rinova BD: orders and their delivery pipeline, catalogue and stock, customers, returns and reviews, offers, staff roles, POS and barcode printing, and the analytics panel — the screens the owner actually runs the shop from.",
+      "audience": "Shops that sell both online and over a counter, and are tired of the two halves disagreeing about stock.",
+      "tags": ["Commerce ops", "Orders", "Inventory", "POS & barcode", "Analytics"],
+      "features": [
+        { "title": "Orders with a delivery pipeline", "body": "Not a status column — the stages an order actually moves through before somebody receives it." },
+        { "title": "POS and barcode printing", "body": "The counter and the website draw on one stock figure, so a sale in the shop shows online." },
+        { "title": "Returns and reviews", "body": "The parts of running a shop that get left out of dashboards and then handled in a notebook." },
+        { "title": "Staff roles", "body": "Different people see different screens, because the person packing parcels does not need the revenue panel." },
+        { "title": "A guide in the dashboard", "body": "A built-in guide page, so handover is not a phone call every time somebody new starts." }
+      ],
+      "shots": [
+        { "page": "admin/index.html", "label": "dashboard", "caption": "The dashboard as it opens." },
+        { "page": "admin/guide/index.html", "label": "guide", "caption": "The built-in guide — handover without a phone call." }
+      ]
+    },
+    {
+      "slug": "demosmartgen",
+      "title": "SmartGen Commerce OS",
+      "category": "Commerce platform",
+      "tagline": "Catalogue, customers, campaigns and analytics behind one navigation.",
+      "summary": "A commerce operations surface that puts the catalogue, customer list, campaign builder and analytics behind one navigation — the shape of tool a growing shop needs once spreadsheets stop scaling.",
+      "audience": "Shops that have outgrown a spreadsheet but are not ready to pay per seat for an enterprise suite.",
+      "tags": ["Catalogue", "Campaigns", "Analytics", "Customers"],
+      "features": [
+        { "title": "Eight screens, one navigation", "body": "Catalogue, orders, customers, campaigns, analytics, settings and more without changing tools." },
+        { "title": "A campaign builder next to the data", "body": "Campaigns are built beside the customer list they target, rather than in a separate product." },
+        { "title": "Analytics that answer a question", "body": "The panel is built around what a shop owner asks on a Monday, not around what is easy to chart." },
+        { "title": "Catalogue as the spine", "body": "Everything else hangs off the catalogue, which is how a shop actually thinks." }
+      ],
+      "shots": [
+        { "page": "index.html", "label": "overview", "caption": "The overview screen." },
+        { "page": "pages/catalog.html", "label": "catalogue", "caption": "The catalogue." },
+        { "page": "pages/analytics.html", "label": "analytics", "caption": "The analytics panel." },
+        { "page": "pages/campaigns.html", "label": "campaigns", "caption": "The campaign builder." }
+      ]
+    },
+    {
+      "slug": "demu-admin",
+      "title": "Northstar Admin",
+      "category": "Admin dashboard",
+      "tagline": "Built for people who keep it open all day.",
+      "summary": "An admin console built around the screens a working team opens every day — orders, users, settings and help — with the density and keyboard-first layout of software people use for hours, not a dashboard that only looks good in a screenshot.",
+      "audience": "Teams whose staff live inside one tool all day and care more about rows per screen than about gradients.",
+      "tags": ["Operations", "Data tables", "Settings", "Dark UI"],
+      "features": [
+        { "title": "Density on purpose", "body": "More rows per screen, because scrolling is the cost paid by whoever uses it for eight hours." },
+        { "title": "Keyboard first", "body": "The layout assumes hands stay on the keyboard, which is what fast data entry actually requires." },
+        { "title": "A help screen that ships with it", "body": "Documentation in the product, where somebody stuck at 9pm will look." },
+        { "title": "Dark by default", "body": "Chosen for the people staring at it all day, not for the screenshot." }
+      ],
+      "shots": [
+        { "page": "index.html", "label": "console", "caption": "The console as it opens." },
+        { "page": "pages/orders.html", "label": "orders", "caption": "Orders — the density is the point." },
+        { "page": "pages/users.html", "label": "users", "caption": "The users screen." }
+      ]
+    }
+  ],
+
+  "whyChoose": [
+    { "title": "Every demo is the real build", "body": "Nothing here is a mockup or a design file. Each one is deployed, and you click through it the way a customer would. If a link is dead you will find it, which is the point." },
+    { "title": "You get the admin, not just the shop", "body": "Most storefront demos stop at the shop front. The part that decides whether a business can actually run on it is the dashboard behind it, so that is included and unlocked." },
+    { "title": "Invented data, never borrowed", "body": "Every product, order, customer and figure in these demos is generated. No real client's catalogue, orders or customers appear in any of them." },
+    { "title": "Rebrandable before it is rebuilt", "body": "Colours, type and logo are variables, not decisions baked into markup. The first change you ask for should not need a rewrite." },
+    { "title": "Built for Bangladeshi connections", "body": "Tested at phone width on a slow connection, because that is how most of the traffic arrives — not on a desk at 1440px." },
+    { "title": "One person, start to finish", "body": "The same person writes the front end, the API and the deploy pipeline. There is no handover gap for a bug to live in." }
+  ]
+}

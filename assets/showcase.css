@@ -1,0 +1,170 @@
+/* ===========================================================================
+   Product showcase — /showcase.html and /showcase/<slug>.html
+   ===========================================================================
+
+   Loaded on top of style.min.css, never instead of it: the header, footer,
+   buttons, section rhythm and reveal animations all come from there, and the
+   showcase only adds the components that did not exist yet — the card grid,
+   the screenshot gallery and the feature/why columns.
+
+   Colours are read from the site's own custom properties with a literal
+   fallback after each one, so a page still looks right if it is opened without
+   the main stylesheet (which is exactly what happens in a test harness, and is
+   how a "styled" page that is actually unstyled gets shipped).
+   ======================================================================== */
+
+:root {
+  --sc-line: var(--line, rgba(255, 255, 255, 0.10));
+  --sc-surface: var(--surface, rgba(255, 255, 255, 0.03));
+  --sc-dim: var(--text-dim, #8b93a1);
+  --sc-soft: var(--text-soft, #c2c8d2);
+  --sc-accent: var(--accent, #d94f4f);
+  --sc-radius: 14px;
+}
+
+/* ------------------------------------------------------------ the index - */
+
+.sc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 26px;
+}
+
+.sc-card {
+  border: 1px solid var(--sc-line);
+  border-radius: var(--sc-radius);
+  background: var(--sc-surface);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.sc-card:hover { transform: translateY(-3px); border-color: rgba(255, 255, 255, 0.22); }
+
+.sc-card-media { display: block; line-height: 0; background: #0d1014; }
+.sc-card-media img {
+  width: 100%; height: auto; display: block;
+  /* The shots are 16:10; fixing the ratio stops the grid jumping as they load. */
+  aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
+}
+
+.sc-card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+.sc-card-body h3 { margin: 0; font-size: 1.22rem; line-height: 1.25; }
+.sc-card-body h3 a { color: inherit; text-decoration: none; }
+.sc-card-body h3 a:hover { color: var(--sc-accent); }
+.sc-card-body > p { margin: 0; color: var(--sc-soft); font-size: 0.95rem; line-height: 1.6; }
+
+.sc-tag {
+  font-size: 0.7rem; letter-spacing: 0.09em; text-transform: uppercase;
+  color: var(--sc-dim); font-weight: 600;
+}
+
+.sc-chips { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; padding: 0; margin: 2px 0 0; }
+.sc-chips li {
+  font-size: 0.72rem; padding: 4px 10px; border-radius: 99px;
+  border: 1px solid var(--sc-line); color: var(--sc-dim); white-space: nowrap;
+}
+.sc-chips-lg { justify-content: center; margin-top: 22px; }
+
+.sc-card-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 14px; }
+.sc-card-actions .btn { font-size: 0.86rem; }
+
+/* ------------------------------------------------------ a product page - */
+
+.sc-crumbs {
+  max-width: 1120px; margin: 0 auto; padding: 22px 24px 0;
+  font-size: 0.8rem; color: var(--sc-dim);
+}
+.sc-crumbs a { color: var(--sc-dim); text-decoration: none; }
+.sc-crumbs a:hover { color: var(--sc-soft); text-decoration: underline; }
+.sc-crumbs span[aria-hidden] { padding: 0 6px; opacity: 0.5; }
+
+.sc-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 26px; }
+
+.sc-hero-shot { padding-top: 8px; }
+.sc-hero-shot figure { margin: 0; max-width: 1120px; margin-inline: auto; }
+.sc-hero-shot img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--sc-line); border-radius: var(--sc-radius); background: #0d1014;
+}
+.sc-hero-shot figcaption,
+.sc-shot figcaption {
+  color: var(--sc-dim); font-size: 0.84rem; padding-top: 10px; text-align: center;
+}
+.sc-hero-shot figcaption a { color: var(--sc-accent); }
+
+.sc-narrow { max-width: 760px; margin: 0 auto 26px; text-align: center; }
+.sc-lede { font-size: 1.06rem; line-height: 1.75; color: var(--sc-soft); margin: 0 0 16px; }
+.sc-audience { color: var(--sc-dim); font-size: 0.95rem; line-height: 1.7; margin: 0; }
+.sc-audience strong { color: var(--sc-soft); }
+
+.sc-feature-grid,
+.sc-why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 22px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+.sc-feature, .sc-why-item {
+  border: 1px solid var(--sc-line); border-radius: var(--sc-radius);
+  background: var(--sc-surface); padding: 20px 22px;
+}
+.sc-feature h3, .sc-why-item h3 { margin: 0 0 8px; font-size: 1.02rem; line-height: 1.35; }
+.sc-feature p, .sc-why-item p { margin: 0; color: var(--sc-soft); font-size: 0.92rem; line-height: 1.65; }
+
+.sc-why-inner { max-width: 1120px; margin: 0 auto; }
+.sc-why-inner > .section-eyebrow,
+.sc-why-inner > h2 { display: block; text-align: center; }
+.sc-why-inner > h2 { margin: 6px 0 28px; }
+
+/* ------------------------------------------------------- the screenshots - */
+
+.sc-shot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 26px;
+  max-width: 1120px;
+  margin: 0 auto;
+  align-items: start;
+}
+.sc-shot { margin: 0; }
+.sc-shot img {
+  width: 100%; height: auto; display: block;
+  border: 1px solid var(--sc-line); border-radius: 10px; background: #0d1014;
+}
+/* A phone screenshot beside a desktop one at the same width looks like a
+   rendering bug. Held narrower and centred, it reads as what it is. */
+.sc-shot.is-mobile img { max-width: 300px; margin: 0 auto; }
+
+/* ------------------------------------------------------------- more list - */
+
+.sc-more-list {
+  list-style: none; padding: 0; margin: 0 auto; max-width: 1120px;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px;
+}
+.sc-more-list a {
+  display: block; padding: 16px 18px; border: 1px solid var(--sc-line);
+  border-radius: 10px; text-decoration: none; background: var(--sc-surface);
+  transition: border-color 0.2s ease;
+}
+.sc-more-list a:hover { border-color: rgba(255, 255, 255, 0.24); }
+.sc-more-list strong { display: block; font-size: 0.98rem; margin-bottom: 4px; }
+.sc-more-list span { color: var(--sc-dim); font-size: 0.85rem; line-height: 1.55; }
+.sc-more-all { text-align: center; margin-top: 20px; }
+.sc-more-all a { color: var(--sc-accent); text-decoration: none; font-weight: 600; }
+
+/* ------------------------------------------------------------- narrower - */
+
+@media (max-width: 720px) {
+  .sc-grid { grid-template-columns: 1fr; gap: 20px; }
+  .sc-shot-grid { grid-template-columns: 1fr; }
+  .sc-card-actions .btn { flex: 1 1 100%; text-align: center; justify-content: center; }
+  .sc-crumbs { padding: 18px 20px 0; }
+  .sc-hero-actions .btn { flex: 1 1 100%; justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sc-card { transition: none; }
+  .sc-card:hover { transform: none; }
+}

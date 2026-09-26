@@ -778,6 +778,26 @@ table.data td.actions .btn { margin-left: 6px; }
 .lp-bar { height: 6px; border-radius: 99px; background: var(--line); overflow: hidden; margin: 10px 0 14px; }
 .lp-bar i { display: block; height: 100%; background: var(--emerald); width: 0; transition: width 0.2s linear; }
 
+/* Creating a page is collapsed by default: the panel's usual job is editing the
+   page that already exists, and a six-field form left open above it pushes that
+   work below the fold every time. */
+.lp-new { margin-top: 18px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); }
+.lp-new > summary {
+  cursor: pointer; padding: 12px 15px; font-size: 0.85rem; font-weight: 600;
+  color: var(--text-soft); list-style: none;
+}
+.lp-new > summary::-webkit-details-marker { display: none; }
+.lp-new > summary::before { content: '+ '; color: var(--emerald); font-weight: 700; }
+.lp-new[open] > summary::before { content: '– '; }
+.lp-new[open] > summary { border-bottom: 1px solid var(--line); }
+.lp-new > *:not(summary) { margin-left: 15px; margin-right: 15px; }
+.lp-new > .field-hint:first-of-type { margin-top: 13px; }
+.lp-new > button { margin-bottom: 15px; }
+/* The address of the page being edited, which is the one thing in this panel
+   somebody needs to copy out of it. */
+[data-landing-page-url] { word-break: break-all; }
+[data-landing-page-url] a { color: var(--emerald); }
+
 /* --- Event tracking ------------------------------------------------------
    The tracking screen adds two shapes the console did not have: a form laid
    out in a row rather than a drawer column, and a raw JSON dump.

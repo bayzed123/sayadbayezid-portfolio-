@@ -3234,7 +3234,51 @@
   // a deploy. The bytes go to R2 through the Worker; the arrangement goes to
   // D1 as one JSON document.
   // ===========================================================================
-  var landing = { content: { video: null, links: [], images: [] }, assets: [], loaded: false, wired: false };
+  var landing = {
+    content: { video: null, links: [], images: [] },
+    assets: [], loaded: false, wired: false, dirty: false,
+    // Which page the editor is pointed at, and the list it was chosen from.
+    // `page` was the string 'fullstack' baked into five URLs before landing
+    // pages became records.
+    page: 'fullstack', pages: []
+  };
+
+  /** The page currently being edited, or null before the list has loaded. */
+  function currentLandingPage() {
+    for (var i = 0; i < landing.pages.length; i++) {
+      if (landing.pages[i].slug === landing.page) return landing.pages[i];
+    }
+    return null;
+  }
+
+  /**
+   * Marks the editor as holding changes that are not on the page yet.
+   *
+   * This exists because the opposite state was invisible. An upload said
+   * "press Save and publish" and, once the bug below was in play, there was
+   * nothing left to save — so the only way to discover that the page had not
+   * changed was to go and look at it. A count of pending changes next to the
+   * button makes the difference between "saved" and "not saved" readable
+   * without leaving the panel.
+   */
+  function landingDirty(on) {
+    landing.dirty = on !== false;
+    var node = document.querySelector('[data-landing-saved]');
+    if (!node) return;
+    if (landing.dirty) {
+      node.textContent = 'Not published yet — press Save and publish.';
+      node.setAttribute('data-kind', 'pending');
+    } else {
+      // Clear the text as well as the styling. Leaving it meant that switching
+      // to another page after abandoning changes still read "Not published
+      // yet" — about a page that had nothing pending — and the next switch
+      // asked to confirm a discard that was not needed.
+      // saveLanding() writes "Saved <time>" after calling this, so the clear
+      // never erases a message that is still true.
+      node.textContent = '';
+      node.removeAttribute('data-kind');
+    }
+  }
 
   function landingBanner(kind, text) {
     var box = document.querySelector('[data-landing-banner]');
@@ -3320,6 +3364,7 @@
     remove.type = 'button';
     remove.addEventListener('click', function () {
       landing.content.video = null;
+      landingDirty(true);
       renderLandingCurrent();
       landingBanner('info', 'Removed here — press Save and publish to take it off the page.');
     });
@@ -3340,7 +3385,7 @@
       labelInput.placeholder = 'Fashion store demo';
       labelField.appendChild(el('label', null, 'Label'));
       labelField.appendChild(labelInput);
-      labelInput.addEventListener('input', function () { link.label = labelInput.value; });
+      labelInput.addEventListener('input', function () { link.label = labelInput.value; landingDirty(true); });
 
       var hrefField = el('div', 'field');
       var hrefInput = document.createElement('input');
@@ -3349,12 +3394,13 @@
       hrefInput.placeholder = 'https://demu.sayadbayezid.com/d/...';
       hrefField.appendChild(el('label', null, 'Link'));
       hrefField.appendChild(hrefInput);
-      hrefInput.addEventListener('input', function () { link.href = hrefInput.value; });
+      hrefInput.addEventListener('input', function () { link.href = hrefInput.value; landingDirty(true); });
 
       var remove = el('button', 'btn btn-ghost', 'Remove');
       remove.type = 'button';
       remove.addEventListener('click', function () {
         landing.content.links.splice(index, 1);
+        landingDirty(true);
         renderLandingLinks();
       });
 
@@ -3371,7 +3417,7 @@
       noteInput.placeholder = 'One line about what they will see';
       noteField.appendChild(el('label', null, 'Note under the label'));
       noteField.appendChild(noteInput);
-      noteInput.addEventListener('input', function () { link.note = noteInput.value; });
+      noteInput.addEventListener('input', function () { link.note = noteInput.value; landingDirty(true); });
       box.appendChild(noteField);
     });
     if (!landing.content.links.length) {
@@ -3398,7 +3444,7 @@
       altInput.placeholder = 'What is in the picture';
       altField.appendChild(el('label', null, 'Description'));
       altField.appendChild(altInput);
-      altInput.addEventListener('input', function () { image.alt = altInput.value; });
+      altInput.addEventListener('input', function () { image.alt = altInput.value; landingDirty(true); });
 
       var capField = el('div', 'field');
       var capInput = document.createElement('input');
@@ -3408,12 +3454,13 @@
       capInput.placeholder = 'Caption shown under it';
       capField.appendChild(el('label', null, 'Caption'));
       capField.appendChild(capInput);
-      capInput.addEventListener('input', function () { image.caption = capInput.value; });
+      capInput.addEventListener('input', function () { image.caption = capInput.value; landingDirty(true); });
 
       var remove = el('button', 'btn btn-ghost', 'Remove');
       remove.type = 'button';
       remove.addEventListener('click', function () {
         landing.content.images.splice(index, 1);
+        landingDirty(true);
         renderLandingImages();
       });
 
@@ -3470,7 +3517,25 @@
                    landing.content.images.some(function (i) { return i.src === '/api/media/' + asset.key; });
         if (used && !window.confirm('That file is used on the page right now. Delete it anyway and leave a gap?')) return;
         api('/api/admin/media/object?key=' + encodeURIComponent(asset.key), { method: 'DELETE' })
-          .then(loadLanding)
+          .then(function () {
+            // Drop the references by hand rather than reloading the document.
+            // Reloading would discard whatever else is waiting to be published
+            // — the same mistake the upload handlers were making — and would
+            // also bring the deleted file's reference straight back, because
+            // the SAVED document still mentions it until the next save.
+            var ref = '/api/media/' + asset.key;
+            if (landing.content.video) {
+              if (landing.content.video.src === ref) landing.content.video = null;
+              else if (landing.content.video.poster === ref) landing.content.video.poster = '';
+            }
+            landing.content.images = landing.content.images.filter(function (i) { return i.src !== ref; });
+            if (used) {
+              landingDirty(true);
+              landingBanner('info', 'File deleted. Press Save and publish to take it off the page too.');
+            }
+            renderLanding();
+            return refreshLandingAssets();
+          })
           .catch(function (error) { landingBanner('error', error.message); });
       });
       actions.appendChild(remove);
@@ -3493,8 +3558,94 @@
 
   function loadLanding() {
     if (!landing.wired) { landing.wired = true; wireLanding(); }
+    // The list has to come first: it decides which page the rest of the panel
+    // is about, and on the very first load `landing.page` is only a default.
+    return loadLandingPages().then(loadLandingContent);
+  }
+
+  /**
+   * The list of landing pages.
+   *
+   * A Worker deployed ahead of its migration answers with a one-entry list and
+   * a `warning`, so the panel keeps working and says which migration is missing
+   * rather than showing an empty dropdown that looks like a bug.
+   */
+  function loadLandingPages() {
+    return api('/api/admin/landing-pages')
+      .then(function (result) {
+        landing.pages = result.pages || [];
+        if (!currentLandingPage() && landing.pages.length) landing.page = landing.pages[0].slug;
+        renderLandingPages();
+        landingPagesBanner(result.warning ? 'error' : '', result.warning || '');
+      })
+      .catch(function (error) {
+        landingPagesBanner('error', error.message);
+        // Without a list there is still the page that always existed, so the
+        // editor below stays usable.
+        landing.pages = [{ slug: 'fullstack', title: 'Full-stack offer (ads)', status: 'static', path: '/ads/fullstack/' }];
+        renderLandingPages();
+      });
+  }
+
+  function landingPagesBanner(kind, text) {
+    var box = document.querySelector('[data-landing-pages-banner]');
+    if (!box) return;
+    clear(box);
+    if (!text) return;
+    var note = el('div', 'notice', text);
+    note.setAttribute('data-kind', kind || 'info');
+    box.appendChild(note);
+  }
+
+  function renderLandingPages() {
+    var select = document.getElementById('landingPageSelect');
+    if (!select) return;
+    clear(select);
+    landing.pages.forEach(function (page) {
+      var option = el('option', null, page.title + (page.status === 'static' ? ' — static file' :
+        page.status === 'published' ? ' — published' : ' — draft'));
+      option.value = page.slug;
+      if (page.slug === landing.page) option.selected = true;
+      select.appendChild(option);
+    });
+
+    document.querySelector('[data-count="landing-pages"]').textContent =
+      landing.pages.length + ' page' + (landing.pages.length === 1 ? '' : 's');
+
+    var page = currentLandingPage() || {};
+    var origin = page.status === 'static' ? 'https://sayadbayezid.com' : API;
+    var href = origin + (page.path || '');
+    var url = document.querySelector('[data-landing-page-url]');
+    clear(url);
+    if (page.path) {
+      var link = el('a', null, href);
+      link.href = href;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      url.appendChild(link);
+      if (page.status === 'draft') {
+        url.appendChild(el('span', 'lp-dim', ' — a draft answers 404 until you publish it.'));
+      }
+    } else {
+      url.textContent = '—';
+    }
+
+    var headerLink = document.querySelector('[data-landing-page-link]');
+    if (headerLink && page.path) { headerLink.href = href; headerLink.textContent = page.title || href; }
+
+    var status = document.getElementById('landingPageStatus');
+    // A static page's visibility is decided by the file existing, so the two
+    // controls that cannot apply to it are disabled rather than silently
+    // rejected by the server after a click.
+    var isStatic = page.status === 'static';
+    status.value = isStatic ? 'published' : (page.status || 'draft');
+    status.disabled = isStatic;
+    document.getElementById('landingPageDelete').disabled = isStatic;
+  }
+
+  function loadLandingContent() {
     return Promise.all([
-      fetch(API + '/api/landing/fullstack').then(function (r) { return r.json(); }).catch(function () { return {}; }),
+      fetch(API + '/api/landing/' + encodeURIComponent(landing.page)).then(function (r) { return r.json(); }).catch(function () { return {}; }),
       api('/api/admin/media/objects').catch(function (error) {
         // A missing migration disables the panel with an explanation rather
         // than leaving an empty screen that looks like a bug.
@@ -3510,8 +3661,34 @@
       };
       landing.assets = results[1].assets || [];
       landing.loaded = true;
+      landingDirty(false);
       renderLanding();
     });
+  }
+
+  /**
+   * Refreshes the uploaded-file table ONLY.
+   *
+   * The distinction from loadLanding() is the whole bug fix. After an upload
+   * the panel needs the new file to appear in the table, and loadLanding() was
+   * used for that — but loadLanding() re-reads the SAVED document and replaces
+   * landing.content with it, throwing away the reference the upload had just
+   * added. The console then said "press Save and publish", and publishing sent
+   * the old document straight back.
+   *
+   * It was not a subtle failure. Four images uploaded on 24 Sep 2026 are still
+   * in R2 and in media_assets; the save five minutes later wrote
+   * `{"links":[...],"images":[]}`. Every upload since behaved the same way.
+   *
+   * So: fetch the list, render the list, leave content alone.
+   */
+  function refreshLandingAssets() {
+    return api('/api/admin/media/objects')
+      .then(function (result) {
+        landing.assets = result.assets || [];
+        renderLandingAssets();
+      })
+      .catch(function (error) { landingBanner('error', error.message); });
   }
 
   function saveLanding() {
@@ -3528,7 +3705,7 @@
       links: landing.content.links.filter(function (l) { return l.label && l.href; }),
       images: landing.content.images
     };
-    return api('/api/admin/landing/fullstack', { method: 'PUT', body: { content: payload } })
+    return api('/api/admin/landing/' + encodeURIComponent(landing.page), { method: 'PUT', body: { content: payload } })
       .then(function (result) {
         // Render back what the SERVER stored, not what was sent. A link the
         // server refused (a javascript: URL, say) must visibly disappear here
@@ -3538,9 +3715,12 @@
           links: result.content.links || [],
           images: result.content.images || []
         };
+        landingDirty(false);
         renderLanding();
         var dropped = payload.links.length - landing.content.links.length;
-        document.querySelector('[data-landing-saved]').textContent = 'Saved ' + new Date().toLocaleTimeString();
+        var saved = document.querySelector('[data-landing-saved]');
+        saved.removeAttribute('data-kind');
+        saved.textContent = 'Saved ' + new Date().toLocaleTimeString();
         landingBanner(dropped > 0 ? 'error' : 'ok',
           dropped > 0
             ? dropped + ' link' + (dropped === 1 ? ' was' : 's were') + ' rejected — links must start with https://'
@@ -3563,7 +3743,9 @@
             autoPopup: document.getElementById('landingAutoPopup').checked
           });
           e.target.value = '';
-          return loadLanding();
+          landingDirty(true);
+          renderLandingCurrent();
+          return refreshLandingAssets();
         })
         .then(function () { landingBanner('ok', 'Video uploaded. Press Save and publish to put it on the page.'); })
         .catch(function (error) { landingBanner('error', error.message); });
@@ -3577,7 +3759,9 @@
           if (!landing.content.video) landing.content.video = { src: '' };
           landing.content.video.poster = result.url;
           e.target.value = '';
-          return loadLanding();
+          landingDirty(true);
+          renderLandingCurrent();
+          return refreshLandingAssets();
         })
         .then(function () { landingBanner('ok', 'Poster uploaded. Press Save and publish.'); })
         .catch(function (error) { landingBanner('error', error.message); });
@@ -3590,7 +3774,9 @@
         .then(function (result) {
           landing.content.images.push({ src: result.url, alt: '', caption: '' });
           e.target.value = '';
-          return loadLanding();
+          landingDirty(true);
+          renderLandingImages();
+          return refreshLandingAssets();
         })
         .then(function () { landingBanner('ok', 'Image added. Describe it, then Save and publish.'); })
         .catch(function (error) { landingBanner('error', error.message); });
@@ -3598,10 +3784,88 @@
 
     document.getElementById('landingAddLink').addEventListener('click', function () {
       landing.content.links.push({ label: '', href: '', note: '' });
+      landingDirty(true);
       renderLandingLinks();
     });
 
     document.getElementById('landingSave').addEventListener('click', saveLanding);
+
+    // --- the page list -----------------------------------------------------
+    document.getElementById('landingPageSelect').addEventListener('change', function (e) {
+      // Switching away from unpublished work would lose it silently, which is
+      // the class of bug this whole panel was just fixed for.
+      if (landing.dirty && !window.confirm('This page has changes that are not published yet. Leave them behind?')) {
+        e.target.value = landing.page;
+        return;
+      }
+      landing.page = e.target.value;
+      landingBanner('', '');
+      // The changes just abandoned belonged to the page being left, so the
+      // pending marker goes with them.
+      landingDirty(false);
+      renderLandingPages();
+      loadLandingContent();
+    });
+
+    document.getElementById('landingPageStatus').addEventListener('change', function (e) {
+      var slug = landing.page;
+      var next = e.target.value;
+      api('/api/admin/landing-pages/' + encodeURIComponent(slug), { method: 'PATCH', body: { status: next } })
+        .then(function () { return loadLandingPages(); })
+        .then(function () {
+          landingPagesBanner('ok', next === 'published'
+            ? 'Published. The address above is live now.'
+            : 'Back to draft. The address answers 404 again.');
+        })
+        .catch(function (error) { landingPagesBanner('error', error.message); e.target.value = 'draft'; });
+    });
+
+    document.getElementById('landingPageDelete').addEventListener('click', function () {
+      var page = currentLandingPage();
+      if (!page) return;
+      if (!window.confirm('Delete "' + page.title + '"? Its address stops working and its blocks are removed. Uploaded files are kept.')) return;
+      api('/api/admin/landing-pages/' + encodeURIComponent(page.slug), { method: 'DELETE' })
+        .then(function () {
+          landing.page = 'fullstack';
+          landing.dirty = false;
+          return loadLanding();
+        })
+        .then(function () { landingPagesBanner('ok', 'Page deleted.'); })
+        .catch(function (error) { landingPagesBanner('error', error.message); });
+    });
+
+    document.getElementById('newLandingCreate').addEventListener('click', function () {
+      var button = this;
+      var body = {
+        title: document.getElementById('newLandingTitle').value.trim(),
+        slug: document.getElementById('newLandingSlug').value.trim(),
+        headline: document.getElementById('newLandingHeadline').value.trim(),
+        subhead: document.getElementById('newLandingSubhead').value.trim(),
+        ctaLabel: document.getElementById('newLandingCtaLabel').value.trim(),
+        ctaHref: document.getElementById('newLandingCtaHref').value.trim()
+      };
+      // Checked here as well as on the server so the two required fields are
+      // named before a round trip, not after one.
+      if (!body.title) { landingPagesBanner('error', 'Give the page a name.'); return; }
+      if (!body.headline) { landingPagesBanner('error', 'Give the page a headline — it is the first thing a visitor reads.'); return; }
+
+      button.disabled = true;
+      api('/api/admin/landing-pages', { method: 'POST', body: body })
+        .then(function (result) {
+          ['newLandingTitle', 'newLandingSlug', 'newLandingHeadline', 'newLandingSubhead',
+           'newLandingCtaLabel', 'newLandingCtaHref'].forEach(function (id) {
+            document.getElementById(id).value = '';
+          });
+          landing.page = result.page.slug;
+          landing.dirty = false;
+          return loadLanding().then(function () {
+            landingPagesBanner('ok', 'Created as a draft at ' + API + result.page.path +
+              ' — add the video, links and images below, then set it to Published.');
+          });
+        })
+        .catch(function (error) { landingPagesBanner('error', error.message); })
+        .then(function () { button.disabled = false; });
+    });
   }
 
   // --- start ---------------------------------------------------------------
