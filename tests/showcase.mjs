@@ -25,6 +25,8 @@
  */
 import { chromium } from 'playwright';
 import { readFile, access } from 'node:fs/promises';
+import { readFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -223,15 +225,47 @@ console.log('\n6. Nothing scrolls sideways, at any width a client will use');
   }
 }
 
-console.log('\n7. The site can be navigated to the showcase');
+console.log('\n7. Every page that has the site nav links to the showcase');
 {
-  const p = await open('/products.html');
-  ok(await p.locator('a[href="/showcase.html"]').count() > 0,
-    'products.html links to the showcase');
-  await p.close();
+  // Checked across the WHOLE site, not on two sample pages, because of what
+  // happened the first time: the link was added to the generated output of
+  // build-blog.js and build-content.js rather than to their templates, and the
+  // next content regeneration — which ran on main two minutes after the merge —
+  // silently stripped it from eleven pages. A spot check on products.html and
+  // the homepage passed throughout, because neither is generated.
+  //
+  // So the rule this encodes is: if a page carries the site nav, it carries
+  // this link. Any page generated from a template that has not been updated
+  // fails here rather than after it has shipped.
+  const pages = execFileSync('grep', ['-rl', '"/products.html">Products</a>', '--include=*.html', '.'],
+    { encoding: 'utf8' })
+    .split('\n')
+    .filter((f) => f && !f.includes('node_modules') && !f.startsWith('./backup/') && !f.startsWith('./Reference/'));
+
+  // COUNTED, not merely present.
+  //
+  // The first version of this check asked "does the page contain the link at
+  // all", and a deliberate break proved it useless: removing the nav link from
+  // a page that also has it in the footer left the check green. A page carries
+  // the site nav AND the site footer, so it should carry the link twice; one
+  // occurrence going missing is exactly the regression this exists to catch.
+  //
+  // Comparing against the count of Products links rather than hardcoding 2
+  // keeps it honest for the few pages that carry only one of the two blocks.
+  const short = [];
+  for (const f of pages) {
+    const html = readFileSync(f, 'utf8');
+    const products = html.split('"/products.html">Products</a>').length - 1;
+    const showcase = html.split('"/showcase.html">Showcase</a>').length - 1;
+    if (showcase < products) short.push(`${f} (${showcase} of ${products})`);
+  }
+  ok(pages.length > 30, `${pages.length} pages carry the site nav`);
+  ok(short.length === 0,
+    `each links to the showcase as often as it links to products${short.length ? `\n         short on:\n         ${short.join('\n         ')}` : ''}`);
+
+  // And it is reachable in a browser, not merely present in the markup.
   const home = await open('/');
-  ok(await home.locator('a[href="/showcase.html"]').count() > 0,
-    'the homepage links to it too');
+  ok(await home.locator('a[href="/showcase.html"]').count() > 0, 'the homepage link renders');
   await home.close();
 }
 
