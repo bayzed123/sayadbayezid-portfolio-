@@ -19,10 +19,298 @@
     "Regenerate the pages after editing:  node scripts/build-showcase.mjs",
     "Recapture the screenshots:          node scripts/capture-showcase-shots.mjs <demo-hub-site-dir>"
   ],
-
   "hub": "https://demu.sayadbayezid.com",
-
   "products": [
+    {
+      "slug": "lks-attire-shop",
+      "adminSlug": "lks-attire-admin",
+      "title": "Lk's Attire",
+      "category": "E-commerce",
+      "tagline": "A Tangail clothing brand's shop, and the dashboard that runs it — sharing one set of orders.",
+      "summary": "The customer side of Lk's Attire, a women's clothing brand from Tangail: real product photos, a Bangla/English switch, filters, product pages with sizes and colours, cart, and a checkout where typing a postcode fills in Division, District and Upazila. Place an order with Cash on Delivery, bKash, Nagad or Rocket, get an invoice number, and track it — then find that order waiting in the admin dashboard.",
+      "audience": "Clothing brands selling on Facebook who take orders by message, and lose track of which ones were confirmed.",
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Bangla / English",
+        "Cash on Delivery",
+        "bKash · Nagad · Rocket",
+        "Cloudflare Workers"
+      ],
+      "features": [
+        {
+          "title": "Order in the shop, find it in the admin",
+          "body": "The two demos share their data. Place an order on the storefront, open the dashboard, and it is sitting in the pipeline — the whole point, demonstrated rather than described."
+        },
+        {
+          "title": "A postcode fills in the address",
+          "body": "Type the postcode at checkout and Division, District and Upazila fill themselves in. Fewer fields is fewer abandoned carts, and fewer wrong addresses to chase by phone."
+        },
+        {
+          "title": "Bangla and English, both sides",
+          "body": "The shop and the dashboard both switch language. Staff who work in Bangla are not forced into an English admin."
+        },
+        {
+          "title": "Invoices and shipping labels that print",
+          "body": "The order pipeline runs pending to delivered, and prints an invoice and a shipping label at the point where you actually need them."
+        },
+        {
+          "title": "Variants, SKUs and a live shop preview",
+          "body": "Products carry variants, SKUs, discounts and free-delivery rules, with a preview of how the product will look in the shop before it is published."
+        }
+      ],
+      "shots": [
+        {
+          "page": "index.html",
+          "label": "shop",
+          "caption": "The storefront."
+        },
+        {
+          "page": "index.html",
+          "label": "shop-mobile",
+          "caption": "Phone width — where most Bangladeshi traffic arrives.",
+          "viewport": "mobile"
+        },
+        {
+          "page": "index.html",
+          "label": "admin",
+          "caption": "The dashboard behind it, opening on today's orders.",
+          "slug": "lks-attire-admin"
+        }
+      ]
+    },
+    {
+      "slug": "zamil-shop-bd",
+      "adminSlug": "zamil-shop-bd-admin",
+      "title": "Zamil Shop BD",
+      "category": "E-commerce",
+      "tagline": "A baby and kids shop with a gift registry, and an admin that screens fake orders.",
+      "summary": "The customer side of Zamil Shop BD, a baby and kids shop from Dhaka: shop by age from 0–6 months to 5 years, a gift finder, a gift registry for new parents, ride-on toys with real product photos, a Bangla/English switch, cart and Cash on Delivery checkout with bKash, Nagad and Rocket — and the dashboard where those orders arrive.",
+      "audience": "Baby and kids sellers who lose money to fake Cash-on-Delivery orders and want them flagged before anything is packed.",
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Baby & kids",
+        "Gift registry",
+        "Bangla / English",
+        "Cloudflare Workers"
+      ],
+      "features": [
+        {
+          "title": "Fake-order protection, colour-coded",
+          "body": "Every order is marked Trusted, New or Verify before packing. On Cash on Delivery that judgement is the difference between a sale and a parcel that comes back."
+        },
+        {
+          "title": "Abandoned checkouts, listed",
+          "body": "Carts that reached checkout and stopped are a list you can call, not a number you cannot act on."
+        },
+        {
+          "title": "Shop by age, and a gift finder",
+          "body": "Browsing by 0–6 months through 5 years is how a parent actually shops, and the gift finder is for the person buying for someone else's child."
+        },
+        {
+          "title": "A gift registry for new parents",
+          "body": "Parents list what they need, family buys from it, and nobody receives three of the same thing."
+        },
+        {
+          "title": "Safety certificates need a document",
+          "body": "A product cannot claim a safety certificate without a file attached. The claim and the proof are one field, so the shop cannot drift into a promise it has not got."
+        }
+      ],
+      "shots": [
+        {
+          "page": "index.html",
+          "label": "shop",
+          "caption": "The storefront, shopping by age."
+        },
+        {
+          "page": "index.html",
+          "label": "shop-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        },
+        {
+          "page": "index.html",
+          "label": "admin",
+          "caption": "The dashboard — four orders waiting for a confirmation call.",
+          "slug": "zamil-shop-bd-admin"
+        }
+      ]
+    },
+    {
+      "slug": "prakriti-herbal",
+      "adminSlug": "prakriti-herbal-admin",
+      "title": "Prakriti Herbal",
+      "category": "E-commerce",
+      "tagline": "Herbal products, with batch expiry tracking and a copy check that refuses medical claims.",
+      "summary": "The customer side of Prakriti Herbal, a Dhaka shop for herbal oils, ayurvedic supplements, natural teas, handmade soaps and essential oils: filter by wellness need, a kit builder that picks one product per shelf within your budget, wellness kits showing the real saving, a journal, and a best-before date on every product — plus the dashboard that tracks the batches behind those dates.",
+      "audience": "Herbal and supplement sellers, who carry both an expiry problem and a regulatory one.",
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Batches & expiry",
+        "Kit builder",
+        "Bangla / English",
+        "Cloudflare Workers"
+      ],
+      "features": [
+        {
+          "title": "Product copy that refuses medical claims",
+          "body": "The dashboard checks product text and will not accept a medical claim. For a herbal shop that is not a nicety — it is the difference between selling and being shut down."
+        },
+        {
+          "title": "Batches picked first-expiry-first-out",
+          "body": "Stock is tracked by batch with expiry dates, and packing takes the earliest-expiring first. Shelf life stops being something discovered at the point of a complaint."
+        },
+        {
+          "title": "A kit builder inside a budget",
+          "body": "Give it a budget and it assembles a kit, one product per shelf. It sells more than one item without asking the customer to do the work."
+        },
+        {
+          "title": "Orders waiting for a call, first",
+          "body": "The dashboard opens on \"needs your attention today\" — the orders that need a confirmation call — rather than on a revenue chart nobody acts on."
+        },
+        {
+          "title": "Certifications held as records",
+          "body": "Certifications are stored and shown, so the claim on the page is backed by something in the system."
+        }
+      ],
+      "shots": [
+        {
+          "page": "index.html",
+          "label": "shop",
+          "caption": "The storefront, filtered by wellness need."
+        },
+        {
+          "page": "index.html",
+          "label": "shop-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        },
+        {
+          "page": "index.html",
+          "label": "admin",
+          "caption": "The dashboard, opening on what needs attention today.",
+          "slug": "prakriti-herbal-admin"
+        }
+      ]
+    },
+    {
+      "slug": "sidra-glow-studio",
+      "adminSlug": "sidra-glow-studio-admin",
+      "title": "Sidra Glow Studio",
+      "category": "E-commerce",
+      "tagline": "A skincare shop and a treatment studio — products and appointments in one dashboard.",
+      "summary": "The customer side of Sidra Glow Studio, a skincare shop and beauty-treatment studio in Tangail: filter by skin type and concern, ingredient lists and best-before dates on every product, a skin quiz that builds a routine within your budget, routine sets, and facials bookable online against a free slot — with the bookings diary and the order pipeline behind them in one admin.",
+      "audience": "Salons and studios that also sell product, and currently run the diary and the shop as two separate things.",
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Studio bookings",
+        "Batches & expiry",
+        "Bangla / English",
+        "Cloudflare Workers"
+      ],
+      "features": [
+        {
+          "title": "Bookings and orders in one place",
+          "body": "The diary — confirm, move, done, no-show — sits in the same dashboard as the product orders. One business, one screen, instead of a paper diary beside a shop admin."
+        },
+        {
+          "title": "Book a facial against a real free slot",
+          "body": "The customer picks from slots that are actually free, so a booking is not a request somebody has to phone back about."
+        },
+        {
+          "title": "A skin quiz that respects a budget",
+          "body": "Answer the quiz and it builds a routine within what you said you would spend. It recommends without overselling, which is what makes it get used."
+        },
+        {
+          "title": "Ingredients and best-before, shown",
+          "body": "Every product carries its ingredient list and its date. In skincare both are things customers check before buying."
+        },
+        {
+          "title": "Batches picked first-expiry-first-out",
+          "body": "Stock is tracked by batch, and the earliest-expiring is packed first — so the dates on the shelf stay honest."
+        }
+      ],
+      "shots": [
+        {
+          "page": "index.html",
+          "label": "shop",
+          "caption": "The storefront."
+        },
+        {
+          "page": "index.html",
+          "label": "shop-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        },
+        {
+          "page": "index.html",
+          "label": "admin",
+          "caption": "The dashboard — orders and the bookings diary together.",
+          "slug": "sidra-glow-studio-admin"
+        }
+      ]
+    },
+    {
+      "slug": "sidra-jewellery",
+      "adminSlug": "sidra-jewellery-admin",
+      "title": "Sidra Jewellery & Fashion",
+      "category": "E-commerce",
+      "tagline": "Jewellery sold by occasion, with size guides and gift wrap flagged for packing.",
+      "summary": "The customer side of Sidra Jewellery & Fashion: earrings, necklaces, bangles, rings and bridal sets shot in macro, shop by occasion — everyday, festive, bridal — curated collections with \"Shop the set\", ring and bangle size guides, gift wrap at checkout, and Cash on Delivery with bKash, Nagad and Rocket. The dashboard behind it sorts products by material and plating, and flags the gift-wrap orders.",
+      "audience": "Jewellery sellers whose returns come from the wrong size and whose busiest orders are gifts.",
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Jewellery",
+        "Gift wrap",
+        "Size guides",
+        "Cloudflare Workers"
+      ],
+      "features": [
+        {
+          "title": "Size guides for rings and bangles",
+          "body": "The commonest reason jewellery comes back is the size. The guide is on the page, before the order, not in a message afterwards."
+        },
+        {
+          "title": "Shop by occasion",
+          "body": "Everyday, festive and bridal is how someone buying jewellery is actually thinking — not by product category."
+        },
+        {
+          "title": "Gift-wrap orders flagged for packing",
+          "body": "Choose gift wrap at checkout and the order is marked for whoever packs it. The request reaches the person who has to act on it."
+        },
+        {
+          "title": "Collections with \"Shop the set\"",
+          "body": "Curated sets sell more than one piece, and a photo picker in the admin builds them without a developer."
+        },
+        {
+          "title": "Products by material and plating",
+          "body": "The catalogue is organised the way the stock actually differs, which is what makes it searchable once it is large."
+        }
+      ],
+      "shots": [
+        {
+          "page": "index.html",
+          "label": "shop",
+          "caption": "The storefront, shopping by occasion."
+        },
+        {
+          "page": "index.html",
+          "label": "shop-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        },
+        {
+          "page": "index.html",
+          "label": "admin",
+          "caption": "The dashboard behind it.",
+          "slug": "sidra-jewellery-admin"
+        }
+      ]
+    },
     {
       "slug": "smartgadget-demo",
       "title": "SmartGadget",
@@ -30,17 +318,46 @@
       "tagline": "A wholesale electronics shop, and the dashboard its owner runs it from.",
       "summary": "A complete wholesale electronics storefront for the Bangladeshi market — catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking — plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics.",
       "audience": "Importers and wholesalers who sell the same item at different prices depending on quantity, and need one screen that shows what is in stock and what is owed.",
-      "tags": ["Storefront", "Admin dashboard", "Wholesale pricing", "GA4 + Meta Pixel"],
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Wholesale pricing",
+        "GA4 + Meta Pixel"
+      ],
       "features": [
-        { "title": "Tiered wholesale pricing", "body": "The price changes with the quantity, and the server decides it — the browser cannot claim a price it has not earned." },
-        { "title": "Catalogue to paid order", "body": "Browse, product page, cart, checkout and order tracking all work end to end. Nothing in the flow is a dead link." },
-        { "title": "The admin the owner lives in", "body": "Products, stock, orders, customers, reviews, site content and analytics — the screens a shop is actually run from, not a KPI wall." },
-        { "title": "Tracking that reports once", "body": "GA4 and the Meta Pixel share one event ID, so a sale is counted a single time instead of twice." },
-        { "title": "Opens with no sign-in", "body": "The dashboard is unlocked on purpose so you can look straight through it. Every product, order, customer and figure in it is generated." }
+        {
+          "title": "Tiered wholesale pricing",
+          "body": "The price changes with the quantity, and the server decides it — the browser cannot claim a price it has not earned."
+        },
+        {
+          "title": "Catalogue to paid order",
+          "body": "Browse, product page, cart, checkout and order tracking all work end to end. Nothing in the flow is a dead link."
+        },
+        {
+          "title": "The admin the owner lives in",
+          "body": "Products, stock, orders, customers, reviews, site content and analytics — the screens a shop is actually run from, not a KPI wall."
+        },
+        {
+          "title": "Tracking that reports once",
+          "body": "GA4 and the Meta Pixel share one event ID, so a sale is counted a single time instead of twice."
+        },
+        {
+          "title": "Opens with no sign-in",
+          "body": "The dashboard is unlocked on purpose so you can look straight through it. Every product, order, customer and figure in it is generated."
+        }
       ],
       "shots": [
-        { "page": "index.html", "label": "storefront", "caption": "The storefront a customer lands on." },
-        { "page": "index.html", "label": "storefront-mobile", "caption": "The same page on a phone — where most of the traffic is.", "viewport": "mobile" }
+        {
+          "page": "index.html",
+          "label": "storefront",
+          "caption": "The storefront a customer lands on."
+        },
+        {
+          "page": "index.html",
+          "label": "storefront-mobile",
+          "caption": "The same page on a phone — where most of the traffic is.",
+          "viewport": "mobile"
+        }
       ]
     },
     {
@@ -50,17 +367,47 @@
       "tagline": "A Vue 3 fashion storefront with eight admin screens behind it.",
       "summary": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens — dashboard, products, orders, customers, messages, staff, profile and a single-product editor.",
       "audience": "Clothing shops that already sell on Facebook and want a real storefront without giving up the way they handle orders.",
-      "tags": ["Storefront", "Admin dashboard", "Vue 3", "Vuex", "From $100"],
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Vue 3",
+        "Vuex",
+        "From $100"
+      ],
       "features": [
-        { "title": "Eight admin screens", "body": "Dashboard, products, orders, customers, messages, staff, profile and a product editor — enough to run the shop, not a demo shell." },
-        { "title": "Shop side complete", "body": "Category pages, product pages, cart and checkout, all reachable and all working." },
-        { "title": "Staff, not just an owner", "body": "A staff screen, because a shop that grows stops being one person with one password." },
-        { "title": "Messages where the orders are", "body": "Customer messages sit in the same dashboard as the orders they are about." },
-        { "title": "Invented data, said out loud", "body": "Every product, order, customer and message is made up. The dashboard opens without a sign-in so you can check that for yourself." }
+        {
+          "title": "Eight admin screens",
+          "body": "Dashboard, products, orders, customers, messages, staff, profile and a product editor — enough to run the shop, not a demo shell."
+        },
+        {
+          "title": "Shop side complete",
+          "body": "Category pages, product pages, cart and checkout, all reachable and all working."
+        },
+        {
+          "title": "Staff, not just an owner",
+          "body": "A staff screen, because a shop that grows stops being one person with one password."
+        },
+        {
+          "title": "Messages where the orders are",
+          "body": "Customer messages sit in the same dashboard as the orders they are about."
+        },
+        {
+          "title": "Invented data, said out loud",
+          "body": "Every product, order, customer and message is made up. The dashboard opens without a sign-in so you can check that for yourself."
+        }
       ],
       "shots": [
-        { "page": "index.html", "label": "storefront", "caption": "The shop front." },
-        { "page": "index.html", "label": "storefront-mobile", "caption": "Phone width.", "viewport": "mobile" }
+        {
+          "page": "index.html",
+          "label": "storefront",
+          "caption": "The shop front."
+        },
+        {
+          "page": "index.html",
+          "label": "storefront-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        }
       ]
     },
     {
@@ -70,17 +417,48 @@
       "tagline": "132 products, real filters, accounts that remember you.",
       "summary": "A working fashion storefront built in React: a catalogue of 132 products with brand, category, gender and price filters, sorting, search with pagination, product pages with size picker and customer reviews, wishlist, cart, checkout and order history. Accounts work too — register, sign in, and your wishlist and orders follow you.",
       "audience": "Shops with a catalogue big enough that browsing without filters stops working — which is most of them past a hundred items.",
-      "tags": ["Storefront", "Admin dashboard", "React", "Redux", "Tailwind", "From $100"],
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "React",
+        "Redux",
+        "Tailwind",
+        "From $100"
+      ],
       "features": [
-        { "title": "Filters on a real catalogue", "body": "Brand, category, gender and price across 132 products, with sorting and paginated search. Filters are cheap to demo on ten items and only prove themselves on a hundred." },
-        { "title": "Accounts that persist", "body": "Register, sign in, and the wishlist and order history follow the account rather than the browser tab." },
-        { "title": "Size picker and reviews", "body": "The two things a clothing product page is judged on, on the product page." },
-        { "title": "Wishlist to checkout", "body": "Wishlist, cart, checkout and order history are one continuous path." },
-        { "title": "React, Redux, Tailwind", "body": "A stack most teams can pick up and extend without a handover document." }
+        {
+          "title": "Filters on a real catalogue",
+          "body": "Brand, category, gender and price across 132 products, with sorting and paginated search. Filters are cheap to demo on ten items and only prove themselves on a hundred."
+        },
+        {
+          "title": "Accounts that persist",
+          "body": "Register, sign in, and the wishlist and order history follow the account rather than the browser tab."
+        },
+        {
+          "title": "Size picker and reviews",
+          "body": "The two things a clothing product page is judged on, on the product page."
+        },
+        {
+          "title": "Wishlist to checkout",
+          "body": "Wishlist, cart, checkout and order history are one continuous path."
+        },
+        {
+          "title": "React, Redux, Tailwind",
+          "body": "A stack most teams can pick up and extend without a handover document."
+        }
       ],
       "shots": [
-        { "page": "index.html", "label": "catalogue", "caption": "The catalogue with its filter rail." },
-        { "page": "index.html", "label": "catalogue-mobile", "caption": "On a phone, filters collapse rather than disappear.", "viewport": "mobile" }
+        {
+          "page": "index.html",
+          "label": "catalogue",
+          "caption": "The catalogue with its filter rail."
+        },
+        {
+          "page": "index.html",
+          "label": "catalogue-mobile",
+          "caption": "On a phone, filters collapse rather than disappear.",
+          "viewport": "mobile"
+        }
       ]
     },
     {
@@ -90,21 +468,66 @@
       "tagline": "Beauty and skincare, from browsing to a printable invoice.",
       "summary": "A complete beauty and skincare shop for the Bangladeshi market: browse, product detail, cart, checkout, order tracking, customer accounts, printable invoices and a journal — plus the admin dashboard the owner actually runs it from.",
       "audience": "Skincare and cosmetics sellers whose customers ask for an invoice and want to know where the parcel is.",
-      "tags": ["Storefront", "Admin dashboard", "Checkout", "Cloudflare Workers"],
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Checkout",
+        "Cloudflare Workers"
+      ],
       "features": [
-        { "title": "Twelve screens, all reachable", "body": "Storefront, product, cart, checkout, account, order tracking, invoice, journal, sitemap, a real 404, and the admin behind them." },
-        { "title": "Printable invoices", "body": "An invoice page built to be printed, because a customer asking for one is not going to accept a screenshot." },
-        { "title": "Order tracking", "body": "A tracking page, so \"where is my parcel\" stops arriving in the inbox." },
-        { "title": "A journal that helps search", "body": "A blog attached to the shop rather than bolted to a different domain." },
-        { "title": "Runs on Cloudflare Workers", "body": "No server to patch, and it stays fast from Bangladesh because it is served at the edge." }
+        {
+          "title": "Twelve screens, all reachable",
+          "body": "Storefront, product, cart, checkout, account, order tracking, invoice, journal, sitemap, a real 404, and the admin behind them."
+        },
+        {
+          "title": "Printable invoices",
+          "body": "An invoice page built to be printed, because a customer asking for one is not going to accept a screenshot."
+        },
+        {
+          "title": "Order tracking",
+          "body": "A tracking page, so \"where is my parcel\" stops arriving in the inbox."
+        },
+        {
+          "title": "A journal that helps search",
+          "body": "A blog attached to the shop rather than bolted to a different domain."
+        },
+        {
+          "title": "Runs on Cloudflare Workers",
+          "body": "No server to patch, and it stays fast from Bangladesh because it is served at the edge."
+        }
       ],
       "shots": [
-        { "page": "web/index.html", "label": "storefront", "caption": "The shop front." },
-        { "page": "web/product.html", "label": "product", "caption": "A product page." },
-        { "page": "web/checkout.html", "label": "checkout", "caption": "Checkout — one page, not a funnel." },
-        { "page": "web/track.html", "label": "tracking", "caption": "Order tracking." },
-        { "page": "web/admin/index.html", "label": "admin", "caption": "The admin dashboard." },
-        { "page": "web/index.html", "label": "storefront-mobile", "caption": "Phone width.", "viewport": "mobile" }
+        {
+          "page": "web/index.html",
+          "label": "storefront",
+          "caption": "The shop front."
+        },
+        {
+          "page": "web/product.html",
+          "label": "product",
+          "caption": "A product page."
+        },
+        {
+          "page": "web/checkout.html",
+          "label": "checkout",
+          "caption": "Checkout — one page, not a funnel."
+        },
+        {
+          "page": "web/track.html",
+          "label": "tracking",
+          "caption": "Order tracking."
+        },
+        {
+          "page": "web/admin/index.html",
+          "label": "admin",
+          "caption": "The admin dashboard."
+        },
+        {
+          "page": "web/index.html",
+          "label": "storefront-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        }
       ]
     },
     {
@@ -114,21 +537,68 @@
       "tagline": "A fashion front end that drops onto the backend you already have.",
       "summary": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything.",
       "audience": "Businesses that already have a commerce backend — or a developer who will build one — and need the shop front without a rewrite.",
-      "tags": ["Storefront", "Admin dashboard", "Bootstrap 5", "Responsive", "Checkout flow", "From $100"],
+      "tags": [
+        "Storefront",
+        "Admin dashboard",
+        "Bootstrap 5",
+        "Responsive",
+        "Checkout flow",
+        "From $100"
+      ],
       "features": [
-        { "title": "Fourteen screens", "body": "Home, category, product, cart, a three-step checkout, login, register, password reset, and four admin screens." },
-        { "title": "Live filters and a price slider", "body": "Filtering happens as you move the slider, with no page reload." },
-        { "title": "Three-step checkout", "body": "Details, shipping and payment as separate steps — the shape most customers already recognise." },
-        { "title": "Rebrandable, not rewritable", "body": "Bootstrap 5 means your colours, type and logo are variables. Nothing needs restructuring to look like your business." },
-        { "title": "Front end only, deliberately", "body": "It drops onto whatever backend you already use, or we wire one up. Said plainly here so nobody buys it expecting a database." }
+        {
+          "title": "Fourteen screens",
+          "body": "Home, category, product, cart, a three-step checkout, login, register, password reset, and four admin screens."
+        },
+        {
+          "title": "Live filters and a price slider",
+          "body": "Filtering happens as you move the slider, with no page reload."
+        },
+        {
+          "title": "Three-step checkout",
+          "body": "Details, shipping and payment as separate steps — the shape most customers already recognise."
+        },
+        {
+          "title": "Rebrandable, not rewritable",
+          "body": "Bootstrap 5 means your colours, type and logo are variables. Nothing needs restructuring to look like your business."
+        },
+        {
+          "title": "Front end only, deliberately",
+          "body": "It drops onto whatever backend you already use, or we wire one up. Said plainly here so nobody buys it expecting a database."
+        }
       ],
       "shots": [
-        { "page": "index.html", "label": "storefront", "caption": "The homepage." },
-        { "page": "category.html", "label": "category", "caption": "Category listing with live filters and the price slider." },
-        { "page": "product.html", "label": "product", "caption": "Product page with gallery and reviews." },
-        { "page": "checkout.html", "label": "checkout", "caption": "Step one of the three-step checkout." },
-        { "page": "admin-orders.html", "label": "admin-orders", "caption": "The orders screen." },
-        { "page": "index.html", "label": "storefront-mobile", "caption": "Phone width.", "viewport": "mobile" }
+        {
+          "page": "index.html",
+          "label": "storefront",
+          "caption": "The homepage."
+        },
+        {
+          "page": "category.html",
+          "label": "category",
+          "caption": "Category listing with live filters and the price slider."
+        },
+        {
+          "page": "product.html",
+          "label": "product",
+          "caption": "Product page with gallery and reviews."
+        },
+        {
+          "page": "checkout.html",
+          "label": "checkout",
+          "caption": "Step one of the three-step checkout."
+        },
+        {
+          "page": "admin-orders.html",
+          "label": "admin-orders",
+          "caption": "The orders screen."
+        },
+        {
+          "page": "index.html",
+          "label": "storefront-mobile",
+          "caption": "Phone width.",
+          "viewport": "mobile"
+        }
       ]
     },
     {
@@ -138,17 +608,46 @@
       "tagline": "The screens a real shop is run from, including POS and barcode printing.",
       "summary": "The admin dashboard behind Rinova BD: orders and their delivery pipeline, catalogue and stock, customers, returns and reviews, offers, staff roles, POS and barcode printing, and the analytics panel — the screens the owner actually runs the shop from.",
       "audience": "Shops that sell both online and over a counter, and are tired of the two halves disagreeing about stock.",
-      "tags": ["Commerce ops", "Orders", "Inventory", "POS & barcode", "Analytics"],
+      "tags": [
+        "Commerce ops",
+        "Orders",
+        "Inventory",
+        "POS & barcode",
+        "Analytics"
+      ],
       "features": [
-        { "title": "Orders with a delivery pipeline", "body": "Not a status column — the stages an order actually moves through before somebody receives it." },
-        { "title": "POS and barcode printing", "body": "The counter and the website draw on one stock figure, so a sale in the shop shows online." },
-        { "title": "Returns and reviews", "body": "The parts of running a shop that get left out of dashboards and then handled in a notebook." },
-        { "title": "Staff roles", "body": "Different people see different screens, because the person packing parcels does not need the revenue panel." },
-        { "title": "A guide in the dashboard", "body": "A built-in guide page, so handover is not a phone call every time somebody new starts." }
+        {
+          "title": "Orders with a delivery pipeline",
+          "body": "Not a status column — the stages an order actually moves through before somebody receives it."
+        },
+        {
+          "title": "POS and barcode printing",
+          "body": "The counter and the website draw on one stock figure, so a sale in the shop shows online."
+        },
+        {
+          "title": "Returns and reviews",
+          "body": "The parts of running a shop that get left out of dashboards and then handled in a notebook."
+        },
+        {
+          "title": "Staff roles",
+          "body": "Different people see different screens, because the person packing parcels does not need the revenue panel."
+        },
+        {
+          "title": "A guide in the dashboard",
+          "body": "A built-in guide page, so handover is not a phone call every time somebody new starts."
+        }
       ],
       "shots": [
-        { "page": "admin/index.html", "label": "dashboard", "caption": "The dashboard as it opens." },
-        { "page": "admin/guide/index.html", "label": "guide", "caption": "The built-in guide — handover without a phone call." }
+        {
+          "page": "admin/index.html",
+          "label": "dashboard",
+          "caption": "The dashboard as it opens."
+        },
+        {
+          "page": "admin/guide/index.html",
+          "label": "guide",
+          "caption": "The built-in guide — handover without a phone call."
+        }
       ]
     },
     {
@@ -158,18 +657,51 @@
       "tagline": "Catalogue, customers, campaigns and analytics behind one navigation.",
       "summary": "A commerce operations surface that puts the catalogue, customer list, campaign builder and analytics behind one navigation — the shape of tool a growing shop needs once spreadsheets stop scaling.",
       "audience": "Shops that have outgrown a spreadsheet but are not ready to pay per seat for an enterprise suite.",
-      "tags": ["Catalogue", "Campaigns", "Analytics", "Customers"],
+      "tags": [
+        "Catalogue",
+        "Campaigns",
+        "Analytics",
+        "Customers"
+      ],
       "features": [
-        { "title": "Eight screens, one navigation", "body": "Catalogue, orders, customers, campaigns, analytics, settings and more without changing tools." },
-        { "title": "A campaign builder next to the data", "body": "Campaigns are built beside the customer list they target, rather than in a separate product." },
-        { "title": "Analytics that answer a question", "body": "The panel is built around what a shop owner asks on a Monday, not around what is easy to chart." },
-        { "title": "Catalogue as the spine", "body": "Everything else hangs off the catalogue, which is how a shop actually thinks." }
+        {
+          "title": "Eight screens, one navigation",
+          "body": "Catalogue, orders, customers, campaigns, analytics, settings and more without changing tools."
+        },
+        {
+          "title": "A campaign builder next to the data",
+          "body": "Campaigns are built beside the customer list they target, rather than in a separate product."
+        },
+        {
+          "title": "Analytics that answer a question",
+          "body": "The panel is built around what a shop owner asks on a Monday, not around what is easy to chart."
+        },
+        {
+          "title": "Catalogue as the spine",
+          "body": "Everything else hangs off the catalogue, which is how a shop actually thinks."
+        }
       ],
       "shots": [
-        { "page": "index.html", "label": "overview", "caption": "The overview screen." },
-        { "page": "pages/catalog.html", "label": "catalogue", "caption": "The catalogue." },
-        { "page": "pages/analytics.html", "label": "analytics", "caption": "The analytics panel." },
-        { "page": "pages/campaigns.html", "label": "campaigns", "caption": "The campaign builder." }
+        {
+          "page": "index.html",
+          "label": "overview",
+          "caption": "The overview screen."
+        },
+        {
+          "page": "pages/catalog.html",
+          "label": "catalogue",
+          "caption": "The catalogue."
+        },
+        {
+          "page": "pages/analytics.html",
+          "label": "analytics",
+          "caption": "The analytics panel."
+        },
+        {
+          "page": "pages/campaigns.html",
+          "label": "campaigns",
+          "caption": "The campaign builder."
+        }
       ]
     },
     {
@@ -179,27 +711,73 @@
       "tagline": "Built for people who keep it open all day.",
       "summary": "An admin console built around the screens a working team opens every day — orders, users, settings and help — with the density and keyboard-first layout of software people use for hours, not a dashboard that only looks good in a screenshot.",
       "audience": "Teams whose staff live inside one tool all day and care more about rows per screen than about gradients.",
-      "tags": ["Operations", "Data tables", "Settings", "Dark UI"],
+      "tags": [
+        "Operations",
+        "Data tables",
+        "Settings",
+        "Dark UI"
+      ],
       "features": [
-        { "title": "Density on purpose", "body": "More rows per screen, because scrolling is the cost paid by whoever uses it for eight hours." },
-        { "title": "Keyboard first", "body": "The layout assumes hands stay on the keyboard, which is what fast data entry actually requires." },
-        { "title": "A help screen that ships with it", "body": "Documentation in the product, where somebody stuck at 9pm will look." },
-        { "title": "Dark by default", "body": "Chosen for the people staring at it all day, not for the screenshot." }
+        {
+          "title": "Density on purpose",
+          "body": "More rows per screen, because scrolling is the cost paid by whoever uses it for eight hours."
+        },
+        {
+          "title": "Keyboard first",
+          "body": "The layout assumes hands stay on the keyboard, which is what fast data entry actually requires."
+        },
+        {
+          "title": "A help screen that ships with it",
+          "body": "Documentation in the product, where somebody stuck at 9pm will look."
+        },
+        {
+          "title": "Dark by default",
+          "body": "Chosen for the people staring at it all day, not for the screenshot."
+        }
       ],
       "shots": [
-        { "page": "index.html", "label": "console", "caption": "The console as it opens." },
-        { "page": "pages/orders.html", "label": "orders", "caption": "Orders — the density is the point." },
-        { "page": "pages/users.html", "label": "users", "caption": "The users screen." }
+        {
+          "page": "index.html",
+          "label": "console",
+          "caption": "The console as it opens."
+        },
+        {
+          "page": "pages/orders.html",
+          "label": "orders",
+          "caption": "Orders — the density is the point."
+        },
+        {
+          "page": "pages/users.html",
+          "label": "users",
+          "caption": "The users screen."
+        }
       ]
     }
   ],
-
   "whyChoose": [
-    { "title": "Every demo is the real build", "body": "Nothing here is a mockup or a design file. Each one is deployed, and you click through it the way a customer would. If a link is dead you will find it, which is the point." },
-    { "title": "You get the admin, not just the shop", "body": "Most storefront demos stop at the shop front. The part that decides whether a business can actually run on it is the dashboard behind it, so that is included and unlocked." },
-    { "title": "Invented data, never borrowed", "body": "Every product, order, customer and figure in these demos is generated. No real client's catalogue, orders or customers appear in any of them." },
-    { "title": "Rebrandable before it is rebuilt", "body": "Colours, type and logo are variables, not decisions baked into markup. The first change you ask for should not need a rewrite." },
-    { "title": "Built for Bangladeshi connections", "body": "Tested at phone width on a slow connection, because that is how most of the traffic arrives — not on a desk at 1440px." },
-    { "title": "One person, start to finish", "body": "The same person writes the front end, the API and the deploy pipeline. There is no handover gap for a bug to live in." }
+    {
+      "title": "Every demo is the real build",
+      "body": "Nothing here is a mockup or a design file. Each one is deployed, and you click through it the way a customer would. If a link is dead you will find it, which is the point."
+    },
+    {
+      "title": "You get the admin, not just the shop",
+      "body": "Most storefront demos stop at the shop front. The part that decides whether a business can actually run on it is the dashboard behind it, so that is included and unlocked."
+    },
+    {
+      "title": "Invented data, never borrowed",
+      "body": "Every product, order, customer and figure in these demos is generated. No real client's catalogue, orders or customers appear in any of them."
+    },
+    {
+      "title": "Rebrandable before it is rebuilt",
+      "body": "Colours, type and logo are variables, not decisions baked into markup. The first change you ask for should not need a rewrite."
+    },
+    {
+      "title": "Built for Bangladeshi connections",
+      "body": "Tested at phone width on a slow connection, because that is how most of the traffic arrives — not on a desk at 1440px."
+    },
+    {
+      "title": "One person, start to finish",
+      "body": "The same person writes the front end, the API and the deploy pipeline. There is no handover gap for a bug to live in."
+    }
   ]
 }

@@ -100,6 +100,28 @@ ${body}
 `;
 }
 
+/* --------------------------------------------------------- demo addresses - */
+
+/**
+ * /d/<slug>/ is the reviewer wrapper, not /demos/<slug>/.
+ *
+ * The hub publishes each demo twice: the raw article under /demos/, and a
+ * wrapper under /d/ that frames it with a contact card and an "open raw"
+ * escape. A client gets the wrapper, because that is the page with a way to
+ * reach us on it. The screenshots come from the raw one — see
+ * capture-showcase-shots.mjs.
+ */
+const demoUrl = (slug) => `${HUB}/d/${slug}/`;
+
+/**
+ * Five products are a storefront plus the admin dashboard that runs it, and the
+ * two demos share one set of orders. `adminSlug` is the second demo, and
+ * wherever it is set the page offers both doors — because the thing that sells
+ * this work is placing an order in the shop and finding it in the dashboard,
+ * which is impossible to show with one link.
+ */
+const adminUrl = (product) => (product.adminSlug ? demoUrl(product.adminSlug) : null);
+
 /* ------------------------------------------------------------- the shots - */
 
 /** Resolves a product's shots to the files that actually exist. */
@@ -138,8 +160,10 @@ const indexCards = products.map((p) => {
             <ul class="sc-chips">${p.tags.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
             <div class="sc-card-actions">
               <a class="btn btn-primary" href="/showcase/${p.slug}.html">See what it does<span class="btn-arrow">→</span></a>
-              <a class="btn btn-ghost" href="${HUB}/d/${p.slug}/" target="_blank" rel="noopener"
-                 data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)}">Open the live demo</a>
+              <a class="btn btn-ghost" href="${demoUrl(p.slug)}" target="_blank" rel="noopener"
+                 data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)}">${p.adminSlug ? 'Open the shop' : 'Open the live demo'}</a>${p.adminSlug ? `
+              <a class="btn btn-ghost" href="${adminUrl(p)}" target="_blank" rel="noopener"
+                 data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)} admin">Open the admin</a>` : ''}
             </div>
           </div>
         </article>`;
@@ -202,8 +226,9 @@ await writeFile(join(ROOT, 'showcase.html'), page({
       description: p.summary,
       url: `${SITE}/showcase/${p.slug}.html`,
       // The demo is the thing being described, so it is named as such rather
-      // than left implied by a link.
-      sameAs: `${HUB}/d/${p.slug}/`,
+      // than left implied by a link. A pair names both, or the admin half of
+      // the product is invisible to anything reading the markup.
+      sameAs: p.adminSlug ? [demoUrl(p.slug), adminUrl(p)] : demoUrl(p.slug),
       offers: { '@type': 'Offer', availability: 'https://schema.org/InStock' },
     })),
   },
@@ -218,7 +243,8 @@ for (const p of products) {
   const shots = withShots.get(p.slug);
   const hero = shots.find((s) => !s.mobile) || shots[0];
   const rest = shots.filter((s) => s !== hero);
-  const demoUrl = `${HUB}/d/${p.slug}/`;
+  const liveUrl = demoUrl(p.slug);
+  const adminLink = adminUrl(p);
 
   const gallery = rest.length ? `
     <section class="section sc-shots">
@@ -234,6 +260,32 @@ ${rest.map((s) => `        <figure class="sc-shot${s.mobile ? ' is-mobile' : ''}
       </div>
     </section>` : '';
 
+  /* The shop + admin pair, spelled out as something to do.
+     The pages used to describe the pairing in the summary, where it read as a
+     feature. It is not a feature — it is the demonstration: order in the shop,
+     open the dashboard, the order is there. So it gets its own panel with the
+     two links in the order you would use them. */
+  const pair = !adminLink ? '' : `
+    <section class="section sc-pair">
+      <div class="sc-pair-inner">
+        <span class="section-eyebrow">Try it both ways</span>
+        <h2>Place an order in the shop, then open the dashboard</h2>
+        <p>Both demos are live and they share one set of orders. Buy something on the
+          storefront with Cash on Delivery, open the admin, and your order is sitting in
+          the pipeline with the address you typed — that is the part a screenshot cannot
+          prove.</p>
+        <ol class="sc-pair-steps">
+          <li><strong>1.</strong> <a href="${liveUrl}" target="_blank" rel="noopener"
+              data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)}">Open the storefront</a>
+              and place an order. No sign-up, nothing to install.</li>
+          <li><strong>2.</strong> <a href="${adminLink}" target="_blank" rel="noopener"
+              data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)} admin">Open the admin dashboard</a>
+              — it opens with no password — and find it waiting.</li>
+        </ol>
+      </div>
+    </section>
+`;
+
   const body = `
     <nav class="sc-crumbs" aria-label="Breadcrumb">
       <a href="/">Home</a> <span aria-hidden="true">/</span>
@@ -246,8 +298,10 @@ ${rest.map((s) => `        <figure class="sc-shot${s.mobile ? ' is-mobile' : ''}
       <h1 class="reveal" data-reveal>${esc(p.title)}</h1>
       <p class="reveal" data-reveal>${esc(p.tagline)}</p>
       <div class="sc-hero-actions reveal" data-reveal>
-        <a class="btn btn-primary btn-lg" href="${demoUrl}" target="_blank" rel="noopener"
-           data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)}">Open the live demo<span class="btn-arrow">→</span></a>
+        <a class="btn btn-primary btn-lg" href="${liveUrl}" target="_blank" rel="noopener"
+           data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)}">${adminLink ? 'Open the storefront' : 'Open the live demo'}<span class="btn-arrow">→</span></a>${adminLink ? `
+        <a class="btn btn-ghost btn-lg" href="${adminLink}" target="_blank" rel="noopener"
+           data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)} admin">Open the admin dashboard</a>` : ''}
         <a class="btn btn-ghost btn-lg" href="/contact.html"
            data-pixel-event="ContactIntent" data-pixel-custom="true">Ask for this, rebranded</a>
       </div>
@@ -256,13 +310,13 @@ ${rest.map((s) => `        <figure class="sc-shot${s.mobile ? ' is-mobile' : ''}
 
     ${hero ? `<section class="section sc-hero-shot">
       <figure>
-        <a href="${demoUrl}" target="_blank" rel="noopener">
+        <a href="${liveUrl}" target="_blank" rel="noopener">
           <img src="${hero.src}" alt="${esc(p.title)} — ${esc(hero.caption)}" width="1440" height="900" decoding="async" />
         </a>
-        <figcaption>${esc(hero.caption)} &middot; <a href="${demoUrl}" target="_blank" rel="noopener">open it yourself</a></figcaption>
+        <figcaption>${esc(hero.caption)} &middot; <a href="${liveUrl}" target="_blank" rel="noopener">open it yourself</a></figcaption>
       </figure>
     </section>` : ''}
-
+${pair}
     <section class="section sc-summary">
       <div class="sc-narrow">
         <p class="sc-lede">${esc(p.summary)}</p>
@@ -335,7 +389,7 @@ ${products.filter((o) => o.slug !== p.slug).slice(0, 4).map((o) => `        <li>
       applicationCategory: p.category,
       description: p.summary,
       url: `${SITE}/showcase/${p.slug}.html`,
-      sameAs: demoUrl,
+      sameAs: adminLink ? [liveUrl, adminLink] : liveUrl,
       featureList: p.features.map((f) => f.title),
       screenshot: shots.map((s) => SITE + s.src),
       author: { '@type': 'Person', name: 'Sayad Md Bayezid Hosan', url: SITE },
@@ -343,6 +397,62 @@ ${products.filter((o) => o.slug !== p.slug).slice(0, 4).map((o) => `        <li>
     },
   }));
   console.log(`wrote showcase/${p.slug}.html  (${shots.length} shot${shots.length === 1 ? '' : 's'})`);
+}
+
+/* ------------------------------------------------------------- sitemap - */
+
+/**
+ * The sitemap's showcase section, rewritten from the same data as the pages.
+ *
+ * It used to be hand-maintained, and adding five products left five pages out
+ * of it. The test suite caught that, which is one step too late: a page Google
+ * is not told about earns nothing, and nothing about writing a product entry
+ * reminds you there is a second file to edit. The block between the markers now
+ * comes from content/showcase.json and the shots that actually exist, so it
+ * cannot fall behind.
+ *
+ * The markers are required. Without them the section's boundaries would have to
+ * be guessed, and guessing wrong rewrites somebody else's URLs.
+ */
+const SITEMAP_START = '<!-- showcase:start';
+const SITEMAP_END = '<!-- showcase:end -->';
+const sitemapPath = join(ROOT, 'sitemap.xml');
+const sitemap = await readFile(sitemapPath, 'utf8');
+const startAt = sitemap.indexOf(SITEMAP_START);
+const endAt = sitemap.indexOf(SITEMAP_END);
+
+if (startAt === -1 || endAt === -1 || endAt < startAt) {
+  console.warn('\n! sitemap.xml has no showcase:start/showcase:end markers — left untouched.');
+} else {
+  const today = new Date().toISOString().slice(0, 10);
+  const entry = (loc, priority, images) => `  <url>
+    <loc>${loc}</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>${priority}</priority>${images.map((i) => `
+    <image:image>
+      <image:loc>${SITE}${i.src}</image:loc>
+      <image:title>${esc(i.title)}</image:title>
+    </image:image>`).join('')}
+  </url>`;
+
+  const block = [
+    entry(`${SITE}/showcase.html`, '0.9', []),
+    ...products.map((p) => entry(
+      `${SITE}/showcase/${p.slug}.html`,
+      '0.8',
+      // Sorted by file name, so a recapture that changes nothing produces no diff.
+      withShots.get(p.slug)
+        .map((s) => ({ src: s.src, title: p.title }))
+        .sort((a, b) => a.src.localeCompare(b.src)),
+    )),
+  ].join('\n');
+
+  // Keep the marker lines themselves, replace only what is between them.
+  const head = sitemap.slice(0, sitemap.indexOf('\n', startAt) + 1);
+  const tail = sitemap.slice(sitemap.lastIndexOf('\n', endAt) + 1);
+  await writeFile(sitemapPath, `${head}${block}\n${tail}`);
+  console.log(`\nwrote ${products.length + 1} sitemap entries between the showcase markers`);
 }
 
 console.log(`\n${products.length + 1} pages written.`);
