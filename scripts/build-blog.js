@@ -1295,102 +1295,14 @@ function escapeAttr(str) {
   return escapeText(str).replace(/"/g, '&quot;');
 }
 
-/**
- * Update sitemap.xml with blog posts
- */
-function updateSitemap(posts) {
-  const sitemapPath = path.join(__dirname, '../sitemap.xml');
-  if (!fs.existsSync(sitemapPath)) {
-    console.log('⚠️  sitemap.xml not found at root. Skipping sitemap update.');
-    return;
-  }
+/* The sitemap is NOT written here any more.
 
-  let sitemapContent = fs.readFileSync(sitemapPath, 'utf8');
-  const today = new Date().toISOString().split('T')[0];
-
-  const urlRegex = /\s*<url>\s*<loc>https:\/\/sayadbayezid\.com\/blog\/[^<]*<\/loc>[\s\S]*?<\/url>/g;
-  sitemapContent = sitemapContent.replace(urlRegex, '');
-
-  sitemapContent = sitemapContent.replace(/\n\s*\n/g, '\n');
-
-  let blogEntries = '';
-  
-  if (!sitemapContent.includes('https://www.sayadbayezid.com/blog/')) {
-    blogEntries += `  <url>
-    <loc>${SITE_URL}/blog/</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>\n`;
-  }
-
-  posts.forEach(post => {
-    // <lastmod> must be a W3C date (YYYY-MM-DD). A human-written front-matter
-    // date like "July 27, 2026" is silently ignored by crawlers, so normalise
-    // it here rather than trusting every post author to get the format right.
-    // Prefer the last edit: <lastmod> is a claim about the content, and a
-    // post that was revised but still reports its original date reads as
-    // stale to a crawler deciding whether to recrawl.
-    const postDate = toW3CDate(post.updated || post.date) || today;
-
-    // Image and video entries, so the post's media can be discovered and
-    // appear in image and video search. Only what the post actually declares:
-    // an <image:image> pointing at a file that does not exist is worse than
-    // no entry at all.
-    const media = [];
-    const cover = absoluteUrl(post.image);
-    if (cover && !cover.endsWith('/assets/images/blog-default.svg')) {
-      media.push(`    <image:image>
-      <image:loc>${escapeXml(cover)}</image:loc>
-      <image:title>${escapeXml(post.imageAlt || post.title)}</image:title>
-    </image:image>`);
-    }
-    (post.images || []).forEach((img) => {
-      const url = absoluteUrl(img.url);
-      if (!url) return;
-      media.push(`    <image:image>
-      <image:loc>${escapeXml(url)}</image:loc>
-      <image:title>${escapeXml(img.alt || img.caption || post.title)}</image:title>
-    </image:image>`);
-    });
-    if (post.video && post.video.url) {
-      const v = post.video;
-      media.push(`    <video:video>
-      <video:thumbnail_loc>${escapeXml(absoluteUrl(v.thumbnail || post.image))}</video:thumbnail_loc>
-      <video:title>${escapeXml(v.name || post.title)}</video:title>
-      <video:description>${escapeXml(v.description || post.description)}</video:description>
-      <video:content_loc>${escapeXml(absoluteUrl(v.url))}</video:content_loc>
-      <video:publication_date>${escapeXml(toW3CDate(v.uploadDate || post.date) || postDate)}</video:publication_date>
-    </video:video>`);
-    }
-
-    blogEntries += `  <url>
-    <loc>${SITE_URL}/blog/${post.slug}/</loc>
-    <lastmod>${postDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-${media.length ? media.join('\n') + '\n' : ''}  </url>\n`;
-  });
-
-  // Declaring a namespace that is used nowhere is harmless; using one that is
-  // not declared makes the entire sitemap invalid, and Search Console rejects
-  // the file rather than the offending entry.
-  if (!sitemapContent.includes('xmlns:video=')) {
-    sitemapContent = sitemapContent.replace(
-      'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"',
-      'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"\n        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"',
-    );
-  }
-
-  if (sitemapContent.includes('</urlset>')) {
-    sitemapContent = sitemapContent.replace('</urlset>', `${blogEntries}</urlset>`);
-    sitemapContent = sitemapContent.replace(/<\/url>\s*<url>/g, '</url>\n  <url>');
-    fs.writeFileSync(sitemapPath, sitemapContent);
-    console.log(`✅ Updated: sitemap.xml with ${posts.length} blog posts\n`);
-  } else {
-    console.log('⚠️  Could not find </urlset> in sitemap.xml. Sitemap update failed.');
-  }
-}
+   This function edited sitemap.xml in place, adding blog entries to whatever
+   it found — and build-content.yml commits the result. scripts/build-sitemap.mjs
+   builds the whole file from the pages on disk, so the two overwrote each
+   other: a deploy published 53 pages and the next content build committed a
+   subset back over it. One writer now, and it is the one that can see every
+   page rather than only the blog's. */
 
 /**
  * Main build function
@@ -1426,7 +1338,8 @@ function buildBlog() {
   fs.writeFileSync(path.join(BLOG_OUTPUT_DIR, 'blog.json'), blogJSON);
   console.log(`✅ Generated: /blog/blog.json\n`);
 
-  updateSitemap(posts);
+  // sitemap.xml is built by scripts/build-sitemap.mjs, from every page on
+  // disk, on each deploy. Nothing to do here.
   updateHomepageJournal(posts);
   reportOrphanedPostDirs(posts);
 
