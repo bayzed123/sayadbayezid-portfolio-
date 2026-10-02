@@ -113,6 +113,7 @@ ${GTM_HEAD}
         <a href="/services.html">Services</a>
         <a href="/products.html">Products</a>
         <a href="/showcase.html">Showcase</a>
+        <a href="https://demu.sayadbayezid.com" class="nav-demos" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="Demo hub">Live demos<span class="nav-ext">&#8599;</span></a>
         <a href="/projects.html">Projects</a>
         <a href="/work.html">Work</a>
         <a href="/case-studies/">Case Studies</a>
@@ -144,6 +145,7 @@ function readFooter(extraScripts = "") {
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
           <a href="/showcase.html">Showcase</a>
+          <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Live demos</a>
           <a href="/projects.html">All projects</a>
           <a href="/case-studies/">Case studies</a>
           <a href="/proofline-atlas.html">Proofline Atlas</a>

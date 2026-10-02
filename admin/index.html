@@ -95,6 +95,10 @@
 
     <div class="side-group">
       <div class="side-group-label">Pipeline</div>
+      <button class="side-link" data-view="orders">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+        Demo orders<span class="side-badge" data-badge="ordersNew"></span>
+      </button>
       <button class="side-link" data-view="enquiries">
         <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         Enquiries<span class="side-badge" data-badge="enquiriesNew"></span>
@@ -604,6 +608,22 @@
     </section>
 
     <!-- Enquiries -------------------------------------------------------- -->
+    <!-- Demo orders -------------------------------------------------------
+         Orders placed from inside a demo on demu.sayadbayezid.com. The other
+         door is WhatsApp, which lands in a phone and leaves no row here, so
+         this list is the orders that chose to be written down — never the
+         total. -->
+    <section class="view" data-view-panel="orders" hidden>
+      <div class="card">
+        <div class="card-head">
+          <h2>Orders from the demo hub</h2>
+          <span class="meta" data-count="orders-unread"></span>
+        </div>
+        <div class="ord-filters" data-order-filters></div>
+        <div data-orders></div>
+      </div>
+    </section>
+
     <section class="view" data-view-panel="enquiries" hidden>
       <div class="card">
         <div class="card-head">

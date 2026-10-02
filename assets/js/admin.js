@@ -325,6 +325,7 @@
     landing: { title: 'Landing page', crumb: 'Portfolio', load: loadLanding },
     reviews: { title: 'Reviews', crumb: 'Portfolio', load: loadReviews },
     comments: { title: 'Comments', crumb: 'Portfolio', load: loadComments },
+    orders: { title: 'Demo orders', crumb: 'Pipeline', load: loadOrders },
     enquiries: { title: 'Enquiries', crumb: 'Pipeline', load: loadEnquiries },
     leads: { title: 'Newsletter leads', crumb: 'Pipeline', load: loadLeads },
     analytics: { title: 'Analytics', crumb: 'Insight', load: loadAnalytics },
@@ -1954,6 +1955,235 @@
     button.type = 'button';
     button.addEventListener('click', function () { copyText(getText(), button); });
     return button;
+  }
+
+
+  // --- demo orders ---------------------------------------------------------
+
+  /**
+   * Orders placed from inside a demo.
+   *
+   * The screen is built around one question: can this be answered right now,
+   * from a phone, without opening anything else. So each card carries the
+   * whole order — which demo, what they ticked, budget, timeline, their own
+   * words — and a WhatsApp button whose message is already written, quoting
+   * what they asked for. Answering takes one tap and no typing, which is the
+   * difference between replying within the hour and replying tomorrow.
+   *
+   * The pipeline is the second idea. The expensive failure here is not losing
+   * an order, it is one that got a reply and then nothing: "contacted" with no
+   * date beside it is visible in a way that a memory is not.
+   */
+  var ORDER_FLOW = ['new', 'contacted', 'quoted', 'won', 'lost'];
+  var ORDER_LABEL = { new: 'New', contacted: 'Contacted', quoted: 'Quoted', won: 'Won', lost: 'Lost' };
+  var orderFilter = 'all';
+
+  function loadOrders() {
+    var container = document.querySelector('[data-orders]');
+    skeleton(container, 3);
+    api('/api/admin/demo-orders').then(function (data) {
+      renderOrders(data);
+    }).catch(function (e) { emptyState(container, 'Could not load demo orders.', e.message); });
+  }
+
+  function renderOrders(data) {
+    var container = document.querySelector('[data-orders]');
+    var filters = document.querySelector('[data-order-filters]');
+    clear(container);
+    clear(filters);
+
+    if (data.needsMigration) {
+      emptyState(container, 'Demo orders are not switched on yet.',
+        'Apply schema/018_demo_orders.sql to start recording orders placed from the demo hub.');
+      return;
+    }
+
+    var rows = data.orders || [];
+    paintOrderCount(data.unread || 0);
+
+    // Filters first, so the counts are visible even when the current filter is
+    // empty — "nothing in Quoted" is a different fact from "nothing at all",
+    // and a screen that shows the same empty state for both hides the first.
+    var counts = data.counts || {};
+    [['all', 'All', rows.length]].concat(ORDER_FLOW.map(function (s) {
+      return [s, ORDER_LABEL[s], counts[s] || 0];
+    })).forEach(function (entry) {
+      var button = el('button', 'ord-filter' + (orderFilter === entry[0] ? ' is-on' : ''));
+      button.type = 'button';
+      button.appendChild(el('span', null, entry[1]));
+      button.appendChild(el('b', null, String(entry[2])));
+      button.addEventListener('click', function () { orderFilter = entry[0]; renderOrders(data); });
+      filters.appendChild(button);
+    });
+
+    var shown = rows.filter(function (row) { return orderFilter === 'all' || row.status === orderFilter; });
+    if (!rows.length) {
+      emptyState(container, 'No orders from the demo hub yet.',
+        'Every demo has an order button and a popup. Orders placed on WhatsApp instead will not appear here.');
+      return;
+    }
+    if (!shown.length) {
+      emptyState(container, 'Nothing in ' + (ORDER_LABEL[orderFilter] || orderFilter) + '.',
+        'There are ' + rows.length + ' order(s) under other statuses.');
+      return;
+    }
+    shown.forEach(function (row) { container.appendChild(orderCard(row)); });
+  }
+
+  /** Their contact string is one field by design — the demo asks for "WhatsApp
+   *  or email" rather than three boxes. The Worker guessed which it is; this
+   *  turns that guess into the right button. */
+  function orderReplyLink(row) {
+    var digits = String(row.contact || '').replace(/[^\d]/g, '');
+    if (row.contact_kind === 'email') return { href: 'mailto:' + row.contact, label: 'Reply by email' };
+    if (!digits) return null;
+    // A local 01XXXXXXXXX needs the country code before WhatsApp will take it.
+    var number = digits.length === 11 && digits.charAt(0) === '0' ? '88' + digits : digits;
+    var lines = ['Hi ' + (row.name || '') + ', thanks for your order for ' + (row.demo_title || 'the demo') + '.'];
+    if (row.features && row.features.length) lines.push('', 'You asked for: ' + row.features.join(', '));
+    lines.push('', 'I can have this live for you — here is what it would cost:');
+    return { href: 'https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n')), label: 'Reply on WhatsApp' };
+  }
+
+  function orderCard(row) {
+    var read = Boolean(row.read_at);
+    var root = el('article', 'ord' + (read ? ' is-read' : '') + ' is-' + row.status);
+
+    var head = el('div', 'ord-head');
+    var who = el('div', 'ord-who');
+    who.appendChild(el('strong', null, row.name || 'Someone'));
+    who.appendChild(el('span', 'ord-demo', row.demo_title || row.demo_slug));
+    head.appendChild(who);
+
+    var when = el('div', 'ord-when');
+    if (!read) when.appendChild(el('span', 'ord-flag', 'NEW'));
+    when.appendChild(el('span', 'ord-status ord-' + row.status, ORDER_LABEL[row.status] || row.status));
+    when.appendChild(el('span', null, fmtDate(row.created_at)));
+    head.appendChild(when);
+    root.appendChild(head);
+
+    // What they ticked. This is the part a WhatsApp message almost never
+    // contains and the part a quote is written against, so it gets the space.
+    if (row.features && row.features.length) {
+      var feats = el('div', 'ord-feats');
+      row.features.forEach(function (f) { feats.appendChild(el('span', 'ord-feat', f)); });
+      root.appendChild(feats);
+    }
+
+    var facts = el('dl', 'ord-facts');
+    [['Reach them on', row.contact], ['Budget', row.budget], ['When', row.timeline],
+     ['Came from', row.source]].forEach(function (pair) {
+      if (!pair[1]) return;
+      facts.appendChild(el('dt', null, pair[0]));
+      facts.appendChild(el('dd', null, pair[1]));
+    });
+    root.appendChild(facts);
+
+    if (row.note) root.appendChild(el('div', 'ord-note', row.note));
+
+    var actions = el('div', 'ord-actions');
+    var reply = orderReplyLink(row);
+    if (reply) {
+      // The primary action, styled to look like one. Opening it also files the
+      // order as read and contacted — the two things that would otherwise be
+      // done from memory, afterwards, by someone who has already moved on.
+      var button = el('a', 'btn btn-primary btn-sm ord-reply', reply.label);
+      button.href = reply.href;
+      button.target = '_blank';
+      button.rel = 'noopener';
+      button.addEventListener('click', function () {
+        if (row.status === 'new') patchOrder(row, { status: 'contacted', read: true });
+        else if (!read) patchOrder(row, { read: true });
+      });
+      actions.appendChild(button);
+    }
+    actions.appendChild(copyButton('Copy contact', function () { return row.contact || ''; }));
+    actions.appendChild(copyButton('Copy all', function () {
+      return [
+        'Demo:     ' + (row.demo_title || '') + ' (' + row.demo_slug + ')',
+        'Name:     ' + (row.name || ''),
+        'Contact:  ' + (row.contact || ''),
+        'Wants:    ' + ((row.features || []).join(', ') || '—'),
+        'Budget:   ' + (row.budget || '—'),
+        'When:     ' + (row.timeline || '—'),
+        'Source:   ' + (row.source || ''),
+        'Received: ' + fmtDate(row.created_at),
+        '',
+        row.note || '(no message)'
+      ].join('\n');
+    }));
+
+    var select = el('select', 'ord-move');
+    select.setAttribute('aria-label', 'Move this order along the pipeline');
+    ORDER_FLOW.forEach(function (status) {
+      var option = el('option', null, ORDER_LABEL[status]);
+      option.value = status;
+      if (status === row.status) option.selected = true;
+      select.appendChild(option);
+    });
+    select.addEventListener('change', function () { patchOrder(row, { status: select.value, read: true }); });
+    actions.appendChild(select);
+
+    if (!read) {
+      var mark = el('button', 'btn btn-ghost btn-sm', 'Mark read');
+      mark.type = 'button';
+      mark.addEventListener('click', function () { patchOrder(row, { read: true }); });
+      actions.appendChild(mark);
+    }
+    root.appendChild(actions);
+
+    if (row.page_url) {
+      var foot = el('div', 'ord-foot');
+      var link = el('a', null, 'Open the demo they were looking at ↗');
+      link.href = row.page_url;
+      link.target = '_blank';
+      link.rel = 'noopener';
+      foot.appendChild(link);
+      root.appendChild(foot);
+    }
+    return root;
+  }
+
+  /**
+   * One write, then a re-read.
+   *
+   * The badge, the filter counts and the card all describe the same rows, and
+   * three places updated by hand is three places to get out of step. The
+   * server already returns the new unread count; everything else comes from
+   * re-fetching the list, which is one request and always right.
+   */
+  function patchOrder(row, change) {
+    return api('/api/admin/demo-orders/' + encodeURIComponent(row.id), { method: 'PATCH', body: change })
+      .then(function () { return api('/api/admin/demo-orders'); })
+      .then(renderOrders)
+      .catch(function (e) {
+        var container = document.querySelector('[data-orders]');
+        var note = el('div', 'incident-note', 'That change did not save: ' + e.message);
+        if (container.firstChild) container.insertBefore(note, container.firstChild);
+      });
+  }
+
+  /** The unread count on the sidebar and in the panel head. Zero removes the
+   *  badge rather than showing "0" — a permanent marker is one the eye stops
+   *  reporting within a week. */
+  function paintOrderCount(count) {
+    var link = document.querySelector('.side-link[data-view="orders"]');
+    if (link) {
+      var badge = link.querySelector('[data-unread]');
+      if (!count) {
+        if (badge) badge.remove();
+      } else {
+        if (!badge) {
+          badge = el('span', 'nav-badge');
+          badge.setAttribute('data-unread', '');
+          link.appendChild(badge);
+        }
+        badge.textContent = String(count);
+        badge.setAttribute('aria-label', count + ' demo orders not read yet');
+      }
+    }
+    var counter = document.querySelector('[data-count="orders-unread"]');
+    if (counter) counter.textContent = count ? count + ' new' : 'all read';
   }
 
   /**

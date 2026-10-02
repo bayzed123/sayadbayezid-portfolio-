@@ -739,6 +739,7 @@ ${buildStructuredData(post)}
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
           <a href="/showcase.html">Showcase</a>
+          <a href="https://demu.sayadbayezid.com" class="nav-demos" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="Demo hub">Live demos<span class="nav-ext">&#8599;</span></a>
           <a href="/projects.html">Projects</a>
           <a href="/case-studies/">Case Studies</a>
           <a href="/blog/" aria-current="page">Blog</a>
@@ -829,6 +830,7 @@ ${buildRelatedHTML(post, allPosts)}
             <a href="/services.html">Services</a>
             <a href="/products.html">Products</a>
             <a href="/showcase.html">Showcase</a>
+            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Live demos</a>
             <a href="/projects.html">All projects</a>
             <a href="/case-studies/">Case studies</a>
             <a href="/proofline-atlas.html">Proofline Atlas</a>
@@ -844,7 +846,6 @@ ${buildRelatedHTML(post, allPosts)}
           </div>
           <div>
             <span class="footer-heading">Live builds</span>
-            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Developer demos</a>
             <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
             <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
             <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">Boyok Leads</a>
@@ -1044,6 +1045,7 @@ function generateArchiveHTML() {
           <a href="/services.html">Services</a>
           <a href="/products.html">Products</a>
           <a href="/showcase.html">Showcase</a>
+          <a href="https://demu.sayadbayezid.com" class="nav-demos" target="_blank" rel="noopener" data-pixel-event="ViewContent" data-pixel-content="Demo hub">Live demos<span class="nav-ext">&#8599;</span></a>
           <a href="/projects.html">Projects</a>
           <a href="/case-studies/">Case Studies</a>
           <a href="/blog/" aria-current="page">Blog</a>
@@ -1110,6 +1112,7 @@ function generateArchiveHTML() {
             <a href="/services.html">Services</a>
             <a href="/products.html">Products</a>
             <a href="/showcase.html">Showcase</a>
+            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Live demos</a>
             <a href="/projects.html">All projects</a>
             <a href="/case-studies/">Case studies</a>
             <a href="/proofline-atlas.html">Proofline Atlas</a>
@@ -1125,7 +1128,6 @@ function generateArchiveHTML() {
           </div>
           <div>
             <span class="footer-heading">Live builds</span>
-            <a href="https://demu.sayadbayezid.com" target="_blank" rel="noopener">Developer demos</a>
             <a href="https://www.smartgentools.com" target="_blank" rel="noopener">SmartGen</a>
             <a href="https://docs.smartgentools.com/" target="_blank" rel="noopener">SmartGen Docs</a>
             <a href="https://leads.sayadbayezid.com/" target="_blank" rel="noopener">Boyok Leads</a>
