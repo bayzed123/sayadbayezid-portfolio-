@@ -22,6 +22,16 @@
  * the order arrived in the dashboard has to come from the other demo. A shot may
  * therefore carry its own `slug`, which overrides the product's.
  *
+ * WHY SOME PRODUCTS ALSO GET AN ORDER WALK-THROUGH
+ * A shop + admin pair is sold on one thing: a customer orders in the shop and
+ * the order is waiting in the dashboard. Three still pictures of the home page
+ * cannot show that, so products with `orderFlow` in content/showcase.json are
+ * also driven through it — product page, checkout with the on-screen SMS code,
+ * the order confirmation, the order arriving in the admin, and the logged call
+ * that confirms it and issues the invoice number — and each stage is captured
+ * as flow-<n>-<stage>. It is one browser context, so the order in the admin
+ * shots is the order the shop shots just placed, not a different one.
+ *
  * Usage, from a built demo hub (websites-tamplate: npm run build:demo-hub):
  *   node scripts/capture-showcase-shots.mjs ../websites-tamplate/site
  *
@@ -80,6 +90,123 @@ await new Promise((r) => server.listen(PORT, '127.0.0.1', r));
 const BASE = `http://127.0.0.1:${PORT}`;
 console.log(`serving ${SITE_DIR} on ${BASE}\n`);
 
+/* ----------------------------------------------- the order walk-through - */
+
+/**
+ * Drives one order through a shop + admin pair and photographs each stage.
+ * Any stage that fails stops the walk-through and is reported, and the stages
+ * already captured are kept — build-showcase.mjs only shows the steps whose
+ * shots are on disk, so a partial run costs pictures, never a broken page.
+ */
+async function captureOrderFlow(product, outDir) {
+  const flow = product.orderFlow;
+  const addr = { division: 'Dhaka', district: 'Dhaka', upazila: 'Mirpur', area: 'House 12, Road 3, Section 10', ...(flow.address || {}) };
+  const ctx = await browser.newContext({ viewport: VIEWPORTS.desktop, deviceScaleFactor: 2 });
+  ctx.on('dialog', (d) => d.accept('Called — she confirmed the size and the address').catch(() => {}));
+  const shop = await ctx.newPage();
+  // Leftover notices ("Added to cart") would cover the next shot; the SMS-code one is kept for its shot.
+  const clearToasts = (page) => page.evaluate(() => document.querySelectorAll('.toast').forEach((t) => t.remove())).catch(() => {});
+  // An order panel opens scrolled to wherever focus landed; the shot wants its top (status and actions).
+  const toTop = (page) => page.evaluate(() => document.querySelectorAll('*').forEach((el) => { if (el.scrollTop > 0) el.scrollTop = 0; })).catch(() => {});
+  const snap = async (page, label) => {
+    await page.evaluate(() => document.activeElement?.blur?.()).catch(() => {});
+    await page.evaluate(() => (document.fonts ? document.fonts.ready : null)).catch(() => {});
+    await page.waitForTimeout(700);
+    await page.screenshot({ path: join(outDir, `${label}.png`), fullPage: false });
+    console.log(`   ok   ${label}  (order walk-through)`);
+    taken++;
+  };
+  let stage = 'product';
+  try {
+    await shop.goto(`${BASE}/demos/${product.slug}/index.html?lang=en#/product/${flow.product}`, { waitUntil: 'load' });
+    await shop.locator('h1').first().waitFor({ timeout: 20000 });
+    await shop.waitForFunction(() => [...document.images].filter((i) => i.getBoundingClientRect().top < innerHeight).every((i) => i.complete), null, { timeout: 15000 }).catch(() => {});
+    await snap(shop, 'flow-1-product');
+
+    stage = 'checkout';
+    // A product sold in sizes needs one picked first (`option`, e.g. "M").
+    // (Matched by its text: size pickers are often marked up as radio buttons, not plain buttons.)
+    if (flow.option) await shop.locator('button, [role="radio"], label').filter({ hasText: new RegExp(`^\\s*${flow.option}\\s*$`) }).first().click();
+    await shop.getByRole('button', { name: /Add to cart/i }).first().click();
+    await shop.waitForTimeout(500);
+    await shop.keyboard.press('Escape');
+    // Every one of these shops keeps its page in the hash, so this is how its own links get there too.
+    await shop.evaluate(() => { location.hash = '#/checkout'; });
+    await shop.getByLabel(/Full name/).waitFor({ timeout: 15000 });
+    await shop.getByLabel(/Full name/).fill(flow.customer || 'Nusrat Jahan');
+    await shop.getByLabel(/Mobile number/).fill(flow.phone || '01712345678');
+    // Shops that check the number by SMS: photograph the code arriving. (In the demo it shows on screen.)
+    const send = shop.getByRole('button', { name: /Send code/i });
+    if (await send.count()) {
+      await clearToasts(shop);
+      await send.click();
+      const toast = shop.locator('.toast', { hasText: /\d{6}/ }).last();
+      await toast.waitFor({ timeout: 15000 });
+      const code = (await toast.textContent()).match(/(\d{6})/)[1];
+      const codeBox = shop.getByPlaceholder(/6-digit/);
+      await codeBox.fill(code);
+      await codeBox.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await snap(shop, 'flow-2-sms-code');
+      stage = 'order';
+      await shop.getByRole('button', { name: 'Verify', exact: true }).click();
+      await shop.getByText(/Verified/).first().waitFor({ timeout: 10000 });
+    }
+
+    stage = 'order';
+    await shop.getByLabel(/Division/).selectOption({ label: addr.division });
+    await shop.getByLabel(/District/).selectOption({ label: addr.district });
+    await shop.getByLabel(/Upazila/).selectOption({ label: addr.upazila });
+    await shop.getByLabel(/House, road|Area, road/).fill(addr.area);
+    await shop.waitForTimeout(600);
+    await shop.getByRole('button', { name: /Place order/i }).click();
+    // The thank-you page is #/order/<number> in every one of these shops, whatever its heading says.
+    await shop.waitForFunction(() => /^#\/order\/[^?]+/.test(location.hash), null, { timeout: 20000 });
+    const orderNo = decodeURIComponent((await shop.evaluate(() => location.hash)).match(/^#\/order\/([^?]+)/)[1]);
+    await shop.locator('h1').first().waitFor({ timeout: 10000 });
+    await shop.evaluate(() => scrollTo({ top: 0 }));
+    await clearToasts(shop);
+    await snap(shop, 'flow-3-order-placed');
+
+    stage = 'admin';
+    const admin = await ctx.newPage();
+    await admin.goto(`${BASE}/demos/${product.adminSlug}/index.html#/orders?q=${encodeURIComponent(orderNo)}`, { waitUntil: 'load' });
+    const row = admin.locator('[data-open]', { hasText: orderNo }).first();
+    await row.waitFor({ timeout: 20000 });
+    await row.click();
+    await clearToasts(admin);
+    await admin.waitForTimeout(1200);
+    await toTop(admin);
+    await snap(admin, 'flow-4-admin-order');
+
+    stage = 'confirmed';
+    // Log the confirmation call where the admin has one, then move the order to Confirmed.
+    const called = admin.locator('[data-attempt="confirmed"]');
+    if (await called.count()) await called.first().click();
+    const next = admin.locator('[data-next="confirmed"]:not([disabled])');
+    await next.first().waitFor({ timeout: 8000 }).then(() => next.first().click()).catch(() => {});
+    // Some admins ask "Are you sure?" in their own dialog first.
+    const yes = admin.getByRole('button', { name: /^(Yes|Continue|OK)$/ });
+    await yes.first().waitFor({ state: 'visible', timeout: 2500 }).then(() => yes.first().click()).catch(() => {});
+    // Confirmed once the "→ Confirmed" step is gone from the panel (it re-renders on the next status).
+    await admin.waitForFunction(() => !document.querySelector('[data-next="confirmed"]'), null, { timeout: 15000 });
+    // An admin that closes the panel after a status change: open the order again to show it confirmed.
+    await admin.waitForTimeout(600);
+    if (!(await admin.locator('[data-next]').count())) {
+      await row.click();
+      await admin.locator('[data-next]').first().waitFor({ timeout: 15000 });
+    }
+    await admin.waitForTimeout(800);
+    await clearToasts(admin);
+    await toTop(admin);
+    await snap(admin, 'flow-5-confirmed');
+  } catch (e) {
+    console.log(`   FAIL order walk-through at "${stage}": ${e.message.split('\n')[0]}`);
+    missing.push(`${product.slug}/order walk-through (stopped at ${stage})`);
+    failed++;
+  }
+  await ctx.close();
+}
+
 /* ------------------------------------------------------------- capturing - */
 
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH });
@@ -130,6 +257,7 @@ for (const product of products) {
     }
     await page.close();
   }
+  if (product.orderFlow && product.adminSlug) await captureOrderFlow(product, outDir);
 }
 
 await browser.close();
