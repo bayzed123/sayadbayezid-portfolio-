@@ -852,6 +852,108 @@ table.data td.actions .btn { margin-left: 6px; }
 .warn-text { color: var(--amber); }
 
 /* ===================================================================
+   Demo orders.
+   Built so one can be answered from a phone without opening anything
+   else: the whole order on the card, and a reply button whose message
+   is already written. The pipeline filter sits above, with counts, so
+   "nothing in Quoted" reads differently from "nothing at all".
+   =================================================================== */
+.ord-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+.ord-filter {
+  display: inline-flex; align-items: center; gap: 7px;
+  border: 1px solid var(--line); background: var(--surface);
+  color: var(--text-dim); border-radius: 999px; padding: 6px 13px;
+  font: inherit; font-size: 0.8rem; cursor: pointer; transition: all 0.18s;
+}
+.ord-filter:hover { border-color: var(--emerald); color: var(--paper); }
+.ord-filter b {
+  font-size: 0.72rem; color: var(--paper); background: var(--void);
+  border-radius: 999px; padding: 1px 7px; min-width: 20px; text-align: center;
+}
+.ord-filter.is-on { background: var(--emerald); border-color: var(--emerald); color: var(--void); font-weight: 600; }
+.ord-filter.is-on b { background: rgba(0, 0, 0, 0.22); color: var(--void); }
+
+.ord {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  padding: 16px 18px;
+  margin-bottom: 14px;
+  /* Same left-edge marker as an enquiry, for the same reason: it reads
+     at an angle in sunlight, which is where this screen is used. */
+  border-left: 3px solid var(--emerald);
+}
+.ord.is-read { border-left-color: var(--line); background: var(--surface); }
+/* Won and lost are the two that should be visible without reading: one
+   is the result, the other is the lesson. */
+.ord.is-won { border-left-color: #35D07F; }
+.ord.is-lost { border-left-color: var(--text-dim); opacity: 0.72; }
+
+.ord-head { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; }
+.ord-who { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+/* overflow-wrap, not just min-width: 0.
+   A name is a stranger's free text. The Worker caps it at 120 characters but
+   cannot make it contain a space, and 120 unbroken characters is one word no
+   amount of min-width:0 will wrap — it widened the card past the viewport and
+   pushed the status and the date off the right edge of the screen, on every
+   other order too. One hostile or fat-fingered name should not cost the whole
+   list its layout. */
+.ord-who strong { color: var(--paper); font-size: 0.98rem; overflow-wrap: anywhere; }
+.ord-demo { color: var(--emerald); font-size: 0.82rem; overflow-wrap: anywhere; }
+.ord-when { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; color: var(--text-dim); flex: none; }
+.ord-flag {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em;
+  color: var(--void); background: var(--emerald); border-radius: 999px; padding: 2px 9px;
+}
+.ord-status {
+  font-size: 0.66rem; font-weight: 600; letter-spacing: 0.04em;
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 9px; color: var(--text-dim);
+}
+.ord-status.ord-won { color: #35D07F; border-color: rgba(53, 208, 127, 0.45); }
+.ord-status.ord-lost { color: var(--text-dim); }
+
+/* What they ticked — the part a WhatsApp message almost never contains,
+   and the part a quote is written against. */
+.ord-feats { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 4px; }
+.ord-feat {
+  font-size: 0.74rem; color: var(--paper);
+  background: var(--emerald-soft); border: 1px solid rgba(0, 208, 132, 0.3);
+  border-radius: 999px; padding: 4px 11px;
+}
+
+.ord-facts {
+  display: grid; grid-template-columns: auto 1fr; gap: 4px 14px;
+  margin: 14px 0 0; font-size: 0.82rem;
+}
+.ord-facts dt { color: var(--text-dim); }
+.ord-facts dd { margin: 0; color: var(--paper); word-break: break-word; }
+
+.ord-note {
+  margin: 14px 0 0; padding: 12px 14px;
+  background: var(--void); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--paper); font-size: 0.88rem; line-height: 1.6;
+  white-space: pre-wrap; word-break: break-word;
+}
+
+.ord-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 14px; }
+/* The reply button is the point of the screen, so it does not look like
+   the copy buttons beside it. */
+.ord-reply { font-weight: 700; }
+.ord-move {
+  background: var(--surface); color: var(--paper); border: 1px solid var(--line);
+  border-radius: 8px; padding: 6px 10px; font: inherit; font-size: 0.8rem;
+}
+.ord-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 0.78rem; }
+.ord-foot a { color: var(--text-dim); text-decoration: none; }
+.ord-foot a:hover { color: var(--emerald); }
+
+@media (max-width: 560px) {
+  .ord-facts { grid-template-columns: 1fr; gap: 2px; }
+  .ord-facts dt { margin-top: 8px; }
+  .ord-actions .btn, .ord-move { flex: 1 1 100%; }
+}
+
+/* ===================================================================
    Enquiries, as cards.
    A table gave the message a 380px cell competing with five other
    columns, which on a phone is a paragraph four words wide. These are

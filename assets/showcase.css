@@ -117,6 +117,11 @@
 .sc-pair-steps strong { color: var(--sc-accent); padding-right: 6px; }
 .sc-pair-steps a { color: var(--sc-accent); }
 
+.sc-hub-line { color: var(--sc-dim); font-size: 0.92rem; margin-top: 10px; }
+.sc-hub-line a { color: var(--sc-accent); }
+.sc-more-all a + a { margin-left: 18px; color: var(--sc-dim); }
+.sc-more-all a + a:hover { color: var(--sc-accent); }
+
 .sc-narrow { max-width: 760px; margin: 0 auto 26px; text-align: center; }
 .sc-lede { font-size: 1.06rem; line-height: 1.75; color: var(--sc-soft); margin: 0 0 16px; }
 .sc-audience { color: var(--sc-dim); font-size: 0.95rem; line-height: 1.7; margin: 0; }

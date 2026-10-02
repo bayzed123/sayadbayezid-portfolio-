@@ -302,6 +302,40 @@ console.log('\n7. Every page that has the site nav links to the showcase');
   await home.close();
 }
 
+console.log('\n7b. Every page that has the site nav links to the demo hub');
+{
+  // Same shape of check as the showcase link above, and for the same reason: a
+  // "does any page link to it" test passes while 38 of 39 pages have lost it.
+  // Counted against the Showcase link, which sits next to it in the nav.
+  const { execFileSync } = await import('node:child_process');
+  const pages = execFileSync('grep', ['-rl', 'class="main-nav"', '--include=*.html', '.'],
+    { encoding: 'utf8' }).split('\n').filter((f) => f && !f.includes('node_modules'));
+
+  const short = [];
+  for (const file of pages) {
+    const html = readFileSync(file, 'utf8');
+    const showcase = (html.match(/href="\/showcase\.html"/g) || []).length;
+    const hub = (html.match(/demu\.sayadbayezid\.com/g) || []).length;
+    if (hub < 1 || hub < showcase - 1) short.push(`${file} (${hub} hub vs ${showcase} showcase)`);
+  }
+  ok(pages.length >= 38, `${pages.length} pages carry the site nav`);
+  ok(short.length === 0, `each one links to the demo hub${short.length ? ': ' + short.slice(0, 3).join(', ') : ''}`);
+
+  const home = readFileSync('index.html', 'utf8');
+  ok(/class="nav-demos"/.test(home), 'the homepage nav link renders');
+}
+
+console.log('\n7c. The showcase and the hub point at each other');
+{
+  const p = await open('/showcase.html');
+  ok(await p.locator(`a[href^="${HUB}"]`).count() >= 1, 'the index offers the hub');
+  await p.close();
+
+  const q = await open('/showcase/lks-attire-shop.html');
+  ok(await q.locator(`a[href="${HUB}"]`).count() >= 1, 'and so does a product page');
+  await q.close();
+}
+
 console.log('\n8. The sitemap carries the new pages');
 {
   const xml = await readFile('sitemap.xml', 'utf8');

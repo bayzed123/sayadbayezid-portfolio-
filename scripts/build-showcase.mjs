@@ -175,6 +175,10 @@ const indexBody = `
       <h1 class="reveal" data-reveal>Open any of these and click through it.</h1>
       <p class="reveal" data-reveal>${products.length} working builds — ${categories.join(', ').toLowerCase()} — deployed and running right now.
         Not mockups, not design files. Every screenshot below was taken from the demo you can open.</p>
+      <p class="reveal sc-hub-line" data-reveal>Every one of these is live on the
+        <a href="${HUB}" target="_blank" rel="noopener"
+           data-pixel-event="ViewContent" data-pixel-content="Demo hub">demo hub &#8599;</a> —
+        open any of them, click through it, and order it from inside the demo.</p>
     </section>
 
     <section class="section">
@@ -364,7 +368,9 @@ ${products.filter((o) => o.slug !== p.slug).slice(0, 4).map((o) => `        <li>
           </a>
         </li>`).join('\n')}
       </ul>
-      <p class="sc-more-all"><a href="/showcase.html">See all ${products.length} &rarr;</a></p>
+      <p class="sc-more-all"><a href="/showcase.html">See all ${products.length} &rarr;</a>
+        <a href="${HUB}" target="_blank" rel="noopener"
+           data-pixel-event="ViewContent" data-pixel-content="Demo hub">Or open the demo hub &#8599;</a></p>
     </section>
 
     <section class="section cta-band">
