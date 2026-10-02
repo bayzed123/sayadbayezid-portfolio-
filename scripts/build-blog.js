@@ -854,7 +854,7 @@ ${buildRelatedHTML(post, allPosts)}
       </div>
       <div class="footer-legal">
         <a href="/privacy-policy.html">Privacy Policy</a>
-        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/terms-of-service.html">Terms of Service</a> <a href="/sitemap.html">Sitemap</a>
         <a href="/business-integration-policy.html">Imprint &amp; business policy</a>
         <a href="/contact.html">Contact</a>
         <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
@@ -1003,7 +1003,7 @@ function generateArchiveHTML() {
     <meta property="og:description" content="Expert tutorials and insights on web utilities, SEO, and digital growth.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="${SITE_URL}/blog/">
-    <meta property="og:image" content="${SITE_URL}/assets/images/blog-og.jpg">
+    <meta property="og:image" content="${SITE_URL}/assets/images/blog-default.svg">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${AUTHOR_NAME} Blog">
@@ -1136,7 +1136,7 @@ function generateArchiveHTML() {
       </div>
       <div class="footer-legal">
         <a href="/privacy-policy.html">Privacy Policy</a>
-        <a href="/terms-of-service.html">Terms of Service</a>
+        <a href="/terms-of-service.html">Terms of Service</a> <a href="/sitemap.html">Sitemap</a>
         <a href="/business-integration-policy.html">Imprint &amp; business policy</a>
         <a href="/contact.html">Contact</a>
         <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>

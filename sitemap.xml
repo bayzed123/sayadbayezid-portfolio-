@@ -1,271 +1,533 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1"
-        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0">
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://sayadbayezid.com/</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/case-studies/</loc>
+    <loc>https://sayadbayezid.com/Buymecoffe.html</loc>
     <lastmod>2026-09-26</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/case-studies/lks-attire.html</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/case-studies/rinova-bd.html</loc>
-    <lastmod>2026-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/case-studies/arif-gadgets.html</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/proofline-atlas.html</loc>
-    <lastmod>2026-09-26</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/facebook-business-login.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/business-integration-policy.html</loc>
-    <lastmod>2026-08-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/verified-profiles/</loc>
-    <lastmod>2026-09-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/projects.html</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/specialities.html</loc>
-    <lastmod>2026-09-24</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/services.html</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/products.html</loc>
-    <lastmod>2026-09-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Dollar &amp; Mastercard Sales</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://sayadbayezid.com/about.html</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>About</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/amader-tangail/privacy-policy.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Privacy Policy — Amader Tangail</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/amader-tangail/user-account-data-delete.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Delete Your Account &amp; Data — Amader Tangail</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/authors.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Authors &amp; Team</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/bayezid-portrait.jpg</image:loc>
+      <image:title>Authors &amp; Team</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/google-maps-lead-generation-google-sheets/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/blog-default.svg</image:loc>
+      <image:title>Google Maps Lead Generation to Google Sheets | NexusLeads - Sayad Md Bayezid Hosan</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/blog-default.svg</image:loc>
+      <image:title>Blog - Sayad Md Bayezid Hosan | Digital Marketing &amp; Web Development Insights</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/smart-ai-open-source-case-study-and-project-journal/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/marketing-banner.png</image:loc>
+      <image:title>smartflow-ai-case-study-and-project-journal - Sayad Md Bayezid Hosan</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/workflow-diagram.png</image:loc>
+      <image:title>WhatsApp Cloud API Setup Guide and Integration Costs - Sayad Md Bayezid Hosan</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/business-integration-policy.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Business Integration &amp; Data Policy</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-01-storefront-home-hero.webp</image:loc>
+      <image:title>Case Studies</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/01-storefront-home-hero.webp</image:loc>
+      <image:title>Case Studies</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/02-home-welcome-banner.png</image:loc>
+      <image:title>Case Studies</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies/arif-gadgets.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/00-architecture.svg</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/01-offer-popup-on-arrival.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/02-home-welcome-banner.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/03-home-categories-and-trust.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/04-home-product-grid.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/05-home-footer-help-and-payments.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/06-catalog-filters-and-sorting.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/07-catalog-filtered-by-category.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/43-admin-gallery-editor.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/09-product-detail-gallery.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/10-product-detail-second-photo.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/08-catalog-hover-preview.png</image:loc>
+      <image:title>Arif Gadgets — a real shop for Savar, built to run itself</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies/example-entry.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-01-storefront-home-hero.webp</image:loc>
+      <image:title>Case Studies</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/01-storefront-home-hero.webp</image:loc>
+      <image:title>Case Studies</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/02-home-welcome-banner.png</image:loc>
+      <image:title>Case Studies</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies/lks-attire.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-00-architecture.svg</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-01-storefront-home-hero.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-02-storefront-categories-and-offers.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-03-storefront-product-grid.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-04-shop-filters-and-sorting.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-05-product-detail.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-06-product-size-guide.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-07-cart-drawer.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-12-storefront-in-bangla.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-08-checkout-area-search.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-09-checkout-address-filled-and-delivery-zone.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/lks-10-checkout-bkash-with-trxid.webp</image:loc>
+      <image:title>Lk&#39;s Attire — a women&#39;s fashion store from Tangail, and the template behind the next one</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies/rinova-bd.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/01-storefront-home-hero.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/02-storefront-categories.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/03-storefront-product-grid.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/04-storefront-product-detail.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/05-storefront-image-viewer.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/06-storefront-product-faq.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/07-storefront-bag-drawer.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/28-admin-bulk-pricing-and-offer.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/09-storefront-checkout-summary.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/08-storefront-checkout.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/10-storefront-order-tracking.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/case-studies/images/11-landing-page-hero.webp</image:loc>
+      <image:title>Rinova BD — a beauty shop built to be advertised</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/case-studies/smartleadgeneration.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://sayadbayezid.com/contact.html</loc>
-    <lastmod>2026-09-05</lastmod>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Contact</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/editorial-policy.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Editorial Guidelines</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/facebook-business-login.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Business Login</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Connect with Bayezid — Digital systems for brands that verify their work</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/bayezid-portrait-480.webp</image:loc>
+      <image:title>Connect with Bayezid — Digital systems for brands that verify their work</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/blog-default.svg</image:loc>
+      <image:title>Connect with Bayezid — Digital systems for brands that verify their work</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/marketing-banner.png</image:loc>
+      <image:title>Connect with Bayezid — Digital systems for brands that verify their work</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/blog-posts/images/workflow-diagram.png</image:loc>
+      <image:title>Connect with Bayezid — Digital systems for brands that verify their work</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/meta-integration.html</loc>
+    <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://sayadbayezid.com/meta-integration.html</loc>
-    <lastmod>2026-09-11</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://sayadbayezid.com/privacy-policy-meta-product.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Privacy Policy</image:title>
+    </image:image>
   </url>
-  <!-- showcase:start — written by scripts/build-showcase.mjs, do not edit by hand -->
+  <url>
+    <loc>https://sayadbayezid.com/privacy-policy.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Privacy Policy</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/products.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Products</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/projects.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Projects — every live build by Connect with Bayezid</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/proofline-atlas.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/arif-gadgets-home.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/lks-attire-home.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/lks-attire-checkout.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/lks-attire-dashboard.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/rinova-bd-home.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/rinova-bd-landing.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/rinova-bd-dashboard.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/arif-gadgets-catalog.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/images/proofline-atlas/arif-gadgets-product.png</image:loc>
+      <image:title>Proofline Atlas — Successful Deliveries</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/services.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Services &amp; Pricing</image:title>
+    </image:image>
+  </url>
   <url>
     <loc>https://sayadbayezid.com/showcase.html</loc>
     <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/lks-attire-shop.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/lks-attire-shop/admin.webp</image:loc>
-      <image:title>Lk&#39;s Attire</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/lks-attire-shop/shop-mobile.webp</image:loc>
-      <image:title>Lk&#39;s Attire</image:title>
-    </image:image>
+    <priority>0.7</priority>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/lks-attire-shop/shop.webp</image:loc>
-      <image:title>Lk&#39;s Attire</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/zamil-shop-bd.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/zamil-shop-bd/admin.webp</image:loc>
-      <image:title>Zamil Shop BD</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/zamil-shop-bd/shop-mobile.webp</image:loc>
-      <image:title>Zamil Shop BD</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/zamil-shop-bd/shop.webp</image:loc>
-      <image:title>Zamil Shop BD</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/prakriti-herbal.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/prakriti-herbal/admin.webp</image:loc>
-      <image:title>Prakriti Herbal</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/prakriti-herbal/shop-mobile.webp</image:loc>
-      <image:title>Prakriti Herbal</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/prakriti-herbal/shop.webp</image:loc>
-      <image:title>Prakriti Herbal</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/sidra-glow-studio.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-glow-studio/admin.webp</image:loc>
-      <image:title>Sidra Glow Studio</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-glow-studio/shop-mobile.webp</image:loc>
-      <image:title>Sidra Glow Studio</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/sidra-glow-studio/shop.webp</image:loc>
-      <image:title>Sidra Glow Studio</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/sidra-jewellery.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-jewellery/admin.webp</image:loc>
-      <image:title>Sidra Jewellery &amp; Fashion</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-jewellery/shop-mobile.webp</image:loc>
-      <image:title>Sidra Jewellery &amp; Fashion</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/sidra-jewellery/shop.webp</image:loc>
-      <image:title>Sidra Jewellery &amp; Fashion</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/smartgadget-demo.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/smartgadget-demo/storefront-mobile.webp</image:loc>
-      <image:title>SmartGadget</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/smartgadget-demo/storefront.webp</image:loc>
-      <image:title>SmartGadget</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/sidra-noor-fashion.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-noor-fashion/storefront-mobile.webp</image:loc>
-      <image:title>Sidra Noor Fashion</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/sidra-noor-fashion/storefront.webp</image:loc>
-      <image:title>Sidra Noor Fashion</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/sidra-clothing.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-clothing/catalogue-mobile.webp</image:loc>
-      <image:title>Sidra Clothing &amp; Shoes</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/sidra-clothing/catalogue.webp</image:loc>
-      <image:title>Sidra Clothing &amp; Shoes</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/veloura-atelier-demo.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/admin.webp</image:loc>
-      <image:title>Veloura Atelier</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/checkout.webp</image:loc>
-      <image:title>Veloura Atelier</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/product.webp</image:loc>
-      <image:title>Veloura Atelier</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/storefront-mobile.webp</image:loc>
-      <image:title>Veloura Atelier</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/storefront.webp</image:loc>
-      <image:title>Veloura Atelier</image:title>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/tracking.webp</image:loc>
-      <image:title>Veloura Atelier</image:title>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/storefront.webp</image:loc>
+      <image:title>Product showcase — live demos you can open</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/dashboard.webp</image:loc>
+      <image:title>Product showcase — live demos you can open</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/overview.webp</image:loc>
+      <image:title>Product showcase — live demos you can open</image:title>
     </image:image>
   </url>
   <url>
@@ -274,42 +536,28 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/admin-orders.webp</image:loc>
-      <image:title>Bootstrap Fashion</image:title>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/storefront.webp</image:loc>
+      <image:title>Bootstrap Fashion — A fashion front end that drops onto the backend you already have.</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/category.webp</image:loc>
-      <image:title>Bootstrap Fashion</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/checkout.webp</image:loc>
-      <image:title>Bootstrap Fashion</image:title>
+      <image:title>Bootstrap Fashion — A fashion front end that drops onto the backend you already have.</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/product.webp</image:loc>
-      <image:title>Bootstrap Fashion</image:title>
+      <image:title>Bootstrap Fashion — A fashion front end that drops onto the backend you already have.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/checkout.webp</image:loc>
+      <image:title>Bootstrap Fashion — A fashion front end that drops onto the backend you already have.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/admin-orders.webp</image:loc>
+      <image:title>Bootstrap Fashion — A fashion front end that drops onto the backend you already have.</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/storefront-mobile.webp</image:loc>
-      <image:title>Bootstrap Fashion</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/bootstrap-fashion/storefront.webp</image:loc>
-      <image:title>Bootstrap Fashion</image:title>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/showcase/rinova-admin-demo.html</loc>
-    <lastmod>2026-10-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/dashboard.webp</image:loc>
-      <image:title>Rinova BD — Admin Dashboard</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/guide.webp</image:loc>
-      <image:title>Rinova BD — Admin Dashboard</image:title>
+      <image:title>Bootstrap Fashion — A fashion front end that drops onto the backend you already have.</image:title>
     </image:image>
   </url>
   <url>
@@ -318,20 +566,20 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/analytics.webp</image:loc>
-      <image:title>SmartGen Commerce OS</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/campaigns.webp</image:loc>
-      <image:title>SmartGen Commerce OS</image:title>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/overview.webp</image:loc>
+      <image:title>SmartGen Commerce OS — Catalogue, customers, campaigns and analytics behind one navigation.</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/catalogue.webp</image:loc>
-      <image:title>SmartGen Commerce OS</image:title>
+      <image:title>SmartGen Commerce OS — Catalogue, customers, campaigns and analytics behind one navigation.</image:title>
     </image:image>
     <image:image>
-      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/overview.webp</image:loc>
-      <image:title>SmartGen Commerce OS</image:title>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/analytics.webp</image:loc>
+      <image:title>SmartGen Commerce OS — Catalogue, customers, campaigns and analytics behind one navigation.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/demosmartgen/campaigns.webp</image:loc>
+      <image:title>SmartGen Commerce OS — Catalogue, customers, campaigns and analytics behind one navigation.</image:title>
     </image:image>
   </url>
   <url>
@@ -341,58 +589,287 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/console.webp</image:loc>
-      <image:title>Northstar Admin</image:title>
+      <image:title>Northstar Admin — Built for people who keep it open all day.</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/orders.webp</image:loc>
-      <image:title>Northstar Admin</image:title>
+      <image:title>Northstar Admin — Built for people who keep it open all day.</image:title>
     </image:image>
     <image:image>
       <image:loc>https://sayadbayezid.com/assets/showcase/demu-admin/users.webp</image:loc>
-      <image:title>Northstar Admin</image:title>
+      <image:title>Northstar Admin — Built for people who keep it open all day.</image:title>
     </image:image>
   </url>
-  <!-- showcase:end -->
   <url>
-    <loc>https://sayadbayezid.com/blog/</loc>
+    <loc>https://sayadbayezid.com/showcase/lks-attire-shop.html</loc>
     <lastmod>2026-10-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/lks-attire-shop/shop.webp</image:loc>
+      <image:title>Lk&#39;s Attire — A Tangail clothing brand&#39;s shop, and the dashboard that runs it — sharing one set of orders.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/lks-attire-shop/shop-mobile.webp</image:loc>
+      <image:title>Lk&#39;s Attire — A Tangail clothing brand&#39;s shop, and the dashboard that runs it — sharing one set of orders.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/lks-attire-shop/admin.webp</image:loc>
+      <image:title>Lk&#39;s Attire — A Tangail clothing brand&#39;s shop, and the dashboard that runs it — sharing one set of orders.</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://sayadbayezid.com/blog/google-maps-lead-generation-google-sheets/</loc>
+    <loc>https://sayadbayezid.com/showcase/prakriti-herbal.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/prakriti-herbal/shop.webp</image:loc>
+      <image:title>Prakriti Herbal — Herbal products, with batch expiry tracking and a copy check that refuses medical claims.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/prakriti-herbal/shop-mobile.webp</image:loc>
+      <image:title>Prakriti Herbal — Herbal products, with batch expiry tracking and a copy check that refuses medical claims.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/prakriti-herbal/admin.webp</image:loc>
+      <image:title>Prakriti Herbal — Herbal products, with batch expiry tracking and a copy check that refuses medical claims.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/rinova-admin-demo.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/dashboard.webp</image:loc>
+      <image:title>Rinova BD — Admin Dashboard — The screens a real shop is run from, including POS and barcode printing.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/rinova-admin-demo/guide.webp</image:loc>
+      <image:title>Rinova BD — Admin Dashboard — The screens a real shop is run from, including POS and barcode printing.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/sidra-clothing.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-clothing/catalogue.webp</image:loc>
+      <image:title>Sidra Clothing &amp; Shoes — 132 products, real filters, accounts that remember you.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-clothing/catalogue-mobile.webp</image:loc>
+      <image:title>Sidra Clothing &amp; Shoes — 132 products, real filters, accounts that remember you.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/sidra-glow-studio.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-glow-studio/shop.webp</image:loc>
+      <image:title>Sidra Glow Studio — A skincare shop and a treatment studio — products and appointments in one dashboard.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-glow-studio/shop-mobile.webp</image:loc>
+      <image:title>Sidra Glow Studio — A skincare shop and a treatment studio — products and appointments in one dashboard.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-glow-studio/admin.webp</image:loc>
+      <image:title>Sidra Glow Studio — A skincare shop and a treatment studio — products and appointments in one dashboard.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/sidra-jewellery.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-jewellery/shop.webp</image:loc>
+      <image:title>Sidra Jewellery &amp; Fashion — Jewellery sold by occasion, with size guides and gift wrap flagged for packing.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-jewellery/shop-mobile.webp</image:loc>
+      <image:title>Sidra Jewellery &amp; Fashion — Jewellery sold by occasion, with size guides and gift wrap flagged for packing.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-jewellery/admin.webp</image:loc>
+      <image:title>Sidra Jewellery &amp; Fashion — Jewellery sold by occasion, with size guides and gift wrap flagged for packing.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/sidra-noor-fashion.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-noor-fashion/storefront.webp</image:loc>
+      <image:title>Sidra Noor Fashion — A Vue 3 fashion storefront with eight admin screens behind it.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/sidra-noor-fashion/storefront-mobile.webp</image:loc>
+      <image:title>Sidra Noor Fashion — A Vue 3 fashion storefront with eight admin screens behind it.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/smartgadget-demo.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/smartgadget-demo/storefront.webp</image:loc>
+      <image:title>SmartGadget — A wholesale electronics shop, and the dashboard its owner runs it from.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/smartgadget-demo/storefront-mobile.webp</image:loc>
+      <image:title>SmartGadget — A wholesale electronics shop, and the dashboard its owner runs it from.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/veloura-atelier-demo.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/storefront.webp</image:loc>
+      <image:title>Veloura Atelier — Beauty and skincare, from browsing to a printable invoice.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/product.webp</image:loc>
+      <image:title>Veloura Atelier — Beauty and skincare, from browsing to a printable invoice.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/checkout.webp</image:loc>
+      <image:title>Veloura Atelier — Beauty and skincare, from browsing to a printable invoice.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/tracking.webp</image:loc>
+      <image:title>Veloura Atelier — Beauty and skincare, from browsing to a printable invoice.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/admin.webp</image:loc>
+      <image:title>Veloura Atelier — Beauty and skincare, from browsing to a printable invoice.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/veloura-atelier-demo/storefront-mobile.webp</image:loc>
+      <image:title>Veloura Atelier — Beauty and skincare, from browsing to a printable invoice.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/showcase/zamil-shop-bd.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/zamil-shop-bd/shop.webp</image:loc>
+      <image:title>Zamil Shop BD — A baby and kids shop with a gift registry, and an admin that screens fake orders.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/zamil-shop-bd/shop-mobile.webp</image:loc>
+      <image:title>Zamil Shop BD — A baby and kids shop with a gift registry, and an admin that screens fake orders.</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/showcase/zamil-shop-bd/admin.webp</image:loc>
+      <image:title>Zamil Shop BD — A baby and kids shop with a gift registry, and an admin that screens fake orders.</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/sitemap.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/smartgen-nexusleads.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>SmartGen NexusLeads — Lead discovery for serious outreach</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/specialities.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Specialities &amp; Technologies — SEO, Advertising, Design &amp; Development</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/terms-of-service.html</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Terms of Service</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/tools/invoice/</loc>
     <lastmod>2026-09-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://sayadbayezid.com/blog/smart-ai-open-source-case-study-and-project-journal/</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
     <image:image>
-      <image:loc>https://sayadbayezid.com/blog-posts/images/marketing-banner.png</image:loc>
-      <image:title>smartflow-ai-case-study-and-project-journal</image:title>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Invoice Generator</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://sayadbayezid.com/blog/whatsapp-cloud-api-setup-guide-and-integration-costs/</loc>
-    <lastmod>2026-07-27</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://sayadbayezid.com/verified-profiles/</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://sayadbayezid.com/blog-posts/images/workflow-diagram.png</image:loc>
-      <image:title>WhatsApp Cloud API Setup Guide and Integration Costs</image:title>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Sayad Md Bayezid Hosan | Verified Profiles</image:title>
     </image:image>
   </url>
   <url>
-    <loc>https://sayadbayezid.com/blog/building-the-smartgen-html-code-library-79-visual-to-code-tools/</loc>
-    <lastmod>2026-06-19</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://sayadbayezid.com/virtual-internation-card/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://i.ibb.co/qMqwVFWv/IMG-5260.jpg</image:loc>
-      <image:title>Building the SmartGen HTML Code Library: 79 Visual-to-Code Tools</image:title>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>RedotPay একাউন্ট খোলার সম্পূর্ণ গাইড (A-Z)</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/virtual-promote.html</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>BD Promote Service</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/webmoney/</loc>
+    <lastmod>2026-09-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>WebMoney - Dashboard</image:title>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sayadbayezid.com/work.html</loc>
+    <lastmod>2026-10-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://sayadbayezid.com/assets/social-preview.svg</image:loc>
+      <image:title>Work</image:title>
     </image:image>
   </url>
 </urlset>
