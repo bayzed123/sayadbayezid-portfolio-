@@ -347,6 +347,29 @@ console.log('\n8. The sitemap carries the new pages');
   ok(!/&(?!(amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/.test(xml), 'no unescaped ampersands');
 }
 
+console.log('\n9. Every shop + admin pair walks one order through, step by step');
+{
+  // The walk-through is the part of these pages that sells the work: an order
+  // placed in the shop and followed into the dashboard. A capture run that
+  // silently dropped it would leave the page looking finished, so its presence
+  // is checked rather than trusted, and so is the order the steps come in.
+  for (const product of products.filter((x) => x.orderFlow)) {
+    const p = await open(`/showcase/${product.slug}.html`);
+    const steps = p.locator('.sc-flow-step');
+    const n = await steps.count();
+    ok(n >= 4, `${product.title}: ${n} walk-through steps (at least 4: product, order placed, admin, confirmed)`);
+    const nums = await p.$$eval('.sc-flow-num', (els) => els.map((e) => Number(e.textContent)));
+    ok(nums.every((v, i) => v === i + 1), `${product.title}: steps numbered 1 to ${n} with no gaps`);
+    const imgs = await p.$$eval('.sc-flow-shot img', (els) => els.map((e) => e.getAttribute('src')));
+    ok(imgs[0]?.endsWith('/flow-1-product.webp') && imgs.at(-1)?.endsWith('/flow-5-confirmed.webp'),
+      `${product.title}: it starts at the product and ends confirmed in the admin`);
+    const cta = await p.locator('.sc-flow-cta a').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
+    ok(cta.includes(`${HUB}/d/${product.slug}/`) && cta.includes(`${HUB}/d/${product.adminSlug}/`),
+      `${product.title}: the walk-through ends with both demos to try it in`);
+    await p.close();
+  }
+}
+
 await b.close();
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail ? 1 : 0);

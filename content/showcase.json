@@ -1,23 +1,30 @@
 {
   "_comment": [
-    "The product showcase — what a prospective client is shown before they open a demo.",
+    "The product showcase \u2014 what a prospective client is shown before they open a demo.",
     "",
     "WHERE THE WORDS COME FROM. `title`, `summary`, `category` and `tags` are the demo's",
     "own demo.json in the websites-tamplate repo, copied rather than rewritten so the",
     "showcase and the demo hub cannot describe the same build differently. `features`,",
     "`whyChoose` and `audience` are written here, and every line in them names something",
-    "the demo actually contains — a screen you can open, a flow you can complete. Nothing",
+    "the demo actually contains \u2014 a screen you can open, a flow you can complete. Nothing",
     "in this file may claim a capability the demo does not demonstrate: a prospect who",
     "clicks through and cannot find what was promised has learned something worse about",
     "the studio than a shorter list would have told them.",
     "",
     "`shots` are paths inside the built demo (websites-tamplate/site/demos/<slug>/), NOT",
-    "the /d/<slug>/ wrapper — the wrapper is a review frame with its own chrome, and a",
+    "the /d/<slug>/ wrapper \u2014 the wrapper is a review frame with its own chrome, and a",
     "showcase wants the product. `href` is the wrapper, because that is the page a client",
     "should land on.",
     "",
     "Regenerate the pages after editing:  node scripts/build-showcase.mjs",
-    "Recapture the screenshots:          node scripts/capture-showcase-shots.mjs <demo-hub-site-dir>"
+    "Recapture the screenshots:          node scripts/capture-showcase-shots.mjs <demo-hub-site-dir>",
+    "",
+    "`orderFlow` (shop + admin pairs only) drives one real order through the demo and captures",
+    "each stage as flow-<n>-<stage>. The step words are `orderFlowSteps` below, shared by every",
+    "shop because the steps are the same everywhere; the page shows only the steps whose shot",
+    "was captured. `product` is the slug the customer orders; `address` overrides the default",
+    "delivery address (Mirpur, Dhaka) for a shop based elsewhere.",
+    "`orderFlow.text` overrides a step's words for one shop whose screens differ from the others."
   ],
   "hub": "https://demu.sayadbayezid.com",
   "products": [
@@ -26,21 +33,21 @@
       "adminSlug": "lks-attire-admin",
       "title": "Lk's Attire",
       "category": "E-commerce",
-      "tagline": "A Tangail clothing brand's shop, and the dashboard that runs it — sharing one set of orders.",
-      "summary": "The customer side of Lk's Attire, a women's clothing brand from Tangail: real product photos, a Bangla/English switch, filters, product pages with sizes and colours, cart, and a checkout where typing a postcode fills in Division, District and Upazila. Place an order with Cash on Delivery, bKash, Nagad or Rocket, get an invoice number, and track it — then find that order waiting in the admin dashboard.",
+      "tagline": "A Tangail clothing brand's shop, and the dashboard that runs it \u2014 sharing one set of orders.",
+      "summary": "The customer side of Lk's Attire, a women's clothing brand from Tangail: real product photos, a Bangla/English switch, filters, product pages with sizes and colours, cart, and a checkout where typing a postcode fills in Division, District and Upazila. Place an order with Cash on Delivery, bKash, Nagad or Rocket, get an invoice number, and track it \u2014 then find that order waiting in the admin dashboard.",
       "audience": "Clothing brands selling on Facebook who take orders by message, and lose track of which ones were confirmed.",
       "tags": [
         "Storefront",
         "Admin dashboard",
         "Bangla / English",
         "Cash on Delivery",
-        "bKash · Nagad · Rocket",
+        "bKash \u00b7 Nagad \u00b7 Rocket",
         "Cloudflare Workers"
       ],
       "features": [
         {
           "title": "Order in the shop, find it in the admin",
-          "body": "The two demos share their data. Place an order on the storefront, open the dashboard, and it is sitting in the pipeline — the whole point, demonstrated rather than described."
+          "body": "The two demos share their data. Place an order on the storefront, open the dashboard, and it is sitting in the pipeline \u2014 the whole point, demonstrated rather than described."
         },
         {
           "title": "A postcode fills in the address",
@@ -59,6 +66,26 @@
           "body": "Products carry variants, SKUs, discounts and free-delivery rules, with a preview of how the product will look in the shop before it is published."
         }
       ],
+      "orderFlow": {
+        "product": "ruby-organza-three-piece",
+        "address": {
+          "division": "Dhaka",
+          "district": "Tangail",
+          "upazila": "Tangail Sadar",
+          "area": "Victoria Road, House 21"
+        },
+        "option": "M",
+        "text": {
+          "flow-4-admin-order": {
+            "title": "It arrives in the admin, with its invoice number",
+            "body": "The order is already in the dashboard with the items, the address and its invoice number, and one-tap Call and WhatsApp buttons for the confirmation call."
+          },
+          "flow-5-confirmed": {
+            "title": "One tap moves it along",
+            "body": "After the call, \u2192 Confirmed moves it on: then packed, shipped with a courier tracking number, and delivered, with the invoice and shipping label ready to print at each step."
+          }
+        }
+      },
       "shots": [
         {
           "page": "index.html",
@@ -68,7 +95,7 @@
         {
           "page": "index.html",
           "label": "shop-mobile",
-          "caption": "Phone width — where most Bangladeshi traffic arrives.",
+          "caption": "Phone width \u2014 where most Bangladeshi traffic arrives.",
           "viewport": "mobile"
         },
         {
@@ -85,7 +112,7 @@
       "title": "Zamil Shop BD",
       "category": "E-commerce",
       "tagline": "A baby and kids shop with a gift registry, and an admin that screens fake orders.",
-      "summary": "The customer side of Zamil Shop BD, a baby and kids shop from Dhaka: shop by age from 0–6 months to 5 years, a gift finder, a gift registry for new parents, ride-on toys with real product photos, a Bangla/English switch, cart and Cash on Delivery checkout with bKash, Nagad and Rocket — and the dashboard where those orders arrive.",
+      "summary": "The customer side of Zamil Shop BD, a baby and kids shop from Dhaka: shop by age from 0\u20136 months to 5 years, a gift finder, a gift registry for new parents, ride-on toys with real product photos, a Bangla/English switch, cart and Cash on Delivery checkout with bKash, Nagad and Rocket \u2014 and the dashboard where those orders arrive.",
       "audience": "Baby and kids sellers who lose money to fake Cash-on-Delivery orders and want them flagged before anything is packed.",
       "tags": [
         "Storefront",
@@ -106,7 +133,7 @@
         },
         {
           "title": "Shop by age, and a gift finder",
-          "body": "Browsing by 0–6 months through 5 years is how a parent actually shops, and the gift finder is for the person buying for someone else's child."
+          "body": "Browsing by 0\u20136 months through 5 years is how a parent actually shops, and the gift finder is for the person buying for someone else's child."
         },
         {
           "title": "A gift registry for new parents",
@@ -117,6 +144,9 @@
           "body": "A product cannot claim a safety certificate without a file attached. The claim and the proof are one field, so the shop cannot drift into a promise it has not got."
         }
       ],
+      "orderFlow": {
+        "product": "soft-cotton-romper"
+      },
       "shots": [
         {
           "page": "index.html",
@@ -132,8 +162,13 @@
         {
           "page": "index.html",
           "label": "admin",
-          "caption": "The dashboard — four orders waiting for a confirmation call.",
+          "caption": "The dashboard \u2014 four orders waiting for a confirmation call.",
           "slug": "zamil-shop-bd-admin"
+        },
+        {
+          "page": "index.html?lang=en#/gift-finder",
+          "label": "gift-finder",
+          "caption": "The gift finder \u2014 age, budget and occasion, and only what is in stock."
         }
       ]
     },
@@ -143,7 +178,7 @@
       "title": "Prakriti Herbal",
       "category": "E-commerce",
       "tagline": "Herbal products, with batch expiry tracking and a copy check that refuses medical claims.",
-      "summary": "The customer side of Prakriti Herbal, a Dhaka shop for herbal oils, ayurvedic supplements, natural teas, handmade soaps and essential oils: filter by wellness need, a kit builder that picks one product per shelf within your budget, wellness kits showing the real saving, a journal, and a best-before date on every product — plus the dashboard that tracks the batches behind those dates.",
+      "summary": "The customer side of Prakriti Herbal, a Dhaka shop for herbal oils, ayurvedic supplements, natural teas, handmade soaps and essential oils: filter by wellness need, a kit builder that picks one product per shelf within your budget, wellness kits showing the real saving, a journal, and a best-before date on every product \u2014 plus the dashboard that tracks the batches behind those dates.",
       "audience": "Herbal and supplement sellers, who carry both an expiry problem and a regulatory one.",
       "tags": [
         "Storefront",
@@ -156,7 +191,7 @@
       "features": [
         {
           "title": "Product copy that refuses medical claims",
-          "body": "The dashboard checks product text and will not accept a medical claim. For a herbal shop that is not a nicety — it is the difference between selling and being shut down."
+          "body": "The dashboard checks product text and will not accept a medical claim. For a herbal shop that is not a nicety \u2014 it is the difference between selling and being shut down."
         },
         {
           "title": "Batches picked first-expiry-first-out",
@@ -168,13 +203,16 @@
         },
         {
           "title": "Orders waiting for a call, first",
-          "body": "The dashboard opens on \"needs your attention today\" — the orders that need a confirmation call — rather than on a revenue chart nobody acts on."
+          "body": "The dashboard opens on \"needs your attention today\" \u2014 the orders that need a confirmation call \u2014 rather than on a revenue chart nobody acts on."
         },
         {
           "title": "Certifications held as records",
           "body": "Certifications are stored and shown, so the claim on the page is backed by something in the system."
         }
       ],
+      "orderFlow": {
+        "product": "ashwagandha-root-capsules"
+      },
       "shots": [
         {
           "page": "index.html",
@@ -192,6 +230,17 @@
           "label": "admin",
           "caption": "The dashboard, opening on what needs attention today.",
           "slug": "prakriti-herbal-admin"
+        },
+        {
+          "page": "index.html?lang=en#/kit-builder?concern=sleep&budget=3500",
+          "label": "kit-builder",
+          "caption": "The kit builder: a need and a budget in, one product from each shelf out."
+        },
+        {
+          "page": "index.html#/inventory?tab=batches",
+          "label": "admin-batches",
+          "caption": "Batches and expiry dates in the admin \u2014 orders are packed first-expiry-first-out.",
+          "slug": "prakriti-herbal-admin"
         }
       ]
     },
@@ -200,8 +249,8 @@
       "adminSlug": "sidra-glow-studio-admin",
       "title": "Sidra Glow Studio",
       "category": "E-commerce",
-      "tagline": "A skincare shop and a treatment studio — products and appointments in one dashboard.",
-      "summary": "The customer side of Sidra Glow Studio, a skincare shop and beauty-treatment studio in Tangail: filter by skin type and concern, ingredient lists and best-before dates on every product, a skin quiz that builds a routine within your budget, routine sets, and facials bookable online against a free slot — with the bookings diary and the order pipeline behind them in one admin.",
+      "tagline": "A skincare shop and a treatment studio \u2014 products and appointments in one dashboard.",
+      "summary": "The customer side of Sidra Glow Studio, a skincare shop and beauty-treatment studio in Tangail: filter by skin type and concern, ingredient lists and best-before dates on every product, a skin quiz that builds a routine within your budget, routine sets, and facials bookable online against a free slot \u2014 with the bookings diary and the order pipeline behind them in one admin.",
       "audience": "Salons and studios that also sell product, and currently run the diary and the shop as two separate things.",
       "tags": [
         "Storefront",
@@ -214,7 +263,7 @@
       "features": [
         {
           "title": "Bookings and orders in one place",
-          "body": "The diary — confirm, move, done, no-show — sits in the same dashboard as the product orders. One business, one screen, instead of a paper diary beside a shop admin."
+          "body": "The diary \u2014 confirm, move, done, no-show \u2014 sits in the same dashboard as the product orders. One business, one screen, instead of a paper diary beside a shop admin."
         },
         {
           "title": "Book a facial against a real free slot",
@@ -230,9 +279,18 @@
         },
         {
           "title": "Batches picked first-expiry-first-out",
-          "body": "Stock is tracked by batch, and the earliest-expiring is packed first — so the dates on the shelf stay honest."
+          "body": "Stock is tracked by batch, and the earliest-expiring is packed first \u2014 so the dates on the shelf stay honest."
         }
       ],
+      "orderFlow": {
+        "product": "niacinamide-10-zinc-1-serum",
+        "address": {
+          "division": "Dhaka",
+          "district": "Tangail",
+          "upazila": "Tangail Sadar",
+          "area": "Victoria Road, House 21"
+        }
+      },
       "shots": [
         {
           "page": "index.html",
@@ -248,7 +306,18 @@
         {
           "page": "index.html",
           "label": "admin",
-          "caption": "The dashboard — orders and the bookings diary together.",
+          "caption": "The dashboard \u2014 orders and the bookings diary together.",
+          "slug": "sidra-glow-studio-admin"
+        },
+        {
+          "page": "index.html?lang=en#/treatments/deep-cleansing-facial",
+          "label": "treatment",
+          "caption": "A treatment page \u2014 pick a day and one of the free times left."
+        },
+        {
+          "page": "index.html#/bookings",
+          "label": "admin-bookings",
+          "caption": "The bookings diary in the admin: confirm, move, done or no-show.",
           "slug": "sidra-glow-studio-admin"
         }
       ]
@@ -259,7 +328,7 @@
       "title": "Sidra Jewellery & Fashion",
       "category": "E-commerce",
       "tagline": "Jewellery sold by occasion, with size guides and gift wrap flagged for packing.",
-      "summary": "The customer side of Sidra Jewellery & Fashion: earrings, necklaces, bangles, rings and bridal sets shot in macro, shop by occasion — everyday, festive, bridal — curated collections with \"Shop the set\", ring and bangle size guides, gift wrap at checkout, and Cash on Delivery with bKash, Nagad and Rocket. The dashboard behind it sorts products by material and plating, and flags the gift-wrap orders.",
+      "summary": "The customer side of Sidra Jewellery & Fashion: earrings, necklaces, bangles, rings and bridal sets shot in macro, shop by occasion \u2014 everyday, festive, bridal \u2014 curated collections with \"Shop the set\", ring and bangle size guides, gift wrap at checkout, and Cash on Delivery with bKash, Nagad and Rocket. The dashboard behind it sorts products by material and plating, and flags the gift-wrap orders.",
       "audience": "Jewellery sellers whose returns come from the wrong size and whose busiest orders are gifts.",
       "tags": [
         "Storefront",
@@ -276,7 +345,7 @@
         },
         {
           "title": "Shop by occasion",
-          "body": "Everyday, festive and bridal is how someone buying jewellery is actually thinking — not by product category."
+          "body": "Everyday, festive and bridal is how someone buying jewellery is actually thinking \u2014 not by product category."
         },
         {
           "title": "Gift-wrap orders flagged for packing",
@@ -291,6 +360,9 @@
           "body": "The catalogue is organised the way the stock actually differs, which is what makes it searchable once it is large."
         }
       ],
+      "orderFlow": {
+        "product": "kundan-chandbali-earrings"
+      },
       "shots": [
         {
           "page": "index.html",
@@ -308,6 +380,11 @@
           "label": "admin",
           "caption": "The dashboard behind it.",
           "slug": "sidra-jewellery-admin"
+        },
+        {
+          "page": "index.html?lang=en#/collections/bridal-kundan-edit",
+          "label": "collection",
+          "caption": "A curated collection, with \"Shop the set\" adding every piece at once."
         }
       ]
     },
@@ -316,7 +393,7 @@
       "title": "SmartGadget",
       "category": "E-commerce",
       "tagline": "A wholesale electronics shop, and the dashboard its owner runs it from.",
-      "summary": "A complete wholesale electronics storefront for the Bangladeshi market — catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking — plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics.",
+      "summary": "A complete wholesale electronics storefront for the Bangladeshi market \u2014 catalogue, tiered wholesale pricing, product pages, cart, checkout and order tracking \u2014 plus the admin dashboard the owner runs it from: products, stock, orders, customers, reviews, content and analytics.",
       "audience": "Importers and wholesalers who sell the same item at different prices depending on quantity, and need one screen that shows what is in stock and what is owed.",
       "tags": [
         "Storefront",
@@ -327,7 +404,7 @@
       "features": [
         {
           "title": "Tiered wholesale pricing",
-          "body": "The price changes with the quantity, and the server decides it — the browser cannot claim a price it has not earned."
+          "body": "The price changes with the quantity, and the server decides it \u2014 the browser cannot claim a price it has not earned."
         },
         {
           "title": "Catalogue to paid order",
@@ -335,7 +412,7 @@
         },
         {
           "title": "The admin the owner lives in",
-          "body": "Products, stock, orders, customers, reviews, site content and analytics — the screens a shop is actually run from, not a KPI wall."
+          "body": "Products, stock, orders, customers, reviews, site content and analytics \u2014 the screens a shop is actually run from, not a KPI wall."
         },
         {
           "title": "Tracking that reports once",
@@ -355,7 +432,7 @@
         {
           "page": "index.html",
           "label": "storefront-mobile",
-          "caption": "The same page on a phone — where most of the traffic is.",
+          "caption": "The same page on a phone \u2014 where most of the traffic is.",
           "viewport": "mobile"
         }
       ]
@@ -365,7 +442,7 @@
       "title": "Sidra Noor Fashion",
       "category": "E-commerce",
       "tagline": "A Vue 3 fashion storefront with eight admin screens behind it.",
-      "summary": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens — dashboard, products, orders, customers, messages, staff, profile and a single-product editor.",
+      "summary": "A Vue 3 fashion storefront with the admin dashboard its owner runs it from. The shop side has category pages, product pages, a cart and a checkout; the admin side has eight screens \u2014 dashboard, products, orders, customers, messages, staff, profile and a single-product editor.",
       "audience": "Clothing shops that already sell on Facebook and want a real storefront without giving up the way they handle orders.",
       "tags": [
         "Storefront",
@@ -377,7 +454,7 @@
       "features": [
         {
           "title": "Eight admin screens",
-          "body": "Dashboard, products, orders, customers, messages, staff, profile and a product editor — enough to run the shop, not a demo shell."
+          "body": "Dashboard, products, orders, customers, messages, staff, profile and a product editor \u2014 enough to run the shop, not a demo shell."
         },
         {
           "title": "Shop side complete",
@@ -415,8 +492,8 @@
       "title": "Sidra Clothing & Shoes",
       "category": "E-commerce",
       "tagline": "132 products, real filters, accounts that remember you.",
-      "summary": "A working fashion storefront built in React: a catalogue of 132 products with brand, category, gender and price filters, sorting, search with pagination, product pages with size picker and customer reviews, wishlist, cart, checkout and order history. Accounts work too — register, sign in, and your wishlist and orders follow you.",
-      "audience": "Shops with a catalogue big enough that browsing without filters stops working — which is most of them past a hundred items.",
+      "summary": "A working fashion storefront built in React: a catalogue of 132 products with brand, category, gender and price filters, sorting, search with pagination, product pages with size picker and customer reviews, wishlist, cart, checkout and order history. Accounts work too \u2014 register, sign in, and your wishlist and orders follow you.",
+      "audience": "Shops with a catalogue big enough that browsing without filters stops working \u2014 which is most of them past a hundred items.",
       "tags": [
         "Storefront",
         "Admin dashboard",
@@ -466,7 +543,7 @@
       "title": "Veloura Atelier",
       "category": "E-commerce",
       "tagline": "Beauty and skincare, from browsing to a printable invoice.",
-      "summary": "A complete beauty and skincare shop for the Bangladeshi market: browse, product detail, cart, checkout, order tracking, customer accounts, printable invoices and a journal — plus the admin dashboard the owner actually runs it from.",
+      "summary": "A complete beauty and skincare shop for the Bangladeshi market: browse, product detail, cart, checkout, order tracking, customer accounts, printable invoices and a journal \u2014 plus the admin dashboard the owner actually runs it from.",
       "audience": "Skincare and cosmetics sellers whose customers ask for an invoice and want to know where the parcel is.",
       "tags": [
         "Storefront",
@@ -510,7 +587,7 @@
         {
           "page": "web/checkout.html",
           "label": "checkout",
-          "caption": "Checkout — one page, not a funnel."
+          "caption": "Checkout \u2014 one page, not a funnel."
         },
         {
           "page": "web/track.html",
@@ -536,7 +613,7 @@
       "category": "E-commerce",
       "tagline": "A fashion front end that drops onto the backend you already have.",
       "summary": "A complete fashion retail front end: homepage, category listing with live filters and a price slider, product page with gallery and reviews, cart, and a three-step checkout with shipping and payment. Built on Bootstrap 5, so your colours, type and logo go in without rewriting anything.",
-      "audience": "Businesses that already have a commerce backend — or a developer who will build one — and need the shop front without a rewrite.",
+      "audience": "Businesses that already have a commerce backend \u2014 or a developer who will build one \u2014 and need the shop front without a rewrite.",
       "tags": [
         "Storefront",
         "Admin dashboard",
@@ -556,7 +633,7 @@
         },
         {
           "title": "Three-step checkout",
-          "body": "Details, shipping and payment as separate steps — the shape most customers already recognise."
+          "body": "Details, shipping and payment as separate steps \u2014 the shape most customers already recognise."
         },
         {
           "title": "Rebrandable, not rewritable",
@@ -603,10 +680,10 @@
     },
     {
       "slug": "rinova-admin-demo",
-      "title": "Rinova BD — Admin Dashboard",
+      "title": "Rinova BD \u2014 Admin Dashboard",
       "category": "Admin dashboard",
       "tagline": "The screens a real shop is run from, including POS and barcode printing.",
-      "summary": "The admin dashboard behind Rinova BD: orders and their delivery pipeline, catalogue and stock, customers, returns and reviews, offers, staff roles, POS and barcode printing, and the analytics panel — the screens the owner actually runs the shop from.",
+      "summary": "The admin dashboard behind Rinova BD: orders and their delivery pipeline, catalogue and stock, customers, returns and reviews, offers, staff roles, POS and barcode printing, and the analytics panel \u2014 the screens the owner actually runs the shop from.",
       "audience": "Shops that sell both online and over a counter, and are tired of the two halves disagreeing about stock.",
       "tags": [
         "Commerce ops",
@@ -618,7 +695,7 @@
       "features": [
         {
           "title": "Orders with a delivery pipeline",
-          "body": "Not a status column — the stages an order actually moves through before somebody receives it."
+          "body": "Not a status column \u2014 the stages an order actually moves through before somebody receives it."
         },
         {
           "title": "POS and barcode printing",
@@ -646,7 +723,7 @@
         {
           "page": "admin/guide/index.html",
           "label": "guide",
-          "caption": "The built-in guide — handover without a phone call."
+          "caption": "The built-in guide \u2014 handover without a phone call."
         }
       ]
     },
@@ -655,7 +732,7 @@
       "title": "SmartGen Commerce OS",
       "category": "Commerce platform",
       "tagline": "Catalogue, customers, campaigns and analytics behind one navigation.",
-      "summary": "A commerce operations surface that puts the catalogue, customer list, campaign builder and analytics behind one navigation — the shape of tool a growing shop needs once spreadsheets stop scaling.",
+      "summary": "A commerce operations surface that puts the catalogue, customer list, campaign builder and analytics behind one navigation \u2014 the shape of tool a growing shop needs once spreadsheets stop scaling.",
       "audience": "Shops that have outgrown a spreadsheet but are not ready to pay per seat for an enterprise suite.",
       "tags": [
         "Catalogue",
@@ -709,7 +786,7 @@
       "title": "Northstar Admin",
       "category": "Admin dashboard",
       "tagline": "Built for people who keep it open all day.",
-      "summary": "An admin console built around the screens a working team opens every day — orders, users, settings and help — with the density and keyboard-first layout of software people use for hours, not a dashboard that only looks good in a screenshot.",
+      "summary": "An admin console built around the screens a working team opens every day \u2014 orders, users, settings and help \u2014 with the density and keyboard-first layout of software people use for hours, not a dashboard that only looks good in a screenshot.",
       "audience": "Teams whose staff live inside one tool all day and care more about rows per screen than about gradients.",
       "tags": [
         "Operations",
@@ -744,7 +821,7 @@
         {
           "page": "pages/orders.html",
           "label": "orders",
-          "caption": "Orders — the density is the point."
+          "caption": "Orders \u2014 the density is the point."
         },
         {
           "page": "pages/users.html",
@@ -773,11 +850,38 @@
     },
     {
       "title": "Built for Bangladeshi connections",
-      "body": "Tested at phone width on a slow connection, because that is how most of the traffic arrives — not on a desk at 1440px."
+      "body": "Tested at phone width on a slow connection, because that is how most of the traffic arrives \u2014 not on a desk at 1440px."
     },
     {
       "title": "One person, start to finish",
       "body": "The same person writes the front end, the API and the deploy pipeline. There is no handover gap for a bug to live in."
+    }
+  ],
+  "orderFlowSteps": [
+    {
+      "label": "flow-1-product",
+      "title": "The customer picks a product",
+      "body": "Photos, price, sizes and stock on one page, in Bangla or English. Add to cart is one tap; the cart keeps itself if they wander off."
+    },
+    {
+      "label": "flow-2-sms-code",
+      "title": "Checkout checks the phone number",
+      "body": "Name, mobile number, and a 6-digit code sent by SMS (in the demo the code appears on screen). A fake number never becomes an order, which is where most lost Cash-on-Delivery money starts."
+    },
+    {
+      "label": "flow-3-order-placed",
+      "title": "The order is placed \u2014 no sign-up",
+      "body": "Division, district and upazila set the delivery charge before they pay anything. The order gets its number at once, with a page to track it."
+    },
+    {
+      "label": "flow-4-admin-order",
+      "title": "It arrives in the admin, waiting for a call",
+      "body": "The order is already in the dashboard with the customer's address, a risk badge and one-tap Call and WhatsApp buttons. Cash on Delivery can't move on until someone confirms it."
+    },
+    {
+      "label": "flow-5-confirmed",
+      "title": "One tap confirms it, and the invoice is issued",
+      "body": "Log the call as \"Customer confirmed\" and the order moves to Confirmed with its invoice number and a printable PDF \u2014 then packed, shipped with a courier tracking number, delivered."
     }
   ]
 }

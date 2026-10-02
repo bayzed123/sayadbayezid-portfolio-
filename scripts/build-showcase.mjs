@@ -138,6 +138,24 @@ async function shotsFor(product) {
   return out;
 }
 
+/**
+ * The order walk-through: the steps of one real order, shop to admin, for the
+ * shop + admin pairs that have `orderFlow`. The words are `orderFlowSteps`
+ * (shared — the steps are the same everywhere) with a shop's own `orderFlow.text`
+ * over them where its screens differ. Only steps whose shot was captured are
+ * shown, numbered as shown, so a shop with no SMS check simply has one step fewer.
+ */
+async function walkthroughFor(product) {
+  if (!product.orderFlow) return [];
+  const steps = [];
+  for (const step of data.orderFlowSteps || []) {
+    const rel = `/assets/showcase/${product.slug}/${step.label}.webp`;
+    if (!(await exists(join(ROOT, rel.slice(1))))) continue;
+    steps.push({ ...step, ...(product.orderFlow.text?.[step.label] || {}), src: rel });
+  }
+  return steps;
+}
+
 /* ------------------------------------------------------------ index page - */
 
 const products = data.products;
@@ -248,6 +266,39 @@ for (const p of products) {
   const hero = shots.find((s) => !s.mobile) || shots[0];
   const rest = shots.filter((s) => s !== hero);
   const liveUrl = demoUrl(p.slug);
+  const steps = await walkthroughFor(p);
+  /* How an order works, in pictures. A client deciding whether to buy a shop
+     wants to see an order go through it more than any list of features, so this
+     comes straight after the hero: what the customer sees, then what the owner
+     sees, each a screenshot of the same real order. */
+  const walkthrough = !steps.length ? '' : `
+    <section class="section sc-flow" aria-labelledby="flow-title">
+      <div class="sc-narrow">
+        <span class="section-eyebrow">How an order works</span>
+        <h2 id="flow-title">One real order, from the shop to the dashboard</h2>
+        <p class="sc-flow-intro">Every picture below is the same order, placed in the live demo and followed into the admin.
+          ${steps.length} steps, and you can do every one of them yourself.</p>
+      </div>
+      <ol class="sc-flow-steps">
+${steps.map((st, i) => `        <li class="sc-flow-step">
+          <div class="sc-flow-text">
+            <span class="sc-flow-num" aria-hidden="true">${i + 1}</span>
+            <h3>${esc(st.title)}</h3>
+            <p>${esc(st.body)}</p>
+          </div>
+          <figure class="sc-flow-shot">
+            <img src="${st.src}" alt="${esc(p.title)} — step ${i + 1}: ${esc(st.title)}" width="1440" height="900" loading="lazy" decoding="async" />
+          </figure>
+        </li>`).join('\n')}
+      </ol>
+      <p class="sc-flow-cta">
+        <a class="btn btn-primary" href="${liveUrl}" target="_blank" rel="noopener"
+           data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)}">Place an order yourself<span class="btn-arrow">→</span></a>${p.adminSlug ? `
+        <a class="btn btn-ghost" href="${demoUrl(p.adminSlug)}" target="_blank" rel="noopener"
+           data-pixel-event="ViewContent" data-pixel-content="${esc(p.title)} admin">Then find it in the admin</a>` : ''}
+      </p>
+    </section>
+`;
   const adminLink = adminUrl(p);
 
   const gallery = rest.length ? `
@@ -320,7 +371,7 @@ ${rest.map((s) => `        <figure class="sc-shot${s.mobile ? ' is-mobile' : ''}
         <figcaption>${esc(hero.caption)} &middot; <a href="${liveUrl}" target="_blank" rel="noopener">open it yourself</a></figcaption>
       </figure>
     </section>` : ''}
-${pair}
+${walkthrough}${pair}
     <section class="section sc-summary">
       <div class="sc-narrow">
         <p class="sc-lede">${esc(p.summary)}</p>
