@@ -93,6 +93,16 @@ console.log('\n1. The index lists every product, once');
   await p.close();
 }
 
+console.log('\n1b. A paired product offers both demos from its card');
+{
+  const p = await open('/showcase.html');
+  for (const product of products.filter((x) => x.adminSlug)) {
+    const admin = await p.locator(`.sc-card a[href="${HUB}/d/${product.adminSlug}/"]`).count();
+    ok(admin === 1, `${product.slug}: the card links straight to the admin demo`);
+  }
+  await p.close();
+}
+
 console.log('\n2. Every screenshot on every page is a real image file, with alt text');
 {
   // Checked WITHOUT a browser, on purpose.
@@ -167,6 +177,15 @@ console.log('\n3. Every demo link points at a slug the hub actually publishes');
     ok(missing.length === 0,
       `all ${products.length} showcase slugs are published by the hub${missing.length ? ': missing ' + missing.join(', ') : ''}`);
 
+    // A paired product sends the client to two demos, and the second one is the
+    // easier to forget: the storefront is what the product is named after, so a
+    // missing admin demo breaks a link nobody is looking at while the page still
+    // looks right.
+    const paired = products.filter((p) => p.adminSlug);
+    const missingAdmin = paired.filter((p) => !published.has(p.adminSlug)).map((p) => p.adminSlug);
+    ok(missingAdmin.length === 0,
+      `all ${paired.length} paired admin demos are published by the hub${missingAdmin.length ? ': missing ' + missingAdmin.join(', ') : ''}`);
+
     // The other direction is worth knowing but is not a failure: a demo may be
     // deliberately kept out of the showcase.
     const shown = new Set(products.map((p) => p.slug));
@@ -190,6 +209,15 @@ console.log('\n4. Each product page says what it is, and proves it');
     ok(why === data.whyChoose.length, `${product.slug}: the why-choose block is present (${why})`);
     ok(crumbs > 0, `${product.slug}: breadcrumb back to the showcase`);
     ok(demo > 0, `${product.slug}: at least one link to the live demo`);
+
+    // The whole argument for a paired product is "order here, see it there", so
+    // the page is only doing its job if both doors are on it.
+    if (product.adminSlug) {
+      const admin = await p.locator(`a[href="${HUB}/d/${product.adminSlug}/"]`).count();
+      const pair = await p.locator('.sc-pair').count();
+      ok(admin > 0, `${product.slug}: links to the ${product.adminSlug} dashboard too`);
+      ok(pair === 1, `${product.slug}: the try-it-both-ways panel is on the page`);
+    }
     await p.close();
   }
 }
@@ -206,6 +234,11 @@ console.log('\n5. The structured data parses and matches the page');
       ok(parsed.name === product.title, `${product.slug}: it names the same product as the heading`);
       ok(Array.isArray(parsed.screenshot) && parsed.screenshot.length > 0,
         `${product.slug}: it lists the screenshots`);
+      if (product.adminSlug) {
+        const sameAs = [].concat(parsed.sameAs || []);
+        ok(sameAs.includes(`${HUB}/d/${product.adminSlug}/`),
+          `${product.slug}: the structured data names the admin demo as well`);
+      }
     }
     await p.close();
   }

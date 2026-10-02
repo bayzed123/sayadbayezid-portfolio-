@@ -15,6 +15,13 @@
  * files. Each shot therefore waits for the body to actually contain something,
  * and a shot that stays empty is reported as a failure instead of written out.
  *
+ * WHY A SHOT CAN NAME ITS OWN DEMO
+ * Five of these products are a pair: a storefront and the admin dashboard that
+ * runs it, published as two demos sharing one set of orders. They are ONE thing
+ * a client is buying, so they are one product here — and the shot that proves
+ * the order arrived in the dashboard has to come from the other demo. A shot may
+ * therefore carry its own `slug`, which overrides the product's.
+ *
  * Usage, from a built demo hub (websites-tamplate: npm run build:demo-hub):
  *   node scripts/capture-showcase-shots.mjs ../websites-tamplate/site
  *
@@ -92,7 +99,7 @@ for (const product of products) {
   for (const shot of product.shots) {
     const viewport = VIEWPORTS[shot.viewport || 'desktop'];
     const page = await browser.newPage({ viewport, deviceScaleFactor: 2 });
-    const url = `${BASE}/demos/${product.slug}/${shot.page}`;
+    const url = `${BASE}/demos/${shot.slug || product.slug}/${shot.page}`;
     const out = join(outDir, `${shot.label}.png`);
 
     try {
@@ -118,7 +125,7 @@ for (const product of products) {
       taken++;
     } catch (e) {
       console.log(`   FAIL ${shot.label}: ${e.message}`);
-      missing.push(`${product.slug}/${shot.label}`);
+      missing.push(`${product.slug}/${shot.label}  (from demos/${shot.slug || product.slug}/${shot.page})`);
       failed++;
     }
     await page.close();
