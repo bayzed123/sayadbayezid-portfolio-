@@ -18,8 +18,13 @@ User-agent: Bingbot
 Allow: /
 Crawl-delay: 1
 
-# Sitemap location
+# Sitemap location. Built from the pages on disk by scripts/build-sitemap.mjs
+# on every deploy, so it cannot fall behind the site.
 Sitemap: https://sayadbayezid.com/sitemap.xml
+
+# The live demos are a separate site with its own sitemap. Listed here too so
+# a crawler that only ever reads this file still finds them.
+Sitemap: https://demu.sayadbayezid.com/sitemap.xml
 
 # Comment: This robots.txt allows all search engines to crawl and index the entire website
 # The sitemap helps search engines discover all pages more efficiently

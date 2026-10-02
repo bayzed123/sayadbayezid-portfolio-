@@ -166,6 +166,10 @@ function readFooter(extraScripts = "") {
       </div>
     </div>
     <div class="footer-legal">
+      <!-- Every other page on the site carries these three; the case studies
+           carried none, so the policy pages and the sitemap had one fewer way
+           in from a section that is otherwise well linked. -->
+      <span class="footer-legal-links"><a href="/privacy-policy.html">Privacy Policy</a> <a href="/terms-of-service.html">Terms of Service</a> <a href="/sitemap.html">Sitemap</a></span>
       <span>© <span id="footerYear"></span> Sayad Md Bayezid Hosan — Connect with Bayezid</span>
     </div>
   </footer>

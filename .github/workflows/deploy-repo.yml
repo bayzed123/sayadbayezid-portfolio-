@@ -27,6 +27,11 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          # build-sitemap.mjs reads each file's last commit date for <lastmod>.
+          # The default shallow clone has one commit, which would stamp every
+          # page with today and teach Google that lastmod here means nothing.
+          fetch-depth: 0
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -46,6 +51,22 @@ jobs:
           perl -pi -e 's{(/assets/(?:css/admin\.css|js/admin\.js))(\?v=[^"]*)?"}{$1?v='"$sha"'"}g' admin/index.html
           # Printed so the run log shows what the browser will be asked to fetch.
           grep -n 'assets/css/admin\.css\|assets/js/admin\.js' admin/index.html
+
+      # The sitemaps are build output, regenerated here so the published pair
+      # always describes the commit being deployed. Generating them at deploy
+      # time rather than committing them means they cannot be stale and cannot
+      # produce a bot commit on every merge -- a page added is a page listed,
+      # with nobody having to remember a second file.
+      #
+      # Needs full history: lastmod is the date of each file's last commit, and
+      # a shallow checkout would date the whole site to the day of the clone.
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build the sitemaps
+        run: node scripts/build-sitemap.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

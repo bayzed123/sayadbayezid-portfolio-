@@ -405,60 +405,11 @@ ${products.filter((o) => o.slug !== p.slug).slice(0, 4).map((o) => `        <li>
   console.log(`wrote showcase/${p.slug}.html  (${shots.length} shot${shots.length === 1 ? '' : 's'})`);
 }
 
-/* ------------------------------------------------------------- sitemap - */
+/* The sitemap is NOT written here any more.
 
-/**
- * The sitemap's showcase section, rewritten from the same data as the pages.
- *
- * It used to be hand-maintained, and adding five products left five pages out
- * of it. The test suite caught that, which is one step too late: a page Google
- * is not told about earns nothing, and nothing about writing a product entry
- * reminds you there is a second file to edit. The block between the markers now
- * comes from content/showcase.json and the shots that actually exist, so it
- * cannot fall behind.
- *
- * The markers are required. Without them the section's boundaries would have to
- * be guessed, and guessing wrong rewrites somebody else's URLs.
- */
-const SITEMAP_START = '<!-- showcase:start';
-const SITEMAP_END = '<!-- showcase:end -->';
-const sitemapPath = join(ROOT, 'sitemap.xml');
-const sitemap = await readFile(sitemapPath, 'utf8');
-const startAt = sitemap.indexOf(SITEMAP_START);
-const endAt = sitemap.indexOf(SITEMAP_END);
-
-if (startAt === -1 || endAt === -1 || endAt < startAt) {
-  console.warn('\n! sitemap.xml has no showcase:start/showcase:end markers — left untouched.');
-} else {
-  const today = new Date().toISOString().slice(0, 10);
-  const entry = (loc, priority, images) => `  <url>
-    <loc>${loc}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>${priority}</priority>${images.map((i) => `
-    <image:image>
-      <image:loc>${SITE}${i.src}</image:loc>
-      <image:title>${esc(i.title)}</image:title>
-    </image:image>`).join('')}
-  </url>`;
-
-  const block = [
-    entry(`${SITE}/showcase.html`, '0.9', []),
-    ...products.map((p) => entry(
-      `${SITE}/showcase/${p.slug}.html`,
-      '0.8',
-      // Sorted by file name, so a recapture that changes nothing produces no diff.
-      withShots.get(p.slug)
-        .map((s) => ({ src: s.src, title: p.title }))
-        .sort((a, b) => a.src.localeCompare(b.src)),
-    )),
-  ].join('\n');
-
-  // Keep the marker lines themselves, replace only what is between them.
-  const head = sitemap.slice(0, sitemap.indexOf('\n', startAt) + 1);
-  const tail = sitemap.slice(sitemap.lastIndexOf('\n', endAt) + 1);
-  await writeFile(sitemapPath, `${head}${block}\n${tail}`);
-  console.log(`\nwrote ${products.length + 1} sitemap entries between the showcase markers`);
-}
+   This script used to own a marked-off block of sitemap.xml, which solved the
+   showcase's half of the problem and left the other 40 pages hand-maintained.
+   scripts/build-sitemap.mjs now generates the whole file from the pages on
+   disk, so a second writer would only be a second thing to keep in step. */
 
 console.log(`\n${products.length + 1} pages written.`);
