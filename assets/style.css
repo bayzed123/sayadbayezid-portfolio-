@@ -502,7 +502,7 @@ a { color: inherit; }
 }
 
 /* ===================== Services page: pricing strip + detailed sections ===================== */
-.price-strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+.price-strip { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
 .price-chip {
   background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
   padding: 16px 10px; text-align: center; text-decoration: none; transition: border-color 0.2s ease, transform 0.2s ease;
@@ -1311,3 +1311,29 @@ a { color: inherit; }
   .spec-grid, .spec-group-grid { grid-template-columns: 1fr; }
   .spec-group { padding: 24px 20px; }
 }
+
+
+/* ---------- Ads Boosting service (services.html#ads) ---------- */
+.ads-offer { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 44px 0 28px; }
+.ads-offer-card { background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+.ads-offer-card-main { border-color: rgba(0,208,132,.45); background: var(--emerald-soft); }
+.ads-offer-label { display: block; font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 8px; }
+.ads-offer-card strong { display: block; font-family: 'Fraunces', serif; font-size: 1.9rem; line-height: 1.1; color: var(--emerald); }
+.ads-offer-card strong small { font-size: .9rem; color: var(--text-soft); font-family: 'Inter', sans-serif; font-weight: 500; }
+.ads-offer-card .ads-offer-text { font-size: 1.05rem; line-height: 1.4; }
+.ads-offer-card p { font-size: .84rem; line-height: 1.55; margin-top: 8px; }
+.ads-points { list-style: none; margin: 0 0 28px; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 32px; max-width: 900px; }
+.ads-points li { font-size: .93rem; line-height: 1.6; padding-left: 20px; position: relative; }
+.ads-points li::before { content: ""; position: absolute; left: 0; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--emerald); }
+.ads-points b { color: var(--paper); }
+.ads-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.ads-proof-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.ads-proof-card { margin: 0; background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.ads-proof-card a { display: block; aspect-ratio: 3 / 4; overflow: hidden; background: #07110D; border-bottom: 1px solid var(--line); }
+.ads-proof-card img { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top center; transition: transform .35s var(--ease); }
+.ads-proof-card a:hover img { transform: scale(1.03); }
+.ads-proof-card figcaption { padding: 14px 16px; font-size: .84rem; line-height: 1.5; color: var(--text-soft); }
+.ads-proof-card figcaption b { color: var(--emerald); font-family: 'Fraunces', serif; font-size: 1.05rem; }
+.ads-proof-note { font-size: .82rem; color: var(--text-dim); margin-top: 18px; max-width: 760px; }
+@media (max-width: 900px) { .ads-offer { grid-template-columns: repeat(2, minmax(0, 1fr)); } .ads-proof-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .ads-offer, .ads-points, .ads-proof-grid { grid-template-columns: 1fr; } }
