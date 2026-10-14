@@ -19,7 +19,7 @@
     
     <meta property="og:title" content="Tracking Setup Guide: Meta Pixel, CAPI, GA4 & Clarity">
     <meta property="og:description" content="A complete, developer-style guide to setting up Meta Pixel, Conversions API, GA4, and Microsoft Clarity — with sandbox testing and official validation links.">
-    <meta property="og:image" content="https://sayadbayezid.com/assets/images/tracking-setup-guide-cover.svg">
+    <meta property="og:image" content="https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg">
     <meta property="og:url" content="https://sayadbayezid.com/blog/meta-pixel-setup-capi-google-tag/">
     <meta property="og:image:alt" content="Tracking Setup Guide: Meta Pixel, CAPI, GA4 &amp; Clarity">
     <meta property="og:type" content="article">
@@ -29,7 +29,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tracking Setup Guide: Meta Pixel, CAPI, GA4 & Clarity">
     <meta name="twitter:description" content="A complete, developer-style guide to setting up Meta Pixel, Conversions API, GA4, and Microsoft Clarity — with sandbox testing and official validation links.">
-    <meta name="twitter:image" content="https://sayadbayezid.com/assets/images/tracking-setup-guide-cover.svg">
+    <meta name="twitter:image" content="https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg">
     
     <link rel="canonical" href="https://sayadbayezid.com/blog/meta-pixel-setup-capi-google-tag/">
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -69,7 +69,7 @@
       "articleSection": "General",
       "image": {
         "@type": "ImageObject",
-        "url": "https://sayadbayezid.com/assets/images/tracking-setup-guide-cover.svg",
+        "url": "https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg",
         "caption": "Tracking Setup Guide: Meta Pixel, CAPI, GA4 & Clarity"
       }
     },
@@ -257,14 +257,14 @@
 
             
 
-            <img src="assets/images/tracking-setup-guide-cover.svg" alt="Tracking Setup Guide: Meta Pixel, CAPI, GA4 &amp; Clarity" class="blog-post-featured-image reveal-up delay-100" loading="lazy" decoding="async">
+            <img src="https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg" alt="Tracking Setup Guide: Meta Pixel, CAPI, GA4 &amp; Clarity" class="blog-post-featured-image reveal-up delay-100" loading="lazy" decoding="async">
 
             <div class="blog-post-content reveal-up delay-200">
                 <p>August 18, 2026 • Developer Guide • By <a href="https://www.sayadbayezid.com">Sayad Md Bayezid Hosan</a></p>
 <h1>The Complete Tracking Setup Guide: Meta Pixel, Conversions API, GA4 &amp; Microsoft Clarity</h1>
 <p>Most tracking guides cover one tool in isolation. In practice, a real tracking stack is never just one thing — it&#39;s the Meta Pixel firing in the browser, the Conversions API confirming the same event from your server, GA4 recording the full session, and Microsoft Clarity showing you what actually happened on screen when a number looks wrong. This guide sets up all four together, in the order that avoids the two most common failure modes: double-counted conversions and silently broken tracking nobody notices for weeks.</p>
 <p>Every step below reflects the current 2026 interface — including Meta&#39;s new one-click Conversions API activation, which changed significantly in April 2026. Where a manual, fully server-side implementation is the better choice, that path is covered too, with real request payloads you can copy directly.</p>
-<p><img src="https://smartgentools.com/blog/tracking-setup-guide-meta-pixel-capi-ga4-clarity/assets/images/tracking-setup-guide-cover.svg" alt="The Complete Tracking Setup Guide — Meta Pixel, Conversions API, GA4 &amp; Microsoft Clarity"></p>
+<p><img src="https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg" alt="The Complete Tracking Setup Guide — Meta Pixel, Conversions API, GA4 &amp; Microsoft Clarity"></p>
 <hr>
 <h2>Overview</h2>
 <table>
@@ -310,7 +310,7 @@
 <hr>
 <h2>Architecture: How These Four Tools Work Together</h2>
 <p>The diagram below shows the two parallel paths — browser and server — and where deduplication happens.</p>
-<p><img src="https://smartgentools.com/blog/tracking-setup-guide-meta-pixel-capi-ga4-clarity/assets/images/tracking-setup-guide-architecture.svg" alt="Tracking architecture diagram showing browser-side and server-side event flow into Meta and GA4"></p>
+<p><img src="https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-architecture.svg" alt="Tracking architecture diagram showing browser-side and server-side event flow into Meta and GA4"></p>
 <hr>
 <h2>Part 1: Meta Pixel Setup</h2>
 <h3>1.1 Create Your Pixel (Now Called a &quot;Dataset&quot;)</h3>
@@ -602,7 +602,7 @@ fbq(&#39;track&#39;, &#39;Purchase&#39;, { value: 49.99, currency: &#39;USD&#39;
 
             <footer class="blog-post-footer reveal-up delay-300">
                 <div class="blog-post-tags">
-                    <span class="blog-tag">SmartGen</span><span class="blog-tag">Tracking Setup</span><span class="blog-tag">Meta Pixel</span><span class="blog-tag">Conversions API</span><span class="blog-tag">GA4</span><span class="blog-tag">Microsoft Clarity</span><span class="blog-tag">Server-Side Tracking</span><span class="blog-tag">Analytics</span>
+                    <span class="blog-tag">Tracking Setup</span><span class="blog-tag">Meta Pixel</span><span class="blog-tag">Conversions API</span><span class="blog-tag">GA4</span><span class="blog-tag">Microsoft Clarity</span><span class="blog-tag">Server-Side Tracking</span><span class="blog-tag">Analytics</span>
                 </div>
                 <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
                     <button id="print-button" class="btn btn-ghost" title="Print or download this article as PDF">
