@@ -1,0 +1,72 @@
+<svg viewBox="0 0 800 420" xmlns="http://www.w3.org/2000/svg" font-family="'SF Mono', 'Consolas', 'Monaco', monospace">
+
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0D1117;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#161B22;stop-opacity:1"/>
+    </linearGradient>
+    <filter id="term-shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="20" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+  </defs>
+
+  <rect width="800" height="420" fill="url(#bg-grad)"/>
+
+  <!-- Subtle grid dots -->
+  <circle cx="60" cy="60" r="1.5" fill="#30363D"/>
+  <circle cx="740" cy="60" r="1.5" fill="#30363D"/>
+  <circle cx="60" cy="380" r="1.5" fill="#30363D"/>
+  <circle cx="740" cy="380" r="1.5" fill="#30363D"/>
+
+  <!-- ================================================ -->
+  <!-- TOP: BADGE + TITLE                               -->
+  <!-- ================================================ -->
+  <text x="40" y="46" fill="#58A6FF" font-size="11" font-weight="700" letter-spacing="1.5" font-family="Arial, sans-serif">SMARTGEN DEVELOPER GUIDE</text>
+
+  <text x="40" y="90" fill="#F0F6FC" font-size="30" font-weight="800" font-family="Arial, sans-serif" letter-spacing="-0.5">Complete Tracking Setup</text>
+  <text x="40" y="118" fill="#8B949E" font-size="15" font-family="Arial, sans-serif">Meta Pixel · Conversions API · GA4 · Microsoft Clarity</text>
+
+  <!-- Tool badge pills -->
+  <rect x="40" y="136" width="98" height="26" rx="13" fill="rgba(24,119,242,0.15)" stroke="#1877F2" stroke-width="1"/>
+  <text x="89" y="153" text-anchor="middle" fill="#79B4FF" font-size="10.5" font-weight="700" font-family="Arial, sans-serif">Meta Pixel</text>
+
+  <rect x="146" y="136" width="64" height="26" rx="13" fill="rgba(10,95,196,0.18)" stroke="#0A5FC4" stroke-width="1"/>
+  <text x="178" y="153" text-anchor="middle" fill="#6FA8F0" font-size="10.5" font-weight="700" font-family="Arial, sans-serif">CAPI</text>
+
+  <rect x="218" y="136" width="60" height="26" rx="13" fill="rgba(249,171,0,0.15)" stroke="#F9AB00" stroke-width="1"/>
+  <text x="248" y="153" text-anchor="middle" fill="#FFC94D" font-size="10.5" font-weight="700" font-family="Arial, sans-serif">GA4</text>
+
+  <rect x="286" y="136" width="82" height="26" rx="13" fill="rgba(0,120,212,0.15)" stroke="#0078D4" stroke-width="1"/>
+  <text x="327" y="153" text-anchor="middle" fill="#5EB6FF" font-size="10.5" font-weight="700" font-family="Arial, sans-serif">Clarity</text>
+
+  <!-- ================================================ -->
+  <!-- TERMINAL WINDOW MOCKUP                           -->
+  <!-- ================================================ -->
+  <rect x="40" y="188" width="720" height="180" rx="10" fill="#0A0E14" filter="url(#term-shadow)" stroke="#30363D" stroke-width="1"/>
+
+  <!-- Title bar -->
+  <rect x="40" y="188" width="720" height="30" rx="10" fill="#161B22"/>
+  <rect x="40" y="208" width="720" height="10" fill="#161B22"/>
+  <circle cx="60" cy="203" r="5" fill="#FF5F56"/>
+  <circle cx="78" cy="203" r="5" fill="#FFBD2E"/>
+  <circle cx="96" cy="203" r="5" fill="#27C93F"/>
+  <text x="400" y="207" text-anchor="middle" fill="#6E7681" font-size="10.5">capi_payload.json — sandbox test</text>
+
+  <!-- Terminal content -->
+  <text x="60" y="242" fill="#7EE787" font-size="12.5">$ curl -X POST graph.facebook.com/.../events \</text>
+  <text x="76" y="260" fill="#8B949E" font-size="12.5">-d @payload.json</text>
+
+  <text x="60" y="284" fill="#79C0FF" font-size="12">{</text>
+  <text x="76" y="300" fill="#C9D1D9" font-size="12">"event_name": <tspan fill="#A5D6FF">"Purchase"</tspan>,</text>
+  <text x="76" y="316" fill="#C9D1D9" font-size="12">"user_data": { "em": <tspan fill="#A5D6FF">"f4d2c9e1...sha256"</tspan> },</text>
+  <text x="76" y="332" fill="#C9D1D9" font-size="12">"test_event_code": <tspan fill="#A5D6FF">"TEST12345"</tspan></text>
+  <text x="60" y="348" fill="#79C0FF" font-size="12">}</text>
+
+  <text x="420" y="348" fill="#7EE787" font-size="12" font-weight="700">✓ Event Match Quality: 8.2</text>
+
+  <!-- ================================================ -->
+  <!-- BOTTOM BYLINE                                    -->
+  <!-- ================================================ -->
+  <text x="40" y="402" fill="#6E7681" font-size="12" font-family="Arial, sans-serif">smartgentools.com  ·  By Sayad Md Bayezid Hosan  ·  Sandbox-tested, official-source verified</text>
+
+</svg>
