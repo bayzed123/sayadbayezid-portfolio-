@@ -3,10 +3,9 @@ title: "Tracking Setup Guide: Meta Pixel, CAPI, GA4 & Clarity"
 description: "A complete, developer-style guide to setting up Meta Pixel, Conversions API, GA4, and Microsoft Clarity — with sandbox testing and official validation links."
 keywords: "Meta Pixel setup, Conversions API setup guide, CAPI sandbox testing, GA4 setup guide 2026, Microsoft Clarity setup, complete tracking setup guide, Meta Pixel and GA4 setup, server-side tracking guide, event match quality, GA4 DebugView, SmartGen"
 date: 2026-08-18
-image: "assets/images/tracking-setup-guide-cover.svg"
+image: "https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg"
 author: "Sayad Md Bayezid Hosan"
 tags:
-  - SmartGen
   - Tracking Setup
   - Meta Pixel
   - Conversions API
@@ -24,7 +23,7 @@ Most tracking guides cover one tool in isolation. In practice, a real tracking s
 
 Every step below reflects the current 2026 interface — including Meta's new one-click Conversions API activation, which changed significantly in April 2026. Where a manual, fully server-side implementation is the better choice, that path is covered too, with real request payloads you can copy directly.
 
-![The Complete Tracking Setup Guide — Meta Pixel, Conversions API, GA4 & Microsoft Clarity](https://smartgentools.com/blog/tracking-setup-guide-meta-pixel-capi-ga4-clarity/assets/images/tracking-setup-guide-cover.svg)
+![The Complete Tracking Setup Guide — Meta Pixel, Conversions API, GA4 & Microsoft Clarity](https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-cover.svg)
 
 ---
 
@@ -56,7 +55,7 @@ Meta Pixel and CAPI should always report the **same underlying events** — that
 
 The diagram below shows the two parallel paths — browser and server — and where deduplication happens.
 
-![Tracking architecture diagram showing browser-side and server-side event flow into Meta and GA4](https://smartgentools.com/blog/tracking-setup-guide-meta-pixel-capi-ga4-clarity/assets/images/tracking-setup-guide-architecture.svg)
+![Tracking architecture diagram showing browser-side and server-side event flow into Meta and GA4](https://sayadbayezid.com/blog-posts/images/tracking-setup-guide-architecture.svg)
 
 ---
 
